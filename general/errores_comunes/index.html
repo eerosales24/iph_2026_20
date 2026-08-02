@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title></title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/iph.css" id="theme" />
+    <link rel="stylesheet" href="plugin/highlight/spyder.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
+
+
+
+    <script defer src="dist/fontawesome/all.min.js"></script>
+
+	<script type="text/javascript">
+		var forgetPop = true;
+		function onPopState(event) {
+			if(forgetPop){
+				forgetPop = false;
+			} else {
+				parent.postMessage(event.target.location.href, "app://obsidian.md");
+			}
+        }
+		window.onpopstate = onPopState;
+		window.onmessage = event => {
+			if(event.data == "reload"){
+				window.document.location.reload();
+			}
+			forgetPop = true;
+		}
+
+		function fitElements(){
+			const itemsToFit = document.getElementsByClassName('fitText');
+			for (const item in itemsToFit) {
+				if (Object.hasOwnProperty.call(itemsToFit, item)) {
+					var element = itemsToFit[item];
+					fitElement(element,1, 1000);
+					element.classList.remove('fitText');
+				}
+			}
+		}
+
+		function fitElement(element, start, end){
+
+			let size = (end + start) / 2;
+			element.style.fontSize = `${size}px`;
+
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
+					size--;
+					element.style.fontSize = `${size}px`;
+				}
+				return;
+			}
+
+			if(element.scrollHeight > element.offsetHeight){
+				fitElement(element, start, size);
+			} else {
+				fitElement(element, size, end);
+			}		
+		}
+
+
+		document.onreadystatechange = () => {
+			fitElements();
+			if (document.readyState === 'complete') {
+				if (window.location.href.indexOf("?export") != -1){
+					parent.postMessage(event.target.location.href, "app://obsidian.md");
+				}
+				if (window.location.href.indexOf("print-pdf") != -1){
+					let stateCheck = setInterval(() => {
+						clearInterval(stateCheck);
+						window.print();
+					}, 250);
+				}
+			}
+	};
+
+
+        </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### <i class="fas fa-award"></i> IP Honores
+
+ ####  *Errores Comunes*
+
+[Eduardo Rosales](mailto:ee.rosales24@uniandes.edu.co)
+
+Departamento de Ingeniería de Sistemas y Computación
+
+Universidad de los Andes
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+> "A good programmer is someone who always looks both ways before crossing a one-way street." 
+
+Doug Linder
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Índice
+
+- [Error y Excepción](https://eerosales24.github.io/iph_2026_20/general/errores_comunes/#/3)
+- [SyntaxError](https://eerosales24.github.io/iph_2026_20/general/errores_comunes/#/4)
+- [NameError](https://eerosales24.github.io/iph_2026_20/general/errores_comunes/#/8)
+- [ValueError](https://eerosales24.github.io/iph_2026_20/general/errores_comunes/#/11)
+- [TypeError](https://eerosales24.github.io/iph_2026_20/general/errores_comunes/#/14)
+- [IndentationError](https://eerosales24.github.io/iph_2026_20/general/errores_comunes/#/18)
+- [ZeroDivisionError](https://eerosales24.github.io/iph_2026_20/general/errores_comunes/#/21)
+- [Error lógico](https://eerosales24.github.io/iph_2026_20/general/errores_comunes/#/25)
+- [IndexError](https://eerosales24.github.io/iph_2026_20/general/errores_comunes/#/33)
+- [KeyError](https://eerosales24.github.io/iph_2026_20/general/errores_comunes/#/37)
+- [RecursionError](https://eerosales24.github.io/iph_2026_20/general/errores_comunes/#/42)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Error 
+
+- Problema → Código fuente
+	- Impide → Ejecución exitosa → Programa
+
+<br>
+
+### Excepción
+- Error → Durante ejecución → Programa
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  `SyntaxError` (Error de sintaxis)
+
+- Cuando el código no cumple 
+	- Reglas de sintaxis de Python
+- Detectado durante _parse time_
+	- **Antes de la ejecución**
+
+- Efecto
+	- IPython no puede procesar el código
+
+- Solución: 
+	- Corregir el código para cumplir → Sintaxis de Python
+
+- Ayuda: [SyntaxError](https://docs.python.org/3/library/exceptions.html#SyntaxError)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `SyntaxError` - Ejemplo (1/2)
+
+- Si se ingresa lo siguiente en el intérprete:
+
+```Python
+4 000
+```
+
+
+<div class="callout callout-color7">
+<div class="callout-title">
+<div class="callout-icon">
+
+<i class="fas fa-bolt" ></i>
+
+
+</div>
+<div class="callout-title-inner">
+
+Error
+
+</div>
+</div>
+<div class="callout-content">
+
+En la sintaxis de Python no se coloca espacios en los números
+
+</div>
+</div>
+<!-- .element: style="width: 80%; font-size: 24px; transform: rotate(0deg)" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `SyntaxError` - Ejemplo (2/2)
+
+```Plaintext
+Cell In[1], line 1
+
+    4 000
+
+      ^
+
+SyntaxError: invalid syntax
+```
+
+- Ocurrió un `SyntaxError` dentro de la celda 1, en la línea 1
+- `^` Señala los ceros finales problemáticos después del número 4
+- Usar espacios dentro de un número 
+	- Es una **sintaxis inválida** en Python
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Solucionando un `SyntaxError`
+
+- ¿Cómo se soluciona el siguiente error?
+
+```Python
+4 000  # SyntaxError: invalid syntax
+```
+
+<br>
+
+- No usar espacios dentro de un número:
+
+```Python
+4000
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `NameError`
+
+- Excepción que ocurre cuando
+	- Un identificador no puede resolverse
+- Ayuda: [NameError](https://docs.python.org/3/library/exceptions.html#NameError)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  `NameError` - Ejemplo
+
+```Python
+promedio = promedio +  1
+```
+
+
+
+<div class="callout callout-color7">
+<div class="callout-title">
+<div class="callout-icon">
+
+<i class="fas fa-bolt" ></i>
+
+
+</div>
+<div class="callout-title-inner">
+
+Error
+
+</div>
+</div>
+<div class="callout-content">
+
+La variable `promedio` no fue definida (declarada) antes de su primer uso
+
+</div>
+</div>
+<!-- .element: style="width: 80%; font-size: 24px; transform: rotate(0deg)" -->
+
+<br>
+
+<img src="iph/n1/img/name_error.png" alt="" style="object-fit: scale-down">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Solucionando un `NameErrror`
+
+- ¿Cómo se soluciona el siguiente error?
+
+```Python
+promedio = promedio +  1  # NameError: name 'promedio' is not defined`
+```
+
+<br>
+
+- **Declarar y luego usar**:
+
+```Python
+promedio = 100
+promedio = promedio +  1  
+# promedio será igual a 101
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `ValueError`
+
+- Excepción que ocurre cuando 
+	- Se provee un valor incorrecto
+			
+- Ayuda: [ValueError](https://docs.python.org/3/library/exceptions.html#ValueError)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `ValueError` - Ejemplo
+
+```Python
+int('esto_es_un_string')
+```
+
+
+
+<div class="callout callout-color7">
+<div class="callout-title">
+<div class="callout-icon">
+
+<i class="fas fa-bolt" ></i>
+
+
+</div>
+<div class="callout-title-inner">
+
+Error
+
+</div>
+</div>
+<div class="callout-content">
+
+`int()` espera un número o una cadena con un entero
+
+</div>
+</div>
+<!-- .element: style="width: 80%; font-size: 24px; transform: rotate(0deg)" -->
+
+- Si se provee una cadena alfanumérica que no sea un entero
+	- Se produce un `ValueError`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Solucionando un `ValueError`
+
+- ¿Cómo se soluciona el siguiente error?
+
+```Python
+int('abc12')
+# ValueError: invalid literal for int() with base 10: 'abc12'
+```
+
+<br>
+
+- **Proveer un argumento válido:**
+
+```Python
+int('12')  # → 12
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  `TypeError`
+
+- Excepción que ocurre cuando una operación 
+	- Se aplica sobre un tipo incorrecto de dato
+- Ayuda: [TypeError](https://docs.python.org/3/library/exceptions.html#TypeError)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `TypeError` - Ejemplo
+
+```Python
+'Result: ' + 5
+```
+
+
+<div class="callout callout-color7">
+<div class="callout-title">
+<div class="callout-icon">
+
+<i class="fas fa-bolt" ></i>
+
+
+</div>
+<div class="callout-title-inner">
+
+Error
+
+</div>
+</div>
+<div class="callout-content">
+
+Los operandos de la concatenación deben ser strings
+
+</div>
+</div>
+<!-- .element: style="width: 80%; font-size: 24px; transform: rotate(0deg)" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Solucionando un `TypeError` (1/2)
+
+- ¿Cómo se soluciona el siguiente error?
+
+```Python
+'Result: ' + 5
+# TypeError: can only concatenate str (not "int") to str
+```
+
+<br>
+
+- **Opción 1:** Usar operandos del tipo válido (vía conversión previa):
+
+```Python
+'Result: ' + str(5)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Solucionando un `TypeError` (2/2)
+
+- ¿Cómo se soluciona el siguiente error?
+
+```Python
+'Result: ' + 5
+# TypeError: can only concatenate str (not "int") to str
+```
+
+<br>
+
+- **Opción 2:** Usar directamente operandos del tipo válido:
+
+```Python
+'Result: ' + '5'
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  `IndentationError`
+
+- Excepción → Cuando la indentación del código
+	- No cumple con las reglas sintácticas de Python
+- En Python, la indentación **no es opcional**
+	- Define el inicio y fin de los bloques de código
+- Ayuda: [IndentationError](https://docs.python.org/3/library/exceptions.html#IndentationError)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `IndentationError` - Ejemplo
+
+```Python
+def suma(primer_operando: int, segundo_operando: int) -> int:
+return primer_operando + segundo_operando
+```
+
+
+
+<div class="callout callout-color7">
+<div class="callout-title">
+<div class="callout-icon">
+
+<i class="fas fa-bolt" ></i>
+
+
+</div>
+<div class="callout-title-inner">
+
+Error
+
+</div>
+</div>
+<div class="callout-content">
+
+Se esperaba un bloque de código indentado
+
+</div>
+</div>
+<!-- .element: style="width: 80%; font-size: 24px; transform: rotate(0deg)" -->
+
+- En Python, la indentación **define los bloques de código**
+	- Si una línea no está correctamente indentada
+		- Se produce un `IndentationError`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Solucionando un `IndentationError`
+
+- ¿Cómo se soluciona el siguiente error?
+
+```Python
+def suma(primer_operando: int, segundo_operando: int) -> int:
+return primer_operando + segundo_operando
+# IndentationError: expected an indented block
+```
+
+<br>
+
+- **Indentar correctamente el bloque:**
+
+```Python
+def suma(primer_operando: int, segundo_operando: int) -> int:
+    return primer_operando + segundo_operando
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `ZeroDivisionError`
+
+- Excepción que ocurre cuando
+  - Se intenta realizar una división por cero
+- Ayuda: [ZeroDivisionError](https://docs.python.org/3/library/exceptions.html#ZeroDivisionError)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `ZeroDivisionError` - Ejemplo
+
+
+```Python
+promedio = 100/0
+```
+
+
+<div class="callout callout-color7">
+<div class="callout-title">
+<div class="callout-icon">
+
+<i class="fas fa-bolt" ></i>
+
+
+</div>
+<div class="callout-title-inner">
+
+Error
+
+</div>
+</div>
+<div class="callout-content">
+
+No es posible dividir entre 0
+
+</div>
+</div>
+<!-- .element: style="width: 80%; font-size: 24px; transform: rotate(0deg)" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Solucionando un `ZeroDivisionError` (1/2)
+
+- **Evitar**: 
+	- División por cero
+	- División entera por cero
+	- Módulo de una división por cero
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Solucionando un `ZeroDivisionError` (2/2)
+
+- ¿Cómo se soluciona el siguiente error?
+
+```Python
+promedio = 100/0  # ZeroDivisionError: division by zero
+```
+
+- **Nunca dividir por cero, usar otro valor:**
+
+```Python
+promedio = 100/4  # promedio = 25.0
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Error lógico
+
+- Error dado un razonamiento incorrecto
+
+- El programa produce
+	- Una salida o resultado **inesperado**
+
+- No es un error de sintaxis
+- No es una excepción
+    
+- Se detecta y soluciona 
+	- Analizando la lógica de programación
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Error lógico - Ejemplo (1/5)
+
+- ¿Qué problema hay en el siguiente código?
+
+```python
+def suma(num1: float, num2: float) -> float:
+    """
+    Suma aritméticamente dos números.
+
+    Args:
+        num1 (float): Primer número a sumar.
+        num2 (float): segundo número a sumar.
+
+    Returns:
+        (float): La suma aritmética de num1 y num2.
+    """
+    return num1 + num2
+
+print('El resultado de la suma es: ', suma("1", "2"))
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Error lógico - Ejemplo (2/5)
+
+- La función `suma()` **espera dos números** (enteros o flotantes)
+
+```python[1,6,7]
+def suma(num1: float, num2: float) -> float:
+    """
+    Suma aritméticamente dos números.
+
+    Args:
+        num1 (float): Primer número a sumar.
+        num2 (float): segundo número a sumar.
+
+    Returns:
+        (float): La suma aritmética de num1 y num2.
+    """
+    return num1 + num2
+
+print('El resultado de la suma es: ', suma("1", "2"))
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Error lógico - Ejemplo (3/5)
+
+- La función `suma()` espera dos números (enteros o flotantes)
+	- Sin embargo, por error, **se la invoca con dos strings**
+
+```python[14]
+def suma(num1: float, num2: float) -> float:
+    """
+    Suma aritméticamente dos números.
+
+    Args:
+        num1 (float): Primer número a sumar.
+        num2 (float): segundo número a sumar.
+
+    Returns:
+        (float): La suma aritmética de num1 y num2.
+    """
+    return num1 + num2
+
+print('El resultado de la suma es: ', suma("1", "2"))
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Error lógico - Ejemplo (4/5)
+
+- La función `suma()` espera dos números (enteros o flotantes)
+	- Sin embargo, por error, se la invoca con dos strings
+	- **La salida inesperada será:**
+		- `El resultado de la suma es:  12`
+		
+```python[14]
+def suma(num1: float, num2: float) -> float:
+    """
+    Suma aritméticamente dos números.
+
+    Args:
+        num1 (float): Primer número a sumar.
+        num2 (float): segundo número a sumar.
+
+    Returns:
+        (float): La suma aritmética de num1 y num2.
+    """
+    return num1 + num2
+
+print('El resultado de la suma es: ', suma("1", "2"))
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Error lógico - Ejemplo (5/5)
+
+- No hay errores de sintaxis
+- No hay excepciones
+
+	<br>
+
+- Hay un **error lógico**:
+	- En lugar de invocar a `suma()` 
+		- Con dos números (enteros o flotantes)
+			- Para obtener una suma aritmética
+	
+	- Se produce una concatenación de strings
+		- Porque se invocó  a `suma()` con  dos strings
+
+```python
+def suma(num1: float, num2: float) -> float:
+    """
+    Suma aritméticamente dos números.
+
+    Args:
+        num1 (float): Primer número a sumar.
+        num2 (float): segundo número a sumar.
+
+    Returns:
+        (float): La suma aritmética de num1 y num2.
+    """
+    return num1 + num2
+
+print('El resultado de la suma es: ', suma("1", "2"))
+
+# → El resultado de la suma es:  12
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Solucionando un error lógico (1/2)
+
+- Revisar la lógica de programación
+	- Dados los **datos de entrada**
+		- ¿Estoy obteniendo el **resultado esperado**?
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Solucionando un error lógico (2/2)
+
+- El error lógico en el ejemplo se soluciona
+	- Al invocar la función `suma()`
+		- Como lo indica su docstring:
+			- Con **dos números**
+
+```python
+def suma(num1: float, num2: float) -> float:
+    """
+    Suma aritméticamente dos números.
+
+    Args:
+        num1 (float): Primer número a sumar.
+        num2 (float): segundo número a sumar.
+
+    Returns:
+        (float): La suma aritmética de num1 y num2.
+    """
+    return num1 + num2
+
+print('El resultado de la suma es: ', suma(1, 2))
+
+# → El resultado de la suma es:  3
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `IndexError`
+
+- Excepción que ocurre cuando:
+    - Se intenta acceder a un índice fuera del rango 
+	    - De un string, lista o tupla
+- Ayuda: [IndexError](https://docs.python.org/3/library/exceptions.html#IndexError)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `IndexError` - Ejemplo
+
+```python
+lista = [1, 2, 3]
+valor = lista[5]  # Índice fuera de rango
+# IndexError: list index out of range
+```
+
+<div class="callout callout-color7">
+<div class="callout-title">
+<div class="callout-icon">
+
+<i class="fas fa-bolt" ></i>
+
+
+</div>
+<div class="callout-title-inner">
+
+Error
+
+</div>
+</div>
+<div class="callout-content">
+
+Índice fuera del rango de la lista
+
+</div>
+</div>
+<!-- .element: style="width: 80%; font-size: 24px; transform: rotate(0deg)" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Solucionando un `IndexError` (1/2)
+
+- **Evitar**:
+    - Acceder a un índice 
+	    - Mayor o menor al rango válido
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Solucionando un `IndexError` (2/2)
+
+- ¿Cómo se soluciona el siguiente error?
+
+```python
+lista = [1, 2, 3]
+valor = lista[5]  # IndexError: list index out of range
+```
+
+- *Ejemplo* de verificar el rango antes de acceder al índice:
+
+```python
+valor = lista[5] if len(lista) > 5 else None
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `KeyError`
+
+- Excepción que ocurre cuando:
+    - Se intenta acceder a una llave inexistente en un diccionario
+
+- Ayuda: [KeyError](https://docs.python.org/3/library/exceptions.html#KeyError)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `KeyError` - Ejemplo
+
+```python
+precios = {'Pan': 2200, 'Leche': 15000, 
+           'Arepa': 21000, 'Cafe': 17000}
+
+print(precios['arepa'])  # Error: la llave no coincide
+```
+
+<div class="callout callout-color7">
+<div class="callout-title">
+<div class="callout-icon">
+
+<i class="fas fa-bolt" ></i>
+
+
+</div>
+<div class="callout-title-inner">
+
+Error
+
+</div>
+</div>
+<div class="callout-content">
+
+La llave 'arepa' no está en el diccionario
+
+</div>
+</div>
+<!-- .element: style="width: 80%; font-size: 24px; transform: rotate(0deg)" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Solucionando un `KeyError` (1/3)
+
+- Asegurar que la llave existe antes de acceder
+- Usar métodos seguros como `.get()` para obtener valores por defecto
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Solucionando un `KeyError` (2/3)
+
+- ¿Cómo se soluciona el siguiente error?
+
+```python
+precios = {'Pan': 2200, 'Leche': 15000, 
+           'Arepa': 21000, 'Cafe': 17000}
+
+print(precios['arepa'])  # KeyError: 'arepa'
+```
+
+- **Opción 1**: Usar una llave existente
+
+```python
+print(precios['Arepa'])  # → 21000
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Solucionando un `KeyError` (3/3)
+
+- ¿Cómo se soluciona el siguiente error?
+
+```python
+precios = {'Pan': 2200, 'Leche': 15000, 
+           'Arepa': 21000, 'Cafe': 17000}
+
+print(precios['arepa'])  # KeyError: 'arepa'
+```
+
+
+- **Opción 2**: Usar `.get()` con un valor por defecto
+
+```python
+print(precios.get('arepa', 'No disponible'))  # → 'No disponible'
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `RecursionError`
+
+- Excepción que ocurre cuando:
+    - Una función se llama a sí misma demasiadas veces
+        
+- Causa:
+    - Recursión sin caso base
+	    - Solo hay caso recursivo
+    - Función mal diseñada
+	    - La ejecución no alcanza el caso base
+        
+- Python limita la profundidad recursiva (~1000 llamadas)
+    
+- Ayuda: [RecursionError](https://docs.python.org/3/library/exceptions.html#RecursionError)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `RecursionError` - Ejemplo
+
+```python
+def infinito():
+    return infinito()
+
+infinito()  # Llamada infinita
+```
+
+
+<div class="callout callout-color7">
+<div class="callout-title">
+<div class="callout-icon">
+
+<i class="fas fa-bolt" ></i>
+
+
+</div>
+<div class="callout-title-inner">
+
+Error
+
+</div>
+</div>
+<div class="callout-content">
+
+RecursionError: maximum recursion depth exceeded
+
+</div>
+</div>
+<!-- .element: style="width: 80%; font-size: 24px; transform: rotate(0deg)" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Solucionando un `RecursionError` (1/2)
+
+- Asegurar que la función:
+
+    1. Tenga **un caso base**
+        
+    2. **Avance hacia el o los casos bases**
+	    - En cada recursión
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Solucionando un `RecursionError` (2/2)
+
+- ¿Cómo se soluciona el siguiente error?
+
+```python
+def fibonacci(n: int) -> int:
+    # No hay caso base:
+    return fibonacci(n - 1) + fibonacci(n - 2)  # → 'RecursionError'
+
+fibonacci(12)  
+```
+
+- ✅ Añadir caso base:
+
+```python
+def fibonacci(n: int) -> int:
+    return n if n <= 1 else fibonacci(n - 1) + fibonacci(n - 2)
+
+fibonacci(12)  # → 144
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+[<i class="fas fa-home  fa-3x"></i>](https://eerosales24.github.io/iph_2026_20/#)
+</div></script></section></div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/chart/chart.min.js"></script>
+	<script src="plugin/chart/plugin.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+	  function isLight(color) {
+		let hex = color.replace('#', '');
+
+		// convert #fff => #ffffff
+		if(hex.length == 3){
+			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+		}
+
+		const c_r = parseInt(hex.substr(0, 2), 16);
+		const c_g = parseInt(hex.substr(2, 2), 16);
+		const c_b = parseInt(hex.substr(4, 2), 16);
+		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+		return brightness > 155;
+	}
+
+	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+	var isLight = isLight(bgColor);
+
+	if(isLight){
+		document.body.classList.add('has-light-background');
+	} else {
+		document.body.classList.add('has-dark-background');
+	}
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+        ],
+
+
+    	allottedTime: 120 * 1000,
+
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
+
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
+
+		customcontrols: {
+			controls: [
+			]
+		},
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width":960,"height":700,"margin":"0.025","minScale":"0.1","maxScale":"2.0","controls":"true","controlsLayout":"bottom-right","progress":"true","slideNumber":"true","center":"false","transition":"slide","transitionSpeed":"default"}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+
+  <!-- created with Advanced Slides -->
+</html>
