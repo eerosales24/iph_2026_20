@@ -1,0 +1,3007 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title></title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/iph.css" id="theme" />
+    <link rel="stylesheet" href="plugin/highlight/spyder.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
+
+
+
+    <script defer src="dist/fontawesome/all.min.js"></script>
+
+	<script type="text/javascript">
+		var forgetPop = true;
+		function onPopState(event) {
+			if(forgetPop){
+				forgetPop = false;
+			} else {
+				parent.postMessage(event.target.location.href, "app://obsidian.md");
+			}
+        }
+		window.onpopstate = onPopState;
+		window.onmessage = event => {
+			if(event.data == "reload"){
+				window.document.location.reload();
+			}
+			forgetPop = true;
+		}
+
+		function fitElements(){
+			const itemsToFit = document.getElementsByClassName('fitText');
+			for (const item in itemsToFit) {
+				if (Object.hasOwnProperty.call(itemsToFit, item)) {
+					var element = itemsToFit[item];
+					fitElement(element,1, 1000);
+					element.classList.remove('fitText');
+				}
+			}
+		}
+
+		function fitElement(element, start, end){
+
+			let size = (end + start) / 2;
+			element.style.fontSize = `${size}px`;
+
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
+					size--;
+					element.style.fontSize = `${size}px`;
+				}
+				return;
+			}
+
+			if(element.scrollHeight > element.offsetHeight){
+				fitElement(element, start, size);
+			} else {
+				fitElement(element, size, end);
+			}		
+		}
+
+
+		document.onreadystatechange = () => {
+			fitElements();
+			if (document.readyState === 'complete') {
+				if (window.location.href.indexOf("?export") != -1){
+					parent.postMessage(event.target.location.href, "app://obsidian.md");
+				}
+				if (window.location.href.indexOf("print-pdf") != -1){
+					let stateCheck = setInterval(() => {
+						clearInterval(stateCheck);
+						window.print();
+					}, 250);
+				}
+			}
+	};
+
+
+        </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### <i class="fas fa-award"></i> IP Honores
+
+ ####  *Laboratorio 1 de Nivel 1 - N1-L1*
+ 
+
+[Eduardo Rosales](mailto:ee.rosales24@uniandes.edu.co)
+
+Departamento de Ingeniería de Sistemas y Computación
+
+Universidad de los Andes
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Siga paso a paso las siguientes instrucciones
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Trabajo individual
+
+- Este laboratorio es
+	- **Completamente individual**<!-- .element: class="fragment highlight-blue" -->
+
+	<br>
+
+- El tiempo para terminar el laboratorio es muy corto
+	- Por favor:
+		- Evite las distracciones
+		- Guarde **silencio**<!-- .element: class="fragment highlight-blue" -->
+
+	<br>
+
+- Si no termina el laboratorio
+	- Debe finalizarlo (**y comprenderlo**) 
+		- En las 5h
+			- De trabajo individual semanal
+
+	<br>
+
+- Próximo jueves:
+	- Primer **quiz** del curso <!-- .element: class="fragment highlight-red" -->
+		- Incluirá  temas de este laboratorio
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Preguntas
+
+- En caso de dudas, por favor:
+
+<br> 
+
+1. Formule su pregunta de forma **muy clara y concisa**
+
+<br>
+
+2. Luego (**y solo luego de esto**)
+	- Levante la mano
+
+<br>
+
+<i class="fas fa-question-circle fa-1x fa-spin fa-1x"></i> _Al plantearse correctamente la pregunta, la respuesta a veces se revela sola_
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Equipo
+
+- Seleccione una opción:
+	<br> 
+	
+	1. [Usaré un equipo del laboratorio](https://eerosales24.github.io/iph_2026_20/n1/n1_l1/#/8)
+
+	<br>
+
+	2. [Usaré mi propio equipo](https://eerosales24.github.io/iph_2026_20/n1/n1_l1/#/5)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Equipo propio
+
+- Seleccione una opción:
+	<br> 
+	
+	1. [Ya tengo el software **Anaconda** instalado](https://eerosales24.github.io/iph_2026_20/n1/n1_l1/#/8)
+
+	<br>
+
+	2. [No tengo ese software instalado](https://eerosales24.github.io/iph_2026_20/n1/n1_l1/#/6)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Equipo propio - Instalación de Anaconda (1/2)
+
+- Descargue el instalador de Anaconda:
+
+	<br>
+
+	1.  Windows:
+		- [64-Bit Graphical Installer](http://repo.anaconda.com/archive/Anaconda3-2026.07-1-Windows-x86_64.exe)
+	2.  Mac (IOS):
+		- Procesador _Silicon_:
+			- [64-Bit (Apple silicon) Graphical Installer](https://repo.anaconda.com/archive/Anaconda3-2026.07-1-MacOSX-arm64.pkg)
+	3.  Otros y Linux:
+		- https://www.anaconda.com/download/success
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Equipo propio - Instalación de Anaconda (2/2)
+
+<img src="iph/n1/img/anaconda_2.png" alt="" style="width: 70%; height: 50%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Abrir Spyder (1/2)
+
+- Busque en sus **Programas** a Spyder y abra esta aplicación:
+
+<img src="iph/n1/img/spyder_1.png" alt="" style="width: 50%; height: 50%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Abrir Spyder (2/2)
+
+- Si no encuentra a Spyder en sus *Programas*:
+	- Busque y abra la aplicación **Anaconda**
+		- Luego, abra **Spyder**
+
+<img src="iph/n1/img/spyder_3.png" alt="" style="object-fit: scale-down">
+
+<!-- .element: style="width: 80%; height: 50%" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<img src="iph/n1/img/spyder.png" alt="" style="width: 25%; height: 15%; object-fit: fill">
+
+
+- [Spyder](https://www.spyder-ide.org/)
+  - Ambiente de Desarrollo Integrado 
+	- Integrated Development Environment - **IDE**
+
+
+<br>
+
+- Único IDE usado en
+	- IP e IP Honores
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Spyder - Interfaz 
+
+- Así se ve la interfaz principal de Spyder:
+
+<img src="iph/n1/img/spyder_gui.png" alt="" style="width: 43%; height: 45%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Editor de Spyder
+
+- Espacio para escribir programas
+
+<br>
+
+		
+<img src="iph/n1/img/editor.png" alt="" style="object-fit: scale-down">
+
+<!-- .element: style="width: 25%; height: 45%" -->
+
+<br>
+
+- Lo aprenderemos a usar más adelante...
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Terminal de Spyder (1/2)
+
+
+- Así se ve la Terminal de Spyder:
+
+	<br>
+	
+<img src="iph/n1/img/terminal.png" alt="" style="object-fit: scale-down">
+
+<!-- .element: style="width: 45%; height: 65%" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Terminal de Spyder (2/2)
+
+- Da acceso al **Intérprete de Python - IPython**
+	- _Interpreta_ y _ejecuta_ código Python
+		- Línea a línea
+
+<br>
+
+
+<img src="iph/n1/img/terminal.png" alt="" style="object-fit: scale-down">
+
+<!-- .element: style="width: 15%; height: 30%" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Aprendamos primero a usar la Terminal de Spyder
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Terminal de Spyder - Ejemplo (1/4)
+
+- Aquí un ejemplo de uso de IPython
+	- En → Terminal de Spyder
+
+<img src="iph/n1/img/ejemplo_terminal.png" alt="" style="object-fit: scale-down">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Terminal de Spyder (2/4)
+
+<img src="iph/n1/img/instruccion.png" alt="" style="object-fit: scale-down">
+
+
+
+- `2 + 2`
+	-  Es una **instrucción**
+- `[1]`:
+	- Cada línea es una celda
+		- Aquí, la celda 1
+- `In`:
+	- Se **ingresa** una instrucción
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Terminal de Spyder - Ejemplo (3/4)
+
+<img src="iph/n1/img/salida.png" alt="" style="object-fit: scale-down">
+
+
+- `4`:
+	-  Es un **resultado** (salida)
+- `Out`:
+	-  El resultado o salida de ejecución
+		-  De una instrucción
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Terminal de Spyder - Ejemplo (4/4)
+
+<img src="iph/n1/img/ejemplo_terminal_1.png" alt="" style="object-fit: scale-down">
+
+
+- En resumen:
+	- IPython interpreta y ejecuta la instrucción ingresada:
+		- **`2 + 2`**
+	-  Y muestra el resultado:
+		- **`4`**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Comentario (1/4)
+
+
+
+<img src="iph/n1/img/ejemplo_terminal_2.png" alt="" style="object-fit: scale-down">
+
+
+
+- ¿Qué es esto?
+	- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->Un **comentario**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Comentario (2/4)
+
+-  Texto que IPython
+	- **Ignora completamente**
+		- Se inicia con un numeral: 
+			- **`#`**
+
+<br>
+
+
+<img src="iph/n1/img/ejemplo_terminal_2.png" alt="" style="object-fit: scale-down">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Comentario (3/4)
+
+
+- Nota legible solo → Humanos
+- Utilizado principalmente para
+	- Explicar el código **a otros humanos**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Comentario (4/4)
+
+
+```Python
+2 + 2  # → 4
+```
+
+<br>
+
+- En IP Honores, por convención
+	- En las presentaciones
+		- Las salidas o resultados 
+			- Se muestran usando comentarios
+			- Ej:  **`# → 4`**
+				- Indica el resultado de **`2 + 2`**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Convenciones sobre comentarios (1/4)
+
+Según la convención [PEP 8 Style](https://peps.python.org/pep-0008/#comments)
+
+- Comentarios de una sola línea:
+	- Comienzan con `#` seguido de texto
+	- Pueden contener caracteres especiales
+	- Ej:
+```Python
+# Comentario de una sola línea
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Convenciones sobre comentarios (2/4)
+
+- Comentarios de una sola línea:
+	- Cuando están al frente de código
+		- Se colocan a **dos espacios** del código
+	- Ej:
+
+```Python
+3.1416  # Valor de PI
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Convenciones sobre comentarios (3/4))
+
+- Comentarios en bloque:
+	- Agrupación de múltiples comentarios
+	- Cada uno empezando con `#`
+		- Se puede usar indentación
+
+- Ej:
+
+```Python
+   # Primera línea de un comentario en bloque
+   # Segunda línea
+   #     Tercera línea
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Convenciones sobre comentarios (4/4)
+
+- Moderación: 
+	- Evite el exceso de comentarios
+		- Deteriora la legibilidad
+- Claridad: 
+	- Comente segmentos significativos/complejos de código
+		- ❌ Explicar el código línea a línea
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#  Actividad I
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Tipos de operadores
+
+- Operadores **unarios**:
+	- Actúan sobre **un** operando
+	-   Ej: Operador de cambio de signo: `-`
+		
+	```Python
+	-1  # → -1
+	```
+
+<br>
+
+- Operadores **binarios**:
+	- Actúan sobre **dos** operandos
+	-   Ej: Operador de sustracción:  `-`
+		
+	```Python
+	4 - 2  # → 2
+	```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Operadores Unarios
+
+<table border="1" style="border-collapse: collapse; width: 100%; text-align: center;font-size: 20px;">
+  <thead style="background-color: #d0e6f8;">
+    <tr>
+      <th style="color: black;">Operador</th>
+      <th style="color: black;">Descripción</th>
+      <th style="color: black;">Ejemplo</th>
+      <th style="color: black;">Resultado</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>−</td>
+      <td style="text-align: left;">Cambio de signo:<br>Invierte el signo</td>
+      <td>−2</td>
+      <td>−2</td>
+    </tr>
+    <tr>
+      <td>+</td>
+      <td style="text-align: left;">Identidad:<br>No tiene efecto<br>(solo hace explícito el signo positivo)</td>
+      <td>+5</td>
+      <td>5</td>
+    </tr>
+  </tbody>
+</table>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Estudiemos ejemplos de operadores binarios
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Operadores Aritméticos
+<table border="1" style="border-collapse: collapse; width: 100%; text-align: center;font-size: 20px;">
+  <thead style="background-color: #d0e6f8;">
+    <tr>
+      <th style="color: black;">Operador</th>
+      <th style="color: black;">Descripción</th>
+      <th style="color: black;">Ejemplo</th>
+      <th style="color: black;">Resultado</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>+</td>
+      <td>Suma</td>
+      <td>5 + 5</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <td>−</td>
+      <td>Resta</td>
+      <td>10 - 2</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <td>*</td>
+      <td>Multiplicación</td>
+      <td>7 * 3</td>
+      <td>21</td>
+    </tr>
+    <tr>
+      <td>/</td>
+      <td>División</td>
+      <td>9 / 2</td>
+      <td>4.5</td>
+    </tr>
+    <tr>
+      <td>//</td>
+      <td>División (entera)</td>
+      <td>9 // 2</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>%</td>
+      <td>Módulo  (o resto)</td>
+      <td>4 % 2</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>**</td>
+      <td>Exponenciación</td>
+      <td>2 ** 4</td>
+      <td>16</td>
+    </tr>
+  </tbody>
+</table>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### ¿Qué prioridad de ejecución tienen los operadores en Python?
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Prioridad de operadores
+
+- Define el orden de evaluación de los operadores 
+	- Los operadores de mayor prioridad 
+		- Se evalúan primero 
+
+<table border="1" style="border-collapse: collapse; width: 100%; text-align: center; font-size: 20px;">
+  <thead style="background-color: #d0e6f8;">
+    <tr>
+      <th style="color: black;">Prioridad</th>
+      <th style="color: black;">Operador</th>
+      <th style="color: black;">Tipo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td><code>**</code></td>
+      <td>Binario</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td><code>+, −</code></td>
+      <td>Unario</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td><code>*, /, //, %</code></td>
+      <td>Binario</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td><code>+, -</code></td>
+      <td>Binario</td>
+    </tr>
+  </tbody>
+</table>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### ¿En qué orden se ejecutan operadores de igual prioridad en Python?
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Asociatividad
+
+- Define la dirección de evaluación de operadores de igual precedencia
+	- La mayoría de los operadores 
+		- Tienen asociatividad de _izquierda a derecha_
+			- Excepto la exponenciación
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Asociatividad por el lado izquierdo (1/2)
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+9 % 6 % 2
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Asociatividad por el lado izquierdo (2/2)
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+9 % 6 % 2
+```
+
+<br>
+
+- De **izquierda a derecha**:
+
+```Python
+9 % 6 = 3
+3 % 2 = 1
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Un ejemplo incorrecto
+
+
+- ¿Cuál es el resultado de ejecutar el siguiente código, si se asume asociatividad de _derecha a izquierda_?
+
+```Python
+9 % 6 % 2
+```
+
+- De  _derecha a izquierda_ (**INCORRECTO**):
+
+```Python
+6 % 2 = 0
+
+9 % 0  # → ZeroDivisionError
+```
+
+- Revise:
+
+	- <a href="https://eerosales24.github.io/iph_2026_20/general/errores_comunes/#/21" target="_blank" rel="noopener noreferrer">ZeroDivisionError</a>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### La exponenciación es la única con asociatividad de derecha a izquierda
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Asociatividad por el lado derecho (1/2)
+
+- Ejemplo de asociatividad por el lado derecho
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+2 ** 2 ** 3
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Asociatividad por el lado derecho (2/2)
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+2 ** 2 ** 3
+```
+
+<br>
+
+- De **derecha a izquierda**:
+	
+```Python
+2 ** 3 = 8
+2 ** 8 = 256
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### ¿Se puede alterar el orden de ejecución de los operadores en Python?
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Paréntesis
+
+- Pueden alterar la prioridad predeterminada
+	- Operaciones entre paréntesis 
+		- Se calculan primero
+- Mejor legibilidad del código
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Paréntesis - Ejemplos
+
+<br>
+
+-   **Sin** paréntesis:
+
+```Python
+5 + 3 * 2 ** 2  # → 17 
+# Orden: Exponenciación, multiplicación, adición
+```
+
+<br>
+
+-   Con paréntesis para **aclarar el orden**:
+
+```Python
+5 + (3 * (2 ** 2))  # → 17
+# Mejor legibilidad
+````
+
+<br>
+
+-   Con paréntesis para **alterar el orden**:
+
+```Python
+(5 + 3) * 2 ** 2  # → 32 
+# Orden alterado: Adición evaluada primero
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Expresión
+
+- Sintaxis evaluable que produce un valor
+-   Se compone de:
+	- Un elemento único
+	- Ó una combinación de 
+		- Valores
+		- Operadores, etc.
+-   Ej:
+
+```Python
+2  # → 2 (un valor)
+
+100 - 30 / (7 - 6)  # → 70.0 (valores y operadores)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Prioridad de operadores (actualizada)
+
+<table border="1" style="border-collapse: collapse; width: 100%; text-align: center; font-size: 20px;">
+  <thead style="background-color: #d0e6f8;">
+    <tr>
+      <th style="color: black;">Prioridad</th>
+      <th style="color: black;">Operador</th>
+      <th style="color: black;">Tipo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td></td>
+      <td><code><strong>(expresión)</strong></code></td>
+      <td><strong>Expresión entre paréntesis</strong></td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td><code>**</code></td>
+      <td>Binario</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td><code>+, −</code></td>
+      <td>Unario</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td><code>*, /, //, %</code></td>
+      <td>Binario</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td><code>+, -</code></td>
+      <td>Binario</td>
+    </tr>
+  </tbody>
+</table>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta I
+
+- ¿Cuál es el resultado de ejecutar la siguiente expresión?
+```Python
+1 + 2 * 3 ** 2
+```
+
+<br>
+
+<table border="1" style="border-collapse: collapse; width: 50%; text-align: center; font-size: 15px;">
+  <thead style="background-color: #d0e6f8;">
+    <tr>
+      <th style="color: black;">Prioridad</th>
+      <th style="color: black;">Operador</th>
+      <th style="color: black;">Tipo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td></td>
+      <td><code>(expresión)</code></td>
+      <td>Expresión entre paréntesis</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td><code>**</code></td>
+      <td>Binario</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td><code>+, −</code></td>
+      <td>Unario</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td><code>*, /, //, %</code></td>
+      <td>Binario</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td><code>+, -</code></td>
+      <td>Binario</td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+- **Respuesta**:
+	- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->`19`
+		- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->Equivalente a: `1 + (2 * (3 ** 2))`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta II
+
+- ¿Cuál es el resultado de ejecutar la siguiente expresión?
+```Python
+2 * 1 + 3 ** 3 ** 1
+```
+
+<br>
+
+<table border="1" style="border-collapse: collapse; width: 50%; text-align: center; font-size: 15px;">
+  <thead style="background-color: #d0e6f8;">
+    <tr>
+      <th style="color: black;">Prioridad</th>
+      <th style="color: black;">Operador</th>
+      <th style="color: black;">Tipo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td></td>
+      <td><code>(expresión)</code></td>
+      <td>Expresión entre paréntesis</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td><code>** <br> <strong>(asociatividad por derecha)</strong> </code></td>
+      <td>Binario</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td><code>+, −</code></td>
+      <td>Unario</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td><code>*, /, //, %</code></td>
+      <td>Binario</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td><code>+, -</code></td>
+      <td>Binario</td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+- **Respuesta**:
+	- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->`29`
+		- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->Equivalente a: `(2 * 1) + (3 ** (3 ** 1))`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad I (1/5)
+
+- Usando la terminal de Spyder
+	- Compruebe los resultados de la siguiente tabla:
+<table border="1" style="border-collapse: collapse; width: 100%; text-align: center;font-size: 20px;">
+  <thead style="background-color: #d0e6f8;">
+    <tr>
+      <th style="color: black;">Operador</th>
+      <th style="color: black;">Descripción</th>
+      <th style="color: black;">Instrucción de ejemplo </th>
+      <th style="color: black;">Resultado esperado</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>+</td>
+      <td>Suma</td>
+      <td><strong>5 + 5</strong></td>
+      <td><strong>10</strong></td>
+    </tr>
+    <tr>
+      <td>−</td>
+      <td>Resta</td>
+      <td><strong>10 - 2</strong></td>
+      <td><strong>8</strong></td>
+    </tr>
+    <tr>
+      <td>*</td>
+      <td>Multiplicación</td>
+      <td><strong>7 * 3</strong></td>
+      <td><strong>21</strong></td>
+    </tr>
+    <tr>
+      <td>/</td>
+      <td>División</td>
+      <td><strong>9 / 2</strong></td>
+      <td><strong>4.5</strong></td>
+    </tr>
+    <tr>
+      <td>//</td>
+      <td>División (entera)</td>
+      <td><strong>9 // 2</strong></td>
+      <td><strong>4</strong></td>
+    </tr>
+    <tr>
+      <td>%</td>
+      <td>Módulo  (o resto)</td>
+      <td><strong>4 % 2</strong></td>
+      <td><strong>0</strong></td>
+    </tr>
+    <tr>
+      <td>**</td>
+      <td>Exponenciación</td>
+      <td><strong>2 ** 4</strong></td>
+      <td><strong>16</strong></td>
+    </tr>
+  </tbody>
+</table>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad I (2/5)
+
+
+- Intente responder a la siguiente pregunta:
+
+<br>
+
+- ¿Por qué la operación  `9 // 2`  tiene como resultado: `4`?
+	- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->A continuación se provee una explicación
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### División entera con positivos
+
+- **Resultado**
+	- Redondeado hacia abajo
+		- Hacia el menor entero
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### División vs División entera con positivos
+
+-  División:
+
+```python
+5 / 2  # → 2.5
+```
+
+<br>
+
+- División entera:
+	- Redondeado hacia abajo
+		- Hacia el menor entero
+
+```python
+5 // 2  # → 2
+```
+
+<br>
+
+- **Recordatorio:**
+	- En presentaciones del curso se usa la notación: ``# →``
+		- Para indicar una salida o resultado
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### División entera con positivos - Ejemplos
+
+
+```Python
+1 // 3  # → 0
+
+6 // 2  # → 3
+
+5 // 2  # → 2
+
+9 // 2  # → 4
+```
+
+
+- Recuerde:
+	-  Redondeo **hacia abajo**
+		- Hacia el **menor entero**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad I (3/5)
+
+
+- Intente responder a la siguiente pregunta:
+
+<br>
+
+- ¿Por qué la operación  `-5 // 2`  tendría como resultado: `-3`?
+	- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->A continuación se provee una explicación
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### División entera con negativos
+
+- **Resultado**
+	- Redondeado hacia abajo
+		- Hacia el **menor entero**
+			- Hacia el _infinito negativo_
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### División vs División entera con negativos
+
+- División:
+
+```python
+-5 / 2  # → -2.5
+```
+
+- División entera:
+	- Hacia el **menor entero**
+		- Hacia el _infinito negativo_
+
+```python
+-5 // 2  # → -3
+```
+
+- **Recordatorio:**
+	- En presentaciones del curso se usa la notación: ``# →``
+		- Para indicar una salida o resultado
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### División entera con negativos - Ejemplos
+
+```python
+-1 // 3   # → -1
+
+-6 // 2   # → -3
+
+-5 // 2   # → -3
+
+-9 // 2   # → -5
+
+5 // -2   # → -3
+
+-5 // -2  # → 2
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad I (4/5)
+
+
+- Intente responder a la siguiente pregunta:
+
+<br>
+
+- ¿Por qué la operación  `4 % 2`  tiene como resultado: `0`?
+	- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->A continuación se provee una explicación
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Módulo
+
+-  *Resto* o *residuo* de una división
+	- Útil para determinar si un número 
+		- Es divisible por otro
+<br>
+
+- Ej:
+
+	- `12 % 4 == 0`
+		- ✅  12 es divisible por 4
+	- `13 % 4 == 1`
+		- ❌  13 no es divisible por 4
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta I
+
+- ¿Cuál sería el resultado de cada operación?
+
+```Python
+24 % 2
+
+1024 % 2
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta I - Solución
+
+- ¿Cuál sería el resultado de cada operación?
+
+```Python
+24 % 2
+
+1024 % 2
+```
+
+<br>
+
+-  Solución:
+
+```python
+24 % 2  # → 0
+
+1024 % 2  # → 0
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta II
+
+- ¿Cuál sería el resultado de cada operación?
+
+```Python
+2 % 24 
+
+2 % 1024
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta II - Solución
+
+- ¿Cuál sería el resultado de cada operación?
+
+```Python
+2 % 24 
+
+2 % 1024
+```
+
+<br>
+
+-  Solución:
+
+```python
+2 % 24  # → 2
+
+2 % 1024  # → 2
+```
+
+<br>
+
+- **Explicación:**
+	 - Si el dividendo es menor que el divisor
+		- El resultado del módulo es **siempre el dividendo**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Hay asignaciones que incluyen una operación
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Asignaciones con operador (1/2)
+
+<table border="1" style="border-collapse: collapse; width: 90%; text-align: center; font-size: 20px; padding: 8px;">
+  <thead style="background-color: #d0e6f8;">
+    <tr>
+      <th style="color: black; padding: 4px;">Operador</th>
+      <th style="color: black; padding: 4px;">Descripción</th>
+      <th style="color: black; padding: 4px;">Ejemplo</th>
+      <th style="color: black; padding: 4px;">Equivalente</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="padding: 4px;"><code>+=</code></td>
+      <td style="padding: 4px;">Suma y asignación</td>
+      <td style="padding: 4px;"><code>x += 5</code></td>
+      <td style="padding: 4px;"><code>x = x + 5</code></td>
+    </tr>
+    <tr>
+      <td style="padding: 4px;"><code>-=</code></td>
+      <td style="padding: 4px;">Resta y asignación</td>
+      <td style="padding: 4px;"><code>x -= 5</code></td>
+      <td style="padding: 4px;"><code>x = x - 5</code></td>
+    </tr>
+    <tr>
+      <td style="padding: 4px;"><code>*=</code></td>
+      <td style="padding: 4px;">Multiplicación y asignación</td>
+      <td style="padding: 4px;"><code>x *= 5</code></td>
+      <td style="padding: 4px;"><code>x = x * 5</code></td>
+    </tr>
+    <tr>
+      <td style="padding: 4px;"><code>/=</code></td>
+      <td style="padding: 4px;">División y asignación</td>
+      <td style="padding: 4px;"><code>x /= 5</code></td>
+      <td style="padding: 4px;"><code>x = x / 5</code></td>
+    </tr>
+    <tr>
+      <td style="padding: 4px;"><code>//=</code></td>
+      <td style="padding: 4px;">División entera y asignación</td>
+      <td style="padding: 4px;"><code>x //= 5</code></td>
+      <td style="padding: 4px;"><code>x = x // 5</code></td>
+    </tr>
+    <tr>
+      <td style="padding: 4px;"><code>%=</code></td>
+      <td style="padding: 4px;">Módulo y asignación</td>
+      <td style="padding: 4px;"><code>x %= 5</code></td>
+      <td style="padding: 4px;"><code>x = x % 5</code></td>
+    </tr>
+    <tr>
+      <td style="padding: 4px;"><code>**=</code></td>
+      <td style="padding: 4px;">Exponenciación y asignación</td>
+      <td style="padding: 4px;"><code>x **= 5</code></td>
+      <td style="padding: 4px;"><code>x = x ** 5</code></td>
+    </tr>
+  </tbody>
+</table>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Asignaciones con operador (2/2)
+
+-   Combinación de operador y  asignación:
+	-     +=, -=, *=, /=, %=, //=, **=
+-   Ej:
+
+```Python
+# Asuma ejecución secuencial de cada línea
+x = 1
+x += 1  # → 2 (Equivalente a: x = x + 1)
+x -= 1  # → 1 (Equivalente a: x = x - 1)
+x *= 1  # → 1 (Equivalente a: x = x * 1)
+x /= 1  # → 1.0 (Equivalente a: x = x / 1)
+x //= 1  # → 1.0 (Equivalente a: x = x // 1)
+x **= 1  # → 1.0 (Equivalente a: x = x ** 1)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad I (5/5)
+
+- Usando la terminal de Spyder
+	- Compruebe los siguiente resultados:
+
+```python
+y = 2  # y = 2
+
+y += 2  # y = 4 (Equivalente a: y = y + 2)
+
+y *= 2  # y = 8 (Equivalente a: y = y * 2)
+
+y -= 3  # y = 5 (Equivalente a: y = y - 3)
+
+y //= 2  # y = 2 (Equivalente a: y = y // 2)
+
+resultado = y + 2  # resultado =  2 + 2 = 4
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Fin de la Actividad I
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#  Actividad II
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Función - Introducción Preliminar (1/7)
+
+
+<img src="iph/n1/img/funcion.png" alt="" style="width: 65%; height: 40%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Función - Introducción preliminar (2/7)
+ 
+- Código **reutilizable**
+	- Diseñado para → **Tarea específica**
+	
+	<br>
+
+- Puede tomar → Datos de entrada
+- Produce un resultado o efecto
+
+<br>
+
+- 🌀 El concepto de _función_ se profundizará más después en el curso... 🌀
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Función - Introducción preliminar (3/7)
+
+- Python tiene funciones _integradas_
+	- Ya listas para invocarse y usarse
+		- Ej:
+			- ``print()``
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Función - Introducción preliminar (4/7)
+
+- En el siguiente ejemplo:
+```python
+print("¡Hola Mundo!")
+```
+
+<br>
+
+- Se **invoca** a la función `print()`
+	- Función **integrada** en Python
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Función - Introducción preliminar (5/7)
+
+- En el siguiente ejemplo:
+```python
+print("¡Hola Mundo!")
+```
+
+<br>
+
+- Al invocar a la función `print()`
+	- Se le _pasa_ un **argumento**
+
+	<br>
+
+- **Argumento:**
+	-  Valor que se pasa/envía a una función al invocarla
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Función - Introducción preliminar (6/7)
+
+
+- Al ejecutar este código en la terminal de Spyder:
+```python
+print("¡Hola Mundo!")
+```
+
+<br>
+
+- Se obtendrá el siguiente resultado:
+
+<br>
+
+<img src="Screenshot 2025-08-07 at 8.43.07 AM.png" alt="" style="object-fit: scale-down">
+
+
+<br>
+
+- Es decir, se muestra el argumento
+	- Pasado/enviado a `print()`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Función - Introducción preliminar (7/7)
+
+
+- Al ejecutar este código en la terminal de Spyder:
+```python
+print("Python")
+```
+
+<br>
+
+- Se obtendrá el siguiente resultado:
+
+<br>
+
+<img src="Screenshot 2025-08-07 at 8.44.51 AM.png" alt="" style="object-fit: scale-down">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad II
+
+
+- En la terminal de Spyder
+	- Use la función `print()` para imprimir:
+
+	<br>
+	
+-  Su **nombre completo** (nombres y apellidos)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III
+
+- ¿Qué es una función?
+
+<br>
+
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->Código **reutilizable**
+	- Diseñado para una **tarea específica**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IV
+
+- ¿Qué es una función _integrada_?
+
+<br>
+
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->Una función **incorporada** en Python
+	- Lista para invocarse y usarse
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta V
+
+- ¿Qué es _invocar_ una función?
+
+<br>
+
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->Es el proceso o acción de "llamar" a la función
+	- Ej: 
+		- `print("Hola")`
+		- `print("Adiós")`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VI
+
+- ¿Qué es un _argumento_?
+
+
+<br>
+
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->Valor que se pasa a una función al invocarla
+	-  Si esta lo requiere/admite
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VII
+
+- En el siguiente ejemplo:
+```python
+print("¡Hola Mundo!")
+```
+
+<br>
+
+
+¿Cuántos argumentos se usa al invocar a la función `print()`?
+
+
+<br>
+
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->**Un solo** argumento: 
+	- `"!Hola Mundo!"`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VIII
+
+- En el siguiente ejemplo (note la **coma**):
+```python
+print("¡Hola",  "Mundo!")
+```
+
+<br>
+
+¿Cuántos argumentos se usa al invocar a la función `print()`?
+
+<br>
+
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->**Dos** argumentos: 
+	- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->`"¡Hola"`
+	- &shy;<!-- .element: class="fragment" data-fragment-index="3" -->`"Mundo!"`
+
+<img src="Screenshot 2025-08-07 at 3.56.08 PM.png" alt="" style="object-fit: scale-down">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IX
+
+- Si se desea pasar varios argumentos a la función `print()` al invocarla
+	-  ¿De qué forma se debe separar esos múltiples argumentos?
+
+<br>
+
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->Los argumentos se separan **con comas**
+
+<br>
+
+
+<img src="Screenshot 2025-08-07 at 9.52.48 AM.png" alt="" style="object-fit: scale-down">
+
+
+<br>
+
+ - &shy;<!-- .element: class="fragment" data-fragment-index="2" -->Note que la coma **no** se muestra/imprime en la salida
+	 - &shy;<!-- .element: class="fragment" data-fragment-index="3" -->Se "transforma" en un espacio
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Fin de la Actividad II
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#  Actividad III
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Motivación (1/2)
+
+- ¿Por qué necesitamos variables?
+	- Imagine → Programa lleno → Datos planos:
+	    - `10000`
+	    - `3.14`
+	    - "¡Hola Mundo!"
+	    - ...
+
+<br>
+
+- ¿Qué tan legible sería ese programa?
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Motivación (2/2)
+
+- Variables → Facilitan
+	- **Describir, manipular organizar y reusar**
+		- Datos en un programa
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🌀 Variable (1/5) 🌀
+
+- Definición en Python:
+	- Es un **nombre** que sirve para
+		- Referenciar algo
+
+<br>
+
+- Analogía con el mundo real:
+	- Su nombre
+		- Sirve para referenciarlo a usted
+		
+<br>
+
+- 🏷️ Un nombre:
+	- No es la persona
+	- Solo una forma
+		- Para referenciarla
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🌀 Variable (2/5) 🌀
+
+- En este ejemplo:
+```Python
+pi = 3.14
+```
+
+<br> 
+
+- `pi` es una **variable**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🌀 Variable (3/5) 🌀
+
+- En este ejemplo:
+```Python
+pi = 3.14
+```
+
+<br> 
+
+- `pi` es una variable o **nombre**
+	- Que sirve para **referenciar** a
+		- `3.14`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🌀 Variable (4/5) 🌀
+
+- En este ejemplo:
+```Python
+pi = 3.14
+print(pi)
+```
+
+<br> 
+
+- Se usa la variable `pi`:
+	1. Para referenciar a `3.14`
+	2. Como argumento de `print()`
+	
+
+
+<br>
+
+<img src="Screenshot 2025-08-07 at 10.09.20 AM.png" alt="" style="object-fit: scale-down">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🌀 Variable (5/5) 🌀
+
+- En este ejemplo:
+
+```Python
+nombre = "John Doe"
+print(nombre)
+```
+
+<br> 
+
+- Se usa la variable  `nombre`:
+	1. Para referenciar a "John Doe"
+	2. Como argumento de `print()`
+	
+<br>
+
+<img src="Screenshot 2025-08-07 at 10.10.53 AM.png" alt="" style="object-fit: scale-down">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Aprendamos a usar el Editor de Spyder
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Actividad III (1/5)
+
+- Ubique el Editor de Spyder
+
+		
+<img src="iph/n1/img/editor.png" alt="" style="object-fit: scale-down">
+
+<!-- .element: style="width: 25%; height: 45%" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Actividad III (2/5)
+
+- Copie y pegue en el Editor de Spyder el siguiente código:
+```python
+nombre = "John Doe"
+print(nombre)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Actividad III (3/5)
+
+- Ejecute el código copiado
+	- Para ello, clic en este botón
+		- Ubicado en parte superior de Editor de Spyder:
+
+<br>
+
+<img src="Screenshot 2025-08-07 at 11.10.24 AM.png" alt="" style="object-fit: scale-down">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Actividad III (4/5)
+
+- Observe el resultado de la ejecución en la Terminal de Spyder
+	- Debería verse similar a la imagen
+		- Note que se imprimió → `"John Doe"`
+
+<br>
+
+<img src="Screenshot 2025-08-07 at 11.18.02 AM.png" alt="" style="object-fit: scale-down">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Actividad III (5/5)
+
+
+- Ahora, en el Editor de Spyder
+	- Personalice el siguiente código
+		- Para que se imprima **su** primer
+			- **Nombre** y
+			- **Apellido**
+
+```python
+nombre = "John"
+apellido = "Doe"
+
+print(nombre, apellido)
+```
+
+<br>
+
+- Luego, ejecute el código y compruebe los resultados
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta X
+
+- ¿Cuál sería el resultado de ejecutar el siguiente código?
+
+```python
+resultado = 4598 % 15000
+
+print(resultado)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta X - Solución
+
+- ¿Cuál sería el resultado de ejecutar el siguiente código?
+
+```python
+resultado = 4598 % 15000
+
+print(resultado)
+```
+
+
+- Solución:
+
+```python
+resultado = 4598 % 15000
+
+print(resultado)  # → 4598
+```
+
+<br>
+
+- 🌀 Recuerde: 🌀
+	- Si el dividendo es menor que el divisor
+		- El módulo es el dividendo
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Aprendamos el concepto de constante
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Constantes
+
+- Variables que, por convención, 
+	- No deben modificarse durante la ejecución del programa
+- Usadas para valores fijos, como tasas, configuraciones, etc.
+- Declaración:
+	- No hay un tipo 'constante' en Python
+	- Se usan variables normales para definirlas
+
+- Convención:
+	- Los nombres de constantes se escriben en **mayúsculas**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Constantes - Ejemplos 
+
+```Python
+PI = 3.14159
+
+TASA_FIJA = 0.08
+
+ALTURA_MAXIMA = 21.1
+
+IVA = 0.19
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XI
+
+- ¿Cuál sería el resultado de ejecutar el siguiente código?
+
+```python
+texto = "El número PI se suele aproximar a:"
+PI = 3.14
+
+print(texto, PI)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XI - Solución
+
+- ¿Cuál sería el resultado de ejecutar el siguiente código?
+
+```python
+texto = "El número PI se suele aproximar a:"
+PI = 3.14
+
+print(texto, PI)
+```
+
+<br>
+
+- Solución:
+
+```python
+texto = "El número PI se suele aproximar a:"
+PI = 3.14
+
+print(texto, PI)  # → El número PI se suele aproximar a: 3.14
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Fin de la Actividad III
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#  Actividad IV
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🌀 Objeto (1/4) 🌀
+
+
+- Entidad que contiene datos
+
+<br>
+
+- En Python:
+	- "Todo"  se trata como un objeto
+
+- Ej:
+	- `3.14` es un objeto
+	- "!Hola Mundo!" es un objeto
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🌀 Objeto (2/4) 🌀
+
+- En Python, un objeto tiene asociado:
+	- _Tipo de dato_
+	- _Valor_
+	- _Identidad_ 
+
+
+<br>
+<img src="Screenshot 2025-08-06 at 4.07.52 PM.png" alt="" style="width: 55%; height: 45%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🌀 Objeto (3/4) 🌀
+
+- Un objeto tiene un **valor** asociado
+
+
+- Ej:
+
+
+	```python
+	3.14
+	```
+
+
+<br>
+
+
+<img src="Screenshot 2025-08-06 at 4.15.12 PM.png" alt="" style="object-fit: scale-down">
+
+ <!-- .element: style="width: 55%; height: 45%" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  🌀 Objeto (4/4) 🌀
+
+- Un objeto tiene un **tipo de dato** asociado
+
+
+- Ej:
+
+
+	```python
+	3.14
+	```
+
+
+
+<br>
+
+<img src="Screenshot 2025-08-06 at 4.44.40 PM.png" alt="" style="width: 45%; height: 35%; object-fit: fill">
+
+
+<br>
+
+- ¿Qué es _tipo de dato_?
+- ¿Qué es `float`?
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🌀 Tipos de datos numéricos 🌀
+
+- En Nivel 1 
+	- Se estudian 2 tipos de datos numéricos:
+<table border="1" style="border-collapse: collapse; width: 100%; text-align: center; font-size: 20px;">
+  <thead style="background-color: #d0e6f8">
+    <tr>
+      <th style="color: black;">Nombre</th>
+      <th style="color: black;">Tipo</th>
+      <th style="color: black;">Ejemplos</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Entero</td>
+      <td><code>int</code></td>
+      <td><code>0</code>, <code>1</code>, <code>-2</code>, <code>1_000</code></td>
+    </tr>
+    <tr>
+      <td>Decimal</td>
+      <td><code>float</code></td>
+      <td><code>.0</code>, <code>3.14</code>, <code>3.14e-10</code></td>
+    </tr>
+  </tbody>
+</table>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🌀 Entero - `int` 🌀
+
+- Representa un número entero
+	- Positivo o negativo
+
+	<br>
+	
+- Se permite usar guión bajo `_` para mejor legibilidad:
+	- ✅ `10000` o `10_000`
+	- ❌ 10.000, 10,000, 10 000
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🌀 Decimal/flotante - `float` 🌀
+
+- Representa un número real con decimales
+	- Positivo o negativo
+	
+<br>
+
+- Notación científica:
+	- Forma concisa de escribir valores grandes o pequeños
+	- `e`  ó  `E` denotan potencia de 10
+		- Ej: `1.2e9` (ó `1.2E9`) 
+			- Representa 1.2 x 10<sup>9</sup>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🌀 Resumen 🌀
+
+
+```python
+3.14
+```
+
+<br>
+<img src="Screenshot 2025-08-07 at 12.50.58 PM.png" alt="" style="width: 70%; height: 45%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### ¿Cómo obtener el tipo de dato de un objeto?
+
+- En Python es posible
+	- Gracias a la función: `type()`
+
+	<br>
+
+- 🌀
+ Luego, estudiaremos más a fondo el concepto de _función_ 🌀
+
+	- Por ahora, solo usemos la función `type()`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `type()`
+
+- Retorna el tipo de dato del objeto dado
+- Sintaxis:  
+```Python
+type(objeto)
+````
+- Ej:
+```Python
+type(3.2)  # → float
+type(17)  # → int
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XII
+
+- ¿Cuál es el resultado de ejecutar lo siguiente?
+```Python
+type(.1)
+```
+
+<br>
+
+-  **Respuesta**:
+	- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->`float`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XIII
+
+- ¿Cuál es el resultado de ejecutar lo siguiente?
+```Python
+type(3.14e-10)
+```
+
+<br>
+
+- **Respuesta**:
+	- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->`float`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XIV
+
+- ¿Cuál es el resultado de ejecutar lo siguiente?
+```Python
+type(4_000)
+```
+
+<br>
+
+- **Respuesta**:
+	- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->`int`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Python es un lenguaje de programación de Tipado Dinámico
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Tipado dinámico (1/2)
+
+- En Python, 
+	- Una variable pueden referenciar 
+	  - Una ubicación en memoria
+		  - Donde resida un objeto 
+			  - De cualquier tipo
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Tipado dinámico (2/2)
+
+- **Cambio de referencia**
+	- Durante la ejecución
+		- Una variable puede cambiar su referencia a otra ubicación
+		  - En donde resida otro objeto
+		
+	- Solo una referencia es válida 
+	  - En un instante de tiempo
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Comprendiendo el tipado dinámico de Python (1/2)
+
+
+```Python
+# Inicialmente, `numero` referencia a un entero
+numero = 42
+
+# Posteriormente `numero` referencia a un flotante
+numero = 42.0
+```
+
+<br>
+
+
+<img src="iph/n1/img/ej_tipado_dinamico.png" alt="" style="object-fit: scale-down">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Comprendiendo el tipado dinámico de Python (2/2)
+
+- En el tipado dinámico en Python
+	- **Solo un referencia es válida**
+	  - **En un solo instante de tiempo**
+
+<br>
+
+<img src="iph/n1/img/ej_tipado_dinamico.png" alt="" style="object-fit: scale-down">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  🌀 Identidad de un objeto (1/6) 🌀
+
+- Un objeto **reside** en una ubicación de memoria
+	- Esa dirección
+		- Es su indentidad
+
+	
+
+<br>
+<img src="Screenshot 2025-08-06 at 9.59.16 PM.png" alt="" style="object-fit: scale-down">
+
+
+ <!-- .element: style="width: 45%; height: 33%" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  🌀 Identidad de un objeto (2/6) 🌀
+
+- La ubicación de memoria en donde reside el objeto
+	- Tiene una **dirección única**
+
+
+<img src="Screenshot 2025-08-07 at 12.53.15 PM.png" alt="" style="width: 45%; height: 33%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  🌀 Identidad de un objeto (3/6) 🌀
+
+- Aquí, cada dirección de memoria
+	- Se representa como una
+		- Cuadro de **color único**
+
+<img src="Screenshot 2025-08-06 at 4.13.15 PM.png" alt="" style="object-fit: scale-down">
+
+ <!-- .element: style="width: 50%; height: 41%" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  🌀 Identidad de un objeto (4/6) 🌀
+
+- Pero en realidad
+	- Una dirección en memoria es
+	- Un **valor numérico único**
+		- Que representa una ubicación
+
+<img src="Screenshot 2025-08-06 at 10.04.22 PM.png" alt="" style="object-fit: scale-down">
+
+ <!-- .element: style="width: 55%; height: 43%" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🌀 Identidad de un objeto (5/6) 🌀
+
+- En la versión estándar de Python
+	- La **identidad** de un objeto
+		- Es su **dirección de memoria**
+
+	<br>
+
+<img src="Screenshot 2025-08-06 at 10.09.06 PM.png" alt="" style="width: 45%; height: 33%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🌀 Identidad de un objeto (6/6) 🌀
+
+- En la versión estándar de Python:
+
+<br>
+
+**Identidad** = **Dirección de memoria**
+
+<br>
+
+<img src="Screenshot 2025-08-06 at 10.09.06 PM.png" alt="" style="width: 45%; height: 33%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🌀 Variables y Objetos (1/2) 🌀
+ 
+- **Variable**
+	- **Nombre** simbólico  🏷️
+	- Que **referencia** a una ubicación en memoria
+		- En donde reside un _objeto_
+
+
+	<br>
+
+- Para este ejemplo:
+```Python
+pi = 3.14
+```
+
+<br> 
+
+- Esta sería la representación conceptual:
+
+<img src="iph/n1/img/ej_pi.png" alt="" style="width: 25%; height: 25%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🌀 Variables y Objetos (2/3) 🌀
+
+- Tal y como se ve en la imagen
+	- Una variable es solo un **nombre**
+		- Que **referencia** a una ubicación de memoria
+	
+
+
+<img src="iph/n1/img/ej_pi.png" alt="" style="width: 25%; height: 25%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🌀 Variables y Objetos (3/3) 🌀
+
+- Una variable
+	- **No** es el objeto
+	- **No** contiene al objeto
+	- **No** es una copia del objeto
+
+<br>
+
+
+<img src="iph/n1/img/ej_pi.png" alt="" style="width: 25%; height: 25%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Pregunta XV
+
+- Para este ejemplo:
+```python
+pi = 3.14
+```
+
+<br>
+
+- ¿Qué es `pi`?
+	- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->Una **variable**
+	
+
+	<br>
+		
+- ¿Qué es en general una variable?
+	- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->Un **nombre** que referencia a una **ubicación en memoria**
+		- &shy;<!-- .element: class="fragment" data-fragment-index="3" -->En **donde reside un objeto**
+
+
+	<br>
+
+<img src="iph/n1/img/ej_pi.png" alt="" style="width: 20%; height: 20%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Pregunta XVI
+
+- Para este ejemplo:
+```python
+pi = 3.14
+```
+
+<br>
+
+- ¿Cuál es el **tipo de dato** del objeto cuya ubicación es referenciada por la variable `pi`?
+	- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->`float`
+
+
+<br>
+
+- ¿Cuál es el **valor** del objeto cuya ubicación es referenciada por `pi`?
+	- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->`3.14`
+
+
+<br>
+
+<img src="iph/n1/img/ej_pi.png" alt="" style="width: 20%; height: 20%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Actividad IV (1/8)
+
+- En la terminal de Spyder 
+	- Ejecute la siguiente línea:
+```Python
+pi = 3.14
+```
+
+<img src="iph/n1/img/ej_variable.png" alt="" style="object-fit: scale-down">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Actividad IV (2/8)
+
+- Ubíquese en el panel de exploración de Spyder
+	- Y seleccione el **Variable Explorer** (Explorador de Variables)
+
+<img src="iph/n1/img/panel.png" alt="" style="width: 80%; height: 80%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad IV (3/8)
+
+- Así debería verse el mismo:
+
+<img src="iph/n1/img/var_explorer_2.png" alt="" style="object-fit: scale-down">
+
+
+
+- **Name**: 
+	- `pi`  es una variable (un nombre)
+- **Type**: 
+	- `pi` referencia a la ubicación de un objeto 
+		- Cuyo **tipo de dato** es un `float`
+- **Size**: 
+	- Tamaño (irrelevante por ahora)
+- **Value**: 
+	- El **valor** del objeto, cuya dirección `pi` referencia es:
+		-  `3.14`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Actividad IV (4/8)
+
+- En la terminal de Spyder 
+	- Ejecute la siguiente línea:
+```Python
+pi = 0.0
+```
+
+<br>
+
+- Revise qué cambios suceden 
+	- En el Explorador de Variables
+
+<br>
+
+<img src="iph/n1/img/ej_pi_2.png" alt="" style="width: 20%; height: 20%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Actividad IV (5/8)
+
+- En la terminal de Spyder 
+	- Ejecute las siguientes líneas:
+```Python
+pi = 3.14
+promedio = 1.5
+```
+
+<br>
+
+- Revise qué cambios suceden 
+	- En el Explorador de Variables
+
+<br>
+
+<img src="iph/n1/img/pi_promedio.png" alt="" style="width: 36%; height: 17%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### ¿Y cómo se consulta la identidad del objeto?
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Obtener la identidad de un objeto
+
+- El Explorador de Variables
+	- No permite ver la identidad de un objeto
+
+<br>
+
+- En Python es posible consultar la identidad de un objeto
+	- Gracias a la función `id()`
+
+	<br>
+
+- 🌀 Luego, estudiaremos más a fondo el concepto de _función_ 🌀
+	- Por ahora, usemos directamente la función `id()`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `id()`
+
+- Retorna la identidad del objeto dado
+    
+- Sintaxis: 
+```Python
+id(object)
+```
+
+- Ej:
+```Python
+pi = 3.14
+id(pi)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Actividad IV (6/8)
+
+- En la terminal de Spyder 
+	- Ejecute las siguientes líneas:
+	
+```Python
+pi = 3.14
+promedio = 1.5
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Actividad IV (7/8)
+
+- Luego, **por aparte**, ejecute cada una de las siguientes líneas:
+```Python
+id(pi)
+```
+```Python
+id(promedio)
+```
+
+<br>
+
+- Cada una de estas líneas
+	- Debería mostrarle la identidad de cada objeto
+		- Cuya dirección de memoria es
+			- Referenciada por cada variable
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Actividad IV (8/8)
+
+- Ejemplo de resultado\*:
+
+<img src="Screenshot 2025-08-07 at 11.30.16 AM.png" alt="" style="object-fit: scale-down">
+
+
+<br>
+
+\*  Cada dirección única obtenida en el ejemplo, depende la sesión de IPython. 
+
+- Por ende, puede (y seguramente va a) diferir de sus resultados
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Pregunta XVII
+
+- ¿Qué es la identidad de un objeto en la versión estándar de Python?
+	- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->La  **dirección de memoria**
+		- En donde reside un objeto
+
+<br>
+
+- ¿Cuántas identidades puede tener un objeto?
+	- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->Una sola
+		-  Un objeto solo puede residir
+			-  En **una sola dirección de memoria**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XVIII
+
+- En este ejemplo:
+
+
+```Python
+PI = 3.14
+pi = PI
+numero_pi = pi
+```
+
+
+<img src="iph/n1/img/variables.png" alt="" style="width: 30%; height: 35%; object-fit: fill">
+
+
+<br>
+
+- ¿Cuántas variables se usan?
+	- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->3
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Pregunta XIX
+
+- En este ejemplo:
+
+
+```Python
+PI = 3.14
+pi = PI
+numero_pi = pi
+```
+
+
+<img src="iph/n1/img/variables.png" alt="" style="width: 30%; height: 35%; object-fit: fill">
+
+
+- ¿Cuántas direcciones son referenciadas por las tres variables?
+	- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->**Un sola** dirección
+
+<br>
+
+ - **Recuerde:**
+	- Una variable es solo un nombre
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Fin de la Actividad IV
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#  Actividad V
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### ¿En dónde se almacenan los objetos?
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🌀 Heap 🌀
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🌀 Heap (1/4) 🌀
+
+- Región de memoria 
+	- Donde Python **almacena** objetos
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🌀 Heap (2/4) 🌀
+	
+- Es como una "piscina"
+	- En donde Python guarda objetos
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🌀 Heap (3/4) 🌀
+
+- Representación simplificada
+	- Ya que heap es una región dinámica:
+	- Cada cuadro representaría
+		- Una ubicación **única** de memoria
+		
+
+<br>
+
+
+<img src="iph/n1/img/heap.png" alt="" style="width: 35%; height: 40%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🌀 Heap (4/4) 🌀
+
+- En el heap cada objeto:
+
+	<br>
+
+	- Se almacena en un **ubicación de memoria**
+		- Asignada según su tamaño
+
+	<br>
+
+	- Esa ubicación de memoria
+		- Tiene una **dirección única**
+		
+		<br>
+
+	- Esta dirección de memoria única
+		- Es la  **identidad del objeto**
+			- Que allí resida (si alguno)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Pregunta XX
+
+
+- Para este ejemplo:
+```python
+pi = 3.14
+```
+
+<br>
+
+- ¿En dónde almacena Python el objeto cuya dirección es referenciada por la variable `pi`?
+	- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->En el Heap
+
+	<br> 
+
+<img src="Screenshot 2025-08-04 at 5.12.30 PM.png" alt="" style="width: 37%; height: 47%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### ¿En dónde se almacenan las variables?
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🌀 Stack (1/2) 🌀
+
+- En Python
+	- Las variables se **almacenan** en el Stack
+	
+	- Desde el Stack se _referencia_ o _apunta_ 
+		- A objetos en el Heap
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🌀 Stack (2/2) 🌀
+
+- Para este ejemplo:
+```python
+pi = 3.14
+```
+
+
+<img src="Screenshot 2025-08-04 at 5.24.04 PM.png" alt="" style="width: 70%; height: 60%; object-fit: fill">
+
+
+- Esta es una representación del Stack muy simplificada
+	- Que se refinará más adelante
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Pregunta XXI
+
+- Para este ejemplo:
+```python
+pi = 3.14
+```
+
+<br>
+
+
+
+
+- ¿En dónde almacena Python el objeto, cuya dirección es referenciada por  `pi`?
+	- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->En el Heap
+
+<br>
+
+- ¿En dónde almacena  Python la variable  `pi`?
+	- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->En el Stack
+
+<br>
+
+
+<img src="Screenshot 2025-08-04 at 9.02.27 PM.png" alt="" style="width: 25%; height: 25%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Pregunta XXII
+
+- En este ejemplo:
+```Python
+promedio = 1.5
+pi = 3.14
+```
+
+<br>
+
+- ¿En dónde Python almacena las variables `pi` y  `promedio`?
+	- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->En el Stack
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Pregunta XXIII
+
+- Para este ejemplo:
+```Python
+promedio = 1.5
+pi = 3.14
+```
+
+	<br>
+
+- ¿Cómo se verían el diagrama Heap y el Stack?
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Pregunta XXIII - Solución
+
+- Para este ejemplo:
+```Python
+promedio = 1.5
+pi = 3.14
+```
+
+<br>
+
+- Así se vería el _Diagrama Heap y Stack_:
+
+<br>
+
+<img src="Screenshot 2025-08-04 at 5.33.06 PM.png" alt="" style="width: 45%; height: 35%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🌀 Diagrama Heap y Stack 🌀
+
+- Forma de representar la **memoria dinámica** del programa
+
+- Cada "caja" en el Stack
+	- Se llama _Frame_
+- Cada _frame_
+	- Representa un llamado a una _función_
+		- Eso se estudiará más tarde en el curso...
+
+<img src="Screenshot 2025-08-04 at 5.33.06 PM.png" alt="" style="width: 40%; height: 35%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🌀 Apilamiento 🌀
+
+- Para este ejemplo:
+```Python
+promedio = 1.5
+pi = 3.14
+```
+
+<br>
+
+- Note que las variables
+	- Se van _apilando_* en el Stack
+		- Por orden de creación
+
+<br>
+
+<img src="Screenshot 2025-08-04 at 5.33.06 PM.png" alt="" style="width: 32%; height: 24%; object-fit: fill">
+
+
+- \* Esta es una representación del apilamiento muy simplificada
+	- Que se refinará más adelante en el curso
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Pregunta XXIV
+
+- Para este ejemplo:
+```Python
+numero_pi = 3.14
+pi = numero_pi
+PI = pi
+```
+
+<br>
+
+- ¿Cómo se vería el diagrama Heap y Stack?
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Pregunta XXIV - Solución
+
+- Para este ejemplo:
+```Python
+numero_pi = 3.14
+pi = numero_pi
+PI = pi
+```
+
+<br>
+
+ - Así se vería el diagrama Heap y Stack:
+
+<br>
+
+<img src="iph/n1/img/promedio_2.png" alt="" style="width: 47%; height: 27%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Pregunta XXV
+
+- Para este ejemplo:
+```python
+PI = 3.14
+pi = PI
+numero_pi = pi
+```
+
+<br>
+
+- ¿Cuántas variables se usan?
+	- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->3
+
+
+<br>
+
+- ¿En dónde se almacenan todas las variables usadas?
+	- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->En el Stack
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Pregunta XXVI
+
+- Para este ejemplo:
+```python
+PI = 3.14
+pi = PI
+numero_pi = pi
+```
+
+<br>
+
+- ¿Cuántas direcciones de memoria son referenciadas por las tres variables?
+	- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->**Un sola** dirección
+
+
+
+
+<br>
+
+- ¿Cuántas variables se almacenan en el Stack?
+	- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->3
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Fin de la Actividad V
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#  Actividad VI
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Actividad VI  
+
+- Estudie las _primeras_ buenas prácticas de N1:
+
+	<br>
+
+	 - <a href="https://eerosales24.github.io/iph_2026_20/n1/buenas_practicas/" target="_blank" rel="noopener noreferrer">Primeras buenas prácticas de N1</a>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Fin de la Actividad VI
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### QUIZ N1-1
+
+- Primer quiz del curso →  **Jueves 13 de agosto, 9:30am**<!-- .element: class="fragment highlight-red" -->
+
+<br>
+
+-  **Formato**:
+	- Escrito, individual y sin apuntes
+- **Extensión**:
+	- 2 preguntas
+- **Duración:**
+	- 5 mins
+- **Tema:**
+	-  <a href="https://eerosales24.github.io/iph_2026_20/n1/buenas_practicas/" target="_blank" rel="noopener noreferrer">Primeras buenas prácticas de N1</a>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Fin de N1-L1
+
+- No es necesario hacer ningún envío de este laboratorio
+	- Pero si **comprenderlo a cabalidad**<!-- .element: class="fragment highlight-blue" --> 
+		- Y estudiar para el **quiz**<!-- .element: class="fragment highlight-red" -->
+	
+
+
+<br>
+<br>
+
+ [<i class="fas fa-home  fa-3x"></i>](https://eerosales24.github.io/iph_2026_20/#)
+</div></script></section></div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/chart/chart.min.js"></script>
+	<script src="plugin/chart/plugin.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+	  function isLight(color) {
+		let hex = color.replace('#', '');
+
+		// convert #fff => #ffffff
+		if(hex.length == 3){
+			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+		}
+
+		const c_r = parseInt(hex.substr(0, 2), 16);
+		const c_g = parseInt(hex.substr(2, 2), 16);
+		const c_b = parseInt(hex.substr(4, 2), 16);
+		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+		return brightness > 155;
+	}
+
+	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+	var isLight = isLight(bgColor);
+
+	if(isLight){
+		document.body.classList.add('has-light-background');
+	} else {
+		document.body.classList.add('has-dark-background');
+	}
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+        ],
+
+
+    	allottedTime: 120 * 1000,
+
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
+
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
+
+		customcontrols: {
+			controls: [
+			]
+		},
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width":960,"height":700,"margin":"0.025","minScale":"0.1","maxScale":"2.0","controls":"true","controlsLayout":"bottom-right","progress":"true","slideNumber":"true","center":"false","transition":"slide","transitionSpeed":"default"}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+
+  <!-- created with Advanced Slides -->
+</html>
