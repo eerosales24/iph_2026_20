@@ -260,6 +260,41 @@ round(numero, ndigits)
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
+### `round()` - Mitades exactas
+
+* Ante una mitad exacta, Python **no** redondea hacia arriba
+* Aplica *redondeo al par más cercano*
+   * Se elige el vecino que sea par
+   * Evita el sesgo acumulado al redondear muchos valores
+
+```python
+round(0.5)  # → 0 (no 1)
+round(1.5)  # → 2
+round(2.5)  # → 2 (no 3)
+round(3.5)  # → 4
+round(-2.5)  # → -2
+```
+
+* Regla: si el descarte es exactamente 0.5, gana el par
+* También aplica con decimales: `round(0.125, 2)` → `0.12`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `round()` - Mitades "falsas"
+
+* Muchos decimales no tienen representación binaria exacta
+* Un número que *parece* una mitad exacta puede no serlo
+   * El valor guardado decide el redondeo
+
+```python
+round(2.675, 2)  # → 2.67 (no 2.68)
+
+# porque 2.675 se almacena como:
+2.675  # → 2.67499999999999982236431605997495353221893310546875
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
 ### `min()`
 
 - Retorna el menor de dos o más argumentos
