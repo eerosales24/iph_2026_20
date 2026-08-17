@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title></title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/iph.css" id="theme" />
+    <link rel="stylesheet" href="plugin/highlight/spyder.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
+
+
+
+    <script defer src="dist/fontawesome/all.min.js"></script>
+
+	<script type="text/javascript">
+		var forgetPop = true;
+		function onPopState(event) {
+			if(forgetPop){
+				forgetPop = false;
+			} else {
+				parent.postMessage(event.target.location.href, "app://obsidian.md");
+			}
+        }
+		window.onpopstate = onPopState;
+		window.onmessage = event => {
+			if(event.data == "reload"){
+				window.document.location.reload();
+			}
+			forgetPop = true;
+		}
+
+		function fitElements(){
+			const itemsToFit = document.getElementsByClassName('fitText');
+			for (const item in itemsToFit) {
+				if (Object.hasOwnProperty.call(itemsToFit, item)) {
+					var element = itemsToFit[item];
+					fitElement(element,1, 1000);
+					element.classList.remove('fitText');
+				}
+			}
+		}
+
+		function fitElement(element, start, end){
+
+			let size = (end + start) / 2;
+			element.style.fontSize = `${size}px`;
+
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
+					size--;
+					element.style.fontSize = `${size}px`;
+				}
+				return;
+			}
+
+			if(element.scrollHeight > element.offsetHeight){
+				fitElement(element, start, size);
+			} else {
+				fitElement(element, size, end);
+			}		
+		}
+
+
+		document.onreadystatechange = () => {
+			fitElements();
+			if (document.readyState === 'complete') {
+				if (window.location.href.indexOf("?export") != -1){
+					parent.postMessage(event.target.location.href, "app://obsidian.md");
+				}
+				if (window.location.href.indexOf("print-pdf") != -1){
+					let stateCheck = setInterval(() => {
+						clearInterval(stateCheck);
+						window.print();
+					}, 250);
+				}
+			}
+	};
+
+
+        </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### <i class="fas fa-award"></i> IP Honores
+
+ ####  *Módulos e importación*
+
+[Eduardo Rosales](mailto:ee.rosales24@uniandes.edu.co)
+
+Departamento de Ingeniería de Sistemas y Computación
+
+Universidad de los Andes
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Módulo
+
+- Colección de funciones y valores en un archivo
+  - El archivo contiene 
+	  - Definiciones y declaraciones de Python
+- Permite la organización lógica del código
+  - Funciones similares 
+	  - Deben pertenecer al mismo módulo
+- Facilita la reutilización del código
+  - Un módulo puede ser usado 
+	  - Por distintos programas
+- Los módulos pueden agruparse en un *paquete*
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `import` (1/2)
+
+- Palabra clave utilizada para importar módulos
+- Accede al contenido específico del módulo
+- Sintaxis: 
+```python
+import nombre_del_modulo
+```
+
+-  `nombre_del_modulo`: Módulo que será importado
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `import` (2/2)
+
+- Permite acceder a funciones y variables
+	- Del módulo importado
+	  - Mediante la *notación de punto*:
+	  
+```plaintext
+nombre_del_modulo.nombre_de_funcion
+nombre_del_modulo.nombre_de_variable
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### ¿Cómo importar un módulo integrado en Python?
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `math` (1/4)
+
+- Módulo integrado en Python que proporciona 
+	- Operaciones matemáticas y constantes
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `math` (2/4)
+
+- Constantes: 
+	- `math.pi` 
+		- Es decir, π
+	- `math.e` 
+		- Es decir, el número de Euler
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `math` (3/4)
+
+- Funciones y su retorno:
+	- `math.sqrt(x)`: 
+		- La raíz cuadrada de `x`
+	- `math.sin(x)`: 
+		- El seno de `x` 
+			- `x` debe estar en radianes
+	- `math.cos(x)`: 
+		- El coseno de `x`
+			- `x` debe estar en radianes
+	- `math.log10(x)`: 
+		- El logaritmo base 10 de `x`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `math` (4/4)
+
+- `math.exp(x)`:
+        
+	- Calcula e<sup>x</sup>
+		
+	- Donde:
+		
+		- `e` es el número de Euler
+			
+	- Se usa para:
+		
+		- Crecimiento exponencial
+			
+		- Decaimiento exponencial (si `x` es negativo)
+			
+	- Ejemplo:
+		
+		- `math.exp(1)` → `e`
+			
+		- `math.exp(0)` → `1`
+			
+		- `math.exp(-1)` → `1 / e`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta I
+
+¿Qué hace el siguiente programa?
+```Python
+import math
+
+num_float = float("9.1")
+num_int = int(num_float)
+resultado = int(math.sqrt(num_int))
+print(resultado)
+```
+
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->Importa el módulo `math`
+    
+- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->Convierte la cadena `"9.1"` a número decimal
+    
+- &shy;<!-- .element: class="fragment" data-fragment-index="3" -->Convierte el decimal a entero (`9`)
+    
+- &shy;<!-- .element: class="fragment" data-fragment-index="4" -->Calcula la raíz cuadrada de `9` (`3.0`)
+    
+- &shy;<!-- .element: class="fragment" data-fragment-index="5" -->Convierte el resultado a entero (`3`)
+    
+- &shy;<!-- .element: class="fragment" data-fragment-index="6" -->Imprime el resultado:
+	- &shy;<!-- .element: class="fragment" data-fragment-index="7" -->`3`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `from`
+
+- Palabra clave para importar selectivamente desde un módulo
+- Sintaxis:
+```
+from nombre_del_modulo import nombre_del_componente
+```
+
+- Características:
+
+	- Importa solo el componente necesario (clase, función, variable)
+	- Reduce la verbosidad
+	- Evita el uso del prefijo del módulo al usar los componentes
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `random` (1/2)
+
+- Módulo integrado en Python que proporciona
+    - Generación de números pseudo-aleatorios
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `random` (2/2)
+
+- Funciones básicas:
+    - `random.random()`
+        - Retorna un número flotante aleatorio en el rango [`0.0`, `1.0`)
+    - `random.randint(a, b)`
+        - Retorna un número entero aleatorio en el rango [`a` y `b`]
+    - `random.uniform(a, b)`
+        - Retorna un número flotante aleatorio en el rango [`a` y `b`]
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta II
+
+¿Qué hace el siguiente programa?
+```python
+import random
+
+num = random.randint(1, 100)
+
+resultado = round(random.uniform(0, num), 2)
+```
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->Genera un número entero aleatorio en el rango  [`1`, `100`]
+	- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->Y se asigna el resultado a la variable `num`
+- &shy;<!-- .element: class="fragment" data-fragment-index="3" -->Genera un número flotante aleatorio en el rango  [`0`, `num`]
+	- &shy;<!-- .element: class="fragment" data-fragment-index="4" -->Redondeado a 2 decimales
+		- &shy;<!-- .element: class="fragment" data-fragment-index="5" -->Y asignado a la variable `resultado`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III
+
+¿Qué hace el siguiente programa?
+
+```python
+from math import exp
+
+# exp(1) = 2.718281828459045
+resultado = exp(1) + 1
+print(round(resultado, 3))
+```
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->Importa **únicamente** la función `exp` del módulo `math`
+    
+- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->Calcula e<sup>1</sup> (el número de Euler) + 1
+	- &shy;<!-- .element: class="fragment" data-fragment-index="3" -->`exp(1) = 2.718281828459045`
+    
+- &shy;<!-- .element: class="fragment" data-fragment-index="4" -->Redondea el número a 3 decimales
+    
+- &shy;<!-- .element: class="fragment" data-fragment-index="5" -->Imprime el resultado:
+	- &shy;<!-- .element: class="fragment" data-fragment-index="6" -->`3.718`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<i class="fas fa-question-circle fa-2x fa-spin fa-4x"></i>
+
+<br>
+<br>
+
+ [<i class="fas fa-home  fa-3x"></i>](https://eerosales24.github.io/iph_2026_20/#)
+</div></script></section></div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/chart/chart.min.js"></script>
+	<script src="plugin/chart/plugin.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+	  function isLight(color) {
+		let hex = color.replace('#', '');
+
+		// convert #fff => #ffffff
+		if(hex.length == 3){
+			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+		}
+
+		const c_r = parseInt(hex.substr(0, 2), 16);
+		const c_g = parseInt(hex.substr(2, 2), 16);
+		const c_b = parseInt(hex.substr(4, 2), 16);
+		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+		return brightness > 155;
+	}
+
+	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+	var isLight = isLight(bgColor);
+
+	if(isLight){
+		document.body.classList.add('has-light-background');
+	} else {
+		document.body.classList.add('has-dark-background');
+	}
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+        ],
+
+
+    	allottedTime: 120 * 1000,
+
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
+
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
+
+		customcontrols: {
+			controls: [
+			]
+		},
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width":960,"height":700,"margin":"0.025","minScale":"0.1","maxScale":"2.0","controls":"true","controlsLayout":"bottom-right","progress":"true","slideNumber":"true","center":"false","transition":"slide","transitionSpeed":"default"}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+
+  <!-- created with Advanced Slides -->
+</html>
