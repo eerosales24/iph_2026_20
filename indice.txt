@@ -1,9 +1,3 @@
-https://eerosales24.github.io/iph_2026_20/n1/n1_07_funciones_2/
-
-https://eerosales24.github.io/iph_2026_20/n1/n1/n1_08_modulos_e_importacion/
-
-https://eerosales24.github.io/iph_2026_20/n1/n1/n1_09_funciones_3/
-
-https://eerosales24.github.io/iph_2026_20/n1/n1/n1_10_funciones_4/
-
 https://eerosales24.github.io/iph_2026_20/n1/n1/n1_11_metodologia/
+
+https://eerosales24.github.io/iph_2026_12/n1/n1_12_separacion_entre_logica_e_interfaz
