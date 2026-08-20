@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title></title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/iph.css" id="theme" />
+    <link rel="stylesheet" href="plugin/highlight/spyder.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
+
+
+
+    <script defer src="dist/fontawesome/all.min.js"></script>
+
+	<script type="text/javascript">
+		var forgetPop = true;
+		function onPopState(event) {
+			if(forgetPop){
+				forgetPop = false;
+			} else {
+				parent.postMessage(event.target.location.href, "app://obsidian.md");
+			}
+        }
+		window.onpopstate = onPopState;
+		window.onmessage = event => {
+			if(event.data == "reload"){
+				window.document.location.reload();
+			}
+			forgetPop = true;
+		}
+
+		function fitElements(){
+			const itemsToFit = document.getElementsByClassName('fitText');
+			for (const item in itemsToFit) {
+				if (Object.hasOwnProperty.call(itemsToFit, item)) {
+					var element = itemsToFit[item];
+					fitElement(element,1, 1000);
+					element.classList.remove('fitText');
+				}
+			}
+		}
+
+		function fitElement(element, start, end){
+
+			let size = (end + start) / 2;
+			element.style.fontSize = `${size}px`;
+
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
+					size--;
+					element.style.fontSize = `${size}px`;
+				}
+				return;
+			}
+
+			if(element.scrollHeight > element.offsetHeight){
+				fitElement(element, start, size);
+			} else {
+				fitElement(element, size, end);
+			}		
+		}
+
+
+		document.onreadystatechange = () => {
+			fitElements();
+			if (document.readyState === 'complete') {
+				if (window.location.href.indexOf("?export") != -1){
+					parent.postMessage(event.target.location.href, "app://obsidian.md");
+				}
+				if (window.location.href.indexOf("print-pdf") != -1){
+					let stateCheck = setInterval(() => {
+						clearInterval(stateCheck);
+						window.print();
+					}, 250);
+				}
+			}
+	};
+
+
+        </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### <i class="fas fa-award"></i> IP Honores
+
+ ####  *Separación entre la lógica y la interfaz*
+
+[Eduardo Rosales](mailto:ee.rosales24@uniandes.edu.co)
+
+Departamento de Ingeniería de Sistemas y Computación
+
+Universidad de los Andes
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Interfaz de usuario
+
+- Medio a través del cual el usuario 
+  - Se comunica con el programa
+- Existen varios tipos
+  - En el Nivel 1 se usará solo la _consola_
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Terminal
+
+- La terminal nos da acceso a IPython
+  - La terminal nos permite comunicarnos con el programa 
+    - Por medio de líneas de texto simple
+
+
+<img src="iph/n1/img/terminal_spyder.png" alt="" style="width: 50%; height: 50%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Interfaz
+
+- Responsabilidades:
+  - Comunicación con el usuario
+  - Capturar y mostrar datos
+	  - Entrada y salida de datos
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### La interfaz se comunica con la lógica del programa
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Lógica
+
+- Responsabilidades:
+	- Contiene las funciones que implementan
+		- La lógica, los requerimientos del programa
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### ¿Por qué separar la lógica de la interfaz?
+
+- Para que el programa sea:
+  - Fácil de usar (y comprender)
+  - Mantenible
+  - Extensible
+  - Escalable
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Veamos un ejemplo de **lógica**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `logica.py` 
+
+```Python
+# En logica.py:
+def convertir_a_dolares(pesos: float, trm: float) -> float:
+    return pesos / trm
+```
+
+-  `logica.py` es un archivo 
+	- Con código fuente Python
+  - Se usa la extensión **`.py`**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `logica.py` 
+
+```Python
+# En logica.py:
+def convertir_a_dolares(pesos: float, trm: float) -> float:
+    return pesos / trm
+```
+
+-  `logica.py` es también un módulo
+	- Que define una sola función
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Veamos un ejemplo de **consola** - Versión 1
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `consola.py`
+
+```Python
+# En consola.py:
+import logica as l
+
+def iniciar_aplicacion() -> None:
+    trm = float(input('Ingrese la TRM: '))
+    pesos = float(input('Ingrese la cantidad de pesos: '))
+    dolares = l.convertir_a_dolares(pesos, trm)
+    print(pesos, 'pesos son', round(dolares, 2), 'dólares')
+```
+
+- `consola.py` contiene una función
+	- Que interactúa con el usuario
+		- Es decir, la interfaz del programa
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### ¿Cómo se **comunica** la consola con la lógica?
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pasos para importar un módulo creado
+
+1. Crear el módulo a importar
+	- Ej: La lógica
+		- Ej: `logica.py`
+2. Crear el módulo desde donde se importará
+	- Ej: Una consola
+		- Ej: `consola.py`
+3. Importar usando la instrucción `import`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Paso 1: Crear el módulo a importar
+
+```Python
+# En logica.py:
+def convertir_a_dolares(pesos: float, trm: float) -> float:
+    return pesos / trm
+```
+
+-  Se define el módulo a importar
+	- En este ejemplo:
+		- `logica.py`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Paso 2: Crear el módulo desde donde se importará
+
+- Se debe crear el módulo 
+	- Desde donde se importará
+	- Ej: Crear una consola
+		- `consola.py`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Paso 3: Importar usando la instrucción `import` (1/4)
+
+```Python[2]
+# En consola.py:
+import logica as l
+# ...
+```
+
+- La segunda línea de esta consola ejemplo
+	- Usa `import` para importar 
+		- El módulo de lógica
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Paso 3: Importar usando la instrucción `import` (2/4)
+
+```Python[2]
+# En consola.py:
+import logica as l
+```
+
+- Aqui, el módulo a importar se llama lógica
+	- Está en un archivo llamado: 
+		- `logica.py`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Paso 3: Importar usando la instrucción `import` (3/4)
+
+```Python[2]
+# En consola.py:
+import logica as l
+```
+
+- `import` importa el módulo `logica.py`
+	- Asignándole un *alias*
+		- En este caso, el alias es `l`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Paso 3: Importar usando la instrucción `import` (4/4)
+
+```Python[2]
+# En consola.py:
+import logica as l
+```
+
+- En resumen, 
+	- Desde `consola.py` se importa 
+		- El módulo de la lógica (`logica.py`)
+			- Con el alias `l`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Ubicación de archivos
+
+- **Importante**:
+
+	- Para que la lógica pueda ser importada 
+		- Desde una consola
+			- Los dos archivos 
+				- Deben estar en el mismo directorio
+	- En este caso los dos siguientes archivos
+		- Deberían estar en el **mismo directorio**:
+			- `logica.py`
+			- `consola.py`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Veamos cómo usar un **módulo importado**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Usando un módulo importado
+
+```Python[7]
+# En consola.py:
+import logica as l
+
+def iniciar_aplicacion() -> None:
+    trm = float(input('Ingrese la TRM: '))
+    pesos = float(input('Ingrese la cantidad de pesos: '))
+    dolares = l.convertir_a_dolares(pesos, trm)
+    print(pesos, 'pesos son', round(dolares, 2), 'dólares')
+```
+
+- En la séptima línea
+	- Se invoca a una función 
+		- Que está en el módulo de lógica
+			- `logica.py`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Entendamos la línea que usa al módulo importado
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Invocar a una función de la lógica (1/2)
+
+```Python
+    # En consola.py:
+    # ...
+    dolares = l.convertir_a_dolares(pesos, trm)
+    # ...
+```
+
+- La anterior línea
+	- Invoca a la función definida en la lógica
+- Usa el alias `l`
+	- Y la notación de punto 
+- La función invocada, está en `logica.py`:
+
+```Python
+# En logica.py:
+def convertir_a_dolares(pesos: float, trm: float) -> float:
+    return pesos / trm
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Invocar a una función de la lógica (2/2)
+
+- La función **debe** ser invocada:
+    1. Usando su **nombre exacto**
+    2. Usando los **argumentos exactos** 
+		- Que la función espera
+		- Considerando:
+			- La **cantidad** de argumentos esperados
+			- El **orden** esperado para esos argumentos
+			- Cada uno con el **tipo de dato** esperado
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Errores al invocar a funciones de la lógica (1/3)
+
+```Python
+    # En consola.py:
+    # ...
+    dolares = l.convertir_a_euros(pesos, trm)
+    # ...
+```
+
+- Este código fallaría con el error:
+
+```Python
+AttributeError: module 'logica' 
+has no attribute 'convertir_a_euros'
+```
+- Se intentó invocar a una función que no existe
+	- En el módulo de lógica:
+	
+```Python
+# En logica.py:
+def convertir_a_dolares(pesos: float, trm: float) -> float:
+    return pesos / trm
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Errores al invocar a funciones de la lógica (2/3)
+
+```Python
+    # En consola.py:
+    # ...
+    dolares = l.convertir_a_pesos(pesos)
+    # ...
+```
+
+- Este código fallaría con el error:
+
+```Python
+TypeError: convertir_a_dolares() 
+missing 1 required positional argument: 'trm'
+```
+- Se intentó invocar a una función 
+	- Que esperaba dos argumentos
+		- Pero sólo se provee uno (falta `trm`):
+
+```Python
+# En logica.py
+def convertir_a_dolares(pesos: float, trm: float) -> float:
+    return pesos / trm
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Errores al invocar a funciones de la lógica (3/3)
+
+```Python
+    # En consola.py:
+    # ...
+    dolares = l.convertir_a_pesos(pesos, "error")
+    # ...
+```
+
+- Este código fallaría con el error:
+
+```Python
+TypeError: unsupported operand type(s) for /:
+ 'float' and 'str'
+```
+- Se intentó invocar a una función 
+	- Con un argumento de un tipo no esperado
+		- `trm` debe ser `int` o `float`
+
+```Python
+# En logica.py
+def convertir_a_dolares(pesos: float, trm: float) -> float:
+    return pesos / trm
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### ¿Cómo **ejecutar el programa**?
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Ejecutando el programa
+
+- La ejecución del programa se hace 
+	- **Exclusivamente, desde una consola**
+
+- Una consola importa y usa la lógica
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Veamos un ejemplo de **consola** - Versión completa
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `consola.py` (1/2)
+
+```Python
+# En consola.py:
+import logica as l
+
+def iniciar_aplicacion() -> None:
+    trm = float(input('Ingrese la TRM: '))
+    pesos = float(input('Ingrese la cantidad de pesos: '))
+    dolares = l.convertir_a_dolares(pesos, trm)
+    print(pesos, 'pesos son', round(dolares, 2), 'dólares')
+
+iniciar_aplicacion()
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `consola.py` (2/2)
+
+1. En Nivel 1, cada consola define **una sola función**
+2. La consola hace la invocación a esa única función
+
+```Python[4, 10]
+# En consola.py:
+import logica as l
+
+def iniciar_aplicacion() -> None:
+    trm = float(input('Ingrese la TRM: '))
+    pesos = float(input('Ingrese la cantidad de pesos: '))
+    dolares = l.convertir_a_dolares(pesos, trm)
+    print(pesos, 'pesos son', round(dolares, 2), 'dólares')
+
+iniciar_aplicacion()
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Ejecutando el programa (1/7)
+
+```Python[10]
+# En consola.py:
+import logica as l
+
+def iniciar_aplicacion() -> None:
+    trm = float(input('Ingrese la TRM: '))
+    pesos = float(input('Ingrese la cantidad de pesos: '))
+    dolares = l.convertir_a_dolares(pesos, trm)
+    print(pesos, 'pesos son', round(dolares, 2), 'dólares')
+
+iniciar_aplicacion()
+```
+
+- La función `iniciar_aplicacion()` 
+	- Se invoca y ejecuta
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Ejecutando el programa (2/7)
+
+```Python[5]
+# En consola.py:
+import logica as l
+
+def iniciar_aplicacion() -> None:
+    trm = float(input('Ingrese la TRM: '))
+    pesos = float(input('Ingrese la cantidad de pesos: '))
+    dolares = l.convertir_a_dolares(pesos, trm)
+    print(pesos, 'pesos son', round(dolares, 2), 'dólares')
+
+iniciar_aplicacion()
+```
+
+-  `iniciar_aplicacion()`
+	1. Solicitará al usuario una TRM
+		- Que se convertirá de `str` a `float`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Ejecutando el programa (3/7)
+
+```Python[6]
+# En consola.py:
+import logica as l
+
+def iniciar_aplicacion() -> None:
+    trm = float(input('Ingrese la TRM: '))
+    pesos = float(input('Ingrese la cantidad de pesos: '))
+    dolares = l.convertir_a_dolares(pesos, trm)
+    print(pesos, 'pesos son', round(dolares, 2), 'dólares')
+
+iniciar_aplicacion()
+```
+
+-  `iniciar_aplicacion()`
+	1. Solicitará al usuario una cantidad en pesos
+		- Que se convertirá de `str` a `float`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Ejecutando el programa (4/7)
+
+```Python[7]
+# En consola.py:
+import logica as l
+
+def iniciar_aplicacion() -> None:
+    trm = float(input('Ingrese la TRM: '))
+    pesos = float(input('Ingrese la cantidad de pesos: '))
+    dolares = l.convertir_a_dolares(pesos, trm)
+    print(pesos, 'pesos son', round(dolares, 2), 'dólares')
+
+iniciar_aplicacion()
+```
+
+```Python
+# En logica.py:
+def convertir_a_dolares(pesos: float, trm: float) -> float:
+    return pesos / trm
+```
+
+-  `iniciar_aplicacion()`
+	1. Invocará a la lógica
+		- Que retornará 
+			- Un monto en dólares (`float`)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Ejecutando el programa (5/7)
+
+```Python[7]
+# En consola.py:
+import logica as l
+
+def iniciar_aplicacion() -> None:
+    trm = float(input('Ingrese la TRM: '))
+    pesos = float(input('Ingrese la cantidad de pesos: '))
+    dolares = l.convertir_a_dolares(pesos, trm)
+    print(pesos, 'pesos son', round(dolares, 2), 'dólares')
+
+iniciar_aplicacion()
+```
+
+- El monto en dólares 
+	- Se asignará a la variable
+		- `dolares`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Ejecutando el programa (6/7)
+
+```Python[8]
+# En consola.py:
+import logica as l
+
+def iniciar_aplicacion() -> None:
+    trm = float(input('Ingrese la TRM: '))
+    pesos = float(input('Ingrese la cantidad de pesos: '))
+    dolares = l.convertir_a_dolares(pesos, trm)
+    print(pesos, 'pesos son', round(dolares, 2), 'dólares')
+
+iniciar_aplicacion()
+```
+
+-  `iniciar_aplicacion()`
+	1. Mostrará al usuario (usando `print()`)
+		- El resultado de la conversión
+			-  Redondeado a 2 cifras decimales
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Ejecutando el programa (7/7)
+
+```Python[12]
+# En consola.py:
+import logica as l
+
+def iniciar_aplicacion() -> None:
+    trm = float(input('Ingrese la TRM: '))
+    pesos = float(input('Ingrese la cantidad de pesos: '))
+    dolares = l.convertir_a_dolares(pesos, trm)
+    print(pesos, 'pesos son', round(dolares, 2), 'dólares')
+
+iniciar_aplicacion()
+
+# Fin del programa
+```
+
+ - El programa terminará su ejecución
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Excepciones que le aplican a las consolas
+
+- No es necesario documentar las consolas
+
+	<br>
+
+- No se crean doctests para las consolas
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Lógica separada de la interfaz
+
+
+- Recuerde siempre mantener la lógica separada de la interfaz
+
+
+<br>
+
+
+- En **N1- PROY**:
+	- Lógica:
+		- `cupibank.py`
+
+	<br>
+
+	- Consolas:
+		- `consola_ingreso_mensual_neto.py`
+		- `consola_capacidad_endeudamiento.py`
+		- `consola_calificacion_crediticia.py`
+		- `consola_cupo_limite.py`
+		- `consola_cuota_mensual.py`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<i class="fas fa-question-circle fa-2x fa-spin fa-4x"></i>
+
+<br>
+<br>
+
+ [<i class="fas fa-home  fa-3x"></i>](https://eerosales24.github.io/iph_2026_20/#)
+</div></script></section></div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/chart/chart.min.js"></script>
+	<script src="plugin/chart/plugin.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+	  function isLight(color) {
+		let hex = color.replace('#', '');
+
+		// convert #fff => #ffffff
+		if(hex.length == 3){
+			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+		}
+
+		const c_r = parseInt(hex.substr(0, 2), 16);
+		const c_g = parseInt(hex.substr(2, 2), 16);
+		const c_b = parseInt(hex.substr(4, 2), 16);
+		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+		return brightness > 155;
+	}
+
+	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+	var isLight = isLight(bgColor);
+
+	if(isLight){
+		document.body.classList.add('has-light-background');
+	} else {
+		document.body.classList.add('has-dark-background');
+	}
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+        ],
+
+
+    	allottedTime: 120 * 1000,
+
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
+
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
+
+		customcontrols: {
+			controls: [
+			]
+		},
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width":960,"height":700,"margin":"0.025","minScale":"0.1","maxScale":"2.0","controls":"true","controlsLayout":"bottom-right","progress":"true","slideNumber":"true","center":"false","transition":"slide","transitionSpeed":"default"}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+
+  <!-- created with Advanced Slides -->
+</html>

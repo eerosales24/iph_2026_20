@@ -1,0 +1,1490 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title></title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/iph.css" id="theme" />
+    <link rel="stylesheet" href="plugin/highlight/spyder.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
+
+
+
+    <script defer src="dist/fontawesome/all.min.js"></script>
+
+	<script type="text/javascript">
+		var forgetPop = true;
+		function onPopState(event) {
+			if(forgetPop){
+				forgetPop = false;
+			} else {
+				parent.postMessage(event.target.location.href, "app://obsidian.md");
+			}
+        }
+		window.onpopstate = onPopState;
+		window.onmessage = event => {
+			if(event.data == "reload"){
+				window.document.location.reload();
+			}
+			forgetPop = true;
+		}
+
+		function fitElements(){
+			const itemsToFit = document.getElementsByClassName('fitText');
+			for (const item in itemsToFit) {
+				if (Object.hasOwnProperty.call(itemsToFit, item)) {
+					var element = itemsToFit[item];
+					fitElement(element,1, 1000);
+					element.classList.remove('fitText');
+				}
+			}
+		}
+
+		function fitElement(element, start, end){
+
+			let size = (end + start) / 2;
+			element.style.fontSize = `${size}px`;
+
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
+					size--;
+					element.style.fontSize = `${size}px`;
+				}
+				return;
+			}
+
+			if(element.scrollHeight > element.offsetHeight){
+				fitElement(element, start, size);
+			} else {
+				fitElement(element, size, end);
+			}		
+		}
+
+
+		document.onreadystatechange = () => {
+			fitElements();
+			if (document.readyState === 'complete') {
+				if (window.location.href.indexOf("?export") != -1){
+					parent.postMessage(event.target.location.href, "app://obsidian.md");
+				}
+				if (window.location.href.indexOf("print-pdf") != -1){
+					let stateCheck = setInterval(() => {
+						clearInterval(stateCheck);
+						window.print();
+					}, 250);
+				}
+			}
+	};
+
+
+        </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### <i class="fas fa-award"></i> IP Honores
+
+ ####  *Laboratorio 3 de Nivel 1 - N1-L3*
+
+[Eduardo Rosales](mailto:ee.rosales24@uniandes.edu.co)
+
+Departamento de Ingeniería de Sistemas y Computación
+
+Universidad de los Andes
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Siga paso a paso las siguientes instrucciones
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Trabajo individual (1/2)
+
+- Este laboratorio es
+	- **Completamente individual**<!-- .element: class="fragment highlight-blue" -->
+
+	<br>
+
+- El tiempo para terminar el laboratorio es muy corto
+	- Por favor:
+		- Evite las distracciones
+		- Guarde **silencio**<!-- .element: class="fragment highlight-blue" -->
+
+	<br>
+
+- Si no termina el laboratorio
+	- Debe finalizarlo (**y comprenderlo**) 
+		- En las **5h** <!-- .element: class="fragment highlight-red" -->
+			- De trabajo individual semanal
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Trabajo individual (2/2)
+
+- El próximo **martes 25 de agosto** habrá quiz al final de la sesión:<!-- .element: class="fragment highlight-blue" -->
+	- Se le pedirá implementar el cuerpo de una función
+		- Se le entregará
+			- Signatura
+			- Documentación
+			- Doctests
+	- La función solicitada deberá usar composición
+	
+	<br>
+	
+- Recuerde que los siguientes evaluables
+	- Estarán basados en N1-PROY:
+		1. **Último quiz de Nivel 1**
+			- **Jueves 27 de agosto**<!-- .element: class="fragment highlight-blue" -->
+		2.  **Examen de Nivel** - **N1-EXAM**
+			- **Viernes 28 de agosto** <!-- .element: class="fragment highlight-blue" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Preguntas
+
+- En caso de dudas, por favor:
+
+<br> 
+
+1. Formule su pregunta de forma **muy clara y concisa**
+
+<br>
+
+2. Luego (**y solo luego de esto**)
+	- Levante la mano
+
+<br>
+
+<i class="fas fa-question-circle fa-1x fa-spin fa-1x"></i> _Al plantearse correctamente la pregunta, la respuesta a veces se revela sola_
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Iniciemos con un repaso de funciones
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta I
+
+- ¿Qué es lo señalado en rojo?
+
+
+<img src="Screenshot 2025-08-16 at 10.28.10 AM.png" alt="" style="object-fit: scale-down">
+
+
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->**Respuesta:**
+	- La **palabra clave `def`**
+		-  Se usa para definir o declarar una función
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta II
+
+- ¿Qué es lo señalado en rojo?
+
+
+<img src="Screenshot 2025-08-16 at 10.30.39 AM.png" alt="" style="object-fit: scale-down">
+
+
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->**Respuesta:**
+	- La **signatura** o **encabezado** de la función
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III
+
+- ¿Qué es lo señalado en rojo?
+
+
+<img src="Screenshot 2025-08-16 at 10.31.37 AM.png" alt="" style="object-fit: scale-down">
+
+
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->**Respuesta:**
+	- El **nombre** de la función
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IV
+
+- ¿Qué es lo señalado en rojo?
+
+
+<img src="Screenshot 2025-08-16 at 10.32.58 AM.png" alt="" style="object-fit: scale-down">
+
+
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->**Respuesta:**
+	- La **lista de parámetros** de la función
+		- Va entre paréntesis
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta V
+
+- ¿Qué es lo señalado en rojo?
+
+<img src="Screenshot 2025-08-16 at 10.34.37 AM.png" alt="" style="object-fit: scale-down">
+
+
+
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->**Respuesta:**
+	- Los **nombres de los parámetros** de la función
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VI
+
+- ¿Qué es lo señalado en rojo?
+
+
+<img src="Screenshot 2025-08-16 at 10.35.47 AM.png" alt="" style="object-fit: scale-down">
+
+
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->**Respuesta:**
+	- Los **tipos de los parámetros** de la función
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VII
+
+- ¿Qué es lo señalado en rojo?
+
+
+<img src="Screenshot 2025-08-16 at 10.36.21 AM.png" alt="" style="object-fit: scale-down">
+
+
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->**Respuesta:**
+	- El  **tipo de retorno** de la función
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VIII
+
+- ¿`def` hace parte de la signatura de la función?
+
+
+<img src="Screenshot 2025-08-16 at 10.28.10 AM.png" alt="" style="object-fit: scale-down">
+
+
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->**Respuesta:**
+	-  `def` **no forma parte de la signatura**
+		- Es una **palabra clave** que introduce
+			- La declaración o definición de la función
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IX
+
+- ¿Qué es lo señalado en rojo?
+
+<img src="Screenshot 2025-08-16 at 10.40.21 AM.png" alt="" style="object-fit: scale-down">
+
+
+
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->**Respuesta:**
+	- La  **documentación** de la función
+		- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->También llamada: 
+			- **docstring**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta X
+
+- ¿Qué es lo señalado en rojo?
+
+
+<img src="Screenshot 2025-08-16 at 11.02.08 AM.png" alt="" style="object-fit: scale-down">
+
+
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->**Respuesta:**
+	- La documentación se **abre** y se **cierra**
+		- Con **comillas triples**
+			- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->Por eso se llama: **docstring**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XI
+
+- ¿Qué es lo señalado en rojo?
+
+<img src="Screenshot 2025-08-16 at 10.42.15 AM.png" alt="" style="object-fit: scale-down">
+
+
+
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->**Respuesta:**
+	- La **documentación del propósito** de la función
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XII
+
+- ¿Qué es lo señalado en rojo?
+
+<img src="Screenshot 2025-08-16 at 10.43.18 AM.png" alt="" style="object-fit: scale-down">
+
+
+
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->**Respuesta:**
+	- La **documentación de los parámetros** de la función, que incluye:
+		- Nombre
+		- Tipo
+		- Descripción concisa
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XIII
+
+- ¿Qué es lo señalado en rojo?
+
+
+<img src="Screenshot 2025-08-16 at 11.01.08 AM.png" alt="" style="object-fit: scale-down">
+
+
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->**Respuesta:**
+	- La **documentación del retorno** de la función, que incluye:
+		- Nombre (si alguno)
+		- Tipo
+		- Descripción concisa
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XIV
+
+
+- ¿Qué es lo señalado en rojo?
+
+
+<img src="Screenshot 2025-08-16 at 11.04.54 AM.png" alt="" style="object-fit: scale-down">
+
+
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->**Respuesta:**
+	- La **palabra clave `return`**
+		- Marca el **retorno explícito** de una función
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XV
+
+
+- ¿Qué es lo señalado en rojo?
+
+
+<img src="Screenshot 2025-08-16 at 11.07.45 AM.png" alt="" style="object-fit: scale-down">
+
+
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->**Respuesta:**
+	- La **instrucción `return`**
+		- Permite que una función retorne de forma explícita
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XVI
+
+
+- ¿Qué es lo señalado en rojo?
+
+
+<img src="Screenshot 2025-08-16 at 11.09.03 AM 1.png" alt="" style="object-fit: scale-down">
+
+
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->**Respuesta:**
+	- **Una expresión**
+		- Que se **evalúa** y cuyo resultado
+			- **Retorna** la función
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XVII
+
+- ¿Qué propósito tiene el código señalado en rojo?
+
+<img src="Screenshot 2025-08-16 at 11.03.43 AM 1.png" alt="" style="object-fit: scale-down">
+
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->**Respuesta:**
+	- Es la **invocación** a la función `suma()`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XVIII
+
+- ¿Qué es lo señalado en rojo?
+ 
+<img src="Screenshot 2025-08-16 at 11.11.25 AM.png" alt="" style="object-fit: scale-down">
+
+
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->**Respuesta:**
+	- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->Los argumentos pasados/enviados a la función
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XIX
+
+- ¿Qué valor será asignado a `resultado` después de ejecutar el siguiente código?
+
+<img src="Screenshot 2025-08-16 at 11.13.05 AM.png" alt="" style="object-fit: scale-down">
+
+
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->**Respuesta:**
+	- `7`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XX
+
+- ¿Qué valor será asignado a `resultado` después de ejecutar el siguiente código?
+
+<img src="Screenshot 2025-08-16 at 11.17.35 AM.png" alt="" style="object-fit: scale-down">
+
+
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->**Respuesta:**
+	- `0`
+		- Porque: `-3 - -3` = `-3 + 3` = `0`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XXI
+
+- ¿Qué valor será asignado a `resultado` después de ejecutar el siguiente código?
+
+```python
+def division(dividendo: int, divisor: int) -> float:
+    """
+    Calcula la división de dos números enteros.
+
+    Args:
+        dividendo (int): Número a dividir.
+        divisor (int): Número por el cual se divide.
+
+    Returns:
+        float: El resultado de la división.
+    """
+    return dividendo / divisor
+
+
+resultado = division(19, 2)
+```
+
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->**Respuesta:**
+	- `9.5`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XXII
+
+- ¿Qué valor será asignado a `resultado` después de ejecutar el siguiente código?
+
+```python
+def modulo(dividendo: int, divisor: int) -> int:
+    """
+    Calcula el módulo (residuo) de dos números enteros.
+
+    Args:
+        dividendo (int): número a dividir.
+        divisor (int): número por el cual se divide.
+
+    Returns:
+        int: El residuo de la división entre los números enteros.
+    """
+    return dividendo % divisor
+
+
+resultado = modulo(19, 2)
+```
+
+
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->**Respuesta:**
+	- `1`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XXIII
+
+```python
+def resta(primer_operando: int, segundo_operando: int) -> int:
+    return primer_operando - segundo_operando
+```
+
+- ¿La función tiene un retorno explícito o implícito?
+	- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->Explícito
+
+- ¿Qué retorna la función?
+	- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->La resta aritmética  de: 
+		- &shy;<!-- .element: class="fragment" data-fragment-index="3" -->`primer_operando` y  `segundo_operando`
+	
+- ¿Cuál es el tipo de retorno de la función?
+	- &shy;<!-- .element: class="fragment" data-fragment-index="4" -->`int`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XXIV
+
+```python
+def print_hola(nombre:str) -> None:
+    print("¡Hola!")
+```
+
+- ¿La función tiene un retorno explícito o implícito?
+	- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->Implícito
+
+- ¿Qué retorna la función?
+	- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->`None`
+	
+- ¿Cuál es el tipo de retorno de la función?
+	- &shy;<!-- .element: class="fragment" data-fragment-index="3" -->`None`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XXV
+
+```python
+def do_nothing() -> None:
+    return
+```
+
+- ¿La función tiene un retorno explícito o implícito?
+	- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->**Explícito**
+		- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->Porque se usa `return` 
+
+- ¿Qué retorna la función?
+	- &shy;<!-- .element: class="fragment" data-fragment-index="3" -->`None`
+		
+	
+- ¿Cuál es el tipo de retorno de la función?
+	- &shy;<!-- .element: class="fragment" data-fragment-index="4" -->`None`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XXVI
+
+- Ignorando que no hay documentación ni doctests
+	- ¿Qué problemas tiene la siguiente función?
+
+```python
+def calcular_area_y_perimetro_rectangulo(ancho, alto):
+    area = ancho * alto
+    perimetro = 2 * (ancho + alto)
+    return area
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XXVI - Solución
+
+- Ignorando que no hay documentación ni doctests
+	- ¿Qué problemas tiene la siguiente función?
+
+```python
+def calcular_area_y_perimetro_rectangulo(ancho, alto):
+    area = ancho * alto
+    perimetro = 2 * (ancho + alto)
+    return area
+```
+
+
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->**Respuesta:**
+
+	- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->No se usa tipado en la signatura
+	- &shy;<!-- .element: class="fragment" data-fragment-index="3" -->La función no tiene un único propósito
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XXVII
+
+- Ignorando que no hay documentación ni doctests
+	- ¿Qué problema hay en el siguiente código?
+
+```python
+def incrementar(cantidad: int, delta: int) -> int:
+    return cantidad + delta
+
+incrementar(100, 10)
+
+print(cantidad)
+```
+
+
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->**Respuesta:**
+	- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->Se intenta usar una variable local, por fuera de la función
+	- &shy;<!-- .element: class="fragment" data-fragment-index="3" -->Esto generará:
+		- &shy;<!-- .element: class="fragment" data-fragment-index="4" -->`NameError: name 'cantidad' is not defined`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XXVIII
+
+- Ignorando que no hay documentación ni doctests
+	- ¿Qué problema hay en el siguiente código?
+
+```python
+def calcular_area_cuadrado(lado: float) -> float:
+    return lado * lado
+
+def calcular_area_triangulo(base: float, altura: float) -> float:
+    return (base * altura) / 2
+
+def calcular_area_total(
+	lado_cuadrado: float, 
+	base_triangulo: float, 
+	altura_triangulo: float) -> float:
+	
+    area_cuadrado = lado_cuadrado * lado_cuadrado
+    area_triangulo = (base_triangulo * altura_triangulo) / 2
+    return area_cuadrado + area_triangulo
+
+print(calcular_area_total(4.0, 4.0, 4.0))  # → 24.0
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XXVIII - Solución
+
+- ¿Qué problema hay en el siguiente código?
+
+```python[12, 13]
+def calcular_area_cuadrado(lado: float) -> float:
+    return lado * lado
+
+def calcular_area_triangulo(base: float, altura: float) -> float:
+    return (base * altura) / 2
+
+def calcular_area_total(
+	lado_cuadrado: float, 
+	base_triangulo: float, 
+	altura_triangulo: float) -> float:
+	
+    area_cuadrado = lado_cuadrado * lado_cuadrado
+    area_triangulo = (base_triangulo * altura_triangulo) / 2
+    return area_cuadrado + area_triangulo
+
+print(calcular_area_total(4.0, 4.0, 4.0))  # → 24.0
+```
+
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->**Respuesta:**
+	- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->No se usa composición, violando el SRP
+		- &shy;<!-- .element: class="fragment" data-fragment-index="3" -->Se duplica innecesariamente código
+			- &shy;<!-- .element: class="fragment" data-fragment-index="4" -->En: `calcular_area_total()`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XXIX
+
+ - Ignorando que no hay documentación ni doctests
+	- ¿Qué problema hay en el siguiente código?
+
+```python
+def calcular_area_cuadrado(lado: float) -> float:
+    return lado * lado
+
+def calcular_area_triangulo(base: float, altura: float) -> float:
+    return (base * altura) / 2
+
+def calcular_area_total(
+	lado_cuadrado: float, 
+	base_triangulo: float, 
+	altura_triangulo: float) -> float:
+	
+    area_cuadrado = calcular_area_cuadrado
+    area_triangulo = calcular_area_triangulo
+    return area_cuadrado + area_triangulo
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XXX - Solución
+
+
+```python[12,13]
+def calcular_area_cuadrado(lado: float) -> float:
+    return lado * lado
+
+def calcular_area_triangulo(base: float, altura: float) -> float:
+    return (base * altura) / 2
+
+def calcular_area_total(
+	lado_cuadrado: float, 
+	base_triangulo: float, 
+	altura_triangulo: float) -> float:
+	
+    area_cuadrado = calcular_area_cuadrado
+    area_triangulo = calcular_area_triangulo
+    return area_cuadrado + area_triangulo
+```
+
+- Este es un error **muy común en evaluaciones**
+	- No invocar correctamente a una función
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XXXI
+
+- ¿Qué problema hay en el siguiente código?
+
+```python
+def suma(num1: float, num2: float) -> float:
+    """
+    Suma dos números.
+
+    Args:
+        num1 (float): Primer número a sumar.
+        num2 (float): segundo número a sumar.
+
+    Returns:
+        (float): La suma aritmética de num1 y num2.
+    """
+    return num1 + num2
+
+numero1 = input('Ingrese el primer número: ')
+numero2 = input('Ingrese el segundo número: ')
+
+print('El resultado de la suma es: ', suma(numero1, numero2))
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XXXI - ¿Solución?
+
+- **No se da respuesta**
+
+<br>
+
+- Analice el código y **llegue a una conclusión**
+
+<br>
+
+- Si no lo logra:
+	- Ejecute el código en Spyder
+		- Y comprenda qué es un **<a href="https://eerosales24.github.io/iph_2026_20/general/errores_comunes/#/25" target="_blank" rel="noopener noreferrer">Error lógico</a>**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Fin del repaso de funciones
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#  Actividad I
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad I (1/9)
+
+- Las pruebas son un **paso fundamental** de la metodología del curso
+	- ❌ Entregar una función sin probarla
+	- ❌ Entregar una función con tests fallidos
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+> "A good programmer is someone who always looks both ways before crossing a one-way street."
+
+Doug Linder
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad I (2/9)
+
+- Configure el ambiente de pruebas de la función `suma()`
+	- Para ello copie las dos líneas mostradas a continuación
+		- Debe pegarlas en el orden mostrado
+			- Esto es, una línea **antes** y otra **después** de la función:
+
+<br>
+
+```Python
+import doctest
+```
+
+<br>
+
+```Python
+doctest.run_docstring_examples(suma, globals(), verbose=True)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad I (3/9)
+
+Ahora el programa debería verse así en su editor de Spyder:
+
+```python
+import doctest
+
+def suma(primer_operando: int, segundo_operando: int) -> int:
+    """
+    Calcula la suma de dos números enteros.
+
+    Args:
+        primer_operando (int): El primer número entero a sumar.
+        segundo_operando (int): El segundo número entero a sumar.
+
+    Returns:
+        int: El resultado de sumar los números enteros.
+
+    >>> suma(0, 0)  # Caso solo ceros
+    0
+    >>> suma(2, 2)  # Caso enteros positivos
+    4
+    >>> suma(-2, -10)  # Caso enteros negativos
+    -12
+    >>> suma(-2, 5)  # Caso enteros positivos y negativos
+    3
+    """
+    return primer_operando + segundo_operando
+
+doctest.run_docstring_examples(suma, globals(), verbose=True)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad I (4/9)
+
+- Ejecute las pruebas de la función `suma()`
+	- Para ello, clic en el botón de ► "play" (ver cuadro rojo)
+
+<img src="iph/n1/img/spyder_10.png" alt="" style="object-fit: scale-down">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad I (5/9)
+
+- ✅ Todos los tests son exitosos
+	- Así debería verse el resultado en el intérprete (terminal):
+
+```Plaintext
+Trying:
+    suma(0, 0)  # Caso solo ceros
+Expecting:
+    0
+ok
+Trying:
+    suma(2, 2)  # Caso enteros positivos
+Expecting:
+    4
+ok
+Trying:
+    suma(-2, -10)  # Caso enteros negativos
+Expecting:
+    -12
+ok
+Trying:
+    suma(-2, 5)  # Caso enteros positivos y negativos
+Expecting:
+    3
+ok
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad I (6/9)
+
+- **Primer test**: ¿por qué es exitoso?
+
+```Python
+def suma(primer_operando: int, segundo_operando: int) -> int:
+    """
+	    ...
+        >>> 	suma(0, 0)  # Caso solo ceros
+	    0
+	    ...
+    """
+    return primer_operando + segundo_operando
+```
+
+
+```Plaintext
+Trying:
+    suma(0, 0)  # Caso solo ceros
+Expecting:
+    0
+ok
+```
+
+- El primer test es exitoso:
+	- Salida esperada: `0`
+	- Salida obtenida: **`0`**
+		- Porque  `primer_operando` + `segundo_operando` (0 + 0) es igual a **`0`**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Actividad I (7/9)
+
+- **Segundo test**: ¿por qué es exitoso?
+
+```Python
+def suma(primer_operando: int, segundo_operando: int) -> int:
+    """
+		...
+        >>> suma(2, 2)  # Caso enteros positivos
+        4
+	    ...
+    """
+    return primer_operando + segundo_operando
+```
+
+```Plaintext
+Trying:
+    suma(2, 2)  # Caso enteros positivos
+Expecting:
+    4
+ok
+```
+
+- El segundo test es exitoso:
+	- Salida esperada: `4`
+	- Salida obtenida: **`4`**
+		- Porque  `primer_operando` + `segundo_operando` (2 + 2) es igual a **`4`**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad I (8/9)
+
+- **Tercer test**: ¿por qué es exitoso?
+
+```Python
+def suma(primer_operando: int, segundo_operando: int) -> int:
+    """
+		...
+        >>> suma(-2, -10)  # Caso enteros negativos
+        -12
+	    ...
+    """
+    return primer_operando + segundo_operando
+```
+
+```Plaintext
+Trying:
+    suma(-2, -10)  # Caso enteros negativos
+Expecting:
+    -12
+ok
+```
+
+- El tercer test es exitoso:
+	- Salida esperada: `-12`
+	- Salida obtenida: **`-12`**
+		- Porque  `primer_operando` + `segundo_operando` (-2 + -10) es igual a **`-12`**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad I (9/9)
+
+-  **Cuarto test**: ¿por qué es exitoso?
+
+```Python
+def suma(primer_operando: int, segundo_operando: int) -> int:
+    """
+		...
+        >>> suma(-2, 5)  # Caso enteros positivos y negativos
+        3
+	    ...
+    """
+    return primer_operando + segundo_operando
+```
+
+```Plaintext
+Trying:
+    suma(-2, 5)  # Caso enteros positivos y negativos
+Expecting:
+    3
+ok
+```
+
+- El cuarto test es exitoso:
+	- Salida esperada: `3`
+	- Salida obtenida: **`3`**
+		- Porque  `primer_operando` + `segundo_operando` (-2 + 5) es igual a **`3`**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#  Actividad II
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad II (1/7)
+
+- Una función podría estar mal implementada
+	- En ese caso, uno o más tests **deberían fallar**
+- A continuación se usará una **versión errónea** de la función `suma()`
+	- El objetivo es entender por qué test fallan
+		- Lo cual se requiere para **corregir** una función
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad II (2/7)
+
+- Copie y pegue esta **versión errónea** de la función `suma()`
+	- En esta versión, no hace la suma aritmética
+		- Sino que la salida siempre es valor de `primer_operando`
+			- Lo cual **no cumple con el propósito de la función**
+
+```Python
+import doctest
+
+def suma(primer_operando: int, segundo_operando: int) -> int:
+    """
+    Calcula la suma de dos números enteros.
+
+    Args:
+        primer_operando (int): El primer número entero a sumar.
+        segundo_operando (int): El segundo número entero a sumar.
+
+    Returns:
+        int: El resultado de sumar los números enteros.
+
+    >>> suma(0, 0)  # Caso solo ceros
+    0
+    >>> suma(2, 2)  # Caso enteros positivos
+    4
+    >>> suma(-2, -10)  # Caso enteros negativos
+    -12
+    >>> suma(-2, 5)  # Caso enteros positivos y negativos
+    3
+    """
+    # Implementación errónea:
+    return primer_operando
+    
+doctest.run_docstring_examples(suma, globals(), verbose=True)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad II (3/7)
+
+- Ejecute las pruebas de la función errónea `suma()`
+	- No todos los tests serán exitosos
+		- Así debería verse el resultado en el intérprete (terminal):
+
+```Plaintext
+Trying:
+    suma(0, 0)  # Caso solo ceros
+Expecting:
+    0
+ok
+Trying:
+    suma(2, 2)  # Caso enteros positivos
+Expecting:
+    4
+**********************************************************************
+File "/Users/eduardo/Desktop/untitled5.py", line 24, in NoName
+Failed example:
+    suma(2, 2)  # Caso enteros positivos
+Expected:
+    4
+Got:
+    2
+Trying:
+    suma(-2, -10)  # Caso enteros negativos
+Expecting:
+    -12
+**********************************************************************
+File "/Users/eduardo/Desktop/untitled5.py", line 26, in NoName
+Failed example:
+    suma(-2, -10)  # Caso enteros negativos
+Expected:
+    -12
+Got:
+    -2
+Trying:
+    suma(-2, 5)  # Caso enteros positivos y negativos
+Expecting:
+    3
+**********************************************************************
+File "/Users/eduardo/Desktop/untitled5.py", line 28, in NoName
+Failed example:
+    suma(-2, 5)  # Caso enteros positivos y negativos
+Expected:
+    3
+Got:
+    -2
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad II (4/7)
+
+- **Primer test**: ¿por qué es exitoso?
+	
+```Python
+def suma(primer_operando: int, segundo_operando: int) -> int:
+    """
+	    ...
+        >>> suma(0, 0)  # Caso solo ceros
+	    0
+	    ...
+    """
+    # Implementación errónea:
+    return primer_operando
+```
+
+```Plaintext
+Trying:
+    suma(0, 0)  # Caso solo ceros
+Expecting:
+    0
+ok
+```
+
+- El primer test es exitoso:
+	- Salida esperada: `0`
+	- Salida obtenida: **`0`**
+		- Porque  `primer_operando` es igual a **`0`**
+
+Este caso destaca la importancia de **hacer varias pruebas**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad II (5/7)
+
+- **Segundo** test: ¿por qué falla?
+
+```Python
+def suma(primer_operando: int, segundo_operando: int) -> int:
+    """
+		...
+        >>> suma(2, 2)  # Caso enteros positivos
+        4
+	    ...
+    """
+	# Implementación errónea:
+    return primer_operando
+```
+
+```Plaintext
+Failed example:
+    suma(2, 2)  # Caso enteros positivos
+Expected:
+    4
+Got:
+    2
+```
+- El segundo test es falla:
+	- Salida esperada: `4`
+	- Salida obtenida: **`2`**
+		- Porque `primer_operando` es igual a **`2`**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad II (6/7)
+
+- **Tercer** test: ¿por qué falla?
+
+```Python
+def suma(primer_operando: int, segundo_operando: int) -> int:
+    """
+		...
+        >>> suma(-2, -10)  # Caso enteros negativos
+        -12
+	    ...
+    """
+	# Implementación errónea:
+    return primer_operando
+```
+
+```Plaintext
+Failed example:
+    suma(-2, -10)  # Caso enteros negativos
+Expected:
+    -12
+Got:
+    -2
+```
+
+- El tercer test es falla:
+	- Salida esperada: `-12`
+	- Salida obtenida: **`-2`**
+		- Porque  `primer_operando` es igual a **`-2`**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad II (7/7)
+
+- **Cuarto** test: ¿por qué falla?
+
+```Python
+def suma(primer_operando: int, segundo_operando: int) -> int:
+    """
+		...
+        >>> suma(-2, 5)  # Caso enteros positivos y negativos
+        3
+	    ...
+    """
+	# Implementación errónea:
+    return primer_operando
+```
+
+```Plaintext
+Failed example:
+    suma(-2, 5)  # Caso enteros positivos y negativos
+Expected:
+    3
+Got:
+    -2
+```
+
+- El cuarto test es falla:
+	- Salida esperada: `3`
+	- Salida obtenida: **`-2`**
+		- Porque  `primer_operando` es igual a **`-2`**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🌀 La metodología de IP Honores (1/2) 🌀
+
+- **El orden es importante**
+	- **NUNCA** se debe construir (codificar)
+		- Si el análisis y el diseño no se han terminado
+
+<img src="iph/n1/img/resultado.png" alt="" style="object-fit: scale-down">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🌀 La metodología de IP Honores (2/2) 🌀
+
+- **El orden es importante**
+	- **NUNCA** se debe construir (codificar)
+		- Sin haber diseñado y documentado los casos de prueba
+			- **En N1-PROY, ya se le entregan todos los doctests**
+
+<img src="iph/n1/img/resultado.png" alt="" style="object-fit: scale-down">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#  Actividad III
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### ¿Cómo indicar una **tarea pendiente** en el código?
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### TODOs (comentarios) (1/3)
+
+- Marcan una sección que requiere ser completada
+
+- Sirve como recordatorio de tareas pendientes
+
+- La descripción debe ser concisa y clara
+
+- Formato:
+```Python
+# TODO: Aquí la descripción de la tarea.
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### TODOs (comentarios) (2/3)
+
+- Numerar los `TODOs`
+	- Útil para organizarlos
+- Ej:  
+
+	
+```Python
+# TODO 1: Descripción (concisa y clara) de la tarea 1.
+
+# TODO 2: Descripción (concisa y clara) de la tarea 2.
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### TODOs - Ejemplo
+
+```Python
+def suma(num1: int, num2: int) -> int:
+    # TODO1: Agregar aquí la documentación de la función suma().
+	
+    return num1 + num2
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### TODOs (comentarios) (3/3)
+
+- En el proyecto de Nivel 1 (**N1-PROY**)
+	- Se usan `TODOs` para indicar tareas que deben completarse
+		- Siguen este estilo:
+
+```python
+    # TODO 1: Implemente la función tal y como se describe en la documentación.
+    
+    ...
+    
+    # TODO 9: Implemente la función tal y como se describe en la documentación.
+
+```
+
+<br>
+
+- Note que están numerados
+	- Y **deben** completarse en ese orden numérico ascendente
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+> "Talk is cheap. Show me the code."
+
+
+Linus Torvalds
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad III (1/2)
+
+1. Vaya a Bloque Neón
+	- IP Honores
+		- Actividades
+			- N1-PROY
+
+<br>
+
+2. Lea el enunciado (`N1-PROY.pdf`)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad III (2/2)
+
+1. Implemente el `TODO 1`:
+	- Función: `calcular_ingreso_mensual_neto`
+
+
+<br>
+
+2. Complete el `TODO1` y ejecute los 5 doctests que ya están dados
+	- Si falla alguno, corrija su implementación
+		- Nunca entregue una función si haber superado todos los doctests
+
+<br>
+
+3. Luego, implemente las demás funciones de N1-PROY
+	- Y cree las 5 consolas requeridas
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Fin de N1-L3
+
+
+- No es necesario entregar nada
+	- Puede enviar sus avances hechos en **N1-PROY**
+		- Puede hacer envíos **ilimitados**
+			- La entrega que será revisada
+				- Será exclusivamente **la última**
+			
+
+- **Fecha límite:**
+	- Viernes **28** de agosto , **9:00am**
+		- Ese día a las 9:30am será **N1-EXAM**<!-- .element: class="fragment highlight-red" -->
+			- Salón: **RGD_310**<!-- .element: class="fragment highlight-blue" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<br>
+
+ [<i class="fas fa-home  fa-3x"></i>](https://eerosales24.github.io/iph_2026_20/#)
+</div></script></section></div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/chart/chart.min.js"></script>
+	<script src="plugin/chart/plugin.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+	  function isLight(color) {
+		let hex = color.replace('#', '');
+
+		// convert #fff => #ffffff
+		if(hex.length == 3){
+			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+		}
+
+		const c_r = parseInt(hex.substr(0, 2), 16);
+		const c_g = parseInt(hex.substr(2, 2), 16);
+		const c_b = parseInt(hex.substr(4, 2), 16);
+		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+		return brightness > 155;
+	}
+
+	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+	var isLight = isLight(bgColor);
+
+	if(isLight){
+		document.body.classList.add('has-light-background');
+	} else {
+		document.body.classList.add('has-dark-background');
+	}
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+        ],
+
+
+    	allottedTime: 120 * 1000,
+
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
+
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
+
+		customcontrols: {
+			controls: [
+			]
+		},
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width":960,"height":700,"margin":"0.025","minScale":"0.1","maxScale":"2.0","controls":"true","controlsLayout":"bottom-right","progress":"true","slideNumber":"true","center":"false","transition":"slide","transitionSpeed":"default"}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+
+  <!-- created with Advanced Slides -->
+</html>

@@ -1,0 +1,79 @@
+/*
+Spyder Light Style - Inspired by Spyder IDE's light theme
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #ebebeb; /* Slightly darker gray background for better contrast */
+  color: #000000; /* Black for non-highlighted text */
+  font-size: 1.4em; /* Incrementa el tamaño del texto */
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-literal,
+.hljs-strong,
+.hljs-name {
+  color: #005cc5; /* Soft blue for keywords and tags */
+  font-weight: bold;
+}
+
+.hljs-string,
+.hljs-bullet,
+.hljs-template-tag,
+.hljs-template-variable {
+  color: #006400; /* Darker green for strings and template elements */
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: #404040; /* Darker gray for comments and quotes */
+  font-style: italic;
+}
+
+.hljs-title,
+.hljs-section {
+  color: #000000; /* Black for user-defined function names */
+  font-weight: bold;
+}
+
+.hljs-attribute,
+.hljs-symbol,
+.hljs-regexp,
+.hljs-link {
+  color: #d73a49; /* Red for attributes and symbols */
+}
+
+.hljs-number {
+  color: #e36209; /* Orange for numbers */
+}
+
+.hljs-variable,
+.hljs-type,
+.hljs-built_in,
+.hljs-builtin-name {
+  color: #900090; /* Dark purple for built-in types (int, float, bool, str, None) */
+}
+
+.hljs-meta {
+  color: #6a737d; /* Medium gray for meta elements */
+}
+
+.hljs-addition {
+  color: #22863a; /* Green for additions */
+}
+
+.hljs-deletion {
+  color: #d73a49; /* Red for deletions */
+}
+
+/* Emphasis and strong elements */
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
