@@ -105,13 +105,50 @@ Donald Knuth
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### Índice
+### Índice (1/2)
 
-- [Usar identificadores válidos](https://eerosales24.github.io/iph_2026_20/n1/buenas_practicas/#3)
-- [Usar identificadores concisos](https://eerosales24.github.io/iph_2026_20/n1/buenas_practicas/#6)
-- [Usar indentificadores autoexplicativos](https://eerosales24.github.io/iph_2026_20/n1/buenas_practicas/#7)
-- [Usar snake_case en identificadores](https://eerosales24.github.io/iph_2026_20/n1/buenas_practicas/#8)
-- [Usar la convención de constantes](https://eerosales24.github.io/iph_2026_20/n1/buenas_practicas/#9)
+- [Usar identificadores válidos](https://eerosales24.github.io/iph_2026_20/n1/buenas_practicas/#4)
+
+- [Usar identificadores concisos](https://eerosales24.github.io/iph_2026_20/n1/buenas_practicas/#7)
+
+- [Usar indentificadores autoexplicativos](https://eerosales24.github.io/iph_2026_20/n1/buenas_practicas/#8)
+
+- [Usar snake_case en identificadores](https://eerosales24.github.io/iph_2026_20/n1/buenas_practicas/#9)
+
+- [Usar la convención de constantes](https://eerosales24.github.io/iph_2026_20/n1/buenas_practicas/#10)
+
+- [Declarar variables antes de usarlas](https://eerosales24.github.io/iph_2026_10/general/buenas_practicas/#/12)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Índice (2/2)
+
+
+- [Usar funciones integradas](https://eerosales24.github.io/iph_2026_10/general/buenas_practicas/#/13)
+
+- [Documentar las funciones](https://eerosales24.github.io/iph_2026_10/general/buenas_practicas/#/15)
+
+- [Crear doctests](https://eerosales24.github.io/iph_2026_10/general/buenas_practicas/#/16)
+
+- [Cumplir el SRP](https://eerosales24.github.io/iph_2026_10/general/buenas_practicas/#/17)
+
+- [Usar tipado en la signatura](https://eerosales24.github.io/iph_2026_10/general/buenas_practicas/#/22)
+
+- [Usar indentación uniforme](https://eerosales24.github.io/iph_2026_10/general/buenas_practicas/#/23)
+
+- [Usar todos los parámetros](https://eerosales24.github.io/iph_2026_10/general/buenas_practicas/#/24)
+
+- [Usar variables locales](https://eerosales24.github.io/iph_2026_10/general/buenas_practicas/#/25)
+
+- [Usar todas las variables declaradas](https://eerosales24.github.io/iph_2026_10/general/buenas_practicas/#/29)
+
+- [Usar líneas cortas](https://eerosales24.github.io/iph_2026_10/general/buenas_practicas/#/30)
+
+- [Usar un solo return](https://eerosales24.github.io/iph_2026_10/general/buenas_practicas/#/31)
+
+- [Respetar el tipo de retorno declarado](https://eerosales24.github.io/iph_2026_10/general/buenas_practicas/#/32)
+
+- [Separar la lógica de la interfaz](https://eerosales24.github.io/iph_2026_10/general/buenas_practicas/#/33)
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -222,7 +259,444 @@ Donald Knuth
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-- En construcción...
+### Declarar variables antes de usarlas
+
+
+- Toda variable debe ser **declarada**
+	- Antes de usarse
+
+- Ej:
+```Python
+pi = 3.14
+print(pi)
+```
+
+<br>
+
+- Evita
+	- <a href="https://eerosales24.github.io/iph_2026_20/general/errores_comunes/#/8" target="_blank" rel="noopener noreferrer">NameError</a>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Usar funciones integradas (1/2)
+
+- No "reinventar la rueda":
+    - Use funciones integradas (<a href="https://docs.python.org/3/library/functions.html" target="_blank" rel="noopener noreferrer">built-in functions</a>):
+    - Aquí algunas estudiadas en N1:
+	    - Tipos: <a href="https://docs.python.org/3/library/functions.html#type" target="_blank" rel="noopener noreferrer">type()</a>,    <a href="https://docs.python.org/3/library/functions.html#float" target="_blank" rel="noopener noreferrer">float()</a>,  <a href="https://docs.python.org/3/library/functions.html#int" target="_blank" rel="noopener noreferrer">int()</a>,  <a href="https://docs.python.org/3/library/functions.html#func-str" target="_blank" rel="noopener noreferrer">str()</a>
+	    - Identidad: <a href="https://docs.python.org/3/library/functions.html?highlight=id#id" target="_blank" rel="noopener noreferrer">id()</a>
+	    - Numéricas: <a href="https://docs.python.org/3/library/functions.html#abs" target="_blank" rel="noopener noreferrer">abs()</a>,  <a href="https://docs.python.org/3/library/functions.html#round" target="_blank" rel="noopener noreferrer">round()</a>,  <a href="https://docs.python.org/3/library/functions.html#min" target="_blank" rel="noopener noreferrer">min()</a>,  <a href="https://docs.python.org/3/library/functions.html#max" target="_blank" rel="noopener noreferrer">max()</a>,  <a href="https://docs.python.org/3/library/functions.html#pow" target="_blank" rel="noopener noreferrer">pow()</a>
+	    - Entrada: <a href="https://docs.python.org/3/library/functions.html#input" target="_blank" rel="noopener noreferrer">input()</a>
+	    - Salida: <a href="https://docs.python.org/3/library/functions.html#print" target="_blank" rel="noopener noreferrer">print()</a>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Usar funciones integradas (2/2)
+
+- No "reinventar la rueda":
+	- Usar funciones de módulos estándar (Ej: <a href="https://docs.python.org/3/library/math.html" target="_blank" rel="noopener noreferrer">math</a>, <a href="https://docs.python.org/3/library/random.html" target="_blank" rel="noopener noreferrer">random</a>):
+		- `math`: <a href="https://docs.python.org/3/library/math.html#math.sqrt" target="_blank" rel="noopener noreferrer">math.sqrt()</a>, <a href="https://docs.python.org/3/library/math.html#math.sin" target="_blank" rel="noopener noreferrer">math.sin()</a>, <a href="https://docs.python.org/3/library/math.html#math.cos" target="_blank" rel="noopener noreferrer">math.cos()</a>, <a href="https://docs.python.org/3/library/math.html#math.log10" target="_blank" rel="noopener noreferrer">math.log10()</a>
+		- `random`: <a href="https://docs.python.org/3/library/random.html#random.random" target="_blank" rel="noopener noreferrer">random.random()</a>,  <a href="https://docs.python.org/3/library/random.html#random.randint" target="_blank" rel="noopener noreferrer">random.randint()</a>, <a href="https://docs.python.org/3/library/random.html#random.uniform" target="_blank" rel="noopener noreferrer">random.uniform()</a>
+	- Ayuda: <a href="https://docs.python.org/3/library/functions.html#help" target="_blank" rel="noopener noreferrer">help()</a>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Documentar las funciones
+
+- Las funciones deben documentarse\*
+	- [PEP 257](https://peps.python.org/pep-0257/)
+
+- Aquí el formato genérico de un docstring usado en el curso:
+
+```python
+    """
+    Propósito de la función.
+
+    Args:
+        nombre parametro 1 (tipo del parametro 1): Descripción.
+        ...
+        nombre parametro n (tipo del parametro n): Descripción.
+        
+    Returns:
+        tipo de retorno: Descripción del valor de retorno.
+    """
+```
+
+<br>
+
+\* La única excepción en Nivel 1, son las funciones en consolas
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Crear doctests
+
+- Las funciones deben incluir varios de casos de prueba\*
+	- En forma de doctests
+- Cada doctest debe ser significativo y no redundante
+- Cada doctest debe estar documentado
+	- De forma muy concisa y clara
+		- En un comentario
+- Ej:
+
+```Python
+   """
+        ...
+        
+        >>> suma(0, 0)  # Caso solo ceros
+        0
+        >>> suma(2, 2)  # Caso enteros positivos
+        4
+        >>> suma(-2, -10)  # Caso enteros negativos
+        -12
+        >>> suma(-2, 5)  # Caso enteros positivos y negativos
+        3
+   """
+```
+
+<br>
+
+\* La excepción en Nivel 1, son las funciones en consolas y las que producen resultados aleatorios
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Cumplir el SRP (1/5)
+
+
+- **"Una función debe tener una, y solo una, razón para cambiar"**
+
+	<br>
+
+-  Si una función tiene dos o más propósitos
+	- Es una indicación
+		- Implementación → Se debería distribuir 
+			- En 2 o más funciones
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Cumplir el SRP (2/5)
+
+Ej:
+
+
+``` Python
+def calcular_area_y_perimetro_rectangulo(ancho: float, alto: float) -> ?:
+    area = ancho * alto
+    perimetro = 2 * (ancho + alto)
+    return ?  # ¿Qué retornar?
+```
+
+-  ❌  Esta función tiene dos propósitos
+	-   ❌  Tiene dos razones para cambiar
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Cumplir el SRP (3/5)
+
+``` Python
+	def calcular_area_rectangulo(ancho: float, alto: float) -> float:
+	    return ancho * alto
+```
+
+<br>
+
+``` Python
+def calcular_perimetro_rectangulo(ancho: float, alto: float) -> float:
+    return 2 * (ancho + alto)
+```
+
+<br>
+
+ ✅ Cada función tiene un propósito único
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Cumplir el SRP (4/5)
+
+-   ❌ Demasiados parámetros
+
+	<br>
+
+-  ✅ Limitar el tamaño de la lista de parámetros
+	- Demasiados podría indicar
+		- Que se debe distribuir la implementación
+			- En 2 o más funciones
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Cumplir el SRP (5/5)
+
+-   ❌ Funciones muy extensas
+
+	<br>
+
+- ✅ Limitar el tamaño del cuerpo de la función
+	- Demasiadas líneas podrían indicar
+		- Que se debe distribuir la implementación
+			- En 2 o más funciones
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Usar tipado en la signatura
+
+- Siempre incluir en la signatura el tipado para:
+	- Parámetros
+	-  Valor de retorno
+
+- Aquí el formato genérico de una signatura:
+
+```Python[2-5]
+def 
+nombre_funcion
+(parametro_1: tipo_parametro_1 ... 
+ parametro_n: tipo_parametro_n) 
+ -> tipo_de_retorno:
+     # Cuerpo de la función
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Usar indentación uniforme
+
+	
+<img src="iph/n1/img/indentacion.png" alt="" style="object-fit: scale-down">
+
+
+
+- Todo bloque de código debe estar indentado usando 4 espacios
+	- ❌ Usar tabulaciones
+
+- Hacer esto evita:
+
+	- Conflictos entre interpretaciones distintas del tabulado
+
+	- Errores dado un flujo de ejecución inesperado
+
+	- <a href="https://eerosales24.github.io/iph_2026_20/general/errores_comunes/#/18" target="_blank" rel="noopener noreferrer">IndentationError</a>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Usar todos los parámetros
+
+```Python[2-5]
+def 
+nombre_funcion
+(parametro_1: tipo_parametro_1 ... 
+ parametro_n: tipo_parametro_n) 
+ -> tipo_de_retorno:
+     # Cuerpo de la función
+```
+
+- Se debe usar **todos** los parámetros definidos en la función
+
+<br>
+
+- Esto:
+	- Asegura coherencia entre
+		- Definición y comportamiento
+			
+    
+	- Evita errores derivados de parámetros innecesarios
+    
+		 - Evita código confuso
+    
+	- Mejora
+		- Legibilidad y 
+			- Facilita el mantenimiento → Función
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Usar variables locales (1/4)
+
+- En el curso
+	- Debe usar variables locales definidas en una función
+
+Ej:
+
+```python
+def volumen_cilindro(radio_base: float, altura: float) -> float:
+    pi = 3.1416
+    area_base = pi * radio_base * radio_base
+    return area_base * altura
+```
+
+- Aquí, `pi` es una variable local
+	- ✅  No se define por fuera de la función
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Usar variables locales (2/4)
+
+Ej:
+
+```python
+def volumen_cilindro(radio_base: float, altura: float) -> float:
+    PI = 3.1416
+    area_base = PI * radio_base * radio_base
+    return area_base * altura
+```
+
+- Aquí, `PI` es una  constante y una variable local
+	- ✅  No se define por fuera de la función
+		- No se usa en ninguna otra función
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Usar variables locales (3/4)
+
+- **Excepción:**
+	- Cuando **una constante** → Se reutiliza en múltiples funciones
+
+Ej:
+
+
+
+```python
+PI = 3.1416
+
+def area_circulo(radio: float) -> float:
+    return PI * radio ** 2
+    
+def volumen_cilindro(radio_base: float, altura: float) -> float:
+    area_base = PI * radio_base * radio_base
+    return area_base * altura
+```
+
+- Aquí, `PI` es una  constante
+	- No se declara como variable local
+		- Porque se usa → Desde múltiples funciones
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Usar variables locales (4/4)
+
+- **Excepción:**
+
+```python[1,4,7]
+PI = 3.1416
+
+def area_circulo(radio: float) -> float:
+    return PI * radio ** 2
+    
+def volumen_cilindro(radio_base: float, altura: float) -> float:
+    area_base = PI * radio_base * radio_base
+    return area_base * altura
+```
+
+- `PI` no es local aquí porque:
+	- ✅   Es una constante
+	- ✅   Evita repetir el mismo valor → En varias funciones
+	- ✅   Permite cambiar un valor → En un solo lugar
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Usar todas las variables declaradas 
+
+- En el curso
+	- Debe usar todas las variables que se declaren
+
+- Esto:
+	- Evita variables innecesarias
+    
+	- Reduce errores lógicos por confusión
+    
+	- Mantiene el código limpio y legible
+    
+	- Facilita el mantenimiento
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Usar líneas cortas
+
+- Según la convención [PEP 8 Style](https://peps.python.org/pep-0008/#naming-conventions)
+	- Líneas máximo de → 79 caracteres
+
+<br>
+
+
+- En el curso
+	- Ideal 100 caracteres máximo
+		- Es solo una recomendación
+
+	<br>
+	
+- Esto:
+
+	- Mejora la legibilidad del código
+    
+	- Facilita la revisión y el mantenimiento
+    
+	- Reduce el desplazamiento horizontal
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Usar un solo return
+
+- En el curso
+	- Una función debe tener **un único punto de salida** (`return`)
+
+	<br>
+	
+- Esto:
+	- Facilita el seguimiento del flujo lógico
+    
+	- Simplifica la depuración
+
+	- Hace las funciones más claras y predecibles
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Respetar el tipo de retorno declarado
+
+- El tipo del valor retornado 
+	- Debe coincidir con tipado en la signatura
+    
+- Se permite retornar un tipo compatible
+	- Ej: `int` 
+		- Cuando se definió `float`
+- Esto:
+	- Mantiene coherencia entre definición y comportamiento
+    
+	- Reduce errores lógicos y confusión de tipos
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Separar la lógica de la interfaz (1/3)
+
+- Se debe separar la lógica
+	- De la interfaz
+
+	<br>
+- La lógica **no** gestiona interacción
+
+	<br>
+
+- La interfaz **no** implementa lógica de negocio
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Separar la lógica de la interfaz (2/3)
+
+- La lógica **NUNCA**:
+	- Recibe datos de entrada
+		- ❌ NO usa `input()`
+	- Muestra resultados
+		- ❌ NO usa `print()`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Separar la lógica de la interfaz (3/3)
+
+- La interfaz\* **NUNCA**:
+	- ❌ Contiene funciones que implementan
+	    - ❌ La lógica del programa
+
+	<br>
+
+\* En el curso, la interfaz es implementada en consolas
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Fin de la buenas prácticas de Nivel 1
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
