@@ -1,0 +1,1483 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title></title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/iph.css" id="theme" />
+    <link rel="stylesheet" href="plugin/highlight/spyder.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
+
+
+
+    <script defer src="dist/fontawesome/all.min.js"></script>
+
+	<script type="text/javascript">
+		var forgetPop = true;
+		function onPopState(event) {
+			if(forgetPop){
+				forgetPop = false;
+			} else {
+				parent.postMessage(event.target.location.href, "app://obsidian.md");
+			}
+        }
+		window.onpopstate = onPopState;
+		window.onmessage = event => {
+			if(event.data == "reload"){
+				window.document.location.reload();
+			}
+			forgetPop = true;
+		}
+
+		function fitElements(){
+			const itemsToFit = document.getElementsByClassName('fitText');
+			for (const item in itemsToFit) {
+				if (Object.hasOwnProperty.call(itemsToFit, item)) {
+					var element = itemsToFit[item];
+					fitElement(element,1, 1000);
+					element.classList.remove('fitText');
+				}
+			}
+		}
+
+		function fitElement(element, start, end){
+
+			let size = (end + start) / 2;
+			element.style.fontSize = `${size}px`;
+
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
+					size--;
+					element.style.fontSize = `${size}px`;
+				}
+				return;
+			}
+
+			if(element.scrollHeight > element.offsetHeight){
+				fitElement(element, start, size);
+			} else {
+				fitElement(element, size, end);
+			}		
+		}
+
+
+		document.onreadystatechange = () => {
+			fitElements();
+			if (document.readyState === 'complete') {
+				if (window.location.href.indexOf("?export") != -1){
+					parent.postMessage(event.target.location.href, "app://obsidian.md");
+				}
+				if (window.location.href.indexOf("print-pdf") != -1){
+					let stateCheck = setInterval(() => {
+						clearInterval(stateCheck);
+						window.print();
+					}, 250);
+				}
+			}
+	};
+
+
+        </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### <i class="fas fa-award"></i> IP Honores
+
+ ####  *Booleanos y sus operaciones*
+
+[Eduardo Rosales](mailto:ee.rosales24@uniandes.edu.co)
+
+Departamento de Ingeniería de Sistemas y Computación
+
+Universidad de los Andes
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🌀 Tipo de dato 🌀
+
+- Conocíamos 3 tipos de datos:
+<table border="1" style="border-collapse: collapse; width: 100%; text-align: center; font-size: 20px;">
+  <thead style="background-color: #d0e6f8;">
+    <tr>
+      <th style="color: black;">Nombre</th>
+      <th style="color: black;">Tipo</th>
+      <th style="color: black;">Ejemplos</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Entero</td>
+      <td><code>int</code></td>
+      <td><code>0</code>, <code>1</code>, <code>-2</code>, <code>1_000</code></td>
+    </tr>
+    <tr>
+      <td>Decimal</td>
+      <td><code>float</code></td>
+      <td><code>.0</code>, <code>3.14</code>, <code>3.14e-10</code></td>
+    </tr>
+    <tr>
+      <td>Cadena de caracteres</td>
+      <td><code>str</code></td>
+      <td style="color: green;"><code>"Hello World"</code></td>
+    </tr>
+  </tbody>
+</table>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Conozcamos un NUEVO tipo de dato
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Booleano - `bool` (1/2)
+
+- Se introduce el tipo booleano:
+<table border="1" style="border-collapse: collapse; width: 100%; text-align: center;">
+  <thead style="background-color:#d0e6f8;">
+    <tr>
+      <th style="color: black;">Nombre</th>
+      <th style="color: black;">Tipo</th>
+      <th style="color: black;">Ejemplos</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Entero</td>
+      <td >int</td>
+      <td >0, 1, -2, 1_000</td>
+    </tr>
+    <tr>
+      <td>Decimal</td>
+      <td >float</td>
+      <td >.0, 3.14, 3.14e-10</td>
+    </tr>
+    <tr>
+      <td>Cadena de caracteres</td>
+      <td>str</td>
+      <td style="color: green;">"Hello World"</td>
+    </tr>
+    <tr>
+      <td><b>Booleano</b></td>
+      <td><b>bool</b></td>
+      <td><b>True, False</b></td>
+    </tr>
+  </tbody>
+</table>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Booleano - `bool` (2/2)
+
+- Representan uno de dos posibles valores:
+	- `True`
+	- `False`
+
+	<br>
+
+- `True` y `False` son constantes en Python
+	- `True` es equivalente a `1`
+	- `False` es equivalente a `0`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta I
+
+- ¿Cuál es el valor retornado por cada expresión?
+
+```Python
+type(True)
+
+type(10_000)
+
+type('.2')
+
+type(2.0)
+
+type(False)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta I - Solución
+
+```Python
+type(True)  # → bool
+
+type(10_000)  # → int
+
+type('.2')  # → str
+
+type(2.0)  # → float
+
+type(False)  # → bool
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🌀 Conversión de tipos 🌀
+- Funciones integradas para conversión de datos:
+	- `int()`
+	- `float()`
+	- `str()`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Conozcamos una NUEVA función de conversión
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `bool()`
+- Función integrada para convertir a booleano
+
+- Crea un nuevo objeto de tipo `bool` a partir de un objeto dado
+    - Sintaxis: 
+```Python
+bool(objeto)
+```
+	- `objeto`: Un objeto de cualquier tipo
+- Ayuda: [bool](https://docs.python.org/3/library/functions.html#bool)
+- Ej:
+```Python
+bool(1)  # → True
+bool(0)  # → False
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta II
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+activado = 1
+print(bool(activado))
+
+desactivado = 0
+print(bool(desactivado))
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta II - Solución
+
+
+```Python
+activado = 1
+print(bool(a))  # → True
+
+desactivado = 0
+print(bool(desactivado))  # → False
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### ¿Qué es "verdadero" (truthy) en el contexto booleano?
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### "Verdadero" (truthy) en el contexto booleano
+
+-  Valor interpretado como `True` 
+	- En el contexto booleano
+- Ej:
+
+``` Python
+True  # → True (porque bool(True) → True)
+
+1  # → True  (porque bool(1) → True)
+   # Aplica para cualquier int distinto de cero
+   
+1.0  # → True  (porque bool(1.0) → True)
+     # Aplica para cualquier float distinto de cero
+     
+'abc'  # → True (porque bool('abc') → True)
+       # Aplica para cualquier string no vacío
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### ¿Qué es "falso" (falsy) en el contexto booleano?
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### "Falso" (falsy) en el contexto booleano
+
+-  Valor interpretado como `False` 
+	- En el contexto booleano
+- Ej:
+
+``` Python
+False  # → False (porque bool(False) → False)
+
+0  # → False  (porque bool(0) → False)
+   
+0.0  # → False  (porque bool(0.0) → False)
+     # Aplica también para .0
+     
+''  # → False (porque bool('') → False)
+       # Aplica también para "" y """"""
+       # Un string vacío se considera como False
+       
+None  # → False (porque bool(None) → False)
+      # En Python `None` se considera `False`
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III
+
+- Clasifique los siguiente valores en verdaderos y falsos en el contexto booleano:
+
+```Python
+False
+True
+0
+1
+0.0
+7
+''
+None
+'Abc'
+.5
+""
+.0
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III - Solución
+
+```Python
+# Falsos:
+False
+0
+0.0
+''
+None
+""
+.0
+
+# Verdaderos:
+True
+1 
+7 
+'Abc'
+.5
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🌀 Expresión 🌀
+-   Sintaxis *evaluable* que produce un valor
+-   Se compone de 
+	- Un elemento único
+	- Ó una combinación de 
+		- Valores
+		- Variables
+		- Operadores
+		- Invocaciones a funciones, etc.
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🌀 Expresión - Ejemplos 🌀
+
+```Python
+2  
+# → 2 (un valor)
+
+100 - 30 / (7 - 6)  
+# → 70.0 (valores y operadores)
+
+100 + min(50, 100)  
+# → 150 (valores, operador y función)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Booleanos y expresiones
+
+- Como cualquier otro tipo de dato
+	- Los booleanos pueden formar expresiones
+- Ej:
+
+```Python
+True  # → True
+False  # → False
+bool(1)  # → True
+bool(0)  # → False
+1 < 10  # → True (Se usa un *operador relacional*)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Operadores relacionales
+
+- Operador que compara dos valores
+	- Retorna `True` si la comparación es verdadera
+		- De lo contrario `False`
+- Operadores:
+
+```Python
+==
+!=
+<
+<=
+>
+>=
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Operadores relacionales - Resumen
+
+<table border="1" style="border-collapse: collapse; width: 100%; text-align: center; font-size: 18px;">
+  <thead style="background-color: #d0e6f8;">
+    <tr>
+      <th style="color: black;">Operador</th>
+      <th style="color: black;">Nombre</th>
+      <th style="color: black;">Ejemplo</th>
+      <th style="color: black;">Resultado</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="2"><code>==</code></td>
+      <td rowspan="2">Es igual que</td>
+      <td><code>5 == 5</code></td>
+      <td><code>True</code></td>
+    </tr>
+    <tr style="background-color: #f3f3f3;">
+      <td style="color: black;"><code>5 == '5'</code></td>
+      <td style="color: black;"><code>False</code></td>
+    </tr>
+    <tr>
+      <td rowspan="2"><code>!=</code></td>
+      <td rowspan="2">Es diferente que</td>
+      <td><code>5 != '5'</code></td>
+      <td><code>True</code></td>
+    </tr>
+    <tr style="background-color: #f3f3f3;">
+      <td style="color: black;"><code>5 != 5</code></td>
+      <td style="color: black;"><code>False</code></td>
+    </tr>
+    <tr>
+      <td rowspan="2"><code>&gt;</code></td>
+      <td rowspan="2">Es mayor que</td>
+      <td><code>5 &gt; 4</code></td>
+      <td><code>True</code></td>
+    </tr>
+    <tr style="background-color: #f3f3f3;">
+      <td style="color: black;"><code>5 &gt; 5</code></td>
+      <td style="color: black;"><code>False</code></td>
+    </tr>
+    <tr>
+      <td rowspan="2"><code>&lt;</code></td>
+      <td rowspan="2">Es menor que</td>
+      <td><code>5 &lt; 6</code></td>
+      <td><code>True</code></td>
+    </tr>
+    <tr style="background-color: #f3f3f3;">
+      <td style="color: black;"><code>5 &lt; 5</code></td>
+      <td style="color: black;"><code>False</code></td>
+    </tr>
+    <tr>
+      <td rowspan="2"><code>&gt;=</code></td>
+      <td rowspan="2">Es mayor o igual que</td>
+      <td><code>5 &gt;= 5</code></td>
+      <td><code>True</code></td>
+    </tr>
+    <tr style="background-color: #f3f3f3;">
+      <td style="color: black;"><code>5 &gt;= 6</code></td>
+      <td style="color: black;"><code>False</code></td>
+    </tr>
+    <tr>
+      <td rowspan="2"><code>&lt;=</code></td>
+      <td rowspan="2">Es menor o igual que</td>
+      <td><code>5 &lt;= 5</code></td>
+      <td><code>True</code></td>
+    </tr>
+    <tr style="background-color: #f3f3f3;">
+      <td style="color: black;"><code>5 &lt;= 4</code></td>
+      <td style="color: black;"><code>False</code></td>
+    </tr>
+  </tbody>
+</table>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IV
+
+- ¿Cuál es el valor retornado por cada expresión?
+
+```Python
+10_000 == 10_000
+
+10_000 - 10_000 >= 0
+
+True > False
+
+True < 1
+
+False < 1
+
+True >= 1
+
+False <= 1
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IV - Solución
+
+```Python
+10_000 == 10_000  # → True (10000 es igual que 10000)
+
+10_000 - 10_000 >= 0  # → True (0 es mayor o igual que 0)
+
+True > False  # → True (True es 1 y False es 0, 1 > 0 es True)
+
+True < 1  # → False (True es 1, 1 < 1 es False)
+
+False < 1  # → True (False es 0, 0 < 1 es True)
+
+True >= 1  # → True (True es 1, 1 >= 1 es True)
+
+False <= 1  # → True (False es 0, 0 <= 1 es True)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Expresiones relacionales
+
+- Expresiones que incluyen operadores relacionales
+- Ej:
+```Python
+5 == 5  # → True
+5 != '5'  # → True
+4 + 4 > 10 * 1  # → False (8 es menor que 10)
+4 * 5 == 10 * 2  # → True (20 es igual a 20)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🌀 Asignación 🌀
+
+```Python
+promedio = 0.0
+```
+
+- Por simplicidad 
+	- Se dice que *"a la variable '`promedio`' se le asigna `0.0`"*
+- Consecuencia
+	- Ahora, la variable '`promedio`' ha sido definida (declarada) 
+		- Y puede usarse en el programa
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Asignación (`=`) vs. Es igual que (`==`)
+- Es igual que `==`
+	- Es una comparación
+	- No implica una asignación
+- Ej:
+
+```Python
+# Asuma la ejecución secuencial de cada línea a línea:
+x = 0  # → x = 0 (asignación)
+x == 0  # → True (porque compara `x`, que es igual 0, con 0)
+x == 1  # → False (porque 0 nos es igual que 1)
+x == -1  # → False (porque 0 nos es igual que -1)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta V
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+activado = 1
+print(activado == 1)
+
+desactivado = 0
+print(desactivado == 1)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta V - Solución
+
+
+```Python
+activado = 1
+print(activado == 1)  # → True (porque `activado` es igual que 1)
+
+desactivado = 0
+print(desactivado == 1)  # → False (porque `desactivado` no es igual que 1)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Operadores de identidad
+
+- Operador que compara 
+	- La identidad de dos objetos
+	- No solo su valor
+- Operadores:
+```Python
+is
+is not
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Operadores de identidad - Resumen
+
+<table border="1" style="border-collapse: collapse; width: 100%; text-align: center; font-size: 18px;">
+  <thead style="background-color: #d0e6f8;">
+    <tr>
+      <th style="color: black;">Operador</th>
+      <th style="color: black;">Nombre</th>
+      <th style="color: black;">Descripción</th>
+      <th style="color: black;">Ejemplo</th>
+      <th style="color: black;">Resultado</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="2"><code>is</code></td>
+      <td rowspan="2">Identidad</td>
+      <td rowspan="2">Retorna <code>True</code> si los dos objetos<br>son el mismo.<br>Caso contrario <code>False</code></td>
+      <td style="text-align: left;">
+        <code>x = 'a'</code><br>
+        <code>y = x</code><br>
+        <code>x is y</code>
+      </td>
+      <td><code>True</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left;background-color: #f3f3f3; color: black;" >
+        <code>x = 'a'</code><br>
+        <code>y = 5</code><br>
+        <code>x is y</code>
+      </td>
+      <td style="background-color: #f3f3f3; color: black;"><code>False</code></td>
+    </tr>
+    <tr>
+      <td rowspan="2"><code>is not</code></td>
+      <td rowspan="2">Negación de identidad</td>
+      <td rowspan="2">La negación de <code>is</code></td>
+      <td style="text-align: left;">
+        <code>x = 'a'</code><br>
+        <code>y = 5</code><br>
+        <code>x is not y</code>
+      </td>
+      <td><code>True</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left;background-color: #f3f3f3; color: black;">
+        <code>x = 'a'</code><br>
+        <code>y = x</code><br>
+        <code>x is not y</code>
+      </td>
+      <td style="background-color: #f3f3f3; color: black;"><code>False</code></td>
+    </tr>
+  </tbody>
+</table>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Operadores lógicos
+
+- Combinan lógicamente o manipulan expresiones
+- Operadores:
+```Python
+and
+or
+not
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `and` (1/3)
+
+- Sintaxis: `expresión1 and expresión2`
+
+- En términos booleanos:
+    - Retorna `True` si **ambas** expresiones evalúan a `True`
+	    - Caso contrario `False`
+- Ej:
+
+```Python
+True and True  # → True
+
+True and False  # → False
+
+False and True  # → False
+
+False and False  # → False
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `and` (2/3)
+
+- Evaluación en *"cortocircuito"*:
+	- Si la primera expresión evalúa a `False`
+		- La segunda expresión no se evalúa
+- Ej:
+
+```Python
+True and True  
+# → True (ambos lados evaluados)
+
+True and False  
+# → False (ambos lados evaluados)
+
+False and True  
+# → False (solo el lado izquierdo evaluado)
+# No puede retornar True si ya hay un False
+
+False and False
+# → False (solo el lado izquierdo evaluado)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `and` (3/3)
+
+- Más formalmente:
+	- Retorna `expresión1` si esta evalúa a un valor falso
+		- Caso contrario, retorna `expresión2`
+- Ej:
+
+```Python
+True and True  # → True
+
+True and False  # → False
+
+False and True  # → False
+
+False and False  # → False
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Tabla de verdad - `and`
+
+<table border="1" style="border-collapse: collapse; width: 100%; text-align: center; font-size: 22px;">
+  <thead style="background-color: #d0e6f8;">
+    <tr>
+      <th style="color: black;" colspan="2">Operador</th>
+      <th style="color: black;">Resultado</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="4">and</td>
+      <td><code>True</code> and <code>True</code></td>
+      <td><code>True</code></td>
+    </tr>
+    <tr style="background-color: #f3f3f3; color: black;">
+      <td><code>True</code> and <code>False</code></td>
+      <td><code>False</code></td>
+    </tr>
+    <tr>
+      <td><code>False</code> and <code>True</code></td>
+      <td><code>False</code></td>
+    </tr>
+    <tr style="background-color: #f3f3f3; color: black;">
+      <td><code>False</code> and <code>False</code></td>
+      <td><code>False</code></td>
+    </tr>
+  </tbody>
+</table>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VI
+
+- ¿Cuál es el valor retornado por cada expresión?
+
+```Python
+True and True
+False and False
+bool(1) and bool(1)
+bool(0) and bool(1)
+bool(1) and bool(0)
+bool('') and bool('abc')
+bool(None) and bool('')
+bool(7) and bool(.1)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VI - Solución
+
+```Python
+True and True  # → True
+False and False  # → False
+bool(1) and bool(1)  # → True
+bool(0) and bool(1)  # → False
+bool(1) and bool(0)  # → False
+bool('') and bool('abc')  # → False
+bool(None) and bool('')  # → False
+bool(7) and bool(.1)  # → True
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `or` (1/3)
+
+- Sintaxis: `expresión1 or expresión2`
+- En términos booleanos:
+	- Retorna `True` si una de las expresiones evalúa a `True`
+		- Caso contrario `False`
+- Ej:
+
+```Python
+True or True  # → True
+
+True or False  # → True
+
+False or True  # → True
+
+False or False  # → False
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `or` (2/3)
+
+- Evaluación en *"cortocircuito"*:
+	- Si la primera expresión evalúa a `True`
+		- La segunda expresión no se evalúa
+- Ej:
+
+```Python
+True or True  # → True (solo el lado izquierdo evaluado)
+
+True or False  # → True (solo el lado izquierdo evaluado)
+
+False or True  # → True (ambos lados evaluados)
+
+False or False  # → False (ambos lados evaluados)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `or` (3/3)
+
+- Más formalmente:
+	- Retorna `expresión1` si esta evalúa a un valor verdadero
+		- Caso contrario, retorna `expresión2`
+- Ej:
+
+```Python
+True or True  # → True
+
+True or False  # → True
+
+False or True  # → True
+
+False and False  # → False
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Tabla de verdad - `or`
+
+<table border="1" style="border-collapse: collapse; width: 100%; text-align: center; font-size: 22px;">
+  <thead style="background-color: #d0e6f8;">
+    <tr>
+      <th style="color: black;" colspan="2">Operador</th>
+      <th style="color: black;">Resultado</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="4">or</td>
+      <td><code>True</code> or <code>True</code></td>
+      <td><code>True</code></td>
+    </tr>
+    <tr style="background-color: #f3f3f3; color: black;">
+      <td><code>True</code> or <code>False</code></td>
+      <td><code>True</code></td>
+    </tr>
+    <tr>
+      <td><code>False</code> or <code>True</code></td>
+      <td><code>True</code></td>
+    </tr>
+    <tr style="background-color: #f3f3f3; color: black;">
+      <td><code>False</code> or <code>False</code></td>
+      <td><code>False</code></td>
+    </tr>
+  </tbody>
+</table>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VII
+
+- ¿Cuál es el valor retornado por cada expresión?
+
+```Python
+True or True
+False or False
+bool(1) or bool(1)
+bool(0) or bool(1)
+bool(1) or bool(0)
+bool('') or bool('abc')
+bool(None) or bool('')
+bool(7) or bool(.1)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VII - Solución
+
+```Python
+True or True  # → True
+False or False  # → False
+bool(1) or bool(1)  # → True
+bool(0) or bool(1)  # → True
+bool(1) or bool(0)  # → True
+bool('') or bool('abc')  # → True
+bool(None) or bool('')  # → False
+bool(7) or bool(.1)  # → True
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `not`
+
+- Sintaxis: `not expresión`
+- Invierte el valor booleano de la expresión
+- Retorna `False` si la expresión evalúa a `True`
+- Retorna `True` si la expresión evalúa a `False`
+- Ej:
+
+```Python
+not True  # → False
+not False  # → True
+not bool(1)  # → False
+not bool(0)  # → True
+not bool('')  # → True
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Tabla de verdad - `not`
+
+<table border="1" style="border-collapse: collapse; width: 100%; text-align: center; font-size: 22px;">
+  <thead style="background-color: #d0e6f8;">
+    <tr>
+      <th style="color: black;" colspan="2">Operador</th>
+      <th style="color: black;">Resultado</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="2">not</td>
+      <td><code>not False</code></td>
+      <td><code>True</code></td>
+    </tr>
+    <tr style="background-color: #f3f3f3; color: black;">
+      <td><code>not True</code></td>
+      <td><code>False</code></td>
+    </tr>
+  </tbody>
+</table>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Álgebra booleana - `and`
+
+```Python
+x and y == y and x
+
+x and (y and z) == (x and y) and z
+
+x and (y or z) == (x and y) or (x and z)
+
+x and True == x
+
+x and False == False
+
+x and x == x
+
+x and not x == False
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Álgebra booleana - `or`
+
+```Python
+x or y == y or x
+
+x or (y or z) == (x or y) or z
+
+x or (y and z) == (x or y) and (x or z)
+
+x or False == x
+
+x or True == True
+
+x or x == x
+
+x or not x == True
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Álgebra booleana - `not`
+
+```Python
+
+not not (x) == x
+
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VIII
+
+- ¿Cuál es el valor retornado por cada expresión?
+
+```Python
+not None
+not ''
+not 0
+not 1
+not 50
+not 0.0
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VIII - Solución
+
+```Python
+not None  # → True
+not ''  # → True
+not 0  # → True
+not 1  # → False
+not 50  # → False
+not 0.0  # → True
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Tablas de verdad - Resumen
+
+<table border="1" style="border-collapse: collapse; width: 100%; text-align: center; font-size: 20px;">
+  <thead style="background-color: #d0e6f8;">
+    <tr>
+      <th style="color: black;">Operador</th>
+      <th style="color: black;">Condición</th>
+      <th style="color: black;">Resultado</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- and operator -->
+    <tr>
+      <td rowspan="4"><code>and</code></td>
+      <td><code>True and True</code></td>
+      <td><code>True</code></td>
+    </tr>
+    <tr style="background-color: #f3f3f3; color: black;">
+      <td><code>True and False</code></td>
+      <td><code>False</code></td>
+    </tr>
+    <tr>
+      <td><code>False and True</code></td>
+      <td><code>False</code></td>
+    </tr>
+    <tr style="background-color: #f3f3f3; color: black;">
+      <td><code>False and False</code></td>
+      <td><code>False</code></td>
+    </tr>
+    <!-- or operator -->
+    <tr>
+      <td rowspan="4"><code>or</code></td>
+      <td><code>True or True</code></td>
+      <td><code>True</code></td>
+    </tr>
+    <tr style="background-color: #f3f3f3; color: black;">
+      <td><code>True or False</code></td>
+      <td><code>True</code></td>
+    </tr>
+    <tr>
+      <td><code>False or True</code></td>
+      <td><code>True</code></td>
+    </tr>
+    <tr style="background-color: #f3f3f3; color: black;">
+      <td><code>False or False</code></td>
+      <td><code>False</code></td>
+    </tr>
+    <!-- not operator -->
+    <tr>
+      <td rowspan="2"><code>not</code></td>
+      <td><code>not False</code></td>
+      <td><code>True</code></td>
+    </tr>
+    <tr style="background-color: #f3f3f3; color: black;">
+      <td><code>not True</code></td>
+      <td><code>False</code></td>
+    </tr>
+  </tbody>
+</table>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Expresiones booleanas
+
+- Composiciones de 
+	- Expresiones relacionales
+	- Valores
+	- Variables 
+	- Ó *invocaciones a funciones booleanas*
+- **Función booleana**:  
+	- Función que retorna un booleano
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Expresiones booleanas - Ejemplos
+
+```Python
+1 > 0 and 10 > -1  # → True (ambas expresiones evalúan a True)
+
+-1 >= 0 or 1 == -1  # → False (ambas expresiones evaluán a False)
+
+True and not False  # → True (ambas expresiones evalúan a True)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🌀 Precedencia de operadores 🌀
+
+
+<table border="1" style="border-collapse: collapse; width: 100%; text-align: center; font-size: 30px;">
+  <thead style="background-color: #d0e6f8;">
+    <tr>
+      <th style="color: black;">Prioridad</th>
+      <th style="color: black;">Operador</th>
+      <th style="color: black;">Tipo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td><code>**</code></td>
+      <td>Binario</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td><code>+, -</code></td>
+      <td>Unario</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td><code>*, /, //, %</code></td>
+      <td>Binario</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td><code>+, -</code></td>
+      <td>Binario</td>
+    </tr>
+  </tbody>
+</table>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Precedencia de operadores (actualizada)
+
+
+<table border="1" style="border-collapse: collapse; width: 100%; text-align: center; font-size: 30px;">
+  <thead style="background-color: #d0e6f8;">
+    <tr>
+      <th style="color: black;">Prioridad</th>
+      <th style="color: black;">Operador</th>
+      <th style="color: black;">Tipo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td><code>**</code></td>
+      <td>Binario</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td><code>+, -</code></td>
+      <td>Unario</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td><code>*, /, //, %</code></td>
+      <td>Binario</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td><code>+, -</code></td>
+      <td>Binario</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td><code>==, !=, &lt;, &lt;=, &gt;, &gt;=, is, is not</code></td>
+      <td>Relacional</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td><code>not, and, or</code></td>
+      <td>Lógico</td>
+    </tr>
+  </tbody>
+</table>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Operadores relacionales compuestos (1/4)
+
+- Los operadores relacionales 
+	- Pueden usarse en forma compuesta
+- Ej:
+```Python
+x < y <= z
+```
+
+- Verifica 
+	- si  `x` es menor que  `y`  y
+	- si  `y` es menor o igual que  `z`
+- Importante:  `y` es evaluado **una sola vez**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Operadores relacionales compuestos (2/4)
+
+- Ej:
+	- Para verificar si `x` está entre 1 y 100 (excluyente):
+```Python
+1 < x < 100
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Operadores relacionales compuestos (3/4)
+
+- Ej:
+	-  Para verificar si `a`, `b` y `c` son todos iguales:
+```Python
+a == b == c
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Operadores relacionales compuestos (4/4)
+
+- Ej:
+	- Para verificar si `a`, `b` y `c` 
+		- Están en orden ascendente
+			- y en el rango de 0 a 100 (inclusivo):
+```Python
+0 <= a <= b <= c <= 100
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IX
+
+- Simplifique las siguientes expresiones 
+	- Usando composición de 
+		- Operadores relacionales
+
+```Python
+x > 1 and x < 100
+
+y > 0 and y <= 2
+
+b >= 0 and b <= 100
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IX - Solución
+
+```Python
+x > 1 and x < 100  # → 1 < x < 100
+
+y > 0 and y <= 2  # → 0 < y <= 2
+
+b >= 0 and b <= 100  # → 0 <= b <= 100
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta X
+
+- Implemente la función `es_impar()`:
+
+```Python
+def es_impar(num: int) -> bool:  
+    """
+    Verifica si un número es impar.
+
+    Args:
+        num (int): El número a verificar.
+
+    Returns:
+        bool: True si el número es impar, False en caso contrario.
+
+    >>> es_impar(3)  # Caso es impar
+    True
+    >>> es_impar(4)  # Caso no es impar
+    False
+    """
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta X- Solución
+
+```Python
+def es_impar(num: int) -> bool:  
+    """
+    Verifica si un número es impar.
+
+    Args:
+        num (int): El número a verificar.
+
+    Returns:
+        bool: True si el número es impar, False en caso contrario.
+
+    >>> es_impar(3)  # Caso es impar
+    True
+    >>> es_impar(4)  # Caso no es impar
+    False
+    """
+    return num % 2 != 0
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<i class="fas fa-question-circle fa-2x fa-spin fa-4x"></i>
+
+<br>
+<br>
+
+ [<i class="fas fa-home  fa-3x"></i>](https://eerosales24.github.io/iph_2026_20/#)
+</div></script></section></div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/chart/chart.min.js"></script>
+	<script src="plugin/chart/plugin.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+	  function isLight(color) {
+		let hex = color.replace('#', '');
+
+		// convert #fff => #ffffff
+		if(hex.length == 3){
+			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+		}
+
+		const c_r = parseInt(hex.substr(0, 2), 16);
+		const c_g = parseInt(hex.substr(2, 2), 16);
+		const c_b = parseInt(hex.substr(4, 2), 16);
+		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+		return brightness > 155;
+	}
+
+	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+	var isLight = isLight(bgColor);
+
+	if(isLight){
+		document.body.classList.add('has-light-background');
+	} else {
+		document.body.classList.add('has-dark-background');
+	}
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+        ],
+
+
+    	allottedTime: 120 * 1000,
+
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
+
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
+
+		customcontrols: {
+			controls: [
+			]
+		},
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width":960,"height":700,"margin":"0.025","minScale":"0.1","maxScale":"2.0","controls":"true","controlsLayout":"bottom-right","progress":"true","slideNumber":"true","center":"false","transition":"slide","transitionSpeed":"default"}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+
+  <!-- created with Advanced Slides -->
+</html>

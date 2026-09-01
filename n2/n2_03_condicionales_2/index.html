@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title></title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/iph.css" id="theme" />
+    <link rel="stylesheet" href="plugin/highlight/spyder.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
+
+
+
+    <script defer src="dist/fontawesome/all.min.js"></script>
+
+	<script type="text/javascript">
+		var forgetPop = true;
+		function onPopState(event) {
+			if(forgetPop){
+				forgetPop = false;
+			} else {
+				parent.postMessage(event.target.location.href, "app://obsidian.md");
+			}
+        }
+		window.onpopstate = onPopState;
+		window.onmessage = event => {
+			if(event.data == "reload"){
+				window.document.location.reload();
+			}
+			forgetPop = true;
+		}
+
+		function fitElements(){
+			const itemsToFit = document.getElementsByClassName('fitText');
+			for (const item in itemsToFit) {
+				if (Object.hasOwnProperty.call(itemsToFit, item)) {
+					var element = itemsToFit[item];
+					fitElement(element,1, 1000);
+					element.classList.remove('fitText');
+				}
+			}
+		}
+
+		function fitElement(element, start, end){
+
+			let size = (end + start) / 2;
+			element.style.fontSize = `${size}px`;
+
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
+					size--;
+					element.style.fontSize = `${size}px`;
+				}
+				return;
+			}
+
+			if(element.scrollHeight > element.offsetHeight){
+				fitElement(element, start, size);
+			} else {
+				fitElement(element, size, end);
+			}		
+		}
+
+
+		document.onreadystatechange = () => {
+			fitElements();
+			if (document.readyState === 'complete') {
+				if (window.location.href.indexOf("?export") != -1){
+					parent.postMessage(event.target.location.href, "app://obsidian.md");
+				}
+				if (window.location.href.indexOf("print-pdf") != -1){
+					let stateCheck = setInterval(() => {
+						clearInterval(stateCheck);
+						window.print();
+					}, 250);
+				}
+			}
+	};
+
+
+        </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### <i class="fas fa-award"></i> IP Honores
+
+ #### *Condicionales II*
+
+[Eduardo Rosales](mailto:ee.rosales24@uniandes.edu.co)
+
+Departamento de Ingeniería de Sistemas y Computación
+
+Universidad de los Andes
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Tomando decisiones
+
+- En el mundo real:
+    - Hacer algo si una condición se cumple
+        - Caso contrario, hacer otra cosa
+```Python
+# Lenguaje natural:
+si el clima es soleado
+    entonces, salir a trotar
+caso contrario
+    permanecer en casa
+````
+```Python
+# En Python:
+if clima == 'soleado':
+    trotar()
+else:
+    permanecer_en_casa()
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### La Instrucción `if` - Versión 2
+
+<img src="iph/n2/img/if_2.png" alt="" style="width: 70%; height: 50%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `else`
+
+- Palabra clave que introduce un caso contrario
+- La definición de `else` 
+    - **Requiere** de una definición de `if` previa
+- No puede haber un `else` sin un `if`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `else` - Cuerpo (1/2)
+
+- El cuerpo de `else`
+    - Es un bloque de código
+- No hay límite en el número de instrucciones
+- **Toda instrucción** que sea parte de `else`
+    - Debe estar indentada
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `else` - Cuerpo (2/2)
+
+<img src="iph/n2/img/if_body_2.png" alt="" style="width: 50%; height: 30%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `if-else` - Ejemplo (1/6)
+
+```Python[1]
+if clima == 'soleado':
+    trotar()
+else:  
+    permanecer_en_casa()
+```
+
+- **Si el clima está soleado**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `if-else` - Ejemplo (2/6)
+
+```Python[1,2]
+if clima == 'soleado':
+    trotar()
+else:  
+    permanecer_en_casa()
+```
+
+- Si el clima está soleado
+    - **Entonces, salir a trotar**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `if-else` - Ejemplo (3/6)
+
+- ¿Qué pasa si el clima NO está soleado?
+
+```Python
+if clima == 'soleado':
+    trotar()
+else:  
+    permanecer_en_casa()
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `if-else` - Ejemplo (4/6)
+
+- ¿Qué pasa si el clima NO está soleado?
+
+<img src="iph/n2/img/if_else_1.png" alt="" style="width: 45%; height: 20%; object-fit: fill">
+
+
+- El cuerpo de `if`
+    - No se ejecuta
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `if-else` - Ejemplo (5/6)
+
+- ¿Qué pasa si el clima NO está soleado?
+
+<img src="iph/n2/img/if_else_body.png" alt="" style="width: 60%; height: 20%; object-fit: fill">
+
+- Únicamente el cuerpo de `else`
+    - Se ejecuta
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `if-else` - Ejemplo (6/6)
+
+- ¿Qué pasa si el clima NO está soleado?
+
+<img src="iph/n2/img/if_else_2.png" alt="" style="width: 60%; height: 20%; object-fit: fill">
+
+- Después del cuerpo de `else`
+    - Termina el condicional
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `if-else` - Diagrama de flujo
+
+<img src="iph/n2/img/df_2.png" alt="" style="width: 50%; height: 50%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta I
+
+- ¿Cuál es el resultado de ejecutar el siguiente código si la hora ingresada es `10`?
+
+ ```Python
+mensaje = 'Digite la hora en formato 24 horas, sin minutos: '
+hora_actual = int(input(mensaje)) 
+
+if 9 <= hora_actual <= 18: 
+    print('La tienda está abierta') 
+else: 
+    print('La tienda está cerrada')
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta I - Solución
+
+```Python[4,5]
+mensaje = 'Digite la hora en formato 24 horas, sin minutos: '
+hora_actual = int(input(mensaje))  
+
+if 9 <= hora_actual <= 18: 
+    print('La tienda está abierta') 
+else: 
+    print('La tienda está cerrada')
+```
+
+-  Se imprime únicamente:
+    - `La tienda está abierta`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta II
+
+- ¿Cuál es el resultado de ejecutar el siguiente código si la hora ingresada es `22`?
+
+ ```Python
+mensaje = 'Digite la hora en formato 24 horas, sin minutos: '
+hora_actual = int(input(mensaje)) 
+
+if 9 <= hora_actual <= 18: 
+    print('La tienda está abierta') 
+else: 
+    print('La tienda está cerrada')
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta II - Solución
+
+```Python[6,7]
+mensaje = 'Digite la hora en formato 24 horas, sin minutos: '
+hora_actual = int(input(mensaje))
+
+if 9 <= hora_actual <= 18: 
+    print('La tienda está abierta') 
+else: 
+    print('La tienda está cerrada')
+```
+
+-  Se imprime únicamente:
+    - `La tienda está cerrada`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+def precio_con_descuento(items: int, total: float) -> float:
+    """
+    Calcula el precio total después de aplicar un descuento 
+    basado en la cantidad de artículos y el total inicial.
+
+    Args:
+        items (int): La cantidad de artículos comprados.
+        total (float): El precio total antes de aplicar el descuento.
+        
+    Returns:
+        float: El precio total después de aplicar los descuentos.
+    """
+    descuento = 0
+
+    if items >= 100:
+        descuento = 0.05
+
+    if total >= 100_000:
+        descuento += 0.1
+
+    return total * (1 - descuento)
+
+
+print(precio_con_descuento(100, 100_000))
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III - Solución
+
+```Python
+def precio_con_descuento(items: int, total: float) -> float:
+    descuento = 0
+
+    if items >= 100:
+        descuento = 0.05
+
+    if total >= 100_000:
+        descuento += 0.1
+
+    return total * (1 - descuento)
+
+print(precio_con_descuento(100, 100_000))
+```
+
+- Se imprime:
+    - `85000.0`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IV
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+def calcular_costo_envio(peso: float, distancia: int) -> float:
+    """
+    Calcula el costo en US dólares de envío basado en el peso 
+    del paquete y la distancia a enviar.
+
+    Args:
+        peso (float): El peso del paquete en kilogramos.
+        distancia (int): La distancia del envío en kilómetros.
+        
+    Returns:
+        float: El costo total del envío.
+    """
+    TARIFA_BASE = 50
+    costo_adicional = 0 
+
+    if peso > 5:
+        costo_adicional += 10
+
+    if distancia > 100:
+        costo_adicional += 15
+
+    return TARIFA_BASE + costo_adicional
+
+
+print(calcular_costo_envio(6, 150))
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IV - Solución
+
+```Python
+def calcular_costo_envio(peso: float, distancia: int) -> float:
+    TARIFA_BASE = 50
+    costo_adicional = 0 
+
+    if peso > 5:
+        costo_adicional += 10
+
+    if distancia > 100:
+        costo_adicional += 15
+
+    return TARIFA_BASE + costo_adicional
+
+print(calcular_costo_envio(6, 150))
+```
+
+- Se imprime:
+    - `75`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Los condicionales pueden estar anidados
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta V
+
+- ¿Cuál es el resultado de ejecutar el siguiente código si la calificación es  `200`?
+
+```Python
+mensaje = 'Digite su calificación (0-100): '
+calificacion = int(input(mensaje))
+
+if 0 <= calificacion <= 100:
+    if calificacion >= 60:
+        print('Has aprobado el curso.')
+    else:
+        print('Lo siento, no has aprobado el curso.')
+else:
+    print('Calificación inválida. Debe estar entre 0 y 100.')
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta V - Solución
+
+```Python[9,10]
+mensaje = 'Digite su calificación (0-100): '
+calificacion = int(input(mensaje))
+
+if 0 <= calificacion <= 100:
+    if calificacion >= 60:
+        print('Has aprobado el curso.')
+    else:
+        print('Lo siento, no has aprobado el curso.')
+else:
+    print('Calificación inválida. Debe estar entre 0 y 100.')
+```
+
+- Se imprime:
+    - `Calificación inválida. Debe estar entre 0 y 100.`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VI 
+
+- ¿Cuál es el resultado de ejecutar el siguiente código si la calificación es  `60`?
+
+```Python
+mensaje = 'Digite su calificación (0-100): '
+calificacion = int(input(mensaje))
+
+if 0 <= calificacion <= 100:
+    if calificacion >= 60:
+        print('Has aprobado el curso.')
+    else:
+        print('Lo siento, no has aprobado el curso.')
+else:
+    print('Calificación inválida. Debe estar entre 0 y 100.')
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VI - Solución
+
+```Python[4,5,6]
+mensaje = 'Digite su calificación (0-100): '
+calificacion = int(input(mensaje))
+
+if 0 <= calificacion <= 100:
+    if calificacion >= 60:
+        print('Has aprobado el curso.')
+    else:
+        print('Lo siento, no has aprobado el curso.')
+else:
+    print('Calificación inválida. Debe estar entre 0 y 100.')
+```
+
+- Se imprime:
+    - `Has aprobado el curso.`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VII
+
+- ¿Cuál es el resultado de ejecutar el siguiente código si la calificación es  `59`?
+
+```Python
+mensaje = 'Digite su calificación (0-100): '
+calificacion = int(input(mensaje))
+
+if 0 <= calificacion <= 100:
+    if calificacion >= 60:
+        print('Has aprobado el curso.')
+    else:
+        print('Lo siento, no has aprobado el curso.')
+else:
+    print('Calificación inválida. Debe estar entre 0 y 100.')
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VII - Solución
+
+```Python[4,7,8]
+mensaje = 'Digite su calificación (0-100): '
+calificacion = int(input(mensaje))
+
+if 0 <= calificacion <= 100:
+    if calificacion >= 60:
+        print('Has aprobado el curso.')
+    else:
+        print('Lo siento, no has aprobado el curso.')
+else:
+    print('Calificación inválida. Debe estar entre 0 y 100.')
+```
+
+- Se imprime:
+    - `Lo siento, no has aprobado el curso.`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VIII
+
+- ¿Cuál es el resultado de ejecutar el siguiente código si la calificación es  `100`?
+
+```Python
+mensaje = 'Digite su calificación (0-100): '
+calificacion = int(input(mensaje))
+
+if 0 <= calificacion <= 100:
+    if calificacion >= 60:
+        print('Has aprobado el curso.')
+    else:
+        print('Lo siento, no has aprobado el curso.')
+else:
+    print('Calificación inválida. Debe estar entre 0 y 100.')
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VIII - Solución
+
+```Python[4,5,6]
+mensaje = 'Digite su calificación (0-100): '
+calificacion = int(input(mensaje))
+
+if 0 <= calificacion <= 100:
+    if calificacion >= 60:
+        print('Has aprobado el curso.')
+    else:
+        print('Lo siento, no has aprobado el curso.')
+else:
+    print('Calificación inválida. Debe estar entre 0 y 100.')
+```
+
+- Se imprime:
+    - `Has aprobado el curso.`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Tomando decisiones
+
+- En el mundo real:
+    - Hacer algo si una condición se cumple
+        - En otro caso, hacer otra cosa, si una condición se cumple
+
+```Python
+# Lenguaje natural:
+si la persona es menor de 5 años
+    entonces, el tiquete es gratis
+en otro caso, si la persona es mayor de 60 años
+   entonces tiene 20% de descuento
+````
+
+```Python
+# En Python:
+if edad < 5:
+    precio_tiquete = 0
+elif edad > 60:
+    precio_tiquete = precio_adulto * 0.8
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### La Instrucción `if` - Versión 3
+
+<img src="iph/n2/img/if_elif_5.png" alt="" style="object-fit: scale-down">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `elif`
+
+- Palabra clave que introduce 
+    - Un caso alterno condicionado
+- Es una forma compacta de decir "*else if*"
+- La definición de `elif`
+    - Requiere de una definición de `if` previa
+- No puede haber un `elif` sin un `if`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `elif` - Cuerpo (1/2)
+
+- El cuerpo de `elif`
+    - Es un bloque de código
+- No hay límite en el número de instrucciones
+- **Toda instrucción** que sea parte de `elif`
+    - Debe estar indentada
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `elif` - Cuerpo (2/2)
+
+<img src="iph/n2/img/if_body_3.png" alt="" style="width: 60%; height: 40%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `elif` - Condición
+
+-  `elif` siempre lleva un condición
+    - Si la condición se cumple
+        - Se ejecuta el cuerpo de `elif`
+    - Si la condición no se cumple
+        - Se ignora el cuerpo de `elif`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `if-elif` - Ejemplo (1/9)
+
+```Python[1]
+if edad < 5:
+    precio_tiquete = 0
+elif edad > 60:
+    precio_tiquete = precio_adulto * 0.8
+```
+
+- ***Si la persona es menor de 5 años***
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `if-elif` - Ejemplo (2/9)
+
+```Python[1,2]
+if edad < 5:
+    precio_tiquete = 0
+elif edad > 60:
+    precio_tiquete = precio_adulto * 0.8
+```
+
+- Si la persona es menor de 5 años
+    - **Entonces, el tiquete es gratis**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `if-elif` - Ejemplo (3/9)
+
+<img src="iph/n2/img/if_elif_1.png" alt="" style="width: 60%; height: 15%; object-fit: fill">
+
+
+-  Si la persona es menor de 5 años
+    - Únicamente se ejecuta el  `if`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `if-elif` - Ejemplo (4/9)
+
+<img src="iph/n2/img/if_elif_2.png" alt="" style="width: 60%; height: 20%; object-fit: fill">
+
+-  El cuerpo de `elif`
+    - No se ejecuta
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `if-elif` - Ejemplo (5/9)
+
+- ¿Qué pasa si la persona no es menor de 5 años?
+
+```Python
+if edad < 5:
+    precio_tiquete = 0
+elif edad > 60:
+    precio_tiquete = precio_adulto * 0.8
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `if-elif` - Ejemplo (6/9)
+
+```Python[3]
+if edad < 5:
+    precio_tiquete = 0
+elif edad > 60:
+    precio_tiquete = precio_adulto * 0.8
+```
+
+- Únicamente si la persona no es menor de 5 años
+    - Se evalúa si es mayor de 60 años
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `if-elif` - Ejemplo (7/9)
+- ¿Qué pasa si la persona no es menor de 5 años?
+
+<img src="iph/n2/img/if_elif_3.png" alt="" style="width: 60%; height: 20%; object-fit: fill">
+
+
+- El cuerpo de `if`
+    - No se ejecuta
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `if-elif` - Ejemplo (8/9)
+
+```Python[3,4]
+if edad < 5:
+    precio_tiquete = 0
+elif edad > 60:
+    precio_tiquete = precio_adulto * 0.8
+```
+
+-  Si es mayor de 60 años
+    - Entonces, se ejecuta el cuerpo de `elif`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `if-elif` - Ejemplo (9/9)
+- ¿Qué pasa si la persona no es menor de 5 años?
+
+<img src="iph/n2/img/if_elif_4.png" alt="" style="width: 60%; height: 20%; object-fit: fill">
+
+
+- Únicamente el cuerpo de `elif` se ejecuta
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IX
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+temperatura = 38  
+
+if temperatura > 35:
+    print('¡Temperatura extrema!')
+elif temperatura > 20: 
+    print('Sólo un día caluroso')
+
+if temperatura > 35:
+    print('¡Temperatura extrema !')
+
+if temperatura > 20:
+    print('Sólo un día caluroso')
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IX - Solución
+
+```Python[4,9,12]
+temperatura = 38  
+
+if temperatura > 35:  # if y elif son excluyentes
+    print('¡Temperatura extrema!')
+elif temperatura > 20: 
+    print('Sólo un día caluroso')
+
+if temperatura > 35:  # if independiente
+    print('¡Temperatura extrema!')
+
+if temperatura > 20:  # if independiente
+    print('Sólo un día caluroso')
+```
+
+- Se imprime:
+    - `¡Temperatura extrema!`
+    - `¡Temperatura extrema!`
+    - `Sólo un día caluroso`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Tomando decisiones
+
+- En el mundo real:
+    - Hacer algo si una condición se cumple
+        - En otro caso, hacer otra cosa, entre varias, 
+            - Si se cumple una condición
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Tipo de  animal según desarrollo de la cría (1/2)
+
+1. **Vivíparos**:
+    -  La cría se desarrolla en la madre y nace completamente formada (hay placenta)
+        - Ej: Mamíferos placentarios (humanos, perros, ballenas)
+    
+2. **Ovíparos** :
+    - La cría se desarrolla en un huevo fuera del cuerpo de la madre
+        - Ej: Aves (gallinas), reptiles (tortugas), anfibios (ranas), peces
+        
+3. **Ovovivíparos**: 
+    - Retienen los huevos dentro del cuerpo hasta que eclosionan (sin placenta)
+        - Ej: Tiburón blanco, serpientes como la víbora áspid
+        
+4. **Marsupiales**:
+    - Las crías nacen inmaduras y terminan su desarrollo en un bolsa (marsupio)
+        - Ej: Canguros, koalas, zarigüeyas
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Tipo de  animal según desarrollo de la cría (2/2)
+
+```Plaintext
+# Lenguaje natural:
+si el animal da a luz crías vivas
+    entonces, es vivíparo
+si el animal pone huevos
+    entonces, es ovíparo
+si el animal retiene los huevos hasta la eclosión
+    entonces, es ovovivíparo
+si el animal tiene bolsa marsupial
+    entonces, es marsupial
+````
+
+```Python
+# En Python:
+if da_a_luz:
+    tipo_animal = "Vivíparo"
+elif pone_huevos:
+    tipo_animal = "Ovíparo"
+elif retiene_huevos:
+    tipo_animal = "Ovovivíparo"
+elif tiene_bolsa_marsupial:
+    tipo_animal = "Marsupial"
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### La Instrucción `if` - Versión 4
+
+<img src="iph/n2/img/if_elif_5.png" alt="" style="width: 60%; height: 40%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Condicionales en cascada
+
+- Múltiples `elif`
+- Todos los casos son mutuamente excluyentes
+    - Solo **un caso** puede ser ejecutado
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `if-elif` - Ejemplo (1/5)
+
+- Suponga que:  `da_a_luz = True`
+
+
+<img src="iph/n2/img/if_elif_6.png" alt="" style="width: 50%; height: 40%; object-fit: fill">
+
+
+<br>
+
+- Solo el cuerpo del primer `if` se ejecuta
+    - Su ejecución es mutuamente excluyente con todo lo demás
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `if-elif` - Ejemplo (2/5)
+
+- Suponga que:  `da_a_luz = False`  y  `pone_huevos = True`
+
+
+<img src="iph/n2/img/if_elif_7.png" alt="" style="width: 50%; height: 40%; object-fit: fill">
+
+
+<br>
+
+- Solo el cuerpo del primer `elif` se ejecuta
+    - Su ejecución es mutuamente excluyente con todo lo demás
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `if-elif` - Ejemplo (3/5)
+
+- Suponga que:  `da_a_luz`   y   `pone_huevos`  son `False`  y
+    - `retiene_huevos = True`
+
+<img src="iph/n2/img/if_elif_8.png" alt="" style="width: 50%; height: 40%; object-fit: fill">
+
+
+<br>
+
+- Solo el cuerpo del segundo `elif` se ejecuta
+    - Su ejecución es mutuamente excluyente con todo lo demás
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `if-elif` - Ejemplo (4/5)
+
+- Suponga que:  `da_a_luz`, `pone_huevos` y `retiene_huevos` son  `False`  y 
+    - `tipo_bolsa_marsupial = True`
+
+<img src="iph/n2/img/if_elif_9.png" alt="" style="width: 55%; height: 40%; object-fit: fill">
+
+
+<br>
+
+- Solo el cuerpo del tercer `elif` se ejecuta
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `if-elif` - Ejemplo (5/5)
+
+- Suponga que:  `da_a_luz`, `pone_huevos` `retiene_huevos`  y  `tipo_bolsa_marsupial` son  todos `False`  
+
+<img src="iph/n2/img/if_elif_10.png" alt="" style="width: 50%; height: 40%; object-fit: fill">
+
+
+<br>
+
+- No se ejecuta ningún cuerpo
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Tomando decisiones
+
+- En el mundo real:
+    - Hacer algo si una condición se cumple
+        - En otro caso, hacer otra cosa, entre varias, si se cumple una condición
+            - Caso contrario
+                - Hacer algo por defecto
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Tipo de  animal según desarrollo de la cría
+
+```Plaintext
+# Lenguaje natural:
+si el animal da a luz crías vivas
+    entonces, es vivíparo
+si el animal pone huevos
+    entonces, es ovíparo
+si el animal retiene los huevos hasta la eclosión
+    entonces, es ovovivíparo
+si el animal tiene bolsa marsupial
+    entonces, es marsupial
+caso contrario
+    es de tipo desconocido
+````
+
+```Python
+# En Python:
+if da_a_luz:
+    tipo_animal = 'Vivíparo'
+elif pone_huevos:
+    tipo_animal = 'Ovíparo'
+elif retiene_huevos:
+    tipo_animal = 'Ovovivíparo'
+elif tiene_bolsa_marsupial:
+    tipo_animal = 'Marsupial'
+else:
+    tipo_animal = 'Desconocido'
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### La Instrucción `if` - Versión  completa
+
+<img src="iph/n2/img/if_elif_else_1.png" alt="" style="width: 60%; height: 35%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `if-elif-else` - Ejemplo 
+
+- Suponga que:  `da_a_luz`, `pone_huevos` `retiene_huevos`  y  `tipo_bolsa_marsupial` son  todos `False`  
+
+
+<img src="iph/n2/img/if_elif_else.png" alt="" style="width: 70%; height: 65%; object-fit: fill">
+
+
+<br>
+
+- Solo el cuerpo de `else` se ejecuta
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `if-elif-else` - Diagrama de flujo
+
+<img src="iph/n2/img/df_3.png" alt="" style="width: 60%; height: 55%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta X
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+temperatura = 3
+
+if temperatura > 35: 
+    print('¡Temperatura extrema!')
+elif temperatura > 18: 
+    print('Sólo un día caluroso')
+else:
+    print('Baja temperatura')
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta X - Solución
+
+```Python[7,8]
+temperatura = 3
+
+if temperatura > 35: 
+    print('¡Temperatura extrema!')
+elif temperatura > 18: 
+    print('Sólo un día caluroso')
+else:  # Caso contrario, porque todo lo anterior evalúa a `False`
+    print('Baja temperatura')
+```
+
+- Se imprime:
+    - Baja temperatura
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<i class="fas fa-question-circle fa-2x fa-spin fa-4x"></i>
+
+<br>
+<br>
+
+ [<i class="fas fa-home  fa-3x"></i>](https://eerosales24.github.io/iph_2026_20/#)
+</div></script></section></div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/chart/chart.min.js"></script>
+	<script src="plugin/chart/plugin.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+	  function isLight(color) {
+		let hex = color.replace('#', '');
+
+		// convert #fff => #ffffff
+		if(hex.length == 3){
+			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+		}
+
+		const c_r = parseInt(hex.substr(0, 2), 16);
+		const c_g = parseInt(hex.substr(2, 2), 16);
+		const c_b = parseInt(hex.substr(4, 2), 16);
+		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+		return brightness > 155;
+	}
+
+	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+	var isLight = isLight(bgColor);
+
+	if(isLight){
+		document.body.classList.add('has-light-background');
+	} else {
+		document.body.classList.add('has-dark-background');
+	}
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+        ],
+
+
+    	allottedTime: 120 * 1000,
+
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
+
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
+
+		customcontrols: {
+			controls: [
+			]
+		},
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width":960,"height":700,"margin":"0.025","minScale":"0.1","maxScale":"2.0","controls":"true","controlsLayout":"bottom-right","progress":"true","slideNumber":"true","center":"false","transition":"slide","transitionSpeed":"default"}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+
+  <!-- created with Advanced Slides -->
+</html>

@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title></title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/iph.css" id="theme" />
+    <link rel="stylesheet" href="plugin/highlight/spyder.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
+
+
+
+    <script defer src="dist/fontawesome/all.min.js"></script>
+
+	<script type="text/javascript">
+		var forgetPop = true;
+		function onPopState(event) {
+			if(forgetPop){
+				forgetPop = false;
+			} else {
+				parent.postMessage(event.target.location.href, "app://obsidian.md");
+			}
+        }
+		window.onpopstate = onPopState;
+		window.onmessage = event => {
+			if(event.data == "reload"){
+				window.document.location.reload();
+			}
+			forgetPop = true;
+		}
+
+		function fitElements(){
+			const itemsToFit = document.getElementsByClassName('fitText');
+			for (const item in itemsToFit) {
+				if (Object.hasOwnProperty.call(itemsToFit, item)) {
+					var element = itemsToFit[item];
+					fitElement(element,1, 1000);
+					element.classList.remove('fitText');
+				}
+			}
+		}
+
+		function fitElement(element, start, end){
+
+			let size = (end + start) / 2;
+			element.style.fontSize = `${size}px`;
+
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
+					size--;
+					element.style.fontSize = `${size}px`;
+				}
+				return;
+			}
+
+			if(element.scrollHeight > element.offsetHeight){
+				fitElement(element, start, size);
+			} else {
+				fitElement(element, size, end);
+			}		
+		}
+
+
+		document.onreadystatechange = () => {
+			fitElements();
+			if (document.readyState === 'complete') {
+				if (window.location.href.indexOf("?export") != -1){
+					parent.postMessage(event.target.location.href, "app://obsidian.md");
+				}
+				if (window.location.href.indexOf("print-pdf") != -1){
+					let stateCheck = setInterval(() => {
+						clearInterval(stateCheck);
+						window.print();
+					}, 250);
+				}
+			}
+	};
+
+
+        </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### <i class="fas fa-award"></i> IP Honores
+
+ #### *Condicionales I*
+
+[Eduardo Rosales](mailto:ee.rosales24@uniandes.edu.co)
+
+Departamento de Ingeniería de Sistemas y Computación
+
+Universidad de los Andes
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Tomando decisiones
+
+- En el mundo real:
+	- Hay acciones que dependen de condiciones
+	- Se hacen únicamente si se cumple una condición
+```Python
+# Lenguaje natural:
+Si el clima está soleado entonces,
+    salir a trotar
+````
+```Python
+# En Python:
+if clima == 'soleado':
+    trotar()
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### La Instrucción `if` - Versión 1
+
+<img src="iph/n2/img/if_1.png" alt="" style="object-fit: scale-down">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `if`
+
+- Palabra clave que introduce un condicional
+- Si la expresión es verdadera 
+	- En el contexto booleano
+		- Entonces, se ejecuta el cuerpo del condicional
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `if` - Cuerpo (1/2)
+
+- El cuerpo del condicional 
+	- Es un bloque de código
+- No hay límite en el número de instrucciones que puede contener
+- **Toda instrucción** que sea parte del condicional
+	- Debe estar indentada
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `if` - Cuerpo (2/2)
+
+<img src="iph/n2/img/if_body.png" alt="" style="object-fit: scale-down">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `if` - Ejemplo (1/5)
+
+```Python[1]
+if clima == 'soleado':
+    trotar()
+```
+
+- **Si el clima está soleado**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `if` - Ejemplo (2/5)
+
+```Python[2]
+if clima == 'soleado':
+    trotar()
+```
+
+- Si el clima está soleado
+	- **Entonces, salir a trotar**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `if` - Ejemplo (3/5)
+
+<img src="iph/n2/img/if_start_end.png" alt="" style="width: 45%; height: 20%; object-fit: fill">
+
+
+- El cuerpo del condicional inicia y termina
+	- Con la identación
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `if` - Ejemplo (4/5)
+
+- ¿Qué pasa si el clima NO está soleado?
+
+```Python
+if clima == 'soleado':
+    trotar()
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `if` - Ejemplo (5/5)
+
+- ¿Qué pasa si el clima NO está soleado?
+
+<img src="iph/n2/img/if_skip.png" alt="" style="width: 60%; height: 15%; object-fit: fill">
+
+
+- El cuerpo del condicional
+	- No se ejecuta
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `if` - Diagrama de flujo
+
+
+<img src="iph/n2/img/df_1.png" alt="" style="width: 50%; height: 50%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta I
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+numero = 7
+
+if numero > 5:
+    print('El número es mayor que 5')
+
+if numero % 2 == 0:
+    print('El número es par')
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta I - Tips
+
+- Note que los condicionales
+	- Son **independientes**
+
+```Python[3,4,6,7]
+numero = 7
+
+if numero > 5:
+    print('El número es mayor que 5')
+
+if numero % 2 == 0:
+    print('El número es par')
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta I - Solución (1/2)
+
+```Python[1,4,5,6,9]
+numero = 7
+
+# Primer if: Verifica si el número es mayor que 5
+if numero > 5:
+    # Se ejecuta:
+    print('El número es mayor que 5') 
+
+# Segundo if: Verifica si el número es par
+if numero % 2 == 0:  # Evalúa a False
+    # No se ejecuta:
+    print('El número es par')
+```
+
+- Se imprime únicamente:
+	- `El número es mayor que 5`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta I - Solución (2/2)
+
+```Python[9]
+numero = 7
+
+# Primer if: Verifica si el número es mayor que 5
+if numero > 5:
+    # Se ejecuta:
+    print('El número es mayor que 5') 
+
+# Segundo if: Verifica si el número es par
+if numero % 2 == 0:
+    # No se ejecuta:
+    print('El número es par')
+```
+
+- El cuerpo del segundo condicional no se ejecuta
+	- Porque `número` (7) no es par
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta II
+
+- Implemente un programa que 
+	- Solicite al usuario un número
+	- Si el número es positivo 
+		- Se imprime la raíz cuadrada del número
+		- El mensaje tendrá el siguiente formato 
+			- Con redondeo a dos decimales:
+			
+```Python
+'La raíz cuadrada del número es: xx.yy'
+```
+
+- **Nota:** No es necesario crear una función
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta II - Tips
+
+- Consejos de implementación:
+	- Use la función: `math.sqrt()`
+	- Capture el número usando: `input()`
+	
+- Nota: Para esta implementación tan pequeña
+	- No necesita crear una función
+	- Ni un módulo de interfaz y otro de lógica
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta II - Solución
+
+```Python
+import math
+
+num = float(input('Digite un número positivo: '))
+
+if num > 0:
+    print(
+        'La raíz cuadrada del número es: ', 
+          round(math.sqrt(num), 2)
+         )
+```
+- Nota: `print()` se puede dividir en varias líneas
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III
+
+- Implemente la función `resultado_examen()`
+
+```Python
+    """
+    Calcula el resultado de un examen basado en la puntuación obtenida.
+
+    Args:
+        puntuacion (float): La puntuación obtenida en un examen.
+
+    Returns:
+        str: 'no aprobado' si la puntuación es menor a 60, 
+        caso contrario 'aprobado'.
+
+    >>> resultado_examen(59)  # Caso no aprobado
+    'no aprobado'
+    >>> resultado_examen(60)  # Caso aprobado
+    'aprobado'
+    """
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III - Tips (1/5)
+
+- Declare una variable 
+	- Con el valor a retornar por defecto
+	- Ej: `'no aprobado'`
+- Esta variable y su valor por defecto
+	- Se retornará al final de la función
+- A esta variable se le llama
+	- *Variable de retorno*
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III - Tips (2/5)
+
+- Así debería verse un esqueleto inicial de la función:
+
+```Python[1,2,4]
+def resultado_examen(puntuacion: float) -> str:
+    resultado = 'no aprobado'  # Variable de retorno
+		
+    # TODO: Completar la función
+		
+    return resultado
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III - Tips (3/5)
+
+- Completar el TODO
+	- Implica usar un condicional
+		- Para cambiar la variable de retorno
+
+```Python[4]
+def resultado_examen(puntuacion: float) -> str:
+    resultado = 'no aprobado'  # Variable de retorno
+		
+    # TODO: Completar la función
+		
+    return resultado
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III - Tips (4/5)
+
+- ¿Qué condición cambiaría la variable de retorno?
+	- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->Si `puntuacion`  es mayor o igual que `60`
+		- `resultado`  sería igual a `'aprobado'`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III - Tips (5/5)
+
+- ¿Qué condición cambiaría la variable de retorno?
+	- Si `puntuacion`  es mayor o igual que `60`
+		- `resultado`  sería igual a `'aprobado'`
+	
+```Python
+   if puntuacion >= 60:
+        resultado = 'aprobado'
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III - Solución
+
+```Python
+def resultado_examen(puntuacion: float) -> str:
+    """
+    Calcula el resultado de un examen basado en la puntuación obtenida.
+
+    Args:
+        puntuacion (float): La puntuación obtenida en un examen.
+
+    Returns:
+        str: 'no aprobado' si la puntuación es menor a 60, 
+        caso contrario 'aprobado'.
+
+    >>> resultado_examen(59)  # Caso no aprobado
+    'no aprobado'
+    >>> resultado_examen(60)  # Caso aprobado
+    'aprobado'
+    """
+    resultado = 'no aprobado'  # Variable de retorno
+    
+    if puntuacion >= 60:
+        resultado = 'aprobado'
+        
+    return resultado
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Variable de retorno (1/6)
+
+```Python[2]
+def resultado_examen(puntuacion: float) -> str:
+    resultado = 'no aprobado'  # Variable de retorno
+    if puntuacion >= 60:
+        resultado = 'aprobado'
+    return resultado
+
+```
+
+- `resultado` es una variable de retorno
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Variable de retorno (2/6)
+
+```Python[2]
+def resultado_examen(puntuacion: float) -> str:
+    resultado = 'no aprobado'  # Variable de retorno
+    if puntuacion >= 60:
+        resultado = 'aprobado'
+    return resultado
+
+```
+
+- `resultado` se inicializa con el que sería
+	- El valor por defecto a retornar
+		- En este caso: `'no aprobado'`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Variable de retorno (3/6)
+
+```Python[5]
+def resultado_examen(puntuacion: float) -> str:
+    resultado = 'no aprobado'  # Variable de retorno
+    if puntuacion >= 60:
+        resultado = 'aprobado'
+    return resultado
+```
+
+- La función retornará a la variable de retorno
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Variable de retorno (4/6)
+
+```Python[2,5]
+def resultado_examen(puntuacion: float) -> str:
+    resultado = 'no aprobado'  # Variable de retorno
+    if puntuacion >= 60:
+        resultado = 'aprobado'
+    return resultado
+```
+
+- Si `resultado` nunca cambió
+	- Se retornará `'no aprobado'`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Variable de retorno (5/6)
+
+```Python[2,5]
+def resultado_examen(puntuacion: float) -> str:
+    resultado = 'no aprobado'  # Variable de retorno
+    if puntuacion >= 60:
+        resultado = 'aprobado'
+    return resultado
+```
+
+Extracto de la documentación de la función:
+```Python[3]
+    """
+    Retorna:
+        (str): 'no aprobado' si la puntuación es menor a 60, 
+        caso contrario 'aprobado'.
+    """
+```
+
+- Retornar  `'no aprobado'` es un caso válido
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Variable de retorno (6/6)
+
+```Python[3,4]
+def resultado_examen(puntuacion: float) -> str:
+    resultado = 'no aprobado'  # Variable de retorno
+    if puntuacion >= 60:
+        resultado = 'aprobado'
+    return resultado
+```
+Extracto de la documentación de la función:
+```Python[4]
+    """
+    Retorna:
+        (str): 'no aprobado' si la puntuación es menor a 60, 
+        caso contrario 'aprobado'.
+    """
+```
+
+- Retornar  `'aprobado'` es el otro caso válido
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IV
+
+- Implemente la función `clasificacion_edad()`
+
+```Python
+    """
+    Determina si una persona es menor de edad o adulta en función de su edad.
+
+    Args:
+        edad (int): La edad de la persona.
+
+    Returns:
+        str: 'menor de edad' si la persona tiene menos de 18 años, 
+        caso contrario 'adulto'.
+
+    >>> clasificacion_edad(17)  # Caso menor de edad
+    'menor de edad'
+    >>> clasificacion_edad(18)  # Caso mayor de edad, con edad igual a 18
+    'adulto'
+    >>> clasificacion_edad(25)  # Caso mayor de edad
+    'adulto'
+    """
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IV - Tips
+
+- ¿Cuál es la variable de retorno?
+	- ¿Qué valor debe asignarse a la variable de retorno?
+	
+- ¿Qué condición puede cambiar la variable de retorno?
+	- ¿Qué valor debe asignarse en este caso?
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IV - Solución
+
+```Python
+def clasificacion_edad(edad: int) -> str:
+    """
+    Determina si una persona es menor de edad o adulta en función de su edad.
+
+    Args:
+        edad (int): La edad de la persona.
+
+    Returns:
+        str: 'menor de edad' si la persona tiene menos de 18 años, 
+        caso contrario 'adulto'.
+
+    >>> clasificacion_edad(17)  # Caso menor de edad
+    'menor de edad'
+    >>> clasificacion_edad(18)  # Caso mayor de edad, con edad igual a 18
+    'adulto'
+    >>> clasificacion_edad(25)  # Caso mayor de edad
+    'adulto'
+    """
+    respuesta = 'menor de edad'  # Variable de retorno
+    # Se ejecuta solo si la edad >= 18:
+    if edad >= 18:
+        respuesta = 'adulto'  # Cambia la variable de retorno
+    return respuesta  # Hay un solo retorno
+
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta V
+
+- Implemente la función `diferencia_absoluta()`
+	- Nota: No usar la función `abs()` en este caso
+
+```Python
+    """
+    Calcula la diferencia absoluta entre dos números positivos.
+
+    Args:
+        num1 (float): El primer número.
+        num2 (float): El segundo número.
+
+    Returns:
+        float: La diferencia absoluta entre los números.
+
+    >>> diferencia_absoluta(5, 3)  # Caso num1 > num2
+    2
+    >>> diferencia_absoluta(3, 5)  # Caso num1 < num2
+    2
+    """
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta V - Solución (1/2)
+
+```Python
+def diferencia_absoluta(num1: float, num2: float) -> float:
+    """
+    Calcula la diferencia absoluta entre dos números positivos.
+
+    Args:
+        num1 (float): El primer número.
+        num2 (float): El segundo número.
+
+    Returns:
+        float: La diferencia absoluta entre los números.
+
+    >>> diferencia_absoluta(5, 3)  # Caso num1 > num2
+    2
+    >>> diferencia_absoluta(3, 5)  # Caso num1 < num2
+    2
+    """
+    resultado = num2 - num1  # Variable de retorno
+    if num1 > num2:
+        # Se ejecutará únicamente si num1 > num2:
+        resultado = num1 - num2  
+    return resultado  # Hay un solo retorno
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta V - Solución (2/2)
+
+```Python
+def diferencia_absoluta(num1: float, num2: float) -> float:
+    """
+    Calcula la diferencia absoluta entre dos números positivos.
+
+    Args:
+        num1 (float): El primer número.
+        num2 (float): El segundo número.
+
+    Returns:
+        float: La diferencia absoluta entre los números.
+
+    >>> diferencia_absoluta(5, 3)  # Caso num1 > num2
+    2
+    >>> diferencia_absoluta(3, 5)  # Caso num1 < num2
+    2
+    """
+    resultado = num1 - num2  # Variable de retorno
+    if num1 < num2:
+        # Se ejecutará únicamente si num1 < num2:
+        resultado = num2 - num1
+    return resultado  # Hay un solo retorno
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<i class="fas fa-question-circle fa-2x fa-spin fa-4x"></i>
+
+<br>
+<br>
+
+ [<i class="fas fa-home  fa-3x"></i>](https://eerosales24.github.io/iph_2026_20/#)
+</div></script></section></div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/chart/chart.min.js"></script>
+	<script src="plugin/chart/plugin.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+	  function isLight(color) {
+		let hex = color.replace('#', '');
+
+		// convert #fff => #ffffff
+		if(hex.length == 3){
+			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+		}
+
+		const c_r = parseInt(hex.substr(0, 2), 16);
+		const c_g = parseInt(hex.substr(2, 2), 16);
+		const c_b = parseInt(hex.substr(4, 2), 16);
+		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+		return brightness > 155;
+	}
+
+	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+	var isLight = isLight(bgColor);
+
+	if(isLight){
+		document.body.classList.add('has-light-background');
+	} else {
+		document.body.classList.add('has-dark-background');
+	}
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+        ],
+
+
+    	allottedTime: 120 * 1000,
+
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
+
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
+
+		customcontrols: {
+			controls: [
+			]
+		},
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width":960,"height":700,"margin":"0.025","minScale":"0.1","maxScale":"2.0","controls":"true","controlsLayout":"bottom-right","progress":"true","slideNumber":"true","center":"false","transition":"slide","transitionSpeed":"default"}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+
+  <!-- created with Advanced Slides -->
+</html>
