@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title></title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/iph.css" id="theme" />
+    <link rel="stylesheet" href="plugin/highlight/spyder.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
+
+
+
+    <script defer src="dist/fontawesome/all.min.js"></script>
+
+	<script type="text/javascript">
+		var forgetPop = true;
+		function onPopState(event) {
+			if(forgetPop){
+				forgetPop = false;
+			} else {
+				parent.postMessage(event.target.location.href, "app://obsidian.md");
+			}
+        }
+		window.onpopstate = onPopState;
+		window.onmessage = event => {
+			if(event.data == "reload"){
+				window.document.location.reload();
+			}
+			forgetPop = true;
+		}
+
+		function fitElements(){
+			const itemsToFit = document.getElementsByClassName('fitText');
+			for (const item in itemsToFit) {
+				if (Object.hasOwnProperty.call(itemsToFit, item)) {
+					var element = itemsToFit[item];
+					fitElement(element,1, 1000);
+					element.classList.remove('fitText');
+				}
+			}
+		}
+
+		function fitElement(element, start, end){
+
+			let size = (end + start) / 2;
+			element.style.fontSize = `${size}px`;
+
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
+					size--;
+					element.style.fontSize = `${size}px`;
+				}
+				return;
+			}
+
+			if(element.scrollHeight > element.offsetHeight){
+				fitElement(element, start, size);
+			} else {
+				fitElement(element, size, end);
+			}		
+		}
+
+
+		document.onreadystatechange = () => {
+			fitElements();
+			if (document.readyState === 'complete') {
+				if (window.location.href.indexOf("?export") != -1){
+					parent.postMessage(event.target.location.href, "app://obsidian.md");
+				}
+				if (window.location.href.indexOf("print-pdf") != -1){
+					let stateCheck = setInterval(() => {
+						clearInterval(stateCheck);
+						window.print();
+					}, 250);
+				}
+			}
+	};
+
+
+        </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### <i class="fas fa-award"></i> IP Honores
+
+ ####  *Laboratorio 1 de Nivel 2 - N2-L1*
+
+[Eduardo Rosales](mailto:ee.rosales24@uniandes.edu.co)
+
+Departamento de Ingeniería de Sistemas y Computación
+
+Universidad de los Andes
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Siga paso a paso las siguientes instrucciones
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Trabajo individual
+
+- Este laboratorio es
+	- **Completamente individual**<!-- .element: class="fragment highlight-blue" -->
+
+	<br>
+
+- El tiempo para terminar el laboratorio es muy corto
+	- Por favor:
+		- Evite las distracciones
+		- Guarde **silencio**<!-- .element: class="fragment highlight-blue" -->
+
+	<br>
+
+- Si no termina el laboratorio
+	- Debe finalizarlo (**y comprenderlo**) 
+		- En las 5h
+			- De trabajo individual semanal
+
+
+- Próximo martes:
+	- Primer **quiz** de N2 <!-- .element: class="fragment highlight-red" -->
+		- Se le pedirá implementar una función booleana
+			- Que usa condicionales
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Preguntas
+
+- En caso de dudas, por favor:
+
+<br> 
+
+1. Formule su pregunta de forma **muy clara y concisa**
+
+<br>
+
+2. Luego (**y solo luego de esto**)
+	- Levante la mano
+
+<br>
+
+<i class="fas fa-question-circle fa-1x fa-spin fa-1x"></i> _Al plantearse correctamente la pregunta, la respuesta a veces se revela sola_
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Primero, un breve repaso de booleanos
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta I
+
+- ¿Cuál es el valor retornado por cada expresión?
+
+```Python
+not False and not False
+
+not False and True
+
+not False or not True
+
+not 1 or not ''
+
+not None or not ''
+
+not 0.0 or not 0
+
+True and not ''
+
+not 1 and not ''
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta I - Solución
+
+```Python
+not False and not False  # → True
+
+not False and True  # → True
+
+not False or not True  # → True
+
+not 1 or not ''  # → True
+
+not None or not ''  # → True
+
+not 0.0 or not 0  # → True
+
+True and not ''  # → True
+
+not 1 and not ''  # → False
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta II
+
+- ¿Cuál es el valor retornado por cada expresión?
+
+```Python
+not False and 0.0 > 0
+
+bool(1) and not (1 <= 0)
+
+bool(None) or bool(0.0)
+
+bool('abc') and bool(10_000)
+
+bool(0.0) or bool(0)
+
+bool(None) or bool('')
+
+(bool(0) and bool('')) or True
+
+(bool(1) and bool('z')) and (True or False)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta II - Solución
+
+
+```Python
+not False and 0.0 > 0  # → False
+
+bool(1) and not (1 <= 0)  # → True
+
+bool(None) or bool(0.0)  # → False
+
+bool('abc') and bool(10_000)  # → True
+
+bool(0.0) or bool(0)  # → False
+
+bool(None) or bool('')  # → False
+
+(bool(0) and bool('')) or True  # → True
+
+(bool(1) and bool('z')) and (True or False)  # → True
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III
+
+- Dadas las asignaciones de  `a`,  `b` y  `c`, ¿cuál es el valor retornado por cada expresión?
+
+```Python
+a = True
+b = False
+c = True
+
+a and (b or c)
+
+(a and b) or (a and c)
+
+a or (not a and b)
+
+(b or a) and (c or not a)
+
+not (not c)
+
+a and not b
+
+not a or (b and not c)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III - Solución
+
+
+```Python
+a = True
+b = False
+c = True
+   
+a and (b or c)  # → True
+
+(a and b) or (a and c)  # → True
+
+a or (not a and b)  # → True
+
+(b or a) and (c or not a)  # → True
+
+not (not c)  # → True
+
+a and not b  # → True
+
+not a or (b and not c)  # → False
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#  Actividad I
+
+- **Objetivos:**
+	- Afianzar el aprendizaje de los booleanos y sus operaciones
+		- Aprender las buenas prácticas relacionadas a estos
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad I (1/10)
+
+1. En esta actividad, usted debe completar **4** funciones booleanas:
+
+	<br> 
+	  
+2. Al implementar las funciones
+	- **NO DEBE** usar condicionales <!-- .element: class="fragment highlight-red" -->
+
+	<br> 
+
+3. Al terminar sus funciones
+	- Se le pide verificar el cumplimiento 
+		- De **nuevas** buenas prácticas obligatorias del curso <!-- .element: class="fragment highlight-blue" -->
+			- Las mismas le serán recordadas más adelante
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad I (2/10)
+
+- Cree un archivo llamado: `logica.py`
+	- Copie y pegue el siguiente código e implemente el `TODO1`
+		- Note que debe crear la signatura 
+
+```python
+import doctest
+
+
+    """
+    Verifica si todos los objetos recibidos son iguales.
+
+    Args:
+        objeto_1 (object): El primer objeto a comparar.
+        objeto_2 (object): El segundo objeto a comparar.
+        objeto_3 (object): El tercer objeto a comparar.
+
+    Returns:
+        bool: True si todos los objetos tienen el mismo valor, 
+        False en caso contrario.
+    """
+	# TODO1: Implemente la función tal y como se describe en la documentación
+	# Debe crear al menos 2 doctests
+	
+#doctest.run_docstring_examples(nombre_funcion, globals(), verbose=True) 
+```
+
+- Nota: El tipo `object` indica aquí que puede ser cualquier tipo de dato
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Prosiga únicamente si ya implementó el `TODO1`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad I (3/10)
+
+1. Revise esta **nueva** buena práctica obligatoria del curso:
+	- <a href="https://eerosales24.github.io/iph_2026_20/n2/buenas_practicas/#/3" target="_blank">Usar nombres interrogativos en funciones booleanas</a>
+
+<br>
+
+2. Si el nombre de su función no cumple esta buena práctica
+	- Por favor, **nómbrela adecuadamente**
+		- Nota: No olvide actualizar los doctests
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad I (4/10)
+
+1. Revise esta **nueva** buena práctica obligatoria del curso:
+	-  <a href="https://eerosales24.github.io/iph_2026_20/n2/buenas_practicas/#/5" target="_blank">Retornar directamente expresiones booleanas</a>
+
+<br>
+
+2. Si su función no cumple esta buena práctica
+	- Por favor, **corrija su implementación**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Prosiga únicamente si ya implementó el `TODO1`, cumpliendo con las buenas prácticas antes enseñadas
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad I (5/10)
+
+- En `logica.py`
+	- Copie y pegue el siguiente código e implemente el `TODO2`
+		- Note que debe crear la signatura 
+
+```python
+
+    """
+    Verifica si un número está dentro del rango dado inclusivo.
+
+    Args:
+        num (float): El número a verificar.
+        inicio (float): El inicio del rango.
+        fin (float): El final del rango.
+
+    Returns:
+        bool: True si el número está dentro del rango inclusivo, 
+        False en caso contrario.
+    """
+	# TODO2: Implemente la función tal y como se describe en la documentación 
+	# Debe crear al menos 2 doctests
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Prosiga únicamente si ya implementó el `TODO2`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad I (6/10)
+
+1. Revise si su función cumple con todas las siguientes buenas prácticas obligatorias del curso:
+
+	- <a href="https://eerosales24.github.io/iph_2026_20/n2/buenas_practicas/#/3" target="_blank">Usar nombres interrogativos en funciones booleanas</a>
+	
+	-  <a href="https://eerosales24.github.io/iph_2026_20/n2/buenas_practicas/#/5" target="_blank">Retornar directamente expresiones booleanas</a>
+
+
+	 - <a href="https://eerosales24.github.io/iph_2026_20/n2/buenas_practicas/#/8" target="_blank"><b>Usar operadores relacionales compuestos</b></a>
+
+<br>
+
+2. Si su función no cumple todas las anteriores buenas prácticas
+	- Por favor,  **corrija su implementación**
+		- Nota: No olvide actualizar los doctests si es necesario
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Prosiga únicamente si ya implementó el `TODO2`, cumpliendo con las buenas prácticas antes enseñadas
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad I (7/10)
+
+- En `logica.py`
+	- Copie y pegue el siguiente código e implemente el `TODO3`
+		- Note que debe crear la signatura 
+
+
+```python
+
+    """
+    Verifica si un año es bisiesto. Un año es bisiesto si es divisible por 400 
+    (por ejemplo, 1600) o si es divisible por 4 pero no por 100 
+	(por ejemplo, 2004, 2008).
+
+    Args:
+        annio (int): El año a evaluar (Valor positivo).
+
+    Returns:
+        bool: True si el año es bisiesto, False en caso contrario.
+
+    >>> es_annio_bisiesto(2000)  # Caso año bisiesto
+    True
+    >>> es_annio_bisiesto(1900)  # Caso año no bisiesto
+    False
+    """
+	# TODO3: Implemente la función tal y como se describe en la documentación
+	
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad I (8/10)
+
+
+1. Revise si su función cumple con la siguiente buena práctica obligatoria del curso:
+
+	-  <a href="https://eerosales24.github.io/iph_2026_20/n2/buenas_practicas/#/5" target="_blank">Retornar directamente expresiones booleanas</a>
+
+
+
+	<br>
+
+2. Si su función no cumple con esta buena práctica
+	- Por favor, **corrija su implementación**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Prosiga únicamente si ya implementó el `TODO3`, cumpliendo con la buena práctica antes enseñada
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad I (9/10)
+
+- En `logica.py`
+	- Copie y pegue el siguiente código e implemente el `TODO4`
+		- Note que debe crear la signatura 
+
+```python
+
+    """
+    Verifica si los lados especificados pueden formar un triángulo equilátero. 
+	Para ello, verifica que lados sean mayores que cero y que todos sean iguales.
+
+    Args:
+        lado_1 (float): Longitud del primer lado.
+        lado_2 (float): Longitud del segundo lado.
+        lado_3 (float): Longitud del tercer lado.
+
+    Returns:
+        bool: True si los lados pueden formar un triángulo equilátero, 
+        False en caso contrario.
+    """
+    # TODO4: Implemente la función tal y como se describe en la documentación
+	# Debe crear al menos 2 doctests
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad I (10/10)
+
+1. Revise si su función cumple con todas las siguientes buenas prácticas obligatorias del curso:
+
+	- <a href="https://eerosales24.github.io/iph_2026_20/n2/buenas_practicas/#/3" target="_blank">Usar nombres interrogativos en funciones booleanas</a>
+	
+	- <a href="https://eerosales24.github.io/iph_2026_20/n2/buenas_practicas/#/5" target="_blank">Retornar directamente expresiones booleanas</a>
+
+
+
+	 - <a href="https://eerosales24.github.io/iph_2026_20/n2/buenas_practicas/#/8" target="_blank"><b>Usar operadores relacionales compuestos</b></a>
+	<br>
+
+2. Si su función no cumple todas las anteriores buenas prácticas
+	- Por favor, **corrija su implementación**
+		- Nota: No olvide actualizar los doctests si es necesario
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Prosiga únicamente si ya implementó el `TODO4`, cumpliendo con las buenas prácticas antes enseñadas
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Fin de la Actividad I
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#  Actividad II
+
+- **Objetivos:**
+	- Afianzar el aprendizaje de condicionales
+		- Aprender las buenas prácticas relacionadas a estos
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad II (1/11)
+
+1. En esta actividad, usted debe completar **6** funciones:
+
+	<br> 
+	  
+2. Al implementar las funciones
+	- **DEBE** usar condicionales <!-- .element: class="fragment highlight-red" -->
+		- Como indica el enunciado
+
+	<br> 
+
+3. Al terminar sus funciones
+	- Se le pide verificar el cumplimiento 
+		- De **nuevas** buenas prácticas obligatorias del curso <!-- .element: class="fragment highlight-blue" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad II (2/11)
+
+- En `logica.py`
+	- Copie y pegue el siguiente código e implemente el `TODO5`
+		- Note que debe crear la signatura 
+
+```python
+
+    """
+    Retorna el número mayor entre dos números dados.
+    La función no usa a min() ni a max().
+
+    Args:
+        num1 (float): El primer número.
+        num2 (float): El segundo número.
+
+    Returns:
+        float: El mayor de los dos números.
+    """
+	# TODO5: Implemente la función tal y como se describe en la documentación 
+	# Debe crear al menos 2 doctests
+```
+
+- **Debe** usar un solo `if`
+	- Sin usar `elif` y sin usar `else`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Prosiga únicamente si ya implementó el `TODO5`, cumpliendo con usar UN SOLO `if`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad II (3/11)
+
+- En `logica.py`
+	- Copie y pegue el siguiente código e implemente el `TODO6`:
+
+```python
+def signo(numero: float) -> int:
+    """
+    Retorna 1 si el número es positivo, -1 si es negativo y 0 si es cero.
+
+    Args:
+        numero (float): Número a evaluar.
+
+    Returns:
+        int: 1 si es positivo, -1 si es negativo, 0 si es cero.
+
+    >>> signo(5)  # Caso número positivo
+    1
+    >>> signo(-3)  # Caso número negativo
+    -1
+    >>> signo(0)  # Caso cero
+    0
+    """
+	# TODO6: Implemente la función tal y como se describe en la documentación
+```
+
+- **Debe** usar como **máximo dos** condicionales `if` independientes
+	- Ninguno de esos condicionales debe usar `elif` y ni `else`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad II (4/11)
+
+1. Revise si su función cumple con la siguiente **nueva** buena práctica obligatoria del curso:
+
+- <a href="https://eerosales24.github.io/iph_2026_20/n2/buenas_practicas/#/9" target="_blank">Nunca interrumpir un condicional</a>
+
+	<br>
+
+2. Si su función no cumple con esta buena práctica
+	- Por favor, **corrija su implementación**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Prosiga únicamente si ya implementó el `TODO6`, cumpliendo todo lo solicitado
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad II (5/11)
+
+- En `logica.py`
+	- Copie y pegue el siguiente código e implemente el `TODO7`:
+
+```python
+def clasificar_calificacion(calificacion: float) -> str:
+    """
+    Clasifica una calificación en 'Aprobado', 'Reprobado' o 'Excelente'.
+	Se puede asumir que la clasificación es siempre una de las tres anteriores.
+
+    Args:
+        calificacion (float): Calificación del estudiante.
+
+    Returns:
+        str: 'Excelente' si la calificación es mayor o igual a 90,
+             'Aprobado' si está entre 60 y 89,
+             'Reprobado' en cualquier otro caso.
+
+    >>> clasificar_calificacion(95)  # Caso excelente
+    'Excelente'
+    >>> clasificar_calificacion(75)  # Caso aprobado
+    'Aprobado'
+    >>> clasificar_calificacion(50)  # Caso reprobado
+    'Reprobado'
+    """
+    # TODO7: Implemente la función tal y como se describe en la documentación
+
+```
+
+- **Debe** usar una estructura `if-elif-else`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad II (6/11)
+
+1. Revise si su función cumple con la siguiente buena práctica obligatoria del curso:
+
+- <a href="https://eerosales24.github.io/iph_2026_20/n2/buenas_practicas/#/9" target="_blank">Nunca interrumpir un condicional</a>
+
+
+
+	<br>
+
+2. Si su función no cumple con esta buena práctica
+	- Por favor, **corrija su implementación**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Prosiga únicamente si ya implementó el `TODO7`, cumpliendo todo lo solicitado
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad II (7/11)
+
+- En `logica.py`
+	- Copie y pegue el siguiente código e implemente el `TODO8`:
+
+```python
+def clasificar_edad(edad: int) -> str:
+    """
+    Clasifica la edad en diferentes categorías de etapa de vida.
+
+    Args:
+        edad (int): Edad de la persona (Valor positivo mayor a cero).
+
+    Returns:
+        str: Categoría de edad según el valor ingresado.
+
+    >>> clasificar_edad(5)  # Caso menor de 13
+    'Niño'
+    >>> clasificar_edad(17)  # Caso menor de 18
+    'Adolescente'
+    >>> clasificar_edad(30)  # Caso menor de 60
+    'Adulto'
+    >>> clasificar_edad(70)  # Caso de 60 o más
+    'Adulto mayor'
+    """
+	# TODO8: Implemente la función tal y como se describe en la documentación
+```
+
+- **Debe** usar una estructura `if-elif-else`
+	- Con dos `elif`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad II (8/11)
+
+1. Revise si su función cumple con la siguiente buena práctica obligatoria del curso:
+
+- <a href="https://eerosales24.github.io/iph_2026_20/n2/buenas_practicas/#/9" target="_blank">Nunca interrumpir un condicional</a>
+
+
+
+	<br>
+
+2. Si su función no cumple con esta buena práctica
+	- Por favor, **corrija su implementación**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Prosiga únicamente si ya implementó el `TODO8`, cumpliendo todo lo solicitado
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad II (9/11)
+
+- En `logica.py`
+	- Copie y pegue el siguiente código e implemente el `TODO9`:
+
+```python
+def calcular_impuesto(salario: float) -> float:
+    """
+    Calcula el impuesto a pagar según el salario anual basado en una
+	escala de impuestos que aplican así:
+
+    10% de impuesto si el salario es hasta 20,000.
+    15% si el salario es entre 20,001 y 50,000.
+    20% si el salario es entre 50,001 y 100,000.
+    25% si el salario es mayor a 100,000.
+
+    Args:
+        salario (float): Salario anual en dólares (Valor positivo mayor a cero).
+
+    Returns:
+        float: Impuesto total a pagar según la escala.
+
+    >>> calcular_impuesto(15000)  # 10% de 15,000
+    1500.0
+    >>> calcular_impuesto(40000)  # 15% de 40,000
+    6000.0
+    >>> calcular_impuesto(80000)  # 20% de 80,000
+    16000.0
+    >>> calcular_impuesto(150000)  # 25% de 150,000
+    37500.0
+    """
+    # TODO9: Implemente la función tal y como se describe en la documentación
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad II (10/11)
+
+1. Revise si su función cumple con la siguiente buena práctica obligatoria del curso:
+
+- <a href="https://eerosales24.github.io/iph_2026_20/n2/buenas_practicas/#/9" target="_blank">Nunca interrumpir un condicional</a>
+
+
+
+	<br>
+
+2. Si su función no cumple con esta buena práctica
+	- Por favor, **corrija su implementación**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Prosiga únicamente si ya implementó el `TODO9`, cumpliendo todo lo solicitado
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad II (11/11)
+
+- En `logica.py`
+	- Copie y pegue el siguiente código e implemente el `TODO10`:
+
+```python
+def clasificar_triangulo(lado1: float, lado2: float, lado3: float) -> str:
+    #TODO10: Cree la documentación (con doctests) de esta función.
+	# Pruebe que sus doctests sean correctos.
+	
+    resultado = "No es un triángulo"  # Variable de retorno
+
+    # Verifica si los lados forman un triángulo válido:
+    if (lado1 + lado2 > lado3 and lado1 + lado3 > lado2 and lado2 + lado3 > lado1):
+        if lado1 == lado2 == lado3:
+            resultado = "Equilátero"
+        else:
+            if lado1 == lado2 or lado1 == lado3 or lado2 == lado3:
+                resultado = "Isósceles"
+            else:
+                resultado = "Escaleno"
+
+    return resultado  # Se usa un solo return
+
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Entrega (1/2)
+
+1. Comprima en un archivo `.zip` el archivo:
+	- `logica.py`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Entrega (2/2)
+
+2. Haga el envío del `.zip` en  [Bloque Neón](https://bloqueneon.uniandes.edu.co/)
+	- Vaya a **"Actividades"**
+		- **"N2-L1"**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Fin de la Actividad II
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#  Actividad III
+
+- **Objetivos:**
+	- Aprender a usar mejor a Spyder
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad III (1/2)
+
+- **Tarea de Spyder de N2**:
+- En  [Bloque Neón](https://bloqueneon.uniandes.edu.co/)
+	- Vaya a: 
+		- _Actividades_
+			- _Tarea de Spyder de N2_
+				- Abra el enunciado:
+					- **Tarea_Spyder_N2**
+						- Siga las instrucciones paso a paso
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad III (2/2)
+
+- **IMPORTANTE**:
+	- La **Tarea de Spyder de N2**
+		- Es un **evaluable de Nivel 2** <!-- .element: class="fragment highlight-red" -->
+			- Vale el **3%** del nivel <!-- .element: class="fragment highlight-blue" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Fin de la Actividad III
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#  Actividad IV
+
+- **Objetivos:**
+	- Afianzar la práctica de condicionales
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad IV (1/2)
+
+- **N2 - Tarea 1**:
+
+	- Ya se encuentra en [senecode](https://senecode.virtual.uniandes.edu.co/) la primera tarea de Nivel 2
+	
+		- Complete los siguientes ejercicios:
+			- `Potenciador`
+			- `Estado académico`
+			- `La estación de Transmilenio`
+			- `Precio de un pasaje`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad IV (2/2)
+
+- Fecha límite de entrega:
+	- **Jueves 10 de septiembre 11:00pm**
+	- Recuerde: Esta tarea es un **evaluable** de Nivel 2
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Fin de N2-L1
+
+- Si no alcanzó a terminar el laboratorio
+	- Debe completar el laboratorio en su tiempo de 
+		- **Trabajo individual semanal** de IP Honores
+
+
+
+		
+
+
+ [<i class="fas fa-home  fa-3x"></i>](https://eerosales24.github.io/iph_2026_20/#)
+</div></script></section></div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/chart/chart.min.js"></script>
+	<script src="plugin/chart/plugin.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+	  function isLight(color) {
+		let hex = color.replace('#', '');
+
+		// convert #fff => #ffffff
+		if(hex.length == 3){
+			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+		}
+
+		const c_r = parseInt(hex.substr(0, 2), 16);
+		const c_g = parseInt(hex.substr(2, 2), 16);
+		const c_b = parseInt(hex.substr(4, 2), 16);
+		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+		return brightness > 155;
+	}
+
+	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+	var isLight = isLight(bgColor);
+
+	if(isLight){
+		document.body.classList.add('has-light-background');
+	} else {
+		document.body.classList.add('has-dark-background');
+	}
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+        ],
+
+
+    	allottedTime: 120 * 1000,
+
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
+
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
+
+		customcontrols: {
+			controls: [
+			]
+		},
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width":960,"height":700,"margin":"0.025","minScale":"0.1","maxScale":"2.0","controls":"true","controlsLayout":"bottom-right","progress":"true","slideNumber":"true","center":"false","transition":"slide","transitionSpeed":"default"}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+
+  <!-- created with Advanced Slides -->
+</html>
