@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title></title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/iph.css" id="theme" />
+    <link rel="stylesheet" href="plugin/highlight/spyder.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
+
+
+
+    <script defer src="dist/fontawesome/all.min.js"></script>
+
+	<script type="text/javascript">
+		var forgetPop = true;
+		function onPopState(event) {
+			if(forgetPop){
+				forgetPop = false;
+			} else {
+				parent.postMessage(event.target.location.href, "app://obsidian.md");
+			}
+        }
+		window.onpopstate = onPopState;
+		window.onmessage = event => {
+			if(event.data == "reload"){
+				window.document.location.reload();
+			}
+			forgetPop = true;
+		}
+
+		function fitElements(){
+			const itemsToFit = document.getElementsByClassName('fitText');
+			for (const item in itemsToFit) {
+				if (Object.hasOwnProperty.call(itemsToFit, item)) {
+					var element = itemsToFit[item];
+					fitElement(element,1, 1000);
+					element.classList.remove('fitText');
+				}
+			}
+		}
+
+		function fitElement(element, start, end){
+
+			let size = (end + start) / 2;
+			element.style.fontSize = `${size}px`;
+
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
+					size--;
+					element.style.fontSize = `${size}px`;
+				}
+				return;
+			}
+
+			if(element.scrollHeight > element.offsetHeight){
+				fitElement(element, start, size);
+			} else {
+				fitElement(element, size, end);
+			}		
+		}
+
+
+		document.onreadystatechange = () => {
+			fitElements();
+			if (document.readyState === 'complete') {
+				if (window.location.href.indexOf("?export") != -1){
+					parent.postMessage(event.target.location.href, "app://obsidian.md");
+				}
+				if (window.location.href.indexOf("print-pdf") != -1){
+					let stateCheck = setInterval(() => {
+						clearInterval(stateCheck);
+						window.print();
+					}, 250);
+				}
+			}
+	};
+
+
+        </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### <i class="fas fa-award"></i> IP Honores
+
+ ####  *Buenas Prácticas de N2*
+
+[Eduardo Rosales](mailto:ee.rosales24@uniandes.edu.co)
+
+Departamento de Ingeniería de Sistemas y Computación
+
+Universidad de los Andes
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+> "I'm not a great programmer; I'm just a good programmer with great habits." 
+
+Kent Beck
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Índice
+
+- [Usar nombres interrogativos en funciones booleanas](https://eerosales24.github.io/iph_2026_20/n2/buenas_practicas/#/3)
+- [Retornar directamente expresiones booleanas](https://eerosales24.github.io/iph_2026_20/n2/buenas_practicas/#/5)
+- [Usar operadores relacionales compuestos](https://eerosales24.github.io/iph_2026_20/n2/buenas_practicas/#/8)
+- [Nunca interrumpir un condicional](https://eerosales24.github.io/iph_2026_20/n2/buenas_practicas/#/9)
+- [Comparar correctamente con None](https://eerosales24.github.io/iph_2026_20/n2/buenas_practicas/#/11)
+- [Comparar correctamente con literales](https://eerosales24.github.io/iph_2026_20/n2/buenas_practicas/#/13)
+- [Usar min() y max() de forma segura](https://eerosales24.github.io/iph_2026_20/n2/buenas_practicas/#/14)
+- [Usar validaciones seguras para métodos de str](https://eerosales24.github.io/iph_2026_20/n2/buenas_practicas/#/15)
+- [Validar llaves de diccionarios](https://eerosales24.github.io/iph_2026_20/n2/buenas_practicas/#/17)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Usar nombres interrogativos en funciones booleanas (1/2)
+
+- Las funciones booleanas 
+	- Deben nombrarse como si fuesen preguntas
+		- Cuya respuesta es `True`  o  `False`
+- Ej:
+
+```Python
+esta_activo()
+
+esta_encendido()
+
+tiene_permiso()
+
+es_valido()
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Usar nombres interrogativos en funciones booleanas (2/2)
+
+- Se debe nombrar a las funciones booleanas
+	- **Sin usar negaciones**
+- Ej:
+
+<br> 
+  
+✅
+```Python
+es_valido()   # Nombramiento correcto y claro
+```
+
+<br>
+
+❌
+```Python
+ es_invalido()  # Mal nombramiento (evitar negaciones)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Retornar directamente expresiones booleanas (1/3)
+
+
+- Para funciones booleanas
+	- Cuando sea posible
+		- Retorne directamente la expresión booleana
+- Ej:
+
+```Python[3]
+# Práctica correcta:
+def es_par(num: int) -> bool:  
+    return num % 2 == 0
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Retornar directamente expresiones booleanas (2/3)
+
+- Retorne directamente la expresión booleana
+	- **Sin usar condicionales innecesarios**
+- Ej:
+
+```Python
+# Práctica correcta:
+def es_multiplo(dividendo: int, divisor: int) -> bool:
+    return divisor != 0 and dividendo % divisor == 0
+```
+
+- Se evitó el uso de `if`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Retornar directamente expresiones booleanas (3/3)
+
+- Claridad y legibilidad
+	- Hace el código más conciso y legible
+- Eficiencia: 
+	- Evita estructuras condicionales innecesarias
+- Mantenimiento: 
+	- Facilita la modificación 
+		- Y depuración del código
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Usar operadores relacionales compuestos
+
+- En Python
+	- Se puede evitar operaciones ineficientes
+		- Con operadores relacionales compuestos
+- Ej: 
+
+```Python
+x < y < z 
+
+# No es lo mismo que:
+
+(x < y) and (y < z)
+```
+
+- `x < y < z` es más eficiente aquí
+	- Porque se evalúa a `y`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Nunca interrumpir un condicional (1/2)
+
+- No interrumpir un condicional
+	- Con la instrucción `return` (u otras: `continue`, `break`, `exit`, etc.)
+- Ej:
+
+```Python
+def resultado_examen(puntuacion: float) -> str:
+    resultado = 'no aprobado'  # variable de retorno
+    if puntuacion >= 60:
+        resultado = 'aprobado'
+    return resultado  # Hay un solo retorno
+```
+
+- ✅ Hay un sólo `return` en la función
+- ✅ Se usa una variable de retorno (`resultado`)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Nunca interrumpir un condicional (2/2)
+
+- ❌ Interrumpir un condicional
+	- Con la instrucción `return` (u otras)
+- Ej:
+  
+```Python[3,4]
+def resultado_examen(puntuacion: float) -> str:
+    if puntuacion >= 60:
+        return 'aprobado'
+	return 'no aprobado'
+```
+
+- ❌ Se interrumpe un condicional con `return`
+- ❌ No se usó una variable de retorno
+- ❌ Hay varios `return` en la función
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Comparar correctamente con `None` (1/2)
+
+
+- Se debe usar `is`  al comparar con `None` 
+- Ej:
+
+✅
+```Python
+x is None  
+```
+
+❌
+```Python
+x == None
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Comparar correctamente con `None` (2/2)
+
+- Ser debe usar `is not` al comparar desigualdad con `None` 
+- Ej:
+
+✅
+```Python
+x is not None
+```
+
+❌
+```Python
+x != None
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Comparar correctamente con literales
+
+- No usar `is`  e  `is not` 
+	- Con valores literales
+- Ej:
+
+✅
+```Python
+x == 'abc'
+x != 5
+x == True
+```
+
+❌
+```Python
+x is 'abc'
+x is not 5
+x is True
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Usar `min()` y `max()` de forma segura
+
+- Considerar el caso de **secuencias vacías** al usar `min()` o `max()`
+	- Usar `default` para evitar [`ValueError`](https://eerosales24.github.io/iph_2026_20/n2/errores_comunes/#/11) 
+		- Cuando las estructura esté vacía:
+
+	<br>
+
+```python
+cadena = ""
+diccionario = {}
+```
+
+<br>
+
+✅ Seguro:
+```python
+min(cadena, default='N/A')
+max(diccionario, default='N/A')
+```
+
+<br>
+
+ ❌ Inseguro:
+```python
+min(cadena)  # ValueError
+max(diccionario)  # ValueError
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Usar validaciones seguras para métodos de `str` (1/2)
+
+- Considerar que algunos métodos de `str` 
+	- Retornan `False` cuando se llaman sobre un **string vacío** 
+		- En lugar de lanzar error
+		- Ej:
+		
+```python
+''.isalpha()   # → False
+
+''.isalnum()   # → False
+
+''.isdigit()   # → False
+
+''.islower()   # → False
+
+''.isspace()   # → False
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Usar validaciones seguras para métodos de `str` (2/2)
+
+- Para evitar errores lógicos silenciosos
+	- Se recomienda validar antes si el string está vacío
+	- Ej:
+	
+```python
+nombre = input("Digite su nombre: ")
+
+if nombre and nombre.isalpha():
+    # No vacío y alfabético:
+    print("Nombre válido")
+else:
+    print("Nombre inválido")
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Validar llaves de diccionarios (1/2)
+
+- Evitar acceder directamente con `dic[llave]` 
+	- Si la llave podría no existir.
+  - ❌ `edad = datos["edad"]`  # puede lanzar KeyError
+
+	<br>
+
+- ✅  Verificar la existencia de la llave con `in`:
+ 
+```python
+    if "edad" in datos:  # Ingresa solo si la llave "edad" existe en `datos`
+        edad = datos["edad"]
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Validar llaves de diccionarios (2/2)
+
+- ✅ Usar `get()` para obtener un valor seguro si la llave no existe:
+
+    ```python
+    edad = datos.get("edad")  # retorna None si no existe
+    ```
+
+	<br>
+
+- ✅  Usar `get()` con valor por defecto para evitar manejar `None`:
+   
+    ```python
+    edad = datos.get("edad", 0)  # retorna 0 si no existe
+    ```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Fin de la buenas prácticas de Nivel 2
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+[<i class="fas fa-home  fa-3x"></i>](https://eerosales24.github.io/iph_2026_20/#)
+</div></script></section></div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/chart/chart.min.js"></script>
+	<script src="plugin/chart/plugin.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+	  function isLight(color) {
+		let hex = color.replace('#', '');
+
+		// convert #fff => #ffffff
+		if(hex.length == 3){
+			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+		}
+
+		const c_r = parseInt(hex.substr(0, 2), 16);
+		const c_g = parseInt(hex.substr(2, 2), 16);
+		const c_b = parseInt(hex.substr(4, 2), 16);
+		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+		return brightness > 155;
+	}
+
+	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+	var isLight = isLight(bgColor);
+
+	if(isLight){
+		document.body.classList.add('has-light-background');
+	} else {
+		document.body.classList.add('has-dark-background');
+	}
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+        ],
+
+
+    	allottedTime: 120 * 1000,
+
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
+
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
+
+		customcontrols: {
+			controls: [
+			]
+		},
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width":960,"height":700,"margin":"0.025","minScale":"0.1","maxScale":"2.0","controls":"true","controlsLayout":"bottom-right","progress":"true","slideNumber":"true","center":"false","transition":"slide","transitionSpeed":"default"}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+
+  <!-- created with Advanced Slides -->
+</html>
