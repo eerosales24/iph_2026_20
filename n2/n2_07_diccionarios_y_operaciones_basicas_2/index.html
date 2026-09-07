@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title></title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/iph.css" id="theme" />
+    <link rel="stylesheet" href="plugin/highlight/spyder.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
+
+
+
+    <script defer src="dist/fontawesome/all.min.js"></script>
+
+	<script type="text/javascript">
+		var forgetPop = true;
+		function onPopState(event) {
+			if(forgetPop){
+				forgetPop = false;
+			} else {
+				parent.postMessage(event.target.location.href, "app://obsidian.md");
+			}
+        }
+		window.onpopstate = onPopState;
+		window.onmessage = event => {
+			if(event.data == "reload"){
+				window.document.location.reload();
+			}
+			forgetPop = true;
+		}
+
+		function fitElements(){
+			const itemsToFit = document.getElementsByClassName('fitText');
+			for (const item in itemsToFit) {
+				if (Object.hasOwnProperty.call(itemsToFit, item)) {
+					var element = itemsToFit[item];
+					fitElement(element,1, 1000);
+					element.classList.remove('fitText');
+				}
+			}
+		}
+
+		function fitElement(element, start, end){
+
+			let size = (end + start) / 2;
+			element.style.fontSize = `${size}px`;
+
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
+					size--;
+					element.style.fontSize = `${size}px`;
+				}
+				return;
+			}
+
+			if(element.scrollHeight > element.offsetHeight){
+				fitElement(element, start, size);
+			} else {
+				fitElement(element, size, end);
+			}		
+		}
+
+
+		document.onreadystatechange = () => {
+			fitElements();
+			if (document.readyState === 'complete') {
+				if (window.location.href.indexOf("?export") != -1){
+					parent.postMessage(event.target.location.href, "app://obsidian.md");
+				}
+				if (window.location.href.indexOf("print-pdf") != -1){
+					let stateCheck = setInterval(() => {
+						clearInterval(stateCheck);
+						window.print();
+					}, 250);
+				}
+			}
+	};
+
+
+        </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### <i class="fas fa-award"></i> IP Honores
+
+#### *Diccionarios y sus operaciones básicas II*
+
+[Eduardo Rosales](mailto:ee.rosales24@uniandes.edu.co)
+
+Departamento de Ingeniería de Sistemas y Computación
+
+Universidad de los Andes
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Operadores de pertenencia (o Membresía) - Diccionarios
+    
+- Sintaxis: 
+```Python
+x in diccionario
+x not in diccionario
+```
+- `x`: Llave a buscar
+- `diccionario`: En donde buscar la llave
+- `x in diccionario` : devuelve `True` 
+	- Si se encuentra `x` en `diccionario`
+	- Caso contrario `False`
+- `not in`: negación de:  `x in diccionario`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Operadores de pertenencia (o Membresía) - Ejemplos
+
+```Python
+# Asumir ejecución secuencial de cada línea:
+notas = {'Lyn':2.0, 'Jim':5.0, 'Chris':3.5, 'George':4.6 }
+'Lyn' in notas  # → True
+'George' in notas   # → True
+'Pedro' in notas   # → False
+'Jim' in notas  # → True
+'Pedro' not in notas  # → True
+'Chris' in notas and 'Pedro' not in notas  # → True
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta I
+
+- ¿Cuál es el resultado de ejecutar el siguiente código si el usuario ingresa: `Manzana`?
+
+```Python
+precio_frutas = {'Manzana': 9000, 'Fresa': 12000, \
+                 'Papaya': 5600, 'Naranja': 8700}
+
+fruta_buscada = input("Digite la fruta de la" \
+                      "cual quiere conocer el precio: ")
+    
+precio = precio_frutas.get(fruta_buscada)
+
+if fruta_buscada in precio_frutas:
+    print("El precio de la {} es: "\
+          "{}.".format(fruta_buscada, precio))
+else:
+    print("El precio de la fruta {} " \
+          "no está disponible.".format(fruta_buscada))
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta I - Solución
+
+```Python
+precio_frutas = {'Manzana': 9000, 'Fresa': 12000, \
+                 'Papaya': 5600, 'Naranja': 8700}
+
+fruta_buscada = input("Digite la fruta de la" \
+                      "cual quiere conocer el precio: ")
+    
+precio = precio_frutas.get(fruta_buscada)
+
+if fruta_buscada in precio_frutas:
+    print("El precio de la {} es: "\
+          "{}.".format(fruta_buscada, precio))
+    # → El precio de la Manzana es: 9000.
+else:
+    print("El precio de la fruta {} " \
+          "no está disponible.".format(fruta_buscada))
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `len()`
+
+- Retorna la longitud (tamaño) de un objeto    
+- Sintaxis: 
+```Python
+len(objeto)
+```
+- Compatible con múltiples objetos
+	- Por ejemplo **diccionarios**
+- Ayuda:  [len](https://docs.python.org/3/library/functions.html#len)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `len()` - Ejemplos
+
+```Python
+len({})  # → 0: Diccionario vacío
+
+len({'a':1})  # → 1: Diccionario de un solo par llave-valor
+
+len({'a':1, 'b':2, 'c':3})  # → 3: Debido a 3 pares llave-valor
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta II
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+precio_frutas = {'Manzana': 9000, 'Fresa': 12000, \
+                 'Papaya': 5600, 'Naranja': 8700}
+
+longitud = len(precio_frutas)
+
+if longitud == 4:
+    print(f'Hay {longitud} precios de frutas disponibles.')
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta II - Solución
+
+```Python
+precio_frutas = {'Manzana': 9000, 'Fresa': 12000, \
+                 'Papaya': 5600, 'Naranja': 8700}
+
+longitud = len(precio_frutas)
+
+if longitud == 4:
+    print(f'Hay {longitud} precios de frutas disponibles.')
+    # → Hay 4 precios de frutas disponibles.
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+precio_frutas = {}
+
+if not precio_frutas:
+    print("No hay precios de frutas disponibles.")
+else:
+    print(f"Hay {len(precio_frutas)} " \
+          "precios de frutas disponibles.")
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III - Solución
+
+```Python
+precio_frutas = {}
+
+if not precio_frutas:
+    print("No hay precios de frutas disponibles.")
+    # → No hay precios de frutas disponibles.
+else:
+    print(f"Hay {len(precio_frutas)} " \
+          "precios de frutas disponibles.")
+
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IV
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+precio_frutas = {'Guanabana': 14000}
+
+if not precio_frutas:
+    print("No hay precios de frutas disponibles.")
+else:
+    print(f"Hay {len(precio_frutas)} " \
+          "precio(s) de frutas disponibles.")
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IV - Solución
+
+```Python
+precio_frutas = {'Guanabana': 14000}
+
+if not precio_frutas:
+    print("No hay precios de frutas disponibles.")
+else:
+    print(f"Hay {len(precio_frutas)} " \
+          "precio(s) de frutas disponibles.")
+    # → Hay 1 precio(s) de frutas disponibles.
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### ¿Puedo pasar un diccionario como argumento?
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Paso de argumentos (1/3)
+
+- El paso como argumento se refiere a cómo se envía algo
+	- Entre la invocación de la función y la función
+- Python usa un *"paso por asignación"*
+	- La función **recibe una referencia**
+		- No el objeto en sí
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Paso de argumentos (2/3)
+
+- No es el objetivo del curso
+	- Comprender en detalle 
+		- El paso por asignación
+- Basta con saber que
+	- Un diccionario **se puede pasar a una función**
+	- Un diccionario que se pasa a una función
+		- **Puede ser modificado por la función**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Paso de argumentos (3/3)
+- Hay dos posibles casos de pasos de argumentos:
+	1. Paso de inmutables
+	2. Paso de mutables
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Paso de argumentos inmutables
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Tipos de datos inmutables
+
+- Un tipo de dato es inmutable
+	- Si después de crearlo, **no se puede cambiar**
+- Tipos de datos inmutables vistos hasta ahora:
+	- `int`
+	- `float`
+	- `str`
+	- `bool`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Paso de argumentos inmutables - Ejemplo (1/2)
+
+```Python
+mensaje_original = 'Original'
+
+def intentar_modificar(mensaje: str) -> None:
+    mensaje = 'Esto solo cambia la variable local'
+    print(mensaje)  # → 'Esto solo cambia la variable local'
+
+print(mensaje_original)  # → Original
+intentar_modificar(mensaje_original)
+print(mensaje_original)  # → Original
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Paso de argumentos inmutables - Ejemplo (2/2)
+
+- Los strings no pueden ser cambiados
+	- Lo que se cambió fue a
+		- La variable local: `mensaje`
+
+```Python[5,6]
+mensaje_original = 'Original'
+
+def intentar_modificar(mensaje: str) -> None:
+    # mensaje es una variable local
+    mensaje = 'Esto solo cambia la variable local'
+    print(mensaje)  # → 'Esto solo cambia la variable local'
+
+print(mensaje_original)  # → Original
+intentar_modificar(mensaje_original)
+print(mensaje_original)  # → Original
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Paso de argumentos mutables
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Tipos de datos mutables
+
+- Un tipo de dato es mutable
+	- Si después de crearlo, se puede cambiar
+- Tipos de datos mutables vistos hasta ahora:
+	- `dict`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Paso de argumentos mutables - Ejemplo (1/2)
+
+```Python
+diccionario_original = {'clave': 'valor original'}
+
+def modificar_diccionario(diccionario: dict) -> None:
+    diccionario['clave'] = 'Se cambió a `diccionario_original`'
+    print(diccionario)  
+    # → {'clave': 'Se cambió a `diccionario_original`'}
+
+print(diccionario_original)  # → {'clave': 'valor original'}
+modificar_diccionario(diccionario_original)  
+print(diccionario_original)  
+# → {'clave': 'Se cambió a `diccionario_original`'}
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Paso de argumentos mutables - Ejemplo (2/2)
+
+- Un diccionario es mutable
+	- Y por lo tanto, **una función puede cambiarlo**
+
+```Python[4,5,6]
+diccionario_original = {'clave': 'valor original'}
+
+def modificar_diccionario(diccionario: dict) -> None:
+    diccionario['clave'] = 'Se cambió a `diccionario_original`'
+    print(diccionario)  
+    # → {'clave': 'Se cambió a `diccionario_original`'}
+
+print(diccionario_original)  # → {'clave': 'valor original'}
+modificar_diccionario(diccionario_original)  
+print(diccionario_original)  
+# → {'clave': 'Se cambió a `diccionario_original`'}
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta V
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+dia_actual = 'Hoy'
+
+def intentar_cambiar_dia(dia: str) -> None:
+    print(dia)
+    dia = 'Mañana'  
+    print(dia)
+
+print(dia_actual)
+intentar_cambiar_dia(dia_actual)
+print(dia_actual)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta V - Solución
+
+```Python
+dia_actual = 'Hoy'
+
+def intentar_cambiar_dia(dia: str) -> None:
+    print(dia)  # → Hoy
+    dia = 'Mañana'  # Aquí solo se cambió a la variable local
+    print(dia)  # → Mañana
+
+print(dia_actual)  # → Hoy
+intentar_cambiar_dia(dia_actual)
+print(dia_actual)  # → Hoy
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VI
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+valor_inicial: int = 1
+
+def intentar_modificar_valor(valor: int) -> None:
+    print(valor)
+    valor = 9
+    print(valor)
+
+print(valor_inicial)
+intentar_modificar_valor(valor_inicial)
+print(valor_inicial)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VI - Solución
+
+```Python
+valor_inicial: int = 1
+
+def intentar_modificar_valor(valor: int) -> None:
+    print(valor)  # → 1
+    valor = 9  # Aquí solo se cambió a la variable local
+    print(valor)  # → 9
+
+
+print(valor_inicial)  # → 1
+intentar_modificar_valor(valor_inicial)
+print(valor_inicial)  # → 1
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VII
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+valor_inicial: int = 1
+
+def retornar_valor(valor: int) -> int:
+    print(valor)
+    valor = 9
+    print(valor)
+    return valor  
+
+print(valor_inicial)
+valor_inicial = retornar_valor(valor_inicial)  
+print(valor_inicial)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VII - Solución
+
+```Python
+valor_inicial: int = 1
+
+def retornar_valor(valor: int) -> int:
+    print(valor)  # → 1
+    valor = 9   # Aquí se cambió a la variable local
+    print(valor)  # → 9   
+    return valor  # Aquí se retornó a la variable local
+
+print(valor_inicial)  # → 1
+# `valor_inicial` se actualiza con el valor retornado:
+valor_inicial = retornar_valor(valor_inicial)  
+print(valor_inicial)  # → 9
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### En resumen
+
+- Un inmutable: 
+	- **No puede ser cambiado** dentro de una función
+- Un mutable:
+	- **Puede ser cambiado** por una función
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Estudiemos más métodos de los diccionarios
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `dict.copy()`
+
+- Crea una copia del diccionario 
+- Sintaxis:  
+
+```Python 
+diccionario_copia = diccionario_original.copy()
+```
+
+- No modifica el diccionario original
+- Útil cuando se necesita trabajar con una copia
+    - Y evitar modificar el original
+	    - Porque **un diccionario es mutable**
+- Ayuda:  [dict.copy](https://docs.python.org/3/library/stdtypes.html#dict.copy)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `dict.copy()` - Ejemplos 
+
+```Python
+# Asumir ejecución secuencial de cada línea:
+
+dct_original = {'a':1, 'b':2}
+
+copia_dct = dct_original.copy()  # copia_dct = {'a':1, 'b':2}
+
+copia_dct['c'] = 3  # copia_dct = {'a':1, 'b':2, 'c':3}
+
+print(dct_original)  # → {'a':1, 'b':2}
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VIII
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+original_dict = {'Juan': 18, 'Ana': 22}
+copia = original_dict.copy()
+original_dict['Juan'] = -1
+copia['Ana'] = -1
+print(original_dict)
+print(copia)
+copia['Pedro'] = 27
+print(original_dict)
+print(copia)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VIII - Solución
+
+```Python
+original_dict = {'Juan': 18, 'Ana': 22}
+copia = original_dict.copy()
+original_dict['Juan'] = -1
+copia['Ana'] = -1
+print(original_dict)  # → {'Juan': -1, 'Ana': 22}
+print(copia)  # → {'Juan': 18, 'Ana': -1}
+copia['Pedro'] = 27
+print(original_dict)  # → {'Juan': -1, 'Ana': 22}
+print(copia)  # → {'Juan': 18, 'Ana': -1, 'Pedro': 27}
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<i class="fas fa-question-circle fa-2x fa-spin fa-4x"></i>
+
+<br>
+<br>
+
+ [<i class="fas fa-home  fa-3x"></i>](https://eerosales24.github.io/iph_2026_20/#)
+</div></script></section></div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/chart/chart.min.js"></script>
+	<script src="plugin/chart/plugin.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+	  function isLight(color) {
+		let hex = color.replace('#', '');
+
+		// convert #fff => #ffffff
+		if(hex.length == 3){
+			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+		}
+
+		const c_r = parseInt(hex.substr(0, 2), 16);
+		const c_g = parseInt(hex.substr(2, 2), 16);
+		const c_b = parseInt(hex.substr(4, 2), 16);
+		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+		return brightness > 155;
+	}
+
+	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+	var isLight = isLight(bgColor);
+
+	if(isLight){
+		document.body.classList.add('has-light-background');
+	} else {
+		document.body.classList.add('has-dark-background');
+	}
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+        ],
+
+
+    	allottedTime: 120 * 1000,
+
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
+
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
+
+		customcontrols: {
+			controls: [
+			]
+		},
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width":960,"height":700,"margin":"0.025","minScale":"0.1","maxScale":"2.0","controls":"true","controlsLayout":"bottom-right","progress":"true","slideNumber":"true","center":"false","transition":"slide","transitionSpeed":"default"}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+
+  <!-- created with Advanced Slides -->
+</html>

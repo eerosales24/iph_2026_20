@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title></title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/iph.css" id="theme" />
+    <link rel="stylesheet" href="plugin/highlight/spyder.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
+
+
+
+    <script defer src="dist/fontawesome/all.min.js"></script>
+
+	<script type="text/javascript">
+		var forgetPop = true;
+		function onPopState(event) {
+			if(forgetPop){
+				forgetPop = false;
+			} else {
+				parent.postMessage(event.target.location.href, "app://obsidian.md");
+			}
+        }
+		window.onpopstate = onPopState;
+		window.onmessage = event => {
+			if(event.data == "reload"){
+				window.document.location.reload();
+			}
+			forgetPop = true;
+		}
+
+		function fitElements(){
+			const itemsToFit = document.getElementsByClassName('fitText');
+			for (const item in itemsToFit) {
+				if (Object.hasOwnProperty.call(itemsToFit, item)) {
+					var element = itemsToFit[item];
+					fitElement(element,1, 1000);
+					element.classList.remove('fitText');
+				}
+			}
+		}
+
+		function fitElement(element, start, end){
+
+			let size = (end + start) / 2;
+			element.style.fontSize = `${size}px`;
+
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
+					size--;
+					element.style.fontSize = `${size}px`;
+				}
+				return;
+			}
+
+			if(element.scrollHeight > element.offsetHeight){
+				fitElement(element, start, size);
+			} else {
+				fitElement(element, size, end);
+			}		
+		}
+
+
+		document.onreadystatechange = () => {
+			fitElements();
+			if (document.readyState === 'complete') {
+				if (window.location.href.indexOf("?export") != -1){
+					parent.postMessage(event.target.location.href, "app://obsidian.md");
+				}
+				if (window.location.href.indexOf("print-pdf") != -1){
+					let stateCheck = setInterval(() => {
+						clearInterval(stateCheck);
+						window.print();
+					}, 250);
+				}
+			}
+	};
+
+
+        </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### <i class="fas fa-award"></i> IP Honores
+
+#### *Diccionarios y sus operaciones básicas I*
+
+[Eduardo Rosales](mailto:ee.rosales24@uniandes.edu.co)
+
+Departamento de Ingeniería de Sistemas y Computación
+
+Universidad de los Andes
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Parejas `llave-valor`​ (1/2)
+    
+- Mecanismo abstracto que permite 
+	- Asociar y almacenar​ llaves y valores
+- *Llave*: 
+	- Elemento único que permite 
+		- Recuperar y modificar un valor
+- *Valor*: 
+	- Información relacionada a la llave
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Parejas `llave-valor` (II)
+
+<img src="iph/n2/img/dic_1.png" alt="" style="object-fit: scale-down">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### ¿Por qué usar parejas `llave-valor`?
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Parejas `llave-valor`​ (2/2)
+
+- Organización​
+	- Búsqueda rápida vía una llave única​
+- Acceso directo​
+	- Acceso inmediato a un valor​
+- Flexibilidad​
+	- Representa relaciones complejas entre datos​
+- Escalabilidad ​
+	- Maneja eficientemente muchos datos
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Parejas `llave-valor` en Python
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Diccionario
+
+- Colección mutable 
+- Mapea llaves únicas a valores
+
+<img src="iph/n2/img/dic_2.png" alt="" style="object-fit: scale-down">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `dict`
+
+- Tipo de dato
+	- Representa a un diccionario en Python
+- Del tipo `dict` puede haber:
+	- Variables
+	- Parámetros
+	- Y tipos de retorno
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Llave
+
+- Elemento único que permite 
+	- Recuperar y modificar un valor
+- Debe ser de tipos de datos inmutables:
+	- `int`
+	- `float`
+	- `str`
+	- `bool`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Valor
+
+- Información relacionada a la llave
+- Pueden ser de cualquier tipo:
+	- `int`
+	- `float`
+	- `str`
+	- `bool`
+	- **`dict`**
+- Es decir, un diccionario 
+	- Puede contener a otro diccionario
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Diccionarios en la vida real
+
+- *Diccionario español - inglés*:
+	- Llave: Palabra en español
+	- Valor: Palabra en inglés
+- *Google*:
+	- Llave: Palabra clave
+	- Valor: URL 
+		- Con relación a las palabras clave
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### ¿Cuáles son las características principales de un diccionario?
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Diccionarios - Características
+
+- Permiten retornar un valor **por llave**
+	- No por índice
+- Soporta el cálculo de su tamaño/longitud
+	- = Total de parejas llave-valor
+- No inherentemente ordenado
+	- Pero preserva el orden de inserción
+		- Desde Python 3.7+
+- Muy útil para búsquedas rápidas
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### ¿Cómo se crea un diccionario en Python?
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Creación de un diccionario -  Vía `{}`
+
+- Sintaxis: 
+```Python
+nombre_diccionario = {llave:valor}
+```
+- `nombre_diccionario`: Nombre del diccionario
+	- (Idealmente) En plural
+- `llave:valor`: Pares separados por comas
+- Cada `llave` se mapea a un `valor` 
+- Cada llave es única e inmutable
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Creación de un diccionario -  Vía `{}` - Ejemplos
+
+```Python
+{}  # Diccionario vacío
+
+# Diccionario de un solo elemento. Llave = a, valor = 1:
+{'a':1}  
+
+enteros = {'x':1, 'y':1, 'z':1}  # Diccionario de enteros
+flotantes = {'a':.4, 'b':1.3, 'c':2.9}  # Diccionario de flotantes
+booleanos = {'On':True, 'Off':False}  # Diccionario de booleanos
+strings = {'apple':'red', 'lime':'green'}  # Diccionario de strings
+items_varios = {'a':1, 'b':.2, 'c':'x'}  # Tipos de valor diversos
+varios_items = {'a':1, 7.1:True}  # Tipos de llave-valor diversos
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta I
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+diccionario = {}
+
+print(diccionario)
+
+type(diccionario)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta I - Solución
+
+```Python
+
+diccionario = {}
+
+print(diccionario)  # → {}
+
+type(diccionario)  # → dict
+
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta II
+
+- ¿Cuáles son las llaves en el siguiente diccionario?
+
+```Python
+directorio = {'Juan':123, 'Diana':643, 'Juliana':189}
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta II - Solución
+
+```Python
+'Juan'
+
+'Diana'
+
+'Juliana'
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III
+
+- ¿Cuál es el valor asignado a la llave 'Diana'?
+
+```Python
+directorio = {'Juan':123, 'Diana':643, 'Juliana':189}
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III - Solución
+
+```Python
+643
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### ¿Cómo se accede a un valor por llave en un diccionario?
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Diccionarios - Acceso por llave
+
+- Dado el siguiente diccionario:
+
+```Python
+directorio = {'Juan':123, 'Diana':643, 'Juliana':189}
+```
+
+- Así se puede acceder a los valores
+	- Por llave:
+
+```Python
+directorio['Juan']  # → 123
+
+directorio['Diana']  # → 643
+
+directorio['Juliana']  # → 189
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IV
+
+- Usted obtuvo acceso al siguiente diccionario
+- El cual contiene contraseñas de usuarios
+
+```Python
+claves = {
+		  'John':'IP_rules', 
+
+          'Paul':'no_se_duerma',
+
+          'Juliana':'n2_es_trivial_comparado_con_n3'
+          }
+```
+
+- ¿Cómo podría obtener la contraseña de la usuaria: "Juliana"?
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IV - Solución
+
+```Python
+claves['Juliana']  # → n2_es_trivial_comparado_con_n3
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Los diccionarios son mutables
+
+- Después de su creación
+	- Los diccionarios se pueden cambiar
+- Se pueden actualizar, agregar y eliminar 
+	- Las parejas llave-valor
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Los diccionarios son mutables - Ejemplo (I)
+
+```Python
+dct = {'a':1, 'b':9}
+```
+
+<img src="iph/n2/img/dic_3.png" alt="" style="object-fit: scale-down">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Los diccionarios son mutables - Ejemplo (II)
+
+```Python[2]
+dct = {'a':1, 'b':9}
+dct['b'] = 2  # Actualiza el valor de la llave 'b'  
+```
+
+<img src="iph/n2/img/dic_4.png" alt="" style="object-fit: scale-down">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### ¿Cómo agregar una nueva pareja `llave-valor`  en un diccionario?
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Diccionarios - Agregar pareja `llave-valor`
+
+- Dado el siguiente diccionario:
+
+```Python
+directorio = {'Juan':123, 'Diana':643}
+```
+
+- Así se puede agregar un nuevo par llave-valor:
+
+```Python
+directorio['Juliana'] = 189 
+```
+
+```Python
+print(directorio) 
+# → {'Juan': 123, 'Diana': 643, 'Juliana': 189}
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Los diccionarios son mutables - Ejemplo (III)
+
+```Python[4,5]
+dct = {'a':1, 'b':9}
+dct['b'] = 2
+
+# Agrega un par llave-valor:
+dct['c'] = 3  # → dct = {'a': 1, 'b': 2, 'c': 3}:
+```
+
+<img src="iph/n2/img/dic_5.png" alt="" style="object-fit: scale-down">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta V
+
+- Resuelva el TODO:
+
+```Python
+edades = {}
+edades['Carlos'] = 22
+edades['Andrea'] = 30
+
+# TODO: Agregue una tercera pareja llave-valor 
+        # Al diccionario `edades`, 
+        # Usando su primer nombre como llave y 
+        # Su edad como valor
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta V - Solución
+
+
+```Python
+edades = {}
+edades['Carlos'] = 22
+edades['Andrea'] = 30
+
+# TODO - DONE: 
+edades['Ejemplo'] = 99
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VI
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+edades = {}
+edades['Ana'] = 19
+edades['Brad'] = 20
+edades['Lyu'] = 21
+print(edades)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VII - Solución
+
+```Python
+edades = {}
+edades['Ana'] = 19
+edades['Brad'] = 20
+edades['Lyu'] = 21
+print(edades)  # → {'Ana': 19, 'Brad': 20, 'Lyu': 21}
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VIII
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+- Tip: 
+	- `chr()` retorna el carácter
+		- Que corresponde a un valor Unicode
+
+```Python
+dc = {}
+dc['A'] = 65  # 65 es el Unicode de: 'A'
+dc['B'] = 66  # 66 es el Unicode de: 'B'
+
+print(chr(dc['A']))
+print(chr(dc['B']))
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VIII - Solución
+
+```Python
+dc = {}
+dc['A'] = 65  # 65 es el Unicode de: 'A'
+dc['B'] = 66  # 66 es el Unicode de: 'B'
+
+print(chr(dc['A']))  # → A
+print(chr(dc['B']))  # → B
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IX
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+- Tip: 
+	- `ord()` retorna el Unicode
+		- Que corresponde a un carácter
+
+```Python
+unicode_map = {
+    'Ñ': ord('Ñ'),  # ord('Ñ') → 209
+    'Z': ord('Z')  # ord('Z') → 90
+}
+
+print(f"'Ñ' es: {unicode_map['Ñ']}")
+print(f"'Z' es: {unicode_map['Z']}")
+
+print(f"{unicode_map['Ñ']} es: {chr(unicode_map['Ñ'])}")
+print(f"{unicode_map['Z']} es: {chr(unicode_map['Z'])}")
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IX - Solución
+
+```Python
+unicode_map = {
+    'Ñ': ord('Ñ'),  # ord('Ñ') → 209
+    'Z': ord('Z')  # ord('Z') → 90
+}
+
+print(f"'Ñ' es: {unicode_map['Ñ']}")  # → 'Ñ' es: 209
+print(f"'Z' es: {unicode_map['Z']}")  # → 'Z' es: 90
+
+print(f"{unicode_map['Ñ']} es: {chr(unicode_map['Ñ'])}")
+# → 209 es: Ñ
+print(f"{unicode_map['Z']} es: {chr(unicode_map['Z'])}")
+# → 90 es: Z
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### ¿Cómo actualizar una pareja `llave-valor` en un diccionario?
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Diccionarios - Actualizar `valor`
+
+Dado el siguiente diccionario:
+```Python
+directorio = {'Juan':123, 'Diana':643}
+
+print(directorio) 
+# → {'Juan': 123, 'Diana': 643}
+```
+
+- Así se puede actualizar un par llave-valor
+	- Dada una llave existente:
+
+```Python
+# Modifica el valor de la llave 'Diana' por 777:
+directorio['Diana'] = 777 
+
+print(directorio) 
+# → {'Juan': 123, 'Diana': 777}
+
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta X
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+precios = {'Pan':200, 'Leche':15_000, 'Huevos':21_000}
+precios['Pan'] = 2200  
+print(precios)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta X - Solución
+
+```Python
+precios = {'Pan':200, 'Leche':15_000, 'Huevos':21_000}
+precios['Pan'] = 2200  
+print(precios)  
+# → {'Pan':2200, 'Leche':15000, 'Huevos':21000}
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XI
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+precios = {'Pan':2200, 'Leche':15_000, 'Huevos':21_000}
+precios['Cafe'] = 17_000
+precios['Leche'] = 25_000
+print(precios)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XI - Solución
+
+```Python
+precios = {'Pan':2200, 'Leche':15_000, 'Huevos':21_000}
+precios['Cafe'] = 17_000
+precios['Leche'] = 25_000
+print(precios)  
+# → {'Pan': 2200, 'Leche': 25000, 'Huevos': 21000, 'Cafe': 17000}
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XII
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+precios = {'Pan':2200, 'Leche':15_000, \
+           'Arepa':21_000,'Cafe':17_000 }
+print(precios['Cafe'])
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XII - Solución
+
+```Python
+precios = {'Pan':2200, 'Leche':15_000, \
+           'Arepa':21_000,'Cafe':17_000 }
+print(precios['Cafe'])  # → 17000
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XIII
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+precios = {'Pan':2200, 'Leche':15_000, \
+           'Arepa':21_000,'Cafe':17_000 }
+print(precios['Huevos'])
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XIII - Solución
+
+```Python
+Traceback (most recent call last):
+  Cell In[...], line …
+    print(precios['Huevos'])
+KeyError: 'Huevos'
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### ¿`KeyError`?
+
+<a href="https://eerosales24.github.io/iph_2026_20/general/errores_comunes/#/37" target="_blank" rel="noopener noreferrer">KeyError</a>
+
+
+<br> 
+
+- **TODO:** Revise la buena práctica asociada:
+	- <a href="https://eerosales24.github.io/iph_2026_20/n2/buenas_practicas/#/17" target="_blank">Validar llaves de diccionarios</a>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `dict` es una clase
+    
+- Una *clase* específica comportamientos de objetos
+- No es el objetivo del curso usar clases
+- Basta con saber que
+	- `dict` es el "molde" 
+		- Para crear diccionarios
+- Esto objetos tienen comportamientos
+	-  Implementados vía *métodos*
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  `dict.get()`
+
+- Recupera un valor para una llave dada
+- Sintaxis: 
+```Python
+dict.get(llave, valor_predeterminado)
+```
+- `llave`: Llave para recuperar valor
+- `valor_predeterminado`: Valor a retornar 
+- Si no se encuentra la llave (opcional: `None`)
+- Retorna el valor para la llave si está presente
+	- Caso contrario: `valor_predeterminado`
+- Usar `dict.get(...)` para evitar `KeyError`
+- Ayuda:  [dict](https://docs.python.org/3/library/stdtypes.html#dict.get)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  `dict.get()` - Ejemplos
+
+```Python
+{'manzana':1, 'banana':2}.get('manzana')  # → 1
+
+{'manzana':1, 'banana':2}.get('cereza')  # → None
+
+{'manzana':1, 'banana':2}.get('cereza', 0)  # → 0 
+
+{'PERA':5, 'GUAYABA':12}.get('pera', 'N/A')  # → 'N/A'
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XIV
+
+- ¿Cuál es el resultado de ejecutar el siguiente código si el usuario ingresa: `Fresa`?
+
+```Python
+precio_frutas = {'Manzana': 9000, 'Fresa': 12000, \
+                 'Papaya': 5600, 'Naranja': 8700}
+
+fruta_buscada = input("Digite la fruta de la " \
+                      "cual quiere conocer el precio: ")
+precio = precio_frutas.get(fruta_buscada)
+
+if precio is not None:
+    print(f"El precio de la {fruta_buscada} " \
+          f"es: {precio}.")
+else:
+    print(f"El precio de la {fruta_buscada} " \
+          f"no está disponible.")
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XIV - Solución
+
+
+```Python
+precio_frutas = {'Manzana': 9000, 'Fresa': 12000, \
+                 'Papaya': 5600, 'Naranja': 8700}
+
+fruta_buscada = input("Digite la fruta de la " \
+                      "cual quiere conocer el precio: ")
+precio = precio_frutas.get(fruta_buscada)
+
+if precio is not None:
+    print(f"El precio de la {fruta_buscada} " \
+          f"es: {precio}.")  
+    # → El precio de la Fresa es: 12000.
+else:
+    print(f"El precio de la {fruta_buscada} " \
+          f"no está disponible.")
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XV
+
+- ¿Cuál es el resultado de ejecutar el siguiente código si el usuario ingresa: `Granadilla`?
+
+```Python
+precio_frutas = {'Manzana': 9000, 'Fresa': 12000, \
+                 'Papaya': 5600, 'Naranja': 8700}
+
+fruta_buscada = input("Digite la fruta de la " \
+                      "cual quiere conocer el precio: ")
+precio = precio_frutas.get(fruta_buscada)
+
+if precio is not None:
+    print(f"El precio de la {fruta_buscada} " \
+          f"es: {precio}.")
+else:
+    print(f"El precio de la {fruta_buscada} " \
+          f"no está disponible.")
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XV - Solución
+
+```Python
+precio_frutas = {'Manzana': 9000, 'Fresa': 12000, \
+                 'Papaya': 5600, 'Naranja': 8700}
+
+fruta_buscada = input("Digite la fruta de la " \
+                      "cual quiere conocer el precio: ")
+precio = precio_frutas.get(fruta_buscada)
+
+if precio is not None:
+    print(f"El precio de la {fruta_buscada} " \
+          f"es: {precio}.")
+else:
+    print(f"El precio de la {fruta_buscada} " \
+          f"no está disponible.")
+    # → El precio de la Granadilla no está disponible.
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XVI
+
+- ¿Cuál es el resultado de ejecutar el siguiente código si el usuario ingresa: `Granadilla`?
+
+```Python
+precio_frutas = {'Manzana': 9000, 'Fresa': 12000, \
+                 'Papaya': 5600, 'Naranja': 8700}
+
+fruta_buscada = input("Digite la fruta de la" \
+                      "cual quiere conocer el precio: ")
+precio = precio_frutas.get(fruta_buscada, -1)
+
+if precio != -1:
+    print(f"El precio de la {fruta_buscada} " \
+          f"es: {precio}.")
+else:
+    print(f"El precio de la {fruta_buscada} " \
+          f"no está disponible.")
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XVI - Solución
+
+```Python
+precio_frutas = {'Manzana': 9000, 'Fresa': 12000, \
+                 'Papaya': 5600, 'Naranja': 8700}
+
+fruta_buscada = input("Digite la fruta de la" \
+                      "cual quiere conocer el precio: ")
+precio = precio_frutas.get(fruta_buscada, -1)
+
+if precio != -1:
+    print(f"El precio de la {fruta_buscada} " \
+          f"es: {precio}.")
+else:
+    print(f"El precio de la {fruta_buscada} " \
+          f"no está disponible.")
+    # → El precio de la Granadilla no está disponible.
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<i class="fas fa-question-circle fa-2x fa-spin fa-4x"></i>
+
+<br>
+<br>
+
+ [<i class="fas fa-home  fa-3x"></i>](https://eerosales24.github.io/iph_2026_20/#)
+</div></script></section></div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/chart/chart.min.js"></script>
+	<script src="plugin/chart/plugin.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+	  function isLight(color) {
+		let hex = color.replace('#', '');
+
+		// convert #fff => #ffffff
+		if(hex.length == 3){
+			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+		}
+
+		const c_r = parseInt(hex.substr(0, 2), 16);
+		const c_g = parseInt(hex.substr(2, 2), 16);
+		const c_b = parseInt(hex.substr(4, 2), 16);
+		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+		return brightness > 155;
+	}
+
+	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+	var isLight = isLight(bgColor);
+
+	if(isLight){
+		document.body.classList.add('has-light-background');
+	} else {
+		document.body.classList.add('has-dark-background');
+	}
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+        ],
+
+
+    	allottedTime: 120 * 1000,
+
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
+
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
+
+		customcontrols: {
+			controls: [
+			]
+		},
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width":960,"height":700,"margin":"0.025","minScale":"0.1","maxScale":"2.0","controls":"true","controlsLayout":"bottom-right","progress":"true","slideNumber":"true","center":"false","transition":"slide","transitionSpeed":"default"}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+
+  <!-- created with Advanced Slides -->
+</html>

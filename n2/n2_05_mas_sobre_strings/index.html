@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title></title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/iph.css" id="theme" />
+    <link rel="stylesheet" href="plugin/highlight/spyder.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
+
+
+
+    <script defer src="dist/fontawesome/all.min.js"></script>
+
+	<script type="text/javascript">
+		var forgetPop = true;
+		function onPopState(event) {
+			if(forgetPop){
+				forgetPop = false;
+			} else {
+				parent.postMessage(event.target.location.href, "app://obsidian.md");
+			}
+        }
+		window.onpopstate = onPopState;
+		window.onmessage = event => {
+			if(event.data == "reload"){
+				window.document.location.reload();
+			}
+			forgetPop = true;
+		}
+
+		function fitElements(){
+			const itemsToFit = document.getElementsByClassName('fitText');
+			for (const item in itemsToFit) {
+				if (Object.hasOwnProperty.call(itemsToFit, item)) {
+					var element = itemsToFit[item];
+					fitElement(element,1, 1000);
+					element.classList.remove('fitText');
+				}
+			}
+		}
+
+		function fitElement(element, start, end){
+
+			let size = (end + start) / 2;
+			element.style.fontSize = `${size}px`;
+
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
+					size--;
+					element.style.fontSize = `${size}px`;
+				}
+				return;
+			}
+
+			if(element.scrollHeight > element.offsetHeight){
+				fitElement(element, start, size);
+			} else {
+				fitElement(element, size, end);
+			}		
+		}
+
+
+		document.onreadystatechange = () => {
+			fitElements();
+			if (document.readyState === 'complete') {
+				if (window.location.href.indexOf("?export") != -1){
+					parent.postMessage(event.target.location.href, "app://obsidian.md");
+				}
+				if (window.location.href.indexOf("print-pdf") != -1){
+					let stateCheck = setInterval(() => {
+						clearInterval(stateCheck);
+						window.print();
+					}, 250);
+				}
+			}
+	};
+
+
+        </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### <i class="fas fa-award"></i> IP Honores
+
+#### *Más sobre los strings*
+
+[Eduardo Rosales](mailto:ee.rosales24@uniandes.edu.co)
+
+Departamento de Ingeniería de Sistemas y Computación
+
+Universidad de los Andes
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Aspectos de codificación - ASCII
+
+- American Standard Code for Information Interchange
+- Desarrollado en los 60s para estandarizar la comunicación digital
+- 127 Caracteres: 
+    - Incluye letras, dígitos, símbolos de puntuación y comandos de control
+- 7 Bits: 
+    - Cada carácter se representa con 7 bits
+        - Comúnmente almacenado en 8 bits (1 byte)
+- Interoperabilidad: 
+    - Facilita el intercambio de datos entre dispositivos y software
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<img src="iph/n2/img/ascii.png" alt="" style="width: 90%; height: 70%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Unicode
+
+- Permite la representación de texto 
+    - De la mayoría de sistemas de escritura
+- Cobertura: 
+    - Incluye más de 140,000 caracteres 
+    - Abarcando escrituras modernas, símbolos, emojis y caracteres históricos
+- Codificación universal: UTF-8, UTF-16, UTF-32
+-  Hay una lista de [códigos Unicode](https://en.wikipedia.org/wiki/List_of_Unicode_characters)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `ord()`
+
+- Retorna el valor Unicode de un carácter
+- Sintaxis:
+```Python
+ord(c)
+```
+    - `c`: String de un solo carácter
+- Útil para obtener la representación numérica 
+    - De un carácter
+- Ayuda:  [ord](https://docs.python.org/3.4/library/functions.html#ord)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `ord()` -  Ejemplos
+
+```Python
+ord('a')  # → 97 (valor Unicode de 'a')
+ord('A')  # → 65 
+ord('0')  # → 48 
+ord('ñ')  # → 241 
+ord(' ')  # → 32
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `chr()`
+
+- Retorna el carácter que corresponde a un valor Unicode
+- Sintaxis:
+```Python
+chr(i)
+```
+    - `i`: Entero en el rango de [códigos Unicode](https://en.wikipedia.org/wiki/List_of_Unicode_characters)
+- Útil para convertir valores Unicode 
+    - A sus caracteres correspondientes
+- Ayuda:  [chr](https://docs.python.org/3.4/library/functions.html#chr)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `chr()` - Ejemplos
+
+```Python
+chr(97)  # → 'a' (97 es valor Unicode de 'a')
+chr(65)  # → 'A' 
+chr(48)  # → '0' 
+chr(241)  # → 'ñ' 
+chr(32)  # → ' '
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Comparación (lexicográfica) de strings (1/4)
+
+- Comparación de dos strings, carácter a carácter
+- El orden está determinado por
+    - Los [códigos Unicode](https://en.wikipedia.org/wiki/List_of_Unicode_characters)
+- Ej:
+
+```Python
+ord('a')  # → 97
+
+ord('B')  # → 65
+
+'B' < 'a'  # → True
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Comparación (lexicográfica) de strings (2/4)
+
+- Se comparan los caracteres uno a uno
+    - Siguiendo el orden de sus códigos Unicode
+- El primer carácter diferente en dos strings determina el resultado
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Comparación (lexicográfica) de strings (3/4)
+
+- Caso todo minúsculas:
+
+```python
+'apple' < 'banana'. # → True (porque 'a' < 'b')
+'car' > 'cat'. # → False (porque 'r' < 't')
+```
+
+- Caso con minúsculas y mayúsculas:
+
+```python
+'Zebra' < 'apple'  # → True ('Z' = 90, 'a' = 97) 
+'Zoo' > 'apple'  # → False ('Z' = 90, 'a' = 97) 
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Comparación (lexicográfica) de strings (4/4)
+
+- Caso números vs letras:
+
+```python
+'123' < 'abc'  # → True (porque '1' = 49 y 'a' = 97)
+'9' > 'A'. # → False ('9' = 57, 'A' = 65)
+```
+
+- Caso con diferente longitud:
+
+```python
+'cat' < 'catalog'   # → True (3 vs. 7)
+'hello' > 'hell'    # → True (5 vs 4)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### ¿Puedo usar `min()` y `max()`con strings?
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `min()` con strings (1/4)
+
+- `min()` también sirve para comparar  `str`
+- Retorna el string **más pequeño** 
+	- Según el orden lexicográfico
+- La comparación se basa en los valores **Unicode**
+- Mayúsculas y minúsculas **sí afectan** el resultado
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `min()` con strings (2/4)
+
+- Sintaxis:
+
+```Python
+min(str1, str2, ..., str_n)
+```
+
+- Ejemplos:
+
+```python
+min("a", "b", "c")  # → "a"
+
+min("gato", "perro", "ave")  # → "ave"
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `min()` con strings (3/4)
+
+- ¿Cómo compara `min()` strings?
+
+	- Compara carácter por carácter (de izquierda a derecha)
+    
+	- Si dos strings coinciden al inicio, el más corto es el menor
+    
+	- El primer carácter diferente define cuál es menor
+
+<br>
+
+```python
+min("casa", "casco")  # → "casa"
+
+min("sol", "soles")   # → "sol"  
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `min()` con strings (4/4)
+
+- ¿Qué pasa si uso un string vacío?
+
+	- - Debe usar `default` 
+		- Para retornar  un valor
+    
+- Ej:
+	- ❌:
+	```python
+	min("", )  # → ValueError
+	```
+
+	- ✅:
+	```python
+	min("", default="N/A")  # → "N/A"
+	```
+
+	<br>
+
+
+- **TODO:** Revise la buena práctica asociada:
+	- <a href="https://eerosales24.github.io/iph_2026_20/n2/buenas_practicas/#/14" target="_blank">Usar `min()` y `max()` de forma segura</a>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `str` es una clase
+    
+- Una *clase* especifica comportamientos de objetos
+- No es el objetivo del curso usar clases
+- Basta con saber que
+    - `str` es el "molde" 
+        - Para crear strings
+- Esto objetos tienen comportamientos
+    -  Implementados vía funciones especiales
+        - Denominadas *métodos*
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `str` tiene métodos
+
+- Por ejemplo, `str.format()`
+    - Es un método de los strings
+
+
+```python
+
+"Resultado = {}".format(10 + 10)  # → 'Resultado = 20'
+# No se podría invocar a format()
+    # Si no se antecede de un string
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### ¿Cómo se invoca a un método de la clase `str`?
+
+- Como al invocar funciones:
+    - \+ Anteponiendo un objeto del tipo válido
+
+
+- **En genérico:**
+    - `str.nombre_metodo(arg_1, arg_2, .... arg_n)`
+        - En donde: 
+            - `str` es un objeto del tipo string
+            - Se usa notación de punto, después del string
+                - La invocación puede requerir cero, uno o `n` argumentos
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Estudiemos un método de los strings como ejemplo
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `str.isdigit()`
+    
+- Determina si el string
+    - Es completamente dígitos
+        - Esto es: `0` al `9`
+- Retorna `True` si todos los caracteres son dígitos
+    - Caso contrario `False`
+- Ayuda:  [str.isdigit](https://docs.python.org/3/library/stdtypes.html#str.isdigit)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### ¿Cómo se invoca al método `str.isdigit()`?
+
+```python
+# str.isdigit()
+    # En donde: 
+        #`str` es un objeto del tipo string
+            # Del cual se desea saber si está compuesto por solo dígitos
+                # La invocación requiere cero argumentos
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `str.isdigit()` - Ejemplos
+
+```Python
+'1234'.isdigit()  # → True (Todos son dígitos)
+
+'1.5'.isdigit()  # → False: (El punto `.` no es un dígito)
+
+'1 5'.isdigit()  # → False: (Los espacios no son dígitos)
+
+'$5'.isdigit()  # → False: (Los símbolos no son dígitos)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta I
+
+- ¿Qué hace el siguiente programa?
+
+```Python
+pin = input('Por favor digite un PIN de cuatro dígitos: ')
+
+if len(pin) != 4:
+    print('El PIN debe tener cuatro dígitos de longitud')
+else:
+    print('El PIN se ha guardado')
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta I - Solución
+
+```Python
+pin = input('Por favor digite un PIN de cuatro dígitos: ')
+
+if len(pin) != 4:
+    print('El PIN debe tener cuatro dígitos de longitud')
+else:
+    print('El PIN se ha guardado')
+```
+
+- Solicita al usuario un PIN de 4 dígitos
+- Si el PIN no coincide con esa longitud
+    - Imprime: 
+        - "El PIN debe tener 4 caracteres de longitud"
+- Caso lo contrario, imprime:
+    - "El PIN se ha guardado"
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta II
+
+- ¿Qué hace el siguiente programa?
+
+```Python
+pin = input('Por favor digite un PIN de cuatro dígitos: ')
+confirmacion_pin = input('Por favor confirme el PIN: ')
+
+if len(pin) != 4:
+    print('El PIN debe tener cuatro dígitos de longitud')
+elif pin == confirmacion_pin:
+    print('El PIN se ha guardado')
+else:
+    print('Error: Los PINs no coinciden')
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta II - Solución
+
+```Python
+pin = input('Por favor digite un PIN de cuatro dígitos: ')
+confirmacion_pin = input('Por favor confirme el PIN: ')
+
+if len(pin) != 4:
+    print('El PIN debe tener cuatro dígitos de longitud')
+elif pin == confirmacion_pin:
+    print('El PIN se ha guardado')
+else:
+    print('Error: Los PINs no coinciden')
+```
+
+- Solicita al usuario un PIN de 4 dígitos
+- Solicita al usuario que confirme el PIN
+- Si el PIN no coincide con esa longitud, imprime: 
+    - "El PIN debe tener 4 dígitos de longitud"
+- Si ambas entradas coinciden, imprime: 
+    - "El PIN se ha guardado"
+- Caso alterno, imprime: 
+    - "Error: los PINs no coinciden"
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III
+
+- ¿Qué hace el siguiente programa?
+
+```Python
+pin = input('Por favor digite un PIN de cuatro dígitos: ')
+confirmacion_pin = input('Por favor confirme el PIN: ')
+
+if len(pin) != 4:
+    print('El PIN debe tener cuatro dígitos de longitud')
+elif not pin.isdigit():
+    print('El PIN debe contener sólo dígitos')
+elif pin == confirmacion_pin:
+    print('El PIN se ha guardado')
+else:
+    print('Error: Los PINs no coinciden')
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III - Solución
+
+- Pide al usuario un PIN de 4 dígitos
+- Pide al usuario que confirme el PIN
+- Si el PIN no coincide con esa longitud, imprime: 
+    - "El PIN debe tener 4 dígitos de longitud"
+- Si el PIN no contiene solo dígitos (0-9), imprime: 
+    - "El PIN debe contener solo dígitos"
+- Si ambas entradas coinciden, imprime: 
+    - "El PIN se ha guardado"
+- Caso alterno, imprime: 
+    - "Error: Los PINs no coinciden"
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IV
+
+- ¿Qué hace el siguiente programa?
+
+```Python
+pin = input('Por favor digite un PIN de cuatro dígitos: ')
+confirmacion_pin = input('Por favor confirme el PIN: ')
+ 
+if pin == confirmacion_pin:
+    if len(pin) != 4:
+        print('El PIN debe tener cuatro dígitos de longitud')
+    elif not pin.isdigit():
+        print('El PIN debe contener sólo dígitos')
+    else:
+        print('El PIN se ha guardado')
+else:
+    print('Error: PIN distintos')
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IV - Solución
+
+- Pide al usuario un PIN de 4 dígitos y confirmación
+- Si ambas entradas coinciden, chequea:
+    - Si el PIN no tiene 4 dígitos, imprime: 
+        - "El PIN debe tener 4 dígitos de longitud"
+    - Si el PIN no es solo dígitos (0-9), imprime: 
+        - "El PIN debe contener solo dígitos"
+    - Caso alterno, imprime: 
+        - "El PIN se ha guardado"
+- Caso alterno, imprime: "Error: PIN distintos"
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Inmutabilidad (Strings) (1/2)
+
+- Los strings son *inmutables*
+- Después de su creación
+    - Los strings no pueden ser modificados
+- Intentar modificar un string resulta en un error
+- Ej:
+```Python
+s = 'Python'
+s[0] = 'J'  # → TypeError: `s` es inmutable
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Inmutabilidad (Strings) (2/2)
+
+- **Las operaciones con strings**
+    - **Siempre retornan un nuevo string**
+- Ej:
+
+```Python
+s = 'Python' # `s` es un string inmutable
+
+s = s + ' es divertido!' # Ahora `s` es un nuevo string
+
+# La concatenación produjo un nuevo string
+# Que es inmutable:
+# s = 'Python es divertido!'
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta V
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+phrase = 'abracadabra'
+first_chars = phrase[0] + phrase[1] + phrase[2] + phrase[3]
+remaining_phrase = phrase.replace(first_chars, '')
+print(first_chars)
+print(remaining_phrase)
+print(first_chars + " " + remaining_phrase + " " + first_chars)
+print(phrase)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta V - Solución
+
+```Python
+phrase = 'abracadabra'
+first_chars = phrase[0] + phrase[1] + phrase[2] + phrase[3]
+remaining_phrase = phrase.replace(first_chars, '')
+print(first_chars)
+print(remaining_phrase)
+print(first_chars + " " + remaining_phrase + " " + first_chars)
+print(phrase)
+```
+
+```plaintext
+abra
+cad
+abra cad abra
+abracadabra
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<i class="fas fa-question-circle fa-2x fa-spin fa-4x"></i>
+
+<br>
+<br>
+
+ [<i class="fas fa-home  fa-3x"></i>](https://eerosales24.github.io/iph_2026_20/#)
+</div></script></section></div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/chart/chart.min.js"></script>
+	<script src="plugin/chart/plugin.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+	  function isLight(color) {
+		let hex = color.replace('#', '');
+
+		// convert #fff => #ffffff
+		if(hex.length == 3){
+			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+		}
+
+		const c_r = parseInt(hex.substr(0, 2), 16);
+		const c_g = parseInt(hex.substr(2, 2), 16);
+		const c_b = parseInt(hex.substr(4, 2), 16);
+		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+		return brightness > 155;
+	}
+
+	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+	var isLight = isLight(bgColor);
+
+	if(isLight){
+		document.body.classList.add('has-light-background');
+	} else {
+		document.body.classList.add('has-dark-background');
+	}
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+        ],
+
+
+    	allottedTime: 120 * 1000,
+
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
+
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
+
+		customcontrols: {
+			controls: [
+			]
+		},
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width":960,"height":700,"margin":"0.025","minScale":"0.1","maxScale":"2.0","controls":"true","controlsLayout":"bottom-right","progress":"true","slideNumber":"true","center":"false","transition":"slide","transitionSpeed":"default"}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+
+  <!-- created with Advanced Slides -->
+</html>

@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title></title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/iph.css" id="theme" />
+    <link rel="stylesheet" href="plugin/highlight/spyder.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
+
+
+
+    <script defer src="dist/fontawesome/all.min.js"></script>
+
+	<script type="text/javascript">
+		var forgetPop = true;
+		function onPopState(event) {
+			if(forgetPop){
+				forgetPop = false;
+			} else {
+				parent.postMessage(event.target.location.href, "app://obsidian.md");
+			}
+        }
+		window.onpopstate = onPopState;
+		window.onmessage = event => {
+			if(event.data == "reload"){
+				window.document.location.reload();
+			}
+			forgetPop = true;
+		}
+
+		function fitElements(){
+			const itemsToFit = document.getElementsByClassName('fitText');
+			for (const item in itemsToFit) {
+				if (Object.hasOwnProperty.call(itemsToFit, item)) {
+					var element = itemsToFit[item];
+					fitElement(element,1, 1000);
+					element.classList.remove('fitText');
+				}
+			}
+		}
+
+		function fitElement(element, start, end){
+
+			let size = (end + start) / 2;
+			element.style.fontSize = `${size}px`;
+
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
+					size--;
+					element.style.fontSize = `${size}px`;
+				}
+				return;
+			}
+
+			if(element.scrollHeight > element.offsetHeight){
+				fitElement(element, start, size);
+			} else {
+				fitElement(element, size, end);
+			}		
+		}
+
+
+		document.onreadystatechange = () => {
+			fitElements();
+			if (document.readyState === 'complete') {
+				if (window.location.href.indexOf("?export") != -1){
+					parent.postMessage(event.target.location.href, "app://obsidian.md");
+				}
+				if (window.location.href.indexOf("print-pdf") != -1){
+					let stateCheck = setInterval(() => {
+						clearInterval(stateCheck);
+						window.print();
+					}, 250);
+				}
+			}
+	};
+
+
+        </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### <i class="fas fa-award"></i> IP Honores
+
+#### *Diccionarios como estructuras de datos*
+
+[Eduardo Rosales](mailto:ee.rosales24@uniandes.edu.co)
+
+Departamento de Ingeniería de Sistemas y Computación
+
+Universidad de los Andes
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+**Nota:** Como un **caso académico**, en este curso (Y en IP regular) se usa a los diccionarios como estructuras de datos para manejar elementos con las mismas características. 
+
+Este **no es** un uso común para un diccionario en Python y se usa para fortalecer el aprendizaje de conceptos como los condicionales
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Aplicación académica de los diccionarios 
+
+- Permiten manejar elementos 
+	- Que tienen las mismas características
+- Ej:
+	- Los datos básicos de una persona
+		- `nombre`, `apellido`, `edad`
+			- Esta información es común a muchas personas
+				- Podría ser representada en un diccionario
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Diccionarios representando elementos con las mismas características
+
+<img src="iph/n2/img/structs.png" alt="" style="object-fit: scale-down">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta I
+
+- ¿Qué hace la siguiente función?
+
+```Python
+def crear_estudiante(nombre: str, codigo: str, genero: str, \
+		carrera: str, promedio: float, ssc: float) -> dict:
+    return {
+        'nombre': nombre,
+        'código': codigo,
+        'género': genero,
+        'carrera': carrera,
+        'promedio': promedio,
+        'ssc': ssc  # ssc: semestre según créditos
+    }
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta I - Solución
+
+
+```Python
+def crear_estudiante(nombre: str, codigo: str, 
+                     genero: str, carrera: str, 
+                     promedio: float, ssc: float) -> dict:
+    """
+    Crea un diccionario que representa a los datos de un estudiante.
+
+    Args:
+        nombre (str): Nombre del estudiante.
+        codigo (str): Código identificador del estudiante.
+        genero (str): Género del estudiante.
+        carrera (str): Carrera que el estudiante está cursando.
+        promedio (float): Promedio actual del estudiante.
+        ssc (float): Semestre según créditos del estudiante.
+
+    Returns:
+        dict: Un diccionario con los datos del estudiante.
+    """
+    return {
+        'nombre': nombre,
+        'código': codigo,
+        'género': genero,
+        'carrera': carrera,
+        'promedio': promedio,
+        'ssc': ssc  # ssc: semestre según créditos
+    }
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta II
+
+- Obtuvo acceso al siguiente programa con la información de los estudiantes
+	- ¿Cómo obtener acceso al promedio de 'David'?
+	
+```Python
+def crear_estudiante(nombre: str, codigo: str, 
+                     genero: str, carrera: str, 
+                     promedio: float, ssc: float) -> dict:
+    return {
+        'nombre': nombre,
+        'código': codigo,
+        'género': genero,
+        'carrera': carrera,
+        'promedio': promedio,
+        'ssc': ssc
+    }
+
+estudiante_1 = crear_estudiante(
+    'Daniel', 'A01234567', 'Masculino', 'Ingeniería', 4.1, 1.0
+)
+estudiante_2 = crear_estudiante(
+    'David', 'A01231234', 'Masculino', 'Física', 3.5, 9.0
+)
+estudiante_3 = crear_estudiante(
+    'Lorena', 'A0154640', 'Femenino', 'Medicina', 4.5, 3.0
+)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta II - Solución
+
+```Python
+def crear_estudiante(nombre: str, codigo: str, 
+                     genero: str, carrera: str, 
+                     promedio: float, ssc: float) -> dict:
+    return {
+        'nombre': nombre,
+        'código': codigo,
+        'género': genero,
+        'carrera': carrera,
+        'promedio': promedio,
+        'ssc': ssc
+    }
+
+estudiante_1 = crear_estudiante(
+    'Daniel', 'A01234567', 'Masculino', 'Ingeniería', 4.1, 1.0
+)
+estudiante_2 = crear_estudiante(
+    'David', 'A01231234', 'Masculino', 'Física', 3.5, 9.0
+)
+estudiante_3 = crear_estudiante(
+    'Lorena', 'A0154640', 'Femenino', 'Medicina', 4.5, 3.0
+)
+```
+
+```Python
+estudiante_2['promedio']  # → 3.5
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III
+
+- Obtuvo acceso al siguiente programa con la información de los estudiantes
+	- ¿Cómo obtener el promedio de todos los estudiantes?
+	
+```Python
+def crear_estudiante(nombre: str, codigo: str, 
+                     genero: str, carrera: str, 
+                     promedio: float, ssc: float) -> dict:
+    return {
+        'nombre': nombre,
+        'código': codigo,
+        'género': genero,
+        'carrera': carrera,
+        'promedio': promedio,
+        'ssc': ssc
+    }
+
+estudiante_1 = crear_estudiante('Daniel', 'A01234567', 'Masculino', 'Ingeniería', 3.0, 1.0)
+estudiante_2 = crear_estudiante('David', 'A01231234', 'Masculino', 'Física', 4.0, 9.0)
+estudiante_3 = crear_estudiante('Lorena', 'A0154640', 'Femenino', 'Medicina', 5.0, 3.0)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III - Solución
+
+
+```Python
+(estudiante_1['promedio'] + 
+ estudiante_2['promedio'] + 
+ estudiante_3['promedio']) / 3  # → 4.0
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Caso de estudio - Libros
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+- Función `crear_libro`:
+
+```Python
+def crear_libro(
+    titulo: str, autor: str, precio: float, genero: str, paginas: int,
+    rating: float, unidades_vendidas: int, proxima_reimpresion: int,
+    best_seller: bool
+) -> dict:
+    """
+    Crea un diccionario que representa un libro con su información relevante,
+    incluyendo si es un best seller.
+
+    Args:
+        titulo (str): Título del libro.
+        autor (str): Autor del libro.
+        precio (float): Precio del libro.
+        genero (str): Género literario del libro.
+        paginas (int): Número de páginas del libro.
+        rating (float): Rating del libro.
+        unidades_vendidas (int): Unidades vendidas del libro.
+        proxima_reimpresion (int): Próxima fecha de reimpresión del libro
+            en formato YYYYMMDD.
+        best_seller (bool): Indica si el libro es un best seller.
+
+    Returns:
+        dict: Diccionario con la información del libro.
+    """
+    return {
+        'titulo': titulo,
+        'autor': autor,
+        'precio': precio,
+        'genero': genero,
+        'paginas': paginas,
+        'rating': rating,
+        'unidades_vendidas': unidades_vendidas,
+        'proxima_reimpresion': proxima_reimpresion,
+        'best_seller': best_seller
+    }
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Nota: Los nombres de los diccionarios usados como parámetros, serán de una letra y un número, por simplicidad y por limitaciones de espacio en las diapositivas
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IV
+
+- Resuelva el TODO
+
+```Python
+def buscar_libro_por_titulo(l1: dict, l2: dict, l3: dict, titulo: str) -> dict:
+    """
+    Busca un libro en la plataforma por su título.
+
+    Args:
+        l1 (dict): Diccionario que contiene la información del primer libro.
+        l2 (dict): Diccionario que contiene la información del segundo libro.
+        l3 (dict): Diccionario que contiene la información del tercer libro.
+        titulo (str): Título del libro a buscar.
+
+    Returns:
+        dict: Diccionario con la información del libro buscado. 
+            Si no se encuentra el libro, retorna un diccionario vacío.
+    """
+    # TODO:  Implemente la función tal y como se describe en la documentación.
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IV - Explicación (1/10)
+
+- ¿Cuál es el valor por defecto a retornar de no encontrarse el libro?
+	- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->Se retornará un diccionario vacío
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IV - Explicación (2/10)
+
+```Python
+def buscar_libro_por_titulo(l1: dict, l2: dict, l3: dict, titulo: str) -> dict:
+    resultado = {}
+    
+    # TODO: Completar el resto de la función
+    
+    return resultado
+```
+
+ - `resultado` es la variable de retormo
+	 - Se inicializa con el que sería
+		 - El valor por defecto a retornar
+			- En este caso un diccionario vacío
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IV - Explicación (3/10)
+
+```Python[6, 8, 12]
+def buscar_libro_por_titulo(l1: dict, l2: dict, l3: dict, titulo: str) -> dict:
+    """ 
+        ...
+        Returns:
+        dict: Diccionario con la información del libro buscado. 
+            Si no se encuentra el libro, retorna un diccionario vacío.
+    """
+    resultado = {}
+    
+    # TODO: Completar el resto de la función
+    
+    return resultado
+```
+
+- Recuerde: si `resultado` nunca cambia
+	- Se retornará un diccionario vacío
+		- Y esto sería un caso de retorno correcto
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IV - Explicación (4/10)
+
+- ¿Qué condición puede cambiar a la variable de retorno?
+	- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->Que uno de los tres libros
+		- Tenga el título buscado
+
+	<br>
+
+- ¿Qué valor debe asignarse a la variable de retorno en este caso?
+	- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->El diccionario cuyo título es el buscado
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IV - Explicación (5/10)
+
+```Python[3,4]
+def buscar_libro_por_titulo(l1: dict, l2: dict, l3: dict, titulo: str) -> dict:
+    resultado = {}
+    if l1['titulo'] == titulo: 
+        resultado = l1
+    # TODO: Completar el resto de la función
+    return resultado
+```
+
+ - Si el título del primer libro
+	- Coincide con el título buscado
+		- Se retornará el diccionario 
+			- Que representa al primer libro
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IV - Explicación (6/10)
+
+- ¿Qué pasa si el primer libro no tiene el título buscado?
+	- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->Se debe verificar si el segundo libro
+		- Tiene el título buscado
+
+	<br>
+
+- ¿Qué valor debe asignarse a la variable de retorno en este caso?
+	- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->El diccionario del segundo libro
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IV - Explicación (7/10)
+
+```Python[5,6]
+def buscar_libro_por_titulo(l1: dict, l2: dict, l3: dict, titulo: str) -> dict:
+    resultado = {}
+    if l1['titulo'] == titulo: 
+        resultado = l1
+    elif l2['titulo'] == titulo: 
+	    resultado = l2
+	# TODO: Completar el resto de la función
+    return resultado
+```
+
+- ¿Por qué se usa `elif`?
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IV - Explicación (8/10)
+
+- ¿Por qué se usa `elif`?
+	- Se revisa el título del segundo libro
+		- **Únicamente si `l1` ya fue descartado**
+	- Si se usarán condicionales independientes
+		- Se evaluarían los demás condicionales
+			- Lo cual sería ineficiente
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IV - Explicación (9/10)
+
+- ¿Qué pasa si el segundo libro no tiene el título buscado?
+	- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->Se debe verificar si el tercer libro
+		- Tiene el título buscado
+- ¿Qué valor debe asignarse a la variable de retorno en este caso?
+	- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->El diccionario del tercer libro
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IV - Explicación (10/10)
+
+```Python[7,8]
+def buscar_libro_por_titulo(l1: dict, l2: dict, l3: dict, titulo: str) -> dict:
+    resultado = {}
+    if l1['titulo'] == titulo:
+        resultado = l1
+    elif l2['titulo'] == titulo:
+        resultado = l2
+    elif l3['titulo'] == titulo:
+        resultado = l3
+    return resultado
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IV - Solución
+
+```Python
+def buscar_libro_por_titulo(l1: dict, l2: dict, l3: dict, titulo: str) -> dict:
+    """
+    Busca un libro en la plataforma por su título.
+
+    Args:
+        l1 (dict): Diccionario que contiene la información del primer libro.
+        l2 (dict): Diccionario que contiene la información del segundo libro.
+        l3 (dict): Diccionario que contiene la información del tercer libro.
+        titulo (str): Título del libro a buscar.
+
+    Returns:
+        dict: Diccionario con la información del libro buscado. 
+            Si no se encuentra el libro, retorna un diccionario vacío.
+    """
+    # TODO - DONE:  Implemente la función tal y como se describe en la documentación.
+    resultado = {}
+    if l1['titulo'] == titulo:
+        resultado = l1
+    elif l2['titulo'] == titulo:
+        resultado = l2
+    elif l3['titulo'] == titulo:
+        resultado = l3
+    return resultado
+
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Revisemos la solución para verificar el uso de algunas buenas prácticas del curso
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+```Python
+def buscar_libro_por_titulo(l1: dict, l2: dict, l3: dict, titulo: str) -> dict:
+    resultado = {}  # Variable de retorno
+    if l1['titulo'] == titulo:
+        resultado = l1
+    elif l2['titulo'] == titulo:
+        resultado = l2
+    elif l3['titulo'] == titulo:
+        resultado = l3
+    return resultado  # Hay un solo retorno
+```
+
+- ✅ Hay un sólo `return` en la función
+	- ✅ No se interrumpe ningún condicional 
+		- Con un `return`
+- ✅ Se usa una variable de retorno (`resultado`)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta V
+
+- Resuelva el TODO
+
+```Python
+def extraer_libros_por_genero(genero: str, l1: dict, l2: dict, l3: dict) -> str:
+    """
+    Extrae libros que sean del género literario ingresado.
+
+    Args:
+        genero (str): Género literario de interés.
+        l1 (dict): Diccionario que representa al primer libro.
+        l2 (dict): Diccionario que representa al segundo libro.
+        l3 (dict): Diccionario que representa al tercer libro.
+
+    Returns:
+        str: Títulos de los libros que pertenecen al género dado, separados por
+        punto y coma. 
+        Retorna la cadena vacía si no hay ningún libro es del género de interés.
+    """
+    # TODO:  Implemente la función tal y como se describe en la documentación.
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta V - Explicación (1/12)
+
+- ¿Cuál es el valor por defecto a retornar?
+	- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->De no encontrarse ningún libro que sea del género de interés
+		- Se retornará la cadena vacía: `''`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta V - Explicación (2/12)
+
+```Python
+def extraer_libros_por_genero(genero: str, l1: dict, l2: dict, l3: dict) -> str:
+    libros = ''  # Variable de retorno
+    
+    # TODO: Completar el resto de la función
+    
+    return libros
+```
+
+ - `libros` se inicializa con el que sería
+	- El valor por defecto a retornar
+		- En este caso la cadena vacía
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta V - Explicación (3/12)
+
+```Python[7,9,13]
+def extraer_libros_por_genero(genero: str, l1: dict, l2: dict, l3: dict) -> str:
+	"""
+	   ...
+    Returns:
+        str: Títulos de los libros que pertenecen al género dado, separados por
+        punto y coma. 
+        Retorna la cadena vacía si no hay ningún libro es del género de interés.
+	"""
+    libros = ''  # Variable de retorno
+    
+    # TODO: Completar el resto de la función
+    
+    return libros
+```
+
+- Recuerde: Si `libros` nunca cambia
+	- Se retornará la cadena vacía
+		- Y esto sería un caso de retorno correcto
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta V - Explicación (4/12)
+
+- ¿Qué condición puede cambiar a la variable de retorno?
+	- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->Que **uno o varios** de los tres libros
+		- Sea(n) del género de interés
+
+	<br>
+
+- ¿Qué valor debe asignarse a la variable de retorno en este caso?
+	- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->**El o los títulos** de los libros
+		- &shy;<!-- .element: class="fragment" data-fragment-index="3" --> Si son varios
+			- Separados por punto y coma (`;`)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta V - Explicación (5/12)
+
+```Python[3,4]
+def extraer_libros_por_genero(genero: str, l1: dict, l2: dict, l3: dict) -> str:
+    libros = ''  # Variable de retorno
+    if genero == l1['genero']:
+        libros = l1['titulo']
+    # TODO: Completar el resto de la función
+    return libros
+```
+
+ - Si el primer libro es del género buscado
+	- Su título será el primero en la lista
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta V - Explicación (6/12)
+
+- ¿Qué pasa si el primer y segundo libro son del género buscado?
+	- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->Ambos títulos deben incluirse en la respuesta
+		- Separados por punto y coma
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta V - Explicación (7/12)
+
+```Python[3, 4,5,6,7,8]
+def extraer_libros_por_genero(genero: str, l1: dict, l2: dict, l3: dict) -> str:
+    libros = ''  # Variable de retorno
+    if genero == l1['genero']:
+        libros = l1['titulo']
+    if genero == l2['genero']:
+        if libros != '':  # Si l1 era del género buscado
+            libros += '; '  # Se inserta la separación con ;
+        libros += l2['titulo']
+    # TODO: Completar el resto de la función
+    return libros
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta V - Explicación (8/12)
+
+```Python[3,5]
+def extraer_libros_por_genero(genero: str, l1: dict, l2: dict, l3: dict) -> str:
+    libros = ''  # Variable de retorno
+    if genero == l1['genero']:
+        libros = l1['titulo']
+    if genero == l2['genero']:
+        if libros != '':
+            libros += '; '
+        libros += l2['titulo']
+    # TODO: Completar el resto de la función
+    return libros
+```
+
+- ¿Por qué se usa `if` independientes y no `elif`?
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta V - Explicación (9/12)
+
+- ¿Por qué se usa `if`?
+	- Se revisa el segundo libro
+		- **Independientemente** de que `l1`
+			- Sea o no del género buscado
+	- Hay que retornar **todos** los títulos de libros
+		- Que sean del género buscado
+			- No se trata de casos mutuamente excluyentes
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta V - Explicación (10/12)
+
+```Python
+def extraer_libros_por_genero(genero: str, l1: dict, l2: dict, l3: dict) -> str:
+    libros = ''  # Variable de retorno
+    if genero == l1['genero']:
+        libros = l1['titulo']
+    if genero == l2['genero']:
+        if libros != '':
+            libros += '; '
+        libros += l2['titulo']
+    # TODO: Completar el resto de la función
+    return libros
+```
+
+- ¿Cómo se construye la lista en el string a retornar?
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta V  - Explicación (11/12)
+
+- Creación de la lista con los títulos
+
+```Python
+        if libros != '':
+            libros += '; '
+```
+
+- Si `l1` era del género buscado
+	- La lista contendrá el título de `l1`
+		- Entonces, hay que separar los títulos
+			- Con punto y coma
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta V  - Explicación (12/12)
+
+- Creación de la lista con los títulos
+
+```Python[3]
+        if libros != '':
+            libros += '; '
+        libros += l2['titulo']
+```
+- Si `l1` no era del género buscado
+	- La lista solo contendrá por ahora
+		- El título del segundo libro
+			- Sin  punto y coma (`;`) previo
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta V 
+
+```Python
+def extraer_libros_por_genero(genero: str, l1: dict, l2: dict, l3: dict) -> str:
+    libros = ''  # Variable de retorno
+    if genero == l1['genero']:
+        libros = l1['titulo']
+    if genero == l2['genero']:
+        if libros != '':
+            libros += '; '
+        libros += l2['titulo']
+    # TODO: Completar el resto de la función para `l3`
+    
+    return libros  # Hay un solo retorno
+```
+
+- Termine la implementación:
+	- Considerando el tercer libro
+		- Y usando las buenas prácticas del curso
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VI
+
+- Resuelva el TODO
+
+```Python
+def libro_con_mayor_precio(l1: dict, l2: dict, l3: dict) -> str:
+	"""
+    Retorna el título del libro con el mayor precio. En caso de empate,
+    retorna el primero que encuentre.
+
+    Args:
+        l1 (dict): Diccionario que contiene la información del primer libro.
+        l2 (dict): Diccionario que contiene la información del segundo libro.
+        l3 (dict): Diccionario que contiene la información del tercer libro.
+
+    Returns:
+        str: Título del libro con el mayor precio.
+	"""
+    # TODO:  Implemente la función tal y como se describe en la documentación.
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VI - Explicación (1/10)
+
+- ¿Cuál es el valor por defecto a retornar?
+    + Se puede asumir que el primer libro 
+        + Es el de mayor precio
+            + Entonces se retornará su título
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VI - Explicación (2/10)
+
+```Python
+def libro_con_mayor_precio(l1: dict, l2: dict, l3: dict) -> str:
+    titulo_mayor_precio = l1['titulo']  # Variable de retorno
+    mayor_precio = l1['precio']  # Variable para guardar al mayor precio
+    # TODO: Completar el resto de la función
+    return titulo_mayor_precio
+```
+
+- `titulo_mayor_precio` 
+    - Se usa para llevar registro 
+        - Del titulo del libro con mayor precio
+- `mayor_precio`
+    - Se usa para llevar registro 
+        - Del mayor precio encontrado
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VI - Explicación (3/10)
+
+```Python[2]
+def libro_con_mayor_precio(l1: dict, l2: dict, l3: dict) -> str:
+    titulo_mayor_precio = l1['titulo']  # Variable de retorno
+    mayor_precio = l1['precio']  # Variable para guardar al mayor precio
+    # TODO: Completar el resto de la función
+    return titulo_mayor_precio
+```
+
+- `titulo_mayor_precio` 
+    - Se inicializa con el título de `l1`
+        - Se asume **al inicio** que `l1` 
+            - Será el de mayor precio
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VI - Explicación (4/10)
+
+```Python[2,5]
+def libro_con_mayor_precio(l1: dict, l2: dict, l3: dict) -> str:
+    titulo_mayor_precio = l1['titulo']  # Variable de retorno
+    mayor_precio = l1['precio']  # Variable para guardar al mayor precio
+    # TODO: Completar el resto de la función
+    return titulo_mayor_precio
+```
+
+- `titulo_mayor_precio` 
+    - Es la variable de retorno
+        - La función termina al retornarla
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VI - Explicación (5/10)
+
+```Python[3]
+def libro_con_mayor_precio(l1: dict, l2: dict, l3: dict) -> str:
+    titulo_mayor_precio = l1['titulo']  # Variable de retorno
+    mayor_precio = l1['precio']  # Variable para guardar al mayor precio
+    # TODO: Completar el resto de la función
+    return titulo_mayor_precio
+```
+
+- `mayor_precio` 
+    - Se inicializa con el precio de `l1`
+        - Se asume **al inicio** que el precio de `l1` 
+            - Será el mayor precio
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VI - Explicación (6/10)
+
+- ¿Qué condición puede cambiar a la variable de retorno?
+    - &shy;<!-- .element: class="fragment" data-fragment-index="1" -->Que uno de los dos libros restantes
+        - Tenga un precio mayor al primer libro
+- ¿Qué valor debe asignarse a la variable de retorno en este caso?
+    - &shy;<!-- .element: class="fragment" data-fragment-index="2" -->El título del libro con el mayor precio
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VI - Explicación (7/10)
+
+```Python[5,6,7]
+def libro_con_mayor_precio(l1: dict, l2: dict, l3: dict) -> str:
+    titulo_mayor_precio = l1['titulo']  # Variable de retorno
+    mayor_precio = l1['precio']  # Variable para guardar al mayor precio
+    # Comparación con l2 
+    if l2['precio'] > mayor_precio: 
+        titulo_mayor_precio = l2['titulo']
+        mayor_precio = l2['precio']
+    # TODO: Completar el resto de la función
+    return titulo_mayor_precio
+```
+
+- Aquí se considera que `l2`
+    - Puede ser el de mayor precio
+	    - Lo cual puede ser un posible caso
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VI - Explicación (8/10)
+
+```Python[5,6,7]
+def libro_con_mayor_precio(l1: dict, l2: dict, l3: dict) -> str:
+    titulo_mayor_precio = l1['titulo']  # Variable de retorno
+    mayor_precio = l1['precio']  # Variable para guardar al mayor precio
+    # Comparación con l2 
+    if l2['precio'] > mayor_precio: 
+        titulo_mayor_precio = l2['titulo']
+        mayor_precio = l2['precio']
+    # TODO: Completar el resto de la función
+    return titulo_mayor_precio
+```
+
+- Este código se ejecutará
+    - Únicamente si el precio de `l2`
+        - Es mayor que el de `l1`
+	        - Guardado en `mayor_precio`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VI - Explicación (9/10)
+
+```Python[3,9]
+def libro_con_mayor_precio(l1: dict, l2: dict, l3: dict) -> str:
+    titulo_mayor_precio = l1['titulo']  # Variable de retorno
+    mayor_precio = l1['precio']  # Variable para guardar al mayor precio
+    # Comparación con l2 
+    if l2['precio'] > mayor_precio: 
+        titulo_mayor_precio = l2['titulo']
+        mayor_precio = l2['precio']
+    # TODO: Completar el resto de la función
+    return titulo_mayor_precio
+```
+
+- Si el precio de `l1` es mayor que el de `l2`
+    - El precio de `l1` seguirá siendo el mayor
+	    - Lo cual puede ser un caso correcto
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VI - Explicación (10/10)
+
+```Python
+def libro_con_mayor_precio(l1: dict, l2: dict, l3: dict) -> str:
+    titulo_mayor_precio = l1['titulo']  # Variable de retorno
+    mayor_precio = l1['precio']  # Variable para guardar al mayor precio
+    # Comparación con l2 
+    if l2['precio'] > mayor_precio: 
+        titulo_mayor_precio = l2['titulo']
+        mayor_precio = l2['precio']
+    # TODO: Completar el resto de la función para `l3`
+    
+    return titulo_mayor_precio
+```
+
+- Termine la implementación:
+    - Considerando el tercer libro
+	    - Y usando las buenas prácticas del curso
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<i class="fas fa-question-circle fa-2x fa-spin fa-4x"></i>
+
+<br>
+<br>
+
+ [<i class="fas fa-home  fa-3x"></i>](https://eerosales24.github.io/iph_2026_20/#)
+</div></script></section></div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/chart/chart.min.js"></script>
+	<script src="plugin/chart/plugin.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+	  function isLight(color) {
+		let hex = color.replace('#', '');
+
+		// convert #fff => #ffffff
+		if(hex.length == 3){
+			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+		}
+
+		const c_r = parseInt(hex.substr(0, 2), 16);
+		const c_g = parseInt(hex.substr(2, 2), 16);
+		const c_b = parseInt(hex.substr(4, 2), 16);
+		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+		return brightness > 155;
+	}
+
+	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+	var isLight = isLight(bgColor);
+
+	if(isLight){
+		document.body.classList.add('has-light-background');
+	} else {
+		document.body.classList.add('has-dark-background');
+	}
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+        ],
+
+
+    	allottedTime: 120 * 1000,
+
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
+
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
+
+		customcontrols: {
+			controls: [
+			]
+		},
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width":960,"height":700,"margin":"0.025","minScale":"0.1","maxScale":"2.0","controls":"true","controlsLayout":"bottom-right","progress":"true","slideNumber":"true","center":"false","transition":"slide","transitionSpeed":"default"}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+
+  <!-- created with Advanced Slides -->
+</html>

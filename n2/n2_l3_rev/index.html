@@ -1,0 +1,1462 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title></title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/iph.css" id="theme" />
+    <link rel="stylesheet" href="plugin/highlight/spyder.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
+
+
+
+    <script defer src="dist/fontawesome/all.min.js"></script>
+
+	<script type="text/javascript">
+		var forgetPop = true;
+		function onPopState(event) {
+			if(forgetPop){
+				forgetPop = false;
+			} else {
+				parent.postMessage(event.target.location.href, "app://obsidian.md");
+			}
+        }
+		window.onpopstate = onPopState;
+		window.onmessage = event => {
+			if(event.data == "reload"){
+				window.document.location.reload();
+			}
+			forgetPop = true;
+		}
+
+		function fitElements(){
+			const itemsToFit = document.getElementsByClassName('fitText');
+			for (const item in itemsToFit) {
+				if (Object.hasOwnProperty.call(itemsToFit, item)) {
+					var element = itemsToFit[item];
+					fitElement(element,1, 1000);
+					element.classList.remove('fitText');
+				}
+			}
+		}
+
+		function fitElement(element, start, end){
+
+			let size = (end + start) / 2;
+			element.style.fontSize = `${size}px`;
+
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
+					size--;
+					element.style.fontSize = `${size}px`;
+				}
+				return;
+			}
+
+			if(element.scrollHeight > element.offsetHeight){
+				fitElement(element, start, size);
+			} else {
+				fitElement(element, size, end);
+			}		
+		}
+
+
+		document.onreadystatechange = () => {
+			fitElements();
+			if (document.readyState === 'complete') {
+				if (window.location.href.indexOf("?export") != -1){
+					parent.postMessage(event.target.location.href, "app://obsidian.md");
+				}
+				if (window.location.href.indexOf("print-pdf") != -1){
+					let stateCheck = setInterval(() => {
+						clearInterval(stateCheck);
+						window.print();
+					}, 250);
+				}
+			}
+	};
+
+
+        </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### <i class="fas fa-award"></i> IP Honores
+
+ ####  *Laboratorio 3 de Nivel 2 - N2-L3*
+
+[Eduardo Rosales](mailto:ee.rosales24@uniandes.edu.co)
+
+Departamento de Ingeniería de Sistemas y Computación
+
+Universidad de los Andes
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Objetivos
+
+
+1. Afianzar la comprensión de los conceptos de mutabilidad e inmutabilidad
+
+	<br>
+
+2. Afianzar la comprensión de la mutabilidad de los diccionarios
+	
+	<br>
+
+3. Comprender las aserciones en Python
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Siga paso a paso las siguientes instrucciones
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Trabajo individual
+
+- Este laboratorio es
+	- **Completamente individual**<!-- .element: class="fragment highlight-blue" -->
+
+	<br>
+
+- El tiempo para terminar el laboratorio es muy corto
+	- Por favor:
+		- Evite las distracciones
+		- Guarde **silencio**<!-- .element: class="fragment highlight-blue" -->
+
+	<br>
+
+- Si no termina el laboratorio
+	- Debe finalizarlo (**y comprenderlo**) 
+		- En las 5h
+			- De trabajo individual semanal
+
+	<br>
+
+- Próximos jueves:
+	- Cuarto **quiz** de N2 <!-- .element: class="fragment highlight-red" -->
+		- Será el día martes 22 de septiembre
+			- Sobre los diccionarios y 
+				- Su representación en el Heap y Stack
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Preguntas
+
+- En caso de dudas, por favor:
+
+<br> 
+
+1. Formule su pregunta de forma **muy clara y concisa**
+
+<br>
+
+2. Luego (**y solo luego de esto**)
+	- Levante la mano
+
+<br>
+
+<i class="fas fa-question-circle fa-1x fa-spin fa-1x"></i> _Al plantearse correctamente la pregunta, la respuesta a veces se revela sola_
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#  Actividad I
+
+- **Objetivos:**
+	- Afianzar la comprensión de los diccionarios
+	- Afianzar la comprensión de la inmutabilidad
+	- Afianzar la comprensión de la mutabilidad de los diccionarios
+
+<br>
+
+- **Importante:**  Este tema será evaluado en un quiz el martes
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🌀 Creación de un diccionario -  Vía `{}` 🌀
+
+- Sintaxis: 
+```Python
+nombre_diccionario = {llave:valor}
+```
+- `nombre_diccionario`: Nombre del diccionario
+	- (Idealmente) En plural
+- `llave:valor`: Pares separados por comas
+- Cada `llave` se mapea a un `valor` 
+- Cada llave es única e inmutable
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  🌀 Creación de un diccionario -  Vía `{}` - Ejemplos 🌀
+
+```Python
+{}  # Diccionario vacío
+
+# Diccionario de un solo elemento. Llave = a, valor = 1:
+{'a':1}  
+
+enteros = {'x':1, 'y':1, 'z':1}  # Diccionario de enteros
+flotantes = {'a':.4, 'b':1.3, 'c':2.9}  # Diccionario de flotantes
+booleanos = {'On':True, 'Off':False}  # Diccionario de booleanos
+strings = {'apple':'red', 'lime':'green'}  # Diccionario de strings
+items_varios = {'a':1, 'b':.2, 'c':'x'}  # Tipos de valor diversos
+varios_items = {'a':1, 7.1:True}  # Tipos de llave-valor diversos
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Hay otra forma de crear diccionarios
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Creación de un diccionario - Vía `dict()` 
+
+- Sintaxis:
+```Python
+nombre_diccionario = dict(llave=valor)
+```
+
+- `nombre_diccionario`: Nombre del diccionario
+    - (Idealmente) en plural
+- `llave=valor`: Pares de clave-valor, separados por comas
+- Cada `llave` es única e inmutable
+- **Nota**: Solo permite llaves que sean identificadores válidos
+	- Sin espacios, números al inicio, o caracteres especiales
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Creación de un diccionario - Vía `dict()` - Ejemplos
+
+```python
+dict()  # Diccionario vacío
+
+# Diccionario con un solo elemento
+dict(a=1)  
+
+# Diccionarios con diferentes tipos de valores:
+enteros = dict(x=1, y=2, z=3)  
+flotantes = dict(a=0.4, b=1.3, c=2.9)  
+booleanos = dict(On=True, Off=False)  
+strings = dict(apple="red", lime="green")  
+
+# Mezcla de tipos de valores:
+items_varios = dict(a=1, b=0.2, c="x") 
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### ¿Cómo sucede la creación de un diccionario en el Heap?
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🌀 Comprendiendo la instrucción de asignación 🌀
+
+En este código:
+```python
+PI = 3.14
+pi = PI
+numero_pi = PI
+```
+
+
+- Hay un solo objeto
+	- Que reside en el heap
+- La ubicación en donde se almacena el objeto
+	- Tiene múltiples nombres
+		- Es decir, se **referencia** por múltiples variables
+- Todas esas variables
+	- Residen en el Stack
+
+
+<br>
+<img src="iph/n1/img/promedio_2.png" alt="" style="width: 44%; height: 25%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Comprendiendo la creación de un diccionario vacío
+
+En este código:
+```python
+enteros = {}
+```
+
+- Se crea un diccionario vacío
+	- Reside **como un objeto en el Heap**
+- La variable `enteros`:
+	- Apunta a ese diccionario vacío
+		- Es solo un nombre que se le da al diccionario
+			- **Reside en el Stack**
+
+<img src="iph/n2/img/dict_hs_1.png" alt="" style="width: 40%; height: 35%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Comprendiendo la creación de un diccionario poblado (1/4)
+
+
+Considere este código:
+```python
+enteros = {'x':1, 'y':2, 'z':3}  # Diccionario de enteros
+```
+
+- Imagine cómo se vería:
+	- El Heap
+	- El Stack
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### No haga trampa, imagine como se vería el Heap y el Stack
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Comprendiendo la creación de un diccionario poblado (2/4)
+
+
+```python
+enteros = {'x':1, 'y':2, 'z':3}  # Diccionario de enteros
+```
+
+<br>
+
+- Así se podría representar el estado del Heap y el Stack:
+
+<img src="iph/n2/img/dict_hs_2.png" alt="" style="width: 60%; height: 50%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Comprendiendo la creación de un diccionario poblado (3/4)
+
+
+```python
+enteros = {'x':1, 'y':2, 'z':3}  # Diccionario de enteros
+```
+
+- Las **llaves** del diccionario
+	- Son solo **referencias a inmutables**
+		- En este caso a 3 strings
+
+<img src="iph/n2/img/dict_hs_3.png" alt="" style="width: 20%; height: 50%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Comprendiendo la creación de un diccionario poblado (4/4)
+
+
+```python
+enteros = {'x':1, 'y':2, 'z':3}  # Diccionario de enteros
+```
+
+- Los **valores** del diccionario
+	- Son solo **referencias a objetos** (pueden ser mutables o inmutables)
+		- En este caso a 3 enteros
+
+<img src="iph/n2/img/dict_hs_4.png" alt="" style="width: 20%; height: 50%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Comprendamos el paso de argumentos
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Paso de argumentos inmutables
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Tipos de datos inmutables
+
+- Un tipo de dato es inmutable
+	- Si después de crearlo, **no se puede cambiar**
+- Tipos de datos inmutables vistos hasta ahora:
+	- `int`
+	- `float`
+	- `str`
+	- `bool`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Paso de argumentos inmutables  - Ejemplo (1/10)
+
+```Python
+original = 'Original'
+
+def intentar_modificar(mensaje: str) -> None:
+    print(mensaje)  # → 'Original'
+    mensaje = 'Nuevo'
+    print(mensaje)  # → 'Nuevo'
+
+print(original)  # → Original
+intentar_modificar(original)
+print(original)  # → Original
+```
+
+- Un inmutable: 
+	- **No puede ser cambiado** dentro de una función
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Paso de argumentos inmutables  - Ejemplo (2/10)
+
+```Python
+mensaje_original = 'Original'
+```
+
+<img src="iph/n2/img/ej_i_1.png" alt="" style="width: 45%; height: 35%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Paso de argumentos inmutables  - Ejemplo (3/10)
+
+```Python[1]
+original = 'Original'
+
+def intentar_modificar(mensaje: str) -> None:
+    print(mensaje)  # → 'Original'
+    mensaje = 'Nuevo'
+    print(mensaje)  # → 'Nuevo'
+
+print(original)  # → Original
+intentar_modificar(original)
+print(original)  # → Original
+```
+
+<img src="iph/n2/img/ej_i_2.png" alt="" style="width: 20%; height: 12%; object-fit: fill">
+
+
+
+- La variable: `original`
+	- Hace referencia a la ubicación en memoria
+		- En donde reside un objeto de:
+			- Tipo: `str`
+			- Valor: `'Original'`
+			- Identidad: Representada por el color amarillo
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Paso de argumentos inmutables  - Ejemplo (4/10)
+
+```Python[9]
+original = 'Original'
+
+def intentar_modificar(mensaje: str) -> None:
+    print(mensaje)  # → 'Original'
+    mensaje = 'Nuevo'
+    print(mensaje)  # → 'Nuevo'
+
+print(original)  # → Original
+intentar_modificar(original)
+print(original)  # → Original
+```
+
+- Se invoca a la función `intentar_modificar()`
+	- Esta invocación **crea una nueva entrada en el Stack**
+		- Un nuevo _"Frame"_
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Paso de argumentos inmutables  - Ejemplo (5/10)
+
+```Python[9,3]
+original = 'Original'
+
+def intentar_modificar(mensaje: str) -> None:
+    print(mensaje)  # → 'Original'
+    mensaje = 'Nuevo'
+    print(mensaje)  # → 'Nuevo'
+
+print(original)  # → Original
+intentar_modificar(original)
+print(original)  # → Original
+```
+
+
+<img src="iph/n2/img/ej_i_3.png" alt="" style="width: 50%; height: 40%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Paso de argumentos inmutables  - Ejemplo (6/10)
+
+```Python[3, 4]
+original = 'Original'
+
+def intentar_modificar(mensaje: str) -> None:
+    print(mensaje)  # → 'Original'
+    mensaje = 'Nuevo'
+    print(mensaje)  # → 'Nuevo'
+
+print(original)  # → Original
+intentar_modificar(original)
+print(original)  # → Original
+```
+
+<img src="iph/n2/img/ej_i_4.png" alt="" style="width: 20%; height: 12%; object-fit: fill">
+
+
+- La variable local: `mensaje`
+	- Hace referencia a la ubicación en memoria
+		- En donde reside un objeto de:
+			- Tipo: `str`
+			- Valor: `'Original'`
+			- Identidad: Representada por el color amarillo
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Paso de argumentos inmutables  - Ejemplo (7/10)
+
+
+```Python[5]
+original = 'Original'
+
+def intentar_modificar(mensaje: str) -> None:
+    print(mensaje)  # → 'Original'
+    mensaje = 'Nuevo'
+    print(mensaje)  # → 'Nuevo'
+
+print(original)  # → Original
+intentar_modificar(original)
+print(original)  # → Original
+```
+
+<img src="iph/n2/img/ej_i_5.png" alt="" style="width: 50%; height: 40%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Paso de argumentos inmutables  - Ejemplo (8/10)
+
+
+```Python[5, 6]
+original = 'Original'
+
+def intentar_modificar(mensaje: str) -> None:
+    print(mensaje)  # → 'Original'
+    mensaje = 'Nuevo'
+    print(mensaje)  # → 'Nuevo'
+...
+```
+
+<img src="iph/n2/img/ej_i_5.png" alt="" style="width: 40%; height: 30%; object-fit: fill">
+
+
+- La variable local: `mensaje`
+	- **Ahora hace referencia a otra ubicación en memoria**
+		- En donde reside un objeto de:
+			- Tipo: `str`
+			- Valor: `'Nuevo'`
+			- Identidad: Representada por el color azul
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Paso de argumentos inmutables  - Ejemplo (9/10)
+
+
+```Python[9]
+original = 'Original'
+
+def intentar_modificar(mensaje: str) -> None:
+    print(mensaje)  # → 'Original'
+    mensaje = 'Nuevo'
+    print(mensaje)  # → 'Nuevo'
+
+print(original)  # → Original
+intentar_modificar(original)
+print(original)  # → Original
+```
+
+- Cuando la función `intentar_modificar()` termina de ejecutarse
+	- Su información desaparece del Stack
+
+<img src="iph/n2/img/ej_i_2.png" alt="" style="width: 35%; height: 20%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Paso de argumentos inmutables  - Ejemplo (10/10)
+
+
+```Python[1, 10]
+original = 'Original'
+
+def intentar_modificar(mensaje: str) -> None:
+    print(mensaje)  # → 'Original'
+    mensaje = 'Nuevo'
+    print(mensaje)  # → 'Nuevo'
+
+print(original)  # → Original
+intentar_modificar(original)
+print(original)  # → Original
+```
+
+
+<img src="iph/n2/img/ej_i_2.png" alt="" style="width: 15%; height: 10%; object-fit: fill">
+
+
+- La variable: `original`
+	- Hace referencia a la ubicación en memoria
+		- En donde reside un objeto de:
+			- Tipo: `str`
+			- Valor: `'Original'`
+			- Identidad: Representada por el color amarillo
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### En resumen
+
+- Un inmutable: 
+	- **No puede ser cambiado** dentro de una función
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Paso de argumentos mutables
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Tipos de datos mutables
+
+- Un tipo de dato es mutable
+	- Si después de crearlo, **se puede cambiar**
+- Tipos de datos mutables vistos hasta ahora:
+	- `dict`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Paso de argumentos mutables - Ejemplo (1/10)
+
+```Python
+dct = {'x': 1}
+
+def modificar_diccionario(diccionario: dict) -> None:
+    print(diccionario)  # → {'x': 1}
+    diccionario['x'] = -777
+    print(diccionario)  # → {'x': -777}
+
+print(dct)  # → {'x': 1}
+modificar_diccionario(dct)  
+print(dct)  # → {'x': -777}
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Paso de argumentos mutables - Ejemplo (2/10)
+
+```Python
+dct = {'x': 1}
+```
+
+<img src="iph/n2/img/ej_m_1.png" alt="" style="width: 50%; height: 40%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Paso de argumentos mutables - Ejemplo (3/10)
+
+```Python
+dct = {'x': 1}
+```
+
+<img src="iph/n2/img/ej_m_1.png" alt="" style="width: 25%; height: 20%; object-fit: fill">
+
+
+
+- La variable local: `dct`
+	- Hace referencia a la ubicación en memoria
+		- En donde reside un objeto de:
+			- Tipo: `dict`
+			- Valor: Referencias a:
+				- keys: `x` (Tipo: `str`, Valor: `'x'`, Identidad: Amarillo)
+				- values: 1 (Tipo: `int`, Valor: `'1'`, Identidad: Verde)
+			- Identidad: Representada por el color azul
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Paso de argumentos mutables - Ejemplo (4/10)
+
+```Python[1,8]
+dct = {'x': 1}
+
+def modificar_diccionario(diccionario: dict) -> None:
+    print(diccionario)  # → {'x': 1}
+    diccionario['x'] = -777
+    print(diccionario)  # → {'x': -777}
+
+print(dct)  # → {'x': 1}
+modificar_diccionario(dct)  
+print(dct)  # → {'x': -777}
+```
+
+<img src="iph/n2/img/ej_m_1.png" alt="" style="width: 35%; height: 30%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Paso de argumentos mutables - Ejemplo (5/10)
+
+```Python[9,3]
+dct = {'x': 1}
+
+def modificar_diccionario(diccionario: dict) -> None:
+    print(diccionario)  # → {'x': 1}
+    diccionario['x'] = -777
+    print(diccionario)  # → {'x': -777}
+
+print(dct)  # → {'x': 1}
+modificar_diccionario(dct)  
+print(dct)  # → {'x': -777}
+```
+
+<img src="iph/n2/img/ej_m_2.png" alt="" style="width: 55%; height: 45%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Paso de argumentos mutables - Ejemplo (6/10)
+
+```Python[3,4]
+dct = {'x': 1}
+
+def modificar_diccionario(diccionario: dict) -> None:
+    print(diccionario)  # → {'x': 1}
+    diccionario['x'] = -777
+    print(diccionario)  # → {'x': -777}
+
+print(dct)  # → {'x': 1}
+modificar_diccionario(dct)  
+print(dct)  # → {'x': -777}
+```
+
+<img src="iph/n2/img/ej_m_2.png" alt="" style="width: 45%; height: 40%; object-fit: fill">
+
+
+- La variable local: `diccionario`
+	- Hace referencia a la ubicación en memoria
+		- En donde reside el diccionario
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Paso de argumentos mutables - Ejemplo (7/10)
+
+```Python[5]
+dct = {'x': 1}
+
+def modificar_diccionario(diccionario: dict) -> None:
+    print(diccionario)  # → {'x': 1}
+    diccionario['x'] = -777
+    print(diccionario)  # → {'x': -777}
+
+print(dct)  # → {'x': 1}
+modificar_diccionario(dct)  
+print(dct)  # → {'x': -777}
+```
+
+<img src="iph/n2/img/ej_m_3.png" alt="" style="width: 55%; height: 50%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Paso de argumentos mutables - Ejemplo (8/10)
+
+```Python[5, 6]
+...
+def modificar_diccionario(diccionario: dict) -> None:
+    print(diccionario)  # → {'x': 1}
+    diccionario['x'] = -777
+    print(diccionario)  # → {'x': -777}
+...
+```
+
+<img src="iph/n2/img/ej_m_3.png" alt="" style="width: 23%; height: 17%; object-fit: fill">
+
+
+- **El diccionario fue cambiado**
+	- El valor (de la única pareja llave-valor que contiene)
+		- Ahora referencia a una ubicación de memoria
+			- En donde reside un objeto de: 
+				- Tipo: `int`
+				- Valor: `-777`
+				- Identidad: Representada por el color naranja
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Paso de argumentos mutables - Ejemplo (9/10)
+
+
+```Python[9]
+dct = {'x': 1}
+
+def modificar_diccionario(diccionario: dict) -> None:
+    print(diccionario)  # → {'x': 1}
+    diccionario['x'] = -777
+    print(diccionario)  # → {'x': -777}
+
+print(dct)  # → {'x': 1}
+modificar_diccionario(dct)  
+print(dct)  # → {'x': -777
+```
+
+<img src="iph/n2/img/ej_m_4.png" alt="" style="width: 45%; height: 35%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Paso de argumentos mutables - Ejemplo (10/10)
+
+
+```Python[9, 10]
+dct = {'x': 1}
+
+def modificar_diccionario(diccionario: dict) -> None:
+    print(diccionario)  # → {'x': 1}
+    diccionario['x'] = -777
+    print(diccionario)  # → {'x': -777}
+
+print(dct)  # → {'x': 1}
+modificar_diccionario(dct)  
+print(dct)  # → {'x': -777
+```
+
+<img src="iph/n2/img/ej_m_4.png" alt="" style="width: 30%; height: 25%; object-fit: fill">
+
+
+- Cuando la función `modificar_diccionario()` termina de ejecutarse
+	- Su información desaparece del Stack
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### En resumen
+
+- Un inmutable: 
+	- **No puede ser cambiado** dentro de una función
+- Un mutable:
+	- **Puede ser cambiado** por una función
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad I (1/4)
+
+- **Mentalmente** resuelva la siguiente pregunta:
+	- ¿Cuál sería el resultado de ejecutar el siguiente código?
+
+```python
+# Diccionario con un inventario de productos en una tienda
+inventario_tienda = {
+    "manzanas": {"cantidad": 50, "precio_unitario": 0.5},
+    "bananas": {"cantidad": 100, "precio_unitario": 0.3},
+    "naranjas": {"cantidad": 75, "precio_unitario": 0.6}
+}
+
+def actualizar_inventario(inventario: dict, producto: str, cantidad_vendida: int) -> None:
+    """
+    Modifica el inventario reduciendo la cantidad disponible de un producto.
+
+    Args:
+        inventario (dict): Diccionario que representa el inventario de productos.
+        producto (str): Nombre del producto cuya cantidad se actualizará.
+        cantidad_vendida (int): Número de unidades vendidas.
+    """
+    print(f"2. Inventario justo antes de la venta:\n{inventario}\n")
+
+    if producto in inventario:
+        inventario[producto]["cantidad"] -= cantidad_vendida
+        print(f"3. Se vendieron {cantidad_vendida} unidades de {producto}.\n")
+
+    print(f"4. Inventario justo después de la venta:\n {inventario}\n")
+
+
+print(f"1. Inventario inicial:\n{inventario_tienda}\n")
+actualizar_inventario(inventario_tienda, "manzanas", 20)
+print(f"5. Inventario final:\n{inventario_tienda}")
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad I (2/4)
+
+- Copie y pegue el anterior código en Spyder y ejecútelo
+	- Revise si su respuesta mental fue correcta
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad I (3/4)
+
+- **Mentalmente** resuelva la siguiente pregunta:
+	- ¿Cuál sería el resultado de ejecutar el siguiente código?
+
+```python
+# Representa el identificador de un pedido en una tienda en línea
+id_pedido = "ORD123456"
+
+def procesar_pedido(id_transaccion: str) -> None:
+    """
+    Simula el procesamiento de un pedido en una tienda en línea.
+    Intenta modificar el identificador del pedido, pero como las cadenas son inmutables,
+    el cambio no afecta la variable original fuera de la función.
+
+    Args:
+        id_transaccion (str): Identificador único del pedido.
+    """
+    print(f"-ID del pedido recibido en la función: {id_transaccion}\n")
+    id_transaccion = "ORD-PROCESADO"
+    print(f"-Nuevo ID dentro de la función (solo variable local): {id_transaccion}\n")
+
+print(f"-ID del pedido antes de procesar: {id_pedido}\n")
+procesar_pedido(id_pedido)
+print(f"-ID del pedido después de procesar: {id_pedido}\n")
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad I (4/4)
+
+- Copie y pegue el anterior código en Spyder y ejecútelo
+	- Revise si su respuesta mental fue correcta
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Recuerde: Siempre puede dibujar el estado del Stack y del Heap, para comprender mejor el paso de argumentos mutables/inmutables
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Fin de la Actividad 1
+
+- No es necesario hacer ningún envío de esta actividad
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#  Actividad II
+
+- **Objetivos:**
+	- Comprender el concepto de aserción
+
+<br>
+
+- **Importante:**  Este tema es parte del proyecto y será evaluado en el parcial 2
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Repasemos cómo obtener un tipo de dato
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🌀 `type()` 🌀
+
+- Retorna el tipo de dato del objeto dado
+- Sintaxis:  
+```Python
+type(objeto)
+````
+- Ej:
+```Python
+type(3.2)  # → float
+type(17)  # → int
+type('Hola mundo')  # → str
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Hay una función que obtiene el tipo de dato, de una forma más precisa
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  `isinstance()` 
+
+- Verifica si un objeto es de un  tipo de dato dado
+    
+- Retorna:
+    
+    - `True`:  Si el objeto es de ese tipo
+        
+    - `False`:  Si no lo es
+
+- Sintaxis:
+```
+isinstance(objeto, tipo)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  `isinstance()`  - Ejemplos (1/2)
+
+
+```python
+isinstance(17, int)       # → True
+isinstance(3.2, float)    # → True
+isinstance('Hola', str)   # → True
+isinstance(17, float)     # → False
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  `isinstance()`  - Ejemplos (2/2)
+
+- También acepta múltiples tipos:
+
+```python
+isinstance(17, (int, float))   # → True
+isinstance(3.2, (int, float))  # → True
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### En IP Honores, debe preferirse a `isinstance()` para conocer el tipo de dato de un objeto (por sobre `type()`)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Aserciones en Python
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### La instrucción `assert` (1/2)
+
+- Verifica una condición (dada como una expresión),
+	- Mostrando error si es falsa
+
+	<br>
+
+- Simplifica pruebas y depuración
+
+	<br>
+
+- **Garantiza que se respeten restricciones**
+	- Se usarán en Nivel 2 con este fin
+		- Solo para parámetros
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### La instrucción `assert` (2/2)
+    
+- Sintaxis:
+    
+    - `assert condition`
+        
+    - `assert condition, 'Error message'`
+
+	<br>
+
+- `assert`: Palabra clave para insertar aserciones
+- `condition`: Condición a evaluar (dada como una expresión)
+
+	<br>
+    
+- Si la condición es verdadera →  la ejecución **continúa normal**
+- Si es falsa →  `AssertionError` (con mensaje opcional)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `assert` - Ejemplos (1/2)
+
+- Aserción **sin** mensaje:
+
+```
+x = -1
+assert x > 0
+```
+
+<br>
+	
+- Resultado de ejecución:
+
+```python
+AssertionError                            Traceback (most recent call last)
+Cell In[90], line 2
+      1 x = -1
+----> 2 assert x > 0
+
+AssertionError: 
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `assert` - Ejemplos (2/2)
+
+- Aserción **con** mensaje:
+
+```
+x = -1
+assert x > 0, "Se esperaba un número positivo, pero x es igual a: " + str(x)
+```
+
+<br>
+
+- Resultado de ejecución:
+
+```python
+AssertionError                            Traceback (most recent call last)
+Cell In[89], line 2
+      1 x = -1
+----> 2 assert x > 0, "Se esperaba un número positivo, pero x es igual a: " + str(x)
+
+AssertionError: Se esperaba un número positivo, pero x es igual a: -1
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta I
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+def suma(primer_operando: int, segundo_operando: int) -> int:
+    return primer_operando + segundo_operando
+    
+print(suma(2, 2))
+```
+
+
+<br>
+
+- **Respuesta**:
+	- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->`4`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta II
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+def suma(primer_operando: int, segundo_operando: int) -> int:
+
+    assert isinstance(primer_operando, int), "Se esperaba un primer parámetro \
+        del tipo entero, pero se recibió: " + str(primer_operando)
+        
+    assert isinstance(segundo_operando, int), "Se esperaba un segundo parámetro \
+        del tipo entero, pero se recibió: " + str(segundo_operando)
+        
+    return primer_operando + segundo_operando
+    
+print(suma(2, 2))
+```
+
+
+<br>
+
+- **Respuesta**:
+	- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->`4`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+def suma(primer_operando: int, segundo_operando: int) -> int:
+    return primer_operando + segundo_operando
+    
+print(suma("Hola", 2))
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III - Solución
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+def suma(primer_operando: int, segundo_operando: int) -> int:
+    return primer_operando + segundo_operando
+    
+print(suma("Hola", 2))
+```
+
+
+<br>
+
+- **Respuesta** :
+
+```
+...
+     10 def suma(primer_operando: int, segundo_operando: int) -> int:
+---> 11     return primer_operando + segundo_operando
+
+TypeError: can only concatenate str (not "int") to str
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IV
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+def suma(primer_operando: int, segundo_operando: int) -> int:
+
+    assert isinstance(primer_operando, int), "Se esperaba un primer parámetro \
+        del tipo entero, pero se recibió: " + str(primer_operando)
+        
+    assert isinstance(segundo_operando, int), "Se esperaba un segundo parámetro \
+        del tipo entero, pero se recibió: " + str(segundo_operando)
+        
+    return primer_operando + segundo_operando
+    
+print(suma("Hola", 2))
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IV - Solución
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+def suma(primer_operando: int, segundo_operando: int) -> int:
+    assert isinstance(primer_operando, int), "Se esperaba un primer parámetro \
+        del tipo entero, pero se recibió: " + str(primer_operando)
+    assert isinstance(segundo_operando, int), "Se esperaba un segundo parámetro \
+        del tipo entero, pero se recibió: " + str(segundo_operando)
+    return primer_operando + segundo_operando
+    
+print(suma("Hola", 2))
+```
+
+
+<br>
+
+- **Respuesta**:
+
+```python
+     10 def suma(primer_operando: int, segundo_operando: int) -> int:
+---> 11     return primer_operando + segundo_operando
+
+AssertionError: Se esperaba un primer parámetro del tipo entero, pero se recibió:
+Hola
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta V
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+def suma(primer_operando: int, segundo_operando: int) -> int:
+
+    assert isinstance(primer_operando, int), "Se esperaba un primer parámetro \
+        del tipo entero, pero se recibió: " + str(primer_operando)
+        
+    assert isinstance(segundo_operando, int), "Se esperaba un segundo parámetro \
+        del tipo entero, pero se recibió: " + str(segundo_operando)
+        
+    return primer_operando + segundo_operando
+    
+print(suma(2, "Mundo"))
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta V - Solución
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+def suma(primer_operando: int, segundo_operando: int) -> int:
+    assert isinstance(primer_operando, int), "Se esperaba un primer parámetro \
+        del tipo entero, pero se recibió: " + str(primer_operando)
+    assert isinstance(segundo_operando, int), "Se esperaba un segundo parámetro \
+        del tipo entero, pero se recibió: " + str(segundo_operando)
+    return primer_operando + segundo_operando
+    
+print(suma(2, "Mundo"))
+```
+
+
+<br>
+
+- **Respuesta**:
+
+
+```
+     10 def suma(primer_operando: int, segundo_operando: int) -> int:
+     11     return primer_operando + segundo_operando
+---> 13 print(suma("Mundo", 2))
+
+AssertionError: Se esperaba un segundo parámetro del tipo entero, pero se recibió:
+Mundo
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VI
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+def suma(primer_operando: int, segundo_operando: int) -> int:
+
+    assert isinstance(primer_operando, int), "Se esperaba un primer parámetro \
+        del tipo entero, pero se recibió: " + str(primer_operando)
+        
+    assert isinstance(segundo_operando, int), "Se esperaba un segundo parámetro \
+        del tipo entero, pero se recibió: " + str(segundo_operando)
+        
+    return primer_operando + segundo_operando
+    
+print(suma(7, 7))
+```
+
+
+<br>
+
+- **Respuesta**:
+	- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->`14`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Fin de la Actividad 2
+
+- No es necesario hacer ningún envío de esta actividad
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Sobre N2:
+
+
+- Falta un solo tema
+	- El cual se explicará el día martes
+		- Pero la presentación ya está disponible:
+			- <a href="https://eerosales24.github.io/iph_2026_20/n2/n2_08_diccionarios_como_estructuras_de_datos/#/" target="_blank">Diccionarios como estructuras de datos</a>
+
+
+
+	<br>
+	
+- Sería ideal que revise la misma y adelante así N2-PROY...
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### N2-PROY
+- De manera **INDIVIDUAL**
+	- Trabaje en N2-PROY
+
+<br>
+
+- **IMPORTANTE**:
+	- Los monitores y el profesor:
+		- NO RESUELVEN EL PROYECTO
+		- NO CREAN DOCTESTS
+		- NO RESUELVEN ERRORES EN EL PROYECTO
+	- En caso de dudas conceptuales sobre N2-PROY 
+		- Formule su pregunta de forma **muy clara y concisa**
+			- Luego (**y solo luego de esto**)
+				- Levante la mano
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Fin de N2-L3
+
+- No es necesario hacer ningún envío de este laboratorio
+	- No olvidé guardar sus avances de N2-PROY
+		- Los cuales puede enviar a Bloque Neón
+			- Puede hacer envíos _ilimitados_
+				- Solo el **último envío**  será revisado
+
+
+<br>
+
+ [<i class="fas fa-home  fa-3x"></i>](https://eerosales24.github.io/iph_2026_20/#)
+</div></script></section></div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/chart/chart.min.js"></script>
+	<script src="plugin/chart/plugin.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+	  function isLight(color) {
+		let hex = color.replace('#', '');
+
+		// convert #fff => #ffffff
+		if(hex.length == 3){
+			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+		}
+
+		const c_r = parseInt(hex.substr(0, 2), 16);
+		const c_g = parseInt(hex.substr(2, 2), 16);
+		const c_b = parseInt(hex.substr(4, 2), 16);
+		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+		return brightness > 155;
+	}
+
+	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+	var isLight = isLight(bgColor);
+
+	if(isLight){
+		document.body.classList.add('has-light-background');
+	} else {
+		document.body.classList.add('has-dark-background');
+	}
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+        ],
+
+
+    	allottedTime: 120 * 1000,
+
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
+
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
+
+		customcontrols: {
+			controls: [
+			]
+		},
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width":960,"height":700,"margin":"0.025","minScale":"0.1","maxScale":"2.0","controls":"true","controlsLayout":"bottom-right","progress":"true","slideNumber":"true","center":"false","transition":"slide","transitionSpeed":"default"}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+
+  <!-- created with Advanced Slides -->
+</html>
