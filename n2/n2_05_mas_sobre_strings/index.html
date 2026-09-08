@@ -404,6 +404,36 @@ min("sol", "soles")   # → "sol"
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
+### ¿Cómo saber la longitud o tamaño de un string?
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `len()`
+
+- Retorna la longitud (tamaño) de un objeto    
+- Sintaxis: 
+```Python
+len(objeto)
+```
+
+- Compatible con múltiples objetos
+    - Por ejemplo **strings**
+- Ayuda: [len](https://docs.python.org/3/library/functions.html#len)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `len()` - Ejemplos
+
+```Python
+len('')  # → 0 (string vacío)
+
+len('Python')  # → 6 (`Python` tiene 6 caracteres)
+
+len('Hello World!')  # → 12 (Los espacios son caracteres)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
 ### Pregunta I
 
 - ¿Qué hace el siguiente programa?
@@ -558,11 +588,6 @@ else:
 - Después de su creación
     - Los strings no pueden ser modificados
 - Intentar modificar un string resulta en un error
-- Ej:
-```Python
-s = 'Python'
-s[0] = 'J'  # → TypeError: `s` es inmutable
-```
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -606,10 +631,10 @@ print(phrase)
 phrase = 'abracadabra'
 first_chars = phrase[0] + phrase[1] + phrase[2] + phrase[3]
 remaining_phrase = phrase.replace(first_chars, '')
-print(first_chars)
-print(remaining_phrase)
-print(first_chars + " " + remaining_phrase + " " + first_chars)
-print(phrase)
+print(first_chars)  # → abra
+print(remaining_phrase)  # → cad
+print(first_chars + " " + remaining_phrase + " " + first_chars)  # → abra cad abra
+print(phrase)  # → abracadabra
 ```
 
 ```plaintext
@@ -618,6 +643,112 @@ cad
 abra cad abra
 abracadabra
 ```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `str.format()`
+
+- Formateo de strings
+    - Con marcadores de posición 
+        - Para expresiones
+- Sintaxis: 
+```Python
+ 'string {}'.format(expresion)
+```
+- `expresion` se evalúa en tiempo de ejecución
+- Compatible con **cualquier versión** de Python
+- Soporta el formateo de decimales
+- Ayuda:  [format](https://docs.python.org/3/library/stdtypes.html#str.format)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### `str.format()` - Ejemplos
+
+```Python
+print('Result: {}'.format(5))  # → 'Result: 5'
+
+print('{} + {} = {}'.format(20, 30, 20 + 30))  # → '20 + 30 = 50'
+# `(20, 30, 20 + 30)` se resuelve en tiempo de ejecución
+
+print('{} / {} = {:.2f}'.format(1, 3, 1 / 3))  # → '1 / 3 = 0.33
+# `{:.2f}` se formatea, usando dos decimales
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VI
+
+
+- ¿Cuál es el resultado de ejecutar la siguiente expresión?
+```Python
+print('{}/{} = {:.2f}'.format(9, 2, 9 / 2))
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VI - Solución
+
+
+```python
+print('{}/{} = {:.2f}'.format(9, 2, 9 / 2))  
+# → 9 /2 = 4.50
+```
+
+<br> 
+
+- Aquí,  `str.format()` obliga la aparición del cero (`4.50`)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  f-strings
+    
+- Formateo de strings usando una 
+    - Expresión embebida (integrada)
+- Sintaxis:
+```Python
+ f'string {expresion}'
+```
+
+- `expresion` se evalúa en tiempo de ejecución
+- Soporta formateo de decimales
+- Introducida **a partir de Python 3.6**
+	- En IP Honores
+		- **Preferimos esta opción**
+- Ayuda: [f-strings ](https://docs.python.org/3/tutorial/inputoutput.html#tut-f-strings)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  f-strings - Ejemplos
+
+```Python
+print(f'Result: {5}')  # → 'Result: 5'
+print(f'{20} + {30} = {20 + 30}')  # → '20 + 30 = 50'   
+print(f'{1} / {3} = {1 / 3:.2f}')  # → '1 / 3 = 0.33'
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VII
+
+
+- ¿Cuál es el resultado de ejecutar la siguiente expresión?
+```Python
+print(f'{11}/{2} = {11 / 2:.2f}')
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VII - Solución
+
+
+```python
+print(f'{11}/{2} = {11 / 2:.2f}')
+# → 11/2 = 5.50
+```
+
+<br> 
+
+- Aquí, `f-string` obliga la aparición del cero (`5.50`)
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
