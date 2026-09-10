@@ -829,6 +829,70 @@ string.replace(old, new, count)
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
+### 🌀 Inmutabilidad (Strings) (1/2) 🌀
+
+- Los strings son *inmutables*
+- Después de su creación
+    - Los strings no pueden ser modificados
+- Intentar modificar un string resulta en un error
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🌀 Inmutabilidad (Strings) (2/2) 🌀
+
+- **Las operaciones con strings**
+    - **Siempre retornan un nuevo string**
+- Ej:
+
+```Python
+s = 'Python' # `s` es un string inmutable
+
+s = s + ' es divertido!' # Ahora `s` es un nuevo string
+
+# La concatenación produjo un nuevo string
+# Que es inmutable:
+# s = 'Python es divertido!'
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VIII
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+phrase = 'abracadabra'
+first_chars = phrase[0] + phrase[1] + phrase[2] + phrase[3]
+remaining_phrase = phrase.replace(first_chars, '')
+print(first_chars)
+print(remaining_phrase)
+print(first_chars + " " + remaining_phrase + " " + first_chars)
+print(phrase)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VIII - Solución
+
+```Python
+phrase = 'abracadabra'
+first_chars = phrase[0] + phrase[1] + phrase[2] + phrase[3]
+remaining_phrase = phrase.replace(first_chars, '')
+print(first_chars)  # → abra
+print(remaining_phrase)  # → cad
+print(first_chars + " " + remaining_phrase + " " + first_chars)  # → abra cad abra
+print(phrase)  # → abracadabra
+```
+
+```plaintext
+abra
+cad
+abra cad abra
+abracadabra
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
 ### `str.startswith()`
 
 - Verifica si el string inicia

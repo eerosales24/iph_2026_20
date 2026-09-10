@@ -609,43 +609,6 @@ s = s + ' es divertido!' # Ahora `s` es un nuevo string
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### Pregunta V
-
-- ¿Cuál es el resultado de ejecutar el siguiente código?
-
-```Python
-phrase = 'abracadabra'
-first_chars = phrase[0] + phrase[1] + phrase[2] + phrase[3]
-remaining_phrase = phrase.replace(first_chars, '')
-print(first_chars)
-print(remaining_phrase)
-print(first_chars + " " + remaining_phrase + " " + first_chars)
-print(phrase)
-```
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Pregunta V - Solución
-
-```Python
-phrase = 'abracadabra'
-first_chars = phrase[0] + phrase[1] + phrase[2] + phrase[3]
-remaining_phrase = phrase.replace(first_chars, '')
-print(first_chars)  # → abra
-print(remaining_phrase)  # → cad
-print(first_chars + " " + remaining_phrase + " " + first_chars)  # → abra cad abra
-print(phrase)  # → abracadabra
-```
-
-```plaintext
-abra
-cad
-abra cad abra
-abracadabra
-```
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
 ### `str.format()`
 
 - Formateo de strings
@@ -676,7 +639,7 @@ print('{} / {} = {:.2f}'.format(1, 3, 1 / 3))  # → '1 / 3 = 0.33
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### Pregunta VI
+### Pregunta V
 
 
 - ¿Cuál es el resultado de ejecutar la siguiente expresión?
@@ -686,7 +649,7 @@ print('{}/{} = {:.2f}'.format(9, 2, 9 / 2))
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### Pregunta VI - Solución
+### Pregunta V - Solución
 
 
 ```python
@@ -728,7 +691,7 @@ print(f'{1} / {3} = {1 / 3:.2f}')  # → '1 / 3 = 0.33'
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### Pregunta VII
+### Pregunta VI
 
 
 - ¿Cuál es el resultado de ejecutar la siguiente expresión?
@@ -738,7 +701,7 @@ print(f'{11}/{2} = {11 / 2:.2f}')
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### Pregunta VII - Solución
+### Pregunta VI - Solución
 
 
 ```python
