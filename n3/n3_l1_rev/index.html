@@ -124,11 +124,19 @@ Universidad de los Andes
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### Quiz I - N3
+### Quiz 1 de N3
 
-- El martes 13 de octubre tendremos el primer quiz de N3
-	- El tema estará relacionado
-		- Con los **temas en este laboratorio** <!-- .element: class="fragment highlight-red" -->
+- Tendrá lugar el día de hoy
+	- **Temas:**
+		-  _Recursividad_
+		- Métodos los `str`
+
+	<br>
+
+- Inicia a la **10:30am**:
+	- Por favor, para esa hora:
+		- Cierre la sesión de su PC
+		- Guarde su celular, iPad, laptop y dispositivos
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -154,8 +162,10 @@ Universidad de los Andes
 ###  Actividad I (1/3)
 
 - Cree un archivo llamado: `logica.py`
-	- Copie y pegue el siguiente código
-	- Codifique el plan de implementación paso a paso  que hizo ayer
+	1. Copie y pegue el siguiente código
+	2. Lea el plan de implementación en la siguiente diapositiva
+	3.  Implemente el `TODO1`
+	
 
 
 ```python
@@ -184,7 +194,7 @@ def suma_digitos(n: int) -> int:
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### Ejemplo de plan de implementación:
+### Ejemplo de plan de implementación del `TODO1`:
 
 - Validar que `n` sea `int` y `n >= 0`
 
@@ -209,8 +219,9 @@ def suma_digitos(n: int) -> int:
 ###  Actividad I (2/3)
 
 - En: `logica.py`
-	- Copie y pegue el siguiente código
-	- Codifique el plan de implementación paso a paso  que hizo ayer
+	1. Copie y pegue el siguiente código
+	2. Lea el plan de implementación desde la siguiente diapositiva
+	3.  Implemente el `TODO2`
 
 ```python
 def contar_vocales_recursivo(cadena: str) -> int:
@@ -239,6 +250,41 @@ def contar_vocales_recursivo(cadena: str) -> int:
 
 #doctest.run_docstring_examples(contar_vocales_recursivo, globals(), verbose=True)
 ```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Ejemplo de plan de implementación del `TODO2` (1/2)
+
+* Validar que `cadena` sea `str`
+
+	<br>
+	
+* ¿Qué operaciones necesito?
+   * Obtener el primer carácter: 
+	   * `cadena[0]`
+   * Ver si es vocal (sin importar mayúsculas): 
+	   * `cadena[0].lower() in 'aeiou'`
+   * Remover el primer carácter: 
+	   * `cadena[1:]`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Ejemplo de plan de implementación del `TODO2` (2/2)
+
+* **Caso base:**
+   * Si `cadena` está vacía, retornar `0`
+
+
+	<br>
+
+* **Caso recursivo:**
+   * Algoritmo:
+      * Sumar `1` si el primer carácter es vocal (`0` si no) 
+	      * Al procesamiento recursivo del resto
+      
+   * Verificación:
+      * `cadena[1:]` reduce la longitud de `cadena`
+         * ✅ Eventualmente se alcanza el caso base
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -285,7 +331,7 @@ def contar_vocales_recursivo(cadena: str) -> int:
 
 - En: `logica.py`
 	- Copie y pegue el siguiente código
-	- Escriba un plan de implementación paso a paso 
+	- Escriba en sus notas un plan de implementación paso a paso 
 		- **Antes** de  implementar el `TODO3`
 	- Una vez su plan sea concreto, proceda a codificar la solución
 
@@ -323,7 +369,7 @@ def es_palindrome_basico(cadena: str) -> bool:
 
 - En: `logica.py`
 	- Copie y pegue el siguiente código
-	- Escriba un plan de implementación paso a paso 
+	- Escriba en sus notas un plan de implementación paso a paso 
 		- **Antes** de  implementar el `TODO4`
 	- Una vez su plan sea concreto, proceda a codificar la solución
 
@@ -397,7 +443,7 @@ es_palindrome_3("Oso", True)
 
 - En: `logica.py`
 	- Copie y pegue el siguiente código
-	- Escriba un plan de implementación paso a paso 
+	- Escriba en sus notas un plan de implementación paso a paso 
 		- **Antes** de  implementar el `TODO5`
 	- Una vez su plan sea concreto, proceda a codificar la solución
 
@@ -440,7 +486,7 @@ def es_palindromo_configurable(cadena: str, sensible_mayusculas: bool=False) -> 
 
 - En: `logica.py`
 	- Copie y pegue el siguiente código
-	- Escriba un plan de implementación paso a paso 
+	- Escriba en sus notas un plan de implementación paso a paso 
 		- **Antes** de  implementar el `TODO6`
 	- Una vez su plan sea concreto, proceda a codificar la solución
 
@@ -486,7 +532,7 @@ def es_palindromo_ignorando_espacios(cadena: str, sensible_mayusculas: bool=Fals
 
 - En: `logica.py`
 	- Copie y pegue el siguiente código
-	- Escriba un plan de implementación paso a paso 
+	- Escriba en sus notas un plan de implementación paso a paso 
 		- **Antes** de  implementar el `TODO7`
 	- Una vez su plan sea concreto, proceda a codificar la solución
 
@@ -535,7 +581,7 @@ def es_palindromo_configurable_espacios(cadena: str, sensible_mayusculas: bool =
 
 - En: `logica.py`
 	- Copie y pegue el siguiente código
-	- Escriba un plan de implementación paso a paso 
+	- Escriba en sus notas un plan de implementación paso a paso 
 		- **Antes** de  implementar el `TODO8`
 	- Una vez su plan sea concreto, proceda a codificar la solución
 
@@ -593,7 +639,7 @@ def es_correo_uniandes(email: str, min_usuario: int=4) -> bool:
 
 - En: `logica.py`
 	- Copie y pegue el siguiente código
-	- Escriba un plan de implementación paso a paso 
+	- Escriba en sus notas un plan de implementación paso a paso 
 		- **Antes** de  implementar el `TODO9`
 	- Una vez su plan sea concreto, proceda a codificar la solución
 
@@ -633,7 +679,7 @@ def ocultar_usuario_email(email: str, caracteres_visibles: int=2) -> str:
 
 - En: `logica.py`
 	- Copie y pegue el siguiente código
-	- Escriba un plan de implementación paso a paso 
+	- Escriba en sus notas un plan de implementación paso a paso 
 		- **Antes** de  implementar el `TODO10`
 	- Una vez su plan sea concreto, proceda a codificar la solución
 
