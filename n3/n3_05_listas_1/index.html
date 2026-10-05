@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title></title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/iph.css" id="theme" />
+    <link rel="stylesheet" href="plugin/highlight/spyder.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
+
+
+
+    <script defer src="dist/fontawesome/all.min.js"></script>
+
+	<script type="text/javascript">
+		var forgetPop = true;
+		function onPopState(event) {
+			if(forgetPop){
+				forgetPop = false;
+			} else {
+				parent.postMessage(event.target.location.href, "app://obsidian.md");
+			}
+        }
+		window.onpopstate = onPopState;
+		window.onmessage = event => {
+			if(event.data == "reload"){
+				window.document.location.reload();
+			}
+			forgetPop = true;
+		}
+
+		function fitElements(){
+			const itemsToFit = document.getElementsByClassName('fitText');
+			for (const item in itemsToFit) {
+				if (Object.hasOwnProperty.call(itemsToFit, item)) {
+					var element = itemsToFit[item];
+					fitElement(element,1, 1000);
+					element.classList.remove('fitText');
+				}
+			}
+		}
+
+		function fitElement(element, start, end){
+
+			let size = (end + start) / 2;
+			element.style.fontSize = `${size}px`;
+
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
+					size--;
+					element.style.fontSize = `${size}px`;
+				}
+				return;
+			}
+
+			if(element.scrollHeight > element.offsetHeight){
+				fitElement(element, start, size);
+			} else {
+				fitElement(element, size, end);
+			}		
+		}
+
+
+		document.onreadystatechange = () => {
+			fitElements();
+			if (document.readyState === 'complete') {
+				if (window.location.href.indexOf("?export") != -1){
+					parent.postMessage(event.target.location.href, "app://obsidian.md");
+				}
+				if (window.location.href.indexOf("print-pdf") != -1){
+					let stateCheck = setInterval(() => {
+						clearInterval(stateCheck);
+						window.print();
+					}, 250);
+				}
+			}
+	};
+
+
+        </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### <i class="fas fa-award"></i> IP Honores
+
+ ####  *Listas 1*
+
+[Eduardo Rosales](mailto:ee.rosales24@uniandes.edu.co)
+
+Departamento de Ingeniería de Sistemas y Computación
+
+Universidad de los Andes
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Lista
+
+- Secuencia mutable e indexada
+	- Puede contener objetos de múltiples tipos
+		- Incluidas otras listas    
+- Soporta elementos duplicados
+- Soporta el cálculo de su tamaño/longitud
+	- = Total de elementos
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Strings vs Listas (1/2)
+    
+- Similitudes:
+	- Secuencias
+	- Iterables
+	- Indexables
+	- Soportan 
+		- Cálculo de tamaño/longitud
+		- Slicing
+		- Operadores de pertenencia
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Strings vs Listas (2/2)
+    
+- Diferencias:
+	- Elementos:
+		- Strings son secuencias 
+			- De solo caracteres
+		- Listas son secuencias
+			- De uno o múltiples tipos
+	- Mutabilidad:
+		- Strings son inmutables
+		- Listas son mutables
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Las listas son secuencias
+- *Secuencia*
+	- Iterable que soporta indexación y 
+		- Cálculo de tamaño/longitud
+- Las secuencias tienen índice cero
+- Ej: 
+```Python
+[-2, -1, 0, 1, 2]  # Lista de enteros
+```
+
+<img src="iph/n4/img/Screenshot 2024-10-05 at 11.23.16 AM.png" alt="" style="object-fit: scale-down">
+
+
+- El primer elemento está en el índice 0 (no en 1)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Creación de listas vía corchetes `[]`
+
+- Sintaxis: 
+```Python
+nombre_lista = [valores]
+```
+
+	- `nombre_lista`: Nombre de la lista
+		- (Idealmente) En plural
+	- `valores`: Elementos de la lista (opcionales)
+		- Separados por comas si hay varios
+		- Pueden provenir de expresiones
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Creación de listas vía corchetes `[]` - Ejemplos
+
+```Python
+[]  # Lista vacía
+
+enteros = [0, -1, 7]  # Lista de enteros
+
+flotantes = [.4, 1.3, 2.9]  # Lista de flotantes
+
+booleanos = [True, False]  # Lista de booleanos
+
+strings = ['a', 'foo', 'b']  # Lista de strings
+
+items = [0, 1.0, 'a', True]  # Lista de múltiples tipos
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta I
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+```Python
+print([bool(0), bool(''), bool({}), bool([])])
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta I - Solución
+
+```Python
+print([bool(0), bool(''), bool({}), bool([])])
+# → [False, False, False, False]
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Las listas soportan indexación
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Indexación Positiva - Ejemplo
+
+<img src="iph/n3/img/Screenshot 2024-10-13 at 9.03.05 AM.png" alt="" style="object-fit: scale-down">
+
+
+```Python
+flotantes = [.0, .1, .2, .3, .4, .5]
+
+flotantes[0]  # → 0.0
+flotantes[1]  # → 0.1
+flotantes[2]  # → 0.2
+flotantes[3]  # → 0.3
+flotantes[4]  # → 0.4
+flotantes[5]  # → 0.5
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Indexación Negativa - Ejemplo
+
+<img src="iph/n3/img/Screenshot 2024-10-13 at 9.08.10 AM.png" alt="" style="object-fit: scale-down">
+
+
+```Python
+letras = ['P', 'y', 't', 'h', 'o', 'n']
+
+letras[-1]  # → 'n'
+letras[-2]  # → 'o'
+letras[-3]  # → 'h'
+letras[-4]  # → 't'
+letras[-5]  # → 'y'
+letras[-6]  # → 'P'
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Errores usando indexamiento
+
+<img src="iph/n3/img/Screenshot 2024-10-13 at 9.10.36 AM.png" alt="" style="object-fit: scale-down">
+
+
+```Python
+[11, 12, -1, 16, 21, -3][6]
+# → IndexError (6 está fuera de rango)
+
+[11, 12, -1, 16, 21, -3][-7]
+# → IndexError (-7 está fuera de rango)
+
+[11, 12, -1, 16, 21, -3][1.0]
+# → TypeError: index must be an integer
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Las listas son mutables
+
+- Después de su creación
+	- Las listas se pueden cambiar
+- Se pueden actualizar, agregar y eliminar 
+	- Todos sus elementos
+- Su modificación se realiza **en sitio**
+	- No se crea una nueva copia
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Las listas son mutables - Ejemplo (1/3)
+
+
+```Python
+numeros = [1, 2, 3]  # La lista `numeros` is creada
+```
+
+<img src="iph/n3/img/Screenshot 2024-10-13 at 9.18.48 AM.png" alt="" style="object-fit: scale-down">
+
+
+- `numeros` es una lista mutable (`list`) 
+	- Guarda una referencia 
+		- A los objetos inmutables `1`, `2` y `3` (`int`)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Las listas son mutables - Ejemplo (2/3)
+
+```Python[2]
+numeros = [1, 2, 3]
+numeros[0] = 7  # `numeros` es modificada en sitio
+```
+
+<img src="iph/n3/img/Screenshot 2024-10-13 at 9.19.59 AM.png" alt="" style="object-fit: scale-down">
+
+
+ - `numeros` guarda una referencia 
+	- A los objetos inmutables **`7`**, `2` y `3` (`int`)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Las listas son mutables  - Ejemplo (3/3)
+
+```Python
+items = [True, True, True]  # → items = [True, True, True]
+
+items[0] = False  # → items = [False, True, True]
+
+items[1] = False  # → items = [False, False, True]
+
+items[-1] = False  # → items = [False, False, False]
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta II
+
+- Complete los siguientes TODOs:
+
+```Python
+# TODO 1: Cree la lista `nums` 
+# con los valores -1, -10, 2, 3, 4, -7
+
+print(nums)  # → [-1, -10, 2, 3, 4, -7]
+
+# TODO 2: Reemplace el primer ítem de `nums` con 0
+
+print(nums)  # → [0, -10, 2, 3, 4, -7]
+
+# TODO 3: Reemplace el segundo ítem de `nums` con 1
+
+print(nums)  # → [0, 1, 2, 3, 4, -7]
+
+# TODO 4: Reemplace el último ítem de `nums` con 5
+
+print(nums)  # → [0, 1, 2, 3, 4, 5]
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta II - Solución
+
+```Python
+
+# TODO 1 - DONE: Cree la lista `nums` 
+# con los valores -1, -10, 2, 3, 4, -7
+nums = [-1, -10, 2, 3, 4, -7]
+print(nums)  # → [-1, -10, 2, 3, 4, -7]
+
+# TODO 2 - DONE: Reemplace el primer ítem de `nums` con 0
+nums[0] = 0 
+print(nums)  # → [0, -10, 2, 3, 4, -7]
+
+# TODO 3 - DONE: Reemplace el segundo ítem de `nums` con 1
+nums[1] = 1 
+print(nums)  # → [0, 1, 2, 3, 4, -7]
+
+# TODO 4 - DONE: Reemplace el último ítem de `nums` con 5
+nums[-1] = 5 
+print(nums)  # → [0, 1, 2, 3, 4, 5]
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Las listas soportan slicing (list slicing)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### List slicing (`step` positivo)
+
+<img src="iph/n3/img/Screenshot 2024-10-13 at 9.28.00 AM.png" alt="" style="object-fit: scale-down">
+
+
+
+```Python
+['P','y','t','h','o','n'][:] # → ['P','y','t','h','o','n']
+
+# start = 0
+# end = Fin de la lista
+# step = 1  # Se mueve de uno en uno hacia adelante
+
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### List slicing (`step` negativo)
+
+<img src="iph/n3/img/Screenshot 2024-10-13 at 9.31.32 AM.png" alt="" style="object-fit: scale-down">
+
+
+```Python
+[5, 4, 3, 2, 1, 0][::-1]
+# start = Desde el fin de la lista
+# end = Inicio de la lista 
+# step = -1  # Se mueve de uno en uno hacia atrás
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III
+
+- Complete el TODO:
+
+```Python
+elementos = [10,'x',9,'%',8,'&',7,'?',6,'¿',5,\
+             '*',4,'#',3,'-',2,'+',1,'/',0]
+
+# TODO: Imprima una lista con los números en `elementos`
+# ordenados ascendentemente usando list slicing
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III - Solución
+
+```Python
+elementos = [10,'x',9,'%',8,'&',7,'?',6,'¿',5,\
+             '*',4,'#',3,'-',2,'+',1,'/',0]
+
+# TODO - DONE: Imprima una lista con los números en `elementos`
+# ordenados ascendentemente usando list slicing
+print(elementos[::-2])  # → [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Las listas se pueden **actualizar vía list slicing**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Actualización vía list slicing - Ejemplo
+
+```Python
+# Crea la lista `items`:
+items = [False, 11, 2, True]
+
+# Reemplaza el 2do y 3er ítem mediante list slicing:
+items[1:3] = [True, False]  
+# Índice 1 (inclusivo)
+# Índice 3 (excluyente = 2)
+
+print(items)  # → [False, True, False, True]
+```
+
+- Se asigna la lista `[True, False]` 
+	- A la sublista `[1:3]` de `items`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Se puede eliminar en las listas vía list slicing
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Eliminación vía list slicing - Ejemplo
+
+```Python
+# Crea la lista `items`:
+items = [0, True, False, 1]
+
+# Elimina el 2do y 3er ítem mediante list slicing:
+items[1:3] = []  
+# Índice 1 (inclusivo)
+# Índice 3 (excluyente = 2)
+
+print(items)  # → [0, 1]
+```
+
+- Se asigna la lista vacía `[]` 
+	- A la sublista `[1:3]` de `items`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Se puede obtener el tamaño de una lista
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `len()`
+
+- Retorna la longitud (tamaño) de un objeto    
+- Sintaxis: 
+```Python
+len(objeto)
+```
+- Compatible con múltiples objetos
+	- Por ejemplo **listas**
+- Ayuda:  [len](https://docs.python.org/3/library/functions.html#len)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `len()` - Ejemplos
+
+```Python
+len([])  # → 0 (Lista vacía)
+
+len([1, 2, 3])  # → 3 
+
+len([1, 'N', 2.0, False])  # → 4 
+
+len([None, None])  # → 2 (La constante None es contada como un ítem)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Se puede **concatenar**  listas
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Concatenación - Listas (1/2)
+
+- Crea una nueva lista 
+	- Al yuxtaponer dos listas dadas
+    
+- Sintaxis: `lista1 + lista2`
+	- Ambos operandos **deben** ser listas
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Concatenación - Listas (2/2)
+
+- La concatenación de listas es asociativa: 
+	- `(A + B) + C = A + (B + C)`
+- Sobrecarga del operador binario `+`
+	- Contrario a la suma
+		- La concatenación NO es conmutativa: 
+		- `A + B ≠ B + A`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Concatenación - Listas  - Ejemplos
+
+
+```Python
+[] + []  # → []
+
+[1, 2] + []  # → [1, 2]
+
+[1, 2] + [3, 4]  # → [1, 2, 3, 4]
+
+[1] + [2] + [3] + [4]  # → [1, 2, 3, 4]
+
+[1] + 'a'  # TypeError: Same type required
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### La operación de repetición también existe para listas
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Repetición - Listas
+    
+- Crea una nueva lista 
+	- Con sus elementos repetidos `n` veces
+- Sintaxis: `lista * n`     ó    `n * lista`
+	- `n` Debe ser un entero
+- La repetición de listas es conmutativa:
+	- `A * B = B * A`
+- Sobrecarga del operador binario de multiplicación: `*`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Repetición - Listas  - Ejemplos
+
+```Python
+[] * 2  # → []
+
+2 * [1, 2, 3]  # → [1, 2, 3, 1, 2, 3]
+```
+
+- Casos especiales:
+
+```Python
+[1, 2, 3] * 0  # → [] (Retorna lista vacía para cero)
+
+[1, 2, 3] * -1  # → [] (Retorna lista vacía para negativos)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Recorridos de listas (1/3)
+
+```Python[1]
+for numero in [1, 2, 3]:
+    print(numero)
+```
+- Para cada número en la lista
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Recorridos de listas (2/3)
+
+```Python[2]
+for numero in [1, 2, 3]:
+    print(numero)
+```
+
+```
+1
+2
+3
+```
+
+- Imprimir el número
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Recorridos de listas (3/3)
+
+<img src="iph/n3/img/Screenshot 2024-10-13 at 10.02.02 AM.png" alt="" style="object-fit: scale-down">
+
+
+- Si la lista está vacía
+- No hay nada que recorrer
+	- El cuerpo de `for`
+		- Se omite
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IV
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+for item in [0, 1, 0, 1]:
+    print(bool(item))
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IV - Solución
+
+```Python
+for item in [0, 1, 0, 1]:
+    print(bool(item))
+```
+
+
+```Python
+False
+True
+False
+True
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta V
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+for item in [5, 10, 15, 20]:
+    print(item//2)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta V - Solución
+
+```Python
+for item in [5, 10, 15, 20]:
+    print(item//2)
+```
+
+
+```Python
+2
+5
+7
+10
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VI
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+items = [0, 1, 2, 3, 4, 5]
+for elemento in items:
+    print(items[elemento] + 1)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VI - Solución
+
+```Python
+items = [0, 1, 2, 3, 4, 5]
+for elemento in items:
+    print(items[elemento] + 1)
+```
+
+
+```Python
+1
+2
+3
+4
+5
+6
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VII
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+nums = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+for i in range(0, len(nums), 2):
+    print(nums[i])
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VII - Solución
+
+```Python
+nums = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+for i in range(0, len(nums), 2):
+    print(nums[i])
+```
+
+
+```Python
+0
+2
+4
+6
+8
+10
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  🌀 `min()` 🌀
+
+- Retorna el elemento menor
+    - De dos o más argumentos
+- Sintaxis: 
+```Python
+min(arg1, arg2, *args, key)
+```
+
+- `arg1, arg2, *args`: Valores a comparar
+- `key` (opcional): Función de un argumento 
+    - Para personalizar la comparación
+- Ayuda:  [ min](https://docs.python.org/3/library/functions.html#min)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🌀 `min()` 🌀
+
+```Python
+min(1, 2, 3)  # → 1
+min(-3, -2, -1, 0, 1, 2, 3)  # → -3
+min('abcdefghijklmnopqrstuvwxyz')  #  → 'a'
+min('abc', 'xyz')  # → 'abc'
+min('z', 'xy', 'abc', key=len)  # → 'z' (Menor longitud)
+min('', default='N/A')  # → 'N/A'
+min('')  # → ValueError (Secuencia vacía y no hay default)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `min()` - Ejemplos con listas
+
+```Python
+min([1, 2, 3, 4, 5])  # → 1
+min(['abc'], [])  # → []
+min(['z', 'z'], ['z'], key=len)  # → ['z'] (Menor longitud)
+min([], default='N/A')  # → 'N/A'
+
+min([])  # → ValueError (Secuencia vacía y no hay default)
+min([1, 'a'])  # → TypeError: str and int cannot be compared
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VIII
+
+- ¿Cuál es el resultado de ejecutar cada expresión?
+
+```Python
+min([-1, -1.0])
+
+min([1, 1.0, True, False])
+
+min(['z', 'az', 'axy'], key=len)
+
+print(min([], default=None))
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VIII - Solución
+
+```Python
+min([-1, -1.0])  # → -1 (El primer menor encontrado)
+
+min([1, 1.0, True, False])   # → False (equivale a 0)
+
+min(['z', 'az', 'axy'], key=len)  # → 'z' (Menor longitud)
+
+print(min([], default=None))  # → None (Valor por defecto)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🌀 `max()` 🌀
+
+- Retorna el elemento mayor 
+    - De dos o más argumentos
+- Sintaxis: 
+```Python
+max(arg1, arg2, *args, key)
+```
+- `arg1, arg2, *args`: Valores a comparar
+- `key` (opcional): Función de un argumento 
+    - Para personalizar la comparación
+- Ayuda:  [ max](https://docs.python.org/3/library/functions.html#max)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🌀 `max()` 🌀
+
+```Python
+max(1, 2, 3)  # → 3
+max(-3, -2, -1, 0, 1, 2, 3)  # → 3
+max('abcdefghijklmnopqrstuvwxyz')  # → 'z'
+max(['abc'], ['xyz'])  # → 'xyz'
+max('z', 'xy', 'abc', key=len)  # → 'abc' (Mayor longitud)
+max('', default='N/A')  # → 'N/A'
+max('')  # → ValueError (Secuencia vacía y no hay default)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `max()` - Ejemplos con listas
+
+```Python
+max([1, 2, 3, 4, 5])  # → 5
+max(['abc'], [])  # → 'abc'
+max(['z', 'z'], ['z'], key=len)  # → ['z', 'z'] (Mayor longitud)
+max([], default='N/A')  # → 'N/A'
+
+max([])  # → ValueError (Secuencia vacía y no hay default)
+max([1, 'a'])  # → TypeError: str and int cannot be compared
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IX
+
+- ¿Cuál es el resultado de ejecutar cada expresión?
+
+```Python
+max([1.0, 1])
+
+max([-1, -1.0, True, False])
+
+max(['z', 'az', 'axy'], key=len)
+
+print(max([], default=None))
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IX - Solución
+
+```Python
+max([1.0, 1])  # → 1.0 (El primer mayor encontrado)
+
+max([-1, -1.0, True, False])   # → True (equivale a 1)
+
+max(['z', 'az', 'axy'], key=len)  # → 'axy' (Mayor longitud)
+
+print(max([], default=None))  # → None (Valor por defecto)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `list()`
+
+- Crea un nueva lista
+- Sintaxis:
+```python+
+list(iterable)
+```
+
+	- `iterable`: Iterable a convertir en una lista (opcional)
+- Si un iterable es pasado como argumento
+	- Lo convierte a lista y lo retorna, 
+	- Caso contrario 
+		- Retorna una lista vacía
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `list()` - Ejemplos
+
+```Python
+list()  # → []
+list('')  # → []
+list([])  # → []
+list({})  # → []
+list([1])  # → [1]
+list([1, 2])  # → [1, 2]
+list('abc')  # → ['a', 'b', 'c'] (Divide los caracteres)
+list(range(1, 4))  # → [1, 2, 3] (range() retorna un iterable)
+
+list(1234)  # → TypeError (int no es un iterable)
+list(1.5)  # → TypeError (float no es un iterable)
+list(True)  # → TypeError (bool no es un iterable)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta X
+
+- Complete los TODOs:
+
+```Python
+# TODO 1: Cree la lista `nums` 
+# con valores del 1 al 10_000
+
+print(len(nums))  # → 10000
+
+# TODO 2: Cree la lista `nums_pares` 
+# con los valores pares dentro de `nums`
+
+print(len(nums_pares))  # → 5000
+
+# TODO 3: Sume todos los ítems en `nums_pares`, 
+# acumulando en la variable `resultado` 
+    
+print(resultado)  # → 25005000
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta X - Solución
+
+```Python
+# TODO 1 - DONE: Cree la lista `nums` 
+# con valores del 1 al 10_000
+nums = list(range(1, 10_000 + 1))
+print(len(nums))  # → 10000
+
+# TODO 2 - DONE: Cree la lista `nums_pares` 
+# con los valores pares dentro de `nums`
+nums_pares = nums[1::2]
+print(len(nums_pares))  # → 5000
+
+# TODO 3 - DONE: Sume todos los ítems en `nums_pares`, 
+# acumulando en la variable `resultado` 
+resultado = 0
+
+for par in nums_pares:
+    resultado += par
+
+print(resultado)  # → 25005000
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XI
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+nums = list(range(1, 5 + 1))
+
+
+sub_nums = nums[::2]
+
+
+resultado = 0
+for item in sub_nums:
+    resultado += item
+
+print(resultado)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XI - Solución
+
+```Python
+# Crea la lista `nums` con valores del 1 al 5  
+nums = list(range(1, 5 + 1))
+
+# Crea la lista `sub_nums` con valores impares
+sub_nums = nums[::2]  # sub_nums = [1, 3, 5]
+
+# Suma los valores de `sub_nums`
+resultado = 0  
+for item in sub_nums:
+    resultado += item
+print(resultado)  # → 9
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XII
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+items = max(list(), default=[None])
+
+items = items * 4
+items[1:3] = []
+
+i = 0
+
+for item_actual in items:
+    if item_actual is None:
+        print(f'{item_actual} en posición: {i}')
+    i+=1
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XII - Solución
+
+```Python
+items = max(list(), default=[None])  
+# → items = [None] (valor por defecto)
+
+items = items * 4  # → items = [None, None, None, None]
+items[1:3] = []  # → items = [None, None]
+
+i = 0
+
+for item_actual in items:
+    if item_actual is None:
+        print(f'{item_actual} en posición: {i}')
+    i+=1
+```
+
+
+```Plaintext
+None en posición: 0
+None en posición: 1
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<i class="fas fa-question-circle fa-2x fa-spin fa-4x"></i>
+
+<br>
+<br>
+
+ [<i class="fas fa-home  fa-3x"></i>](https://eerosales24.github.io/iph_2026_20/#)
+</div></script></section></div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/chart/chart.min.js"></script>
+	<script src="plugin/chart/plugin.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+	  function isLight(color) {
+		let hex = color.replace('#', '');
+
+		// convert #fff => #ffffff
+		if(hex.length == 3){
+			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+		}
+
+		const c_r = parseInt(hex.substr(0, 2), 16);
+		const c_g = parseInt(hex.substr(2, 2), 16);
+		const c_b = parseInt(hex.substr(4, 2), 16);
+		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+		return brightness > 155;
+	}
+
+	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+	var isLight = isLight(bgColor);
+
+	if(isLight){
+		document.body.classList.add('has-light-background');
+	} else {
+		document.body.classList.add('has-dark-background');
+	}
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+        ],
+
+
+    	allottedTime: 120 * 1000,
+
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
+
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
+
+		customcontrols: {
+			controls: [
+			]
+		},
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width":960,"height":700,"margin":"0.025","minScale":"0.1","maxScale":"2.0","controls":"true","controlsLayout":"bottom-right","progress":"true","slideNumber":"true","center":"false","transition":"slide","transitionSpeed":"default"}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+
+  <!-- created with Advanced Slides -->
+</html>

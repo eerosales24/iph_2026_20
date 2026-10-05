@@ -1,0 +1,1717 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title></title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/iph.css" id="theme" />
+    <link rel="stylesheet" href="plugin/highlight/spyder.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
+
+
+
+    <script defer src="dist/fontawesome/all.min.js"></script>
+
+	<script type="text/javascript">
+		var forgetPop = true;
+		function onPopState(event) {
+			if(forgetPop){
+				forgetPop = false;
+			} else {
+				parent.postMessage(event.target.location.href, "app://obsidian.md");
+			}
+        }
+		window.onpopstate = onPopState;
+		window.onmessage = event => {
+			if(event.data == "reload"){
+				window.document.location.reload();
+			}
+			forgetPop = true;
+		}
+
+		function fitElements(){
+			const itemsToFit = document.getElementsByClassName('fitText');
+			for (const item in itemsToFit) {
+				if (Object.hasOwnProperty.call(itemsToFit, item)) {
+					var element = itemsToFit[item];
+					fitElement(element,1, 1000);
+					element.classList.remove('fitText');
+				}
+			}
+		}
+
+		function fitElement(element, start, end){
+
+			let size = (end + start) / 2;
+			element.style.fontSize = `${size}px`;
+
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
+					size--;
+					element.style.fontSize = `${size}px`;
+				}
+				return;
+			}
+
+			if(element.scrollHeight > element.offsetHeight){
+				fitElement(element, start, size);
+			} else {
+				fitElement(element, size, end);
+			}		
+		}
+
+
+		document.onreadystatechange = () => {
+			fitElements();
+			if (document.readyState === 'complete') {
+				if (window.location.href.indexOf("?export") != -1){
+					parent.postMessage(event.target.location.href, "app://obsidian.md");
+				}
+				if (window.location.href.indexOf("print-pdf") != -1){
+					let stateCheck = setInterval(() => {
+						clearInterval(stateCheck);
+						window.print();
+					}, 250);
+				}
+			}
+	};
+
+
+        </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### <i class="fas fa-award"></i> IP Honores
+
+ ####  *Laboratorio 3 de Nivel 3 - N3-L3*
+
+[Eduardo Rosales](mailto:ee.rosales24@uniandes.edu.co)
+
+Departamento de Ingeniería de Sistemas y Computación
+
+Universidad de los Andes
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Objetivos
+ 
+
+- Afianzar la comprensión de los strings y ciclos
+- Afianzar la comprensión de las listas y sus métodos
+- Aprender nuevos métodos de las listas
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Siga paso a paso las siguientes instrucciones
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Trabajo individual
+
+- Este laboratorio debe realizarse de forma
+	- **Completamente individual**<!-- .element: class="fragment highlight-red" -->
+	
+
+	<br>
+	
+	
+
+- El tiempo para terminar el laboratorio es muy corto
+	- Es un laboratorio *retante y muy extenso* <!-- .element: class="fragment highlight-green" -->
+		- Por favor:
+			- Evite las distracciones
+			- Guarde **silencio**<!-- .element: class="fragment highlight-blue" -->
+
+	<br>
+
+- Si no termina el laboratorio
+	- Debe finalizarlo (**y comprenderlo**)<!-- .element: class="fragment highlight-green" --> 
+		- En las 5h
+			- De trabajo individual semanal
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Preguntas
+
+- En caso de dudas, por favor:
+
+<br> 
+
+1. Formule su pregunta de forma **muy clara y concisa**
+
+<br>
+
+2. Luego (**y solo luego de esto**)
+	- Levante la mano
+
+<br>
+
+<i class="fas fa-question-circle fa-1x fa-spin fa-1x"></i> _Al plantearse correctamente la pregunta, la respuesta a veces se revela sola_
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Validaciones seguras de los métodos de `list`
+
+- Revise la siguiente buena práctica:
+
+	- <a href="https://eerosales24.github.io/iph_2026_20/general/buenas_practicas/#/15" target="_blank" rel="noopener noreferrer">Validaciones seguras de métodos de <code>list</code></a>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Actividad I
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad I (1/1)
+
+- Cree un archivo llamado: `logica.py`
+	- Copie y pegue el siguiente código e implemente el `TODO1`
+	- Este fue el ejercicio del Quiz II de N3
+
+```python
+import doctest
+
+    def tribonacci_while(n: int) -> int:
+    """
+    Calcula el n-ésimo número de la serie Tribonacci usando un ciclo while.
+
+    La serie Tribonacci se define así:
+    - tribonacci(0) = 0
+    - tribonacci(1) = 1
+    - tribonacci(2) = 1
+    - tribonacci(n) = tribonacci(n - 1) + tribonacci(n - 2) + tribonacci(n - 3), para n >= 3
+
+    Args:
+        n (int): Posición en la serie Tribonacci. Debe ser un entero no negativo.
+
+    Returns:
+        int: El valor correspondiente a la posición n en la serie Tribonacci.
+
+    >>> tribonacci_while(0)
+    0
+    >>> tribonacci_while(1)
+    1
+    >>> tribonacci_while(2)
+    1
+    >>> tribonacci_while(3)
+    2
+    >>> tribonacci_while(4)
+    4
+    >>> tribonacci_while(5)
+    7
+    >>> tribonacci_while(6)
+    13
+    >>> tribonacci_while(8)
+    44
+    """
+    assert isinstance(n, int) and n >= 0, "n debe ser un entero no negativo."
+
+    resultado = 0
+
+    if n == 1 or n == 2:
+        resultado = 1
+    elif n >= 3:
+        a = 0
+        b = 1
+        c = 1
+        posicion = 3
+
+        # TODO1: Complete la función tal y como se describe en la documentación
+
+        resultado = c
+
+    return resultado
+
+#doctest.run_docstring_examples(tribonacci_while, globals(), verbose=True)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Fin de la Actividad I
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Actividad II
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Repasemos los métodos de las listas
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta I
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+nums = [1, 2, 3, 3]
+var = nums.pop()
+print(nums)
+
+nums.remove(var)
+print(nums)
+
+del nums[1] 
+print(nums)
+
+nums.clear()
+print(nums)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta I - Solución
+
+```Python
+nums = [1, 2, 3, 3]
+var = nums.pop()
+print(nums)  # → [1, 2, 3]
+
+nums.remove(var)
+print(nums)  # → [1, 2]
+
+del nums[1] 
+print(nums)  # → [1]
+
+nums.clear()
+print(nums)  # → []
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta II
+
+- Complete los TODOs (en su mente):
+
+```Python
+names = ['Sam', 'Ben', 'Leo']
+
+# TODO 1: Insertar 'Ian' en la posición 0
+
+
+# TODO 2: Insertar 'Anna' en la posición 1
+
+
+# TODO 3: Insertar 'Tom' en la posición 4
+
+# TODO 4: Explicar cómo se ve `names` al final
+print(names)  # → 
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta II - Solución
+
+```Python
+names = ['Sam', 'Ben', 'Leo']
+
+# TODO 1 - DONE: Insertar 'Ian' en la posición 0
+names.insert(0, 'Ian')
+
+# TODO 2 - DONE: Insertar 'Anna' en la posición 1
+names.insert(1, 'Anna')
+
+# TODO 3 - DONE: Insertar 'Tom' en la posición 4
+names.insert(4, 'Tom')
+
+print(names)  # → ['Ian', 'Anna', 'Sam', 'Ben', 'Tom', 'Leo']
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III
+
+- Complete los TODOs (en su mente):
+
+```Python
+nums = [1, 2, 3]
+nums2 = [4, 5, 6]
+# TODO 1: Crear la lista `l3` que contiene 
+# los ítems de `nums` y `nums2`
+
+print(l3)  # → [1, 2, 3, 4, 5, 6]
+# TODO 2: Agregar en sitio todos los ítems (individualmente) 
+# de `nums2` a `nums`
+
+print(nums)  # → [1, 2, 3, 4, 5, 6]
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III - Solución
+
+```Python
+nums = [1, 2, 3]
+nums2 = [4, 5, 6]
+# TODO 1 - DONE: Crear la lista `l3` que contiene 
+# los ítems de `nums` y `nums2`
+l3 = nums + nums2
+print(l3)  # → [1, 2, 3, 4, 5, 6]
+# TODO 2 - DONE: Agregar en sitio todos los ítems (individualmente) 
+# de `nums2` a `nums`
+nums.extend(nums2)
+print(nums)  # → [1, 2, 3, 4, 5, 6]
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IV
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+nums = [1, 2, 3, 4]
+print(nums[:2] + nums[2:])
+
+nums.insert(0, 0)
+print(nums)
+
+nums.extend([5, 6])
+print(nums)
+
+nums.append([7, 8])
+print(nums)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IV - Solución
+
+```Python
+nums = [1, 2, 3, 4]
+print(nums[:2] + nums[2:])  # → [1, 2, 3, 4]
+
+nums.insert(0, 0)
+print(nums)  # → [0, 1, 2, 3, 4]
+
+nums.extend([5, 6])
+print(nums)  # → [0, 1, 2, 3, 4, 5, 6]
+
+nums.append([7, 8])
+print(nums)  # → [0, 1, 2, 3, 4, 5, 6, [7, 8]]
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta V
+
+- Complete los TODOs (en su mente):
+
+```Python
+# TODO 1: Crear la lista `nums` con los ítems: 
+# 1, 1, 1, 1, 1, usando repetición de listas
+
+  
+# TODO 2: Insertar el ítem entero `1` 
+# al inicio de la lista `nums`, usando insert()
+
+  
+# TODO 3: Agregar el ítem entero `1` 
+# al final de la lista `nums`
+
+  
+# TODO 4: Remplazar el ítem del medio en `nums` 
+# por el entero `0`
+
+
+
+# TODO 5: Chequear si el entero `0` está en `nums` 
+# y si es así, imprimir su índice
+  
+
+
+print(nums)  # → [1, 1, 1, 0, 1, 1, 1]
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta V - Solución
+
+```Python
+# TODO 1 - DONE: Crear la lista `nums` con los ítems: 
+# 1, 1, 1, 1, 1, usando repetición de listas
+nums = [1] * 5
+  
+# TODO 2 - DONE: Insertar el ítem entero `1` 
+# al inicio de la lista `nums`, usando insert()
+nums.insert(0, 1)  # nums → [1, 1, 1, 1, 1, 1]
+  
+# TODO 3 - DONE: Agregar el ítem entero `1` 
+# al final de la lista `nums`
+nums.append(1)  # nums → [1, 1, 1, 1, 1, 1, 1]
+  
+# TODO 4 - DONE: Remplazar el ítem del medio en `nums` 
+# por el entero `0`
+nums[len(nums) // 2] = 0  
+# Porque len(nums) es impar (7), entonces 7//2 = 3
+
+  
+# TODO 5 - DONE: Chequear si el entero `0` está en `nums` 
+# y si es así, imprimir su índice
+if 0 in nums:
+    print(nums.index(0))    
+    
+print(nums)  # → [1, 1, 1, 0, 1, 1, 1]```
+
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Estudiemos conceptos NUEVOS de las listas
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Comparación de listas (1/2)
+
+- Si dos listas varían en tamaño son distintas
+- Si dos listas son iguales en tamaño
+	- Se compara ítem a ítem
+		- De izquierda a derecha
+- Dos listas son iguales si sus ítems son idénticos
+- Ej:
+
+```Python
+[1, 2, 3] == [1, 2, 3]  # → True
+[1, 2, 3] == [4, 5, 6]  # → False
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Comparación de listas (2/2)
+
+- Los operadores de comparación 
+	- Pueden ser usados con listas
+		- `>, <, >=, <=`
+		
+```Python
+[0, 1, 2] < [3, 4, 5]   # → True
+[3, 4, 5] > [0, 1, 2]   # → True
+[0, 1, 2] <= [0, 1, 2]   # → True
+[0, 1, 2] >= [0, 1, 2]   # → True
+
+
+[1, 1, 1] > [0, 1, 1]   # → True 
+[1, 1, 1] > [1, 1, 0]   # → True 
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VI
+
+- Se tiene dos listas y cada una contiene un gran número de elementos, ¿cómo se puede determinar si las dos listas contienen exactamente los mismos elementos, de una forma eficiente?
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VI - Solución
+
+
+- Se puede comparar la longitud de las listas
+	- Si las listas tienen igual longitud
+		- Se pueden ordenar las listas 
+			- Y compararlas
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+```Python
+lista1 = [0, 2, 7, 3, 4, 5, 6, 1, 6, 5, 4, 3, 2, 6, 1, 7,]
+lista2 = [6, 5, 4, 3, 2, 6, 1, 7, 0, 2, 7, 3, 4, 5, 6, 1]
+
+son_iguales = ( (len(lista1) == len(lista2)) \
+               and lista1.sort() == lista2.sort())
+
+print(son_iguales)  # → True
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VII
+
+- ¿Cuál es el propósito de la siguiente función\*?
+
+```Python
+def funcion(data: list) -> list:
+    resultado = data[:]
+    
+    if len(data) > 1:
+        resultado = [data[-1]] + data[1:-1] + [data[0]]
+    
+    return resultado
+```
+
+\*El nombre de la función es intencionalmente no significativo
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VII - Solución
+
+```Python
+def intercambiar_extremos(data: list) -> list:
+    """
+    Retorna una nueva lista en donde se intercambiaron los
+    primeros y últimos elementos de la lista que es pasada 
+    como argumento. La lista original (aquella pasada como
+    argumento) permanece sin cambios.
+
+    Args:
+        data (list): La lista de elementos.
+
+    Returns:
+        list: Una lista con los primeros y últimos elementos
+        intercambiados.
+        
+    >>> intercambiar_extremos([])  # Caso lista vacía
+    []
+    >>> intercambiar_extremos([1, 2, 3, 4, 5])  # Caso lista ordenada int
+    [5, 2, 3, 4, 1]
+    >>> intercambiar_extremos([10.0, 20.5, 30.5, 40.0])  # Caso lista ordenada float
+    [40.0, 20.5, 30.5, 10.0]
+    """
+    resultado = data[:]  # Variable de retorno
+    
+    if len(data) > 1:
+        resultado = [data[-1]] + data[1:-1] + [data[0]]
+    
+    return resultado  # Usa un solo return
+
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Ahora, estudiemos la copia de listas
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `list.copy()`
+
+- Crea una copia de la lista
+- Sintaxis: 
+```Python
+lista.copy()
+```
+- No modifica la lista original
+- `list.copy()` retorna una nueva lista
+- Evita la modificación de la lista original
+- Ayuda:  [list.copy](https://docs.python.org/3/tutorial/datastructures.html)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `list.copy()` - Ejemplo (1/5)
+
+```Python
+original = [1, 2, 3]
+copia = original.copy()
+print(original)  # → [1, 2, 3]
+print(copia)  # → [1, 2, 3]
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `list.copy()` - Ejemplo (2/5)
+
+<img src="iph/n3/img/Screenshot 2024-10-15 at 9.07.59 PM.png" alt="" style="object-fit: scale-down">
+
+
+```Python
+original = [1, 2, 3]
+copia = original.copy()
+```
+
+- `copia` es un objeto independiente de `original`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `list.copy()` - Ejemplo (3/5)
+
+<img src="iph/n3/img/Screenshot 2024-10-15 at 9.09.22 PM.png" alt="" style="object-fit: scale-down">
+
+
+```Python
+original = [1, 2, 3]
+copia = original.copy()
+original[0] = 9
+print(original)  # → [9, 2, 3]
+print(copia)  # → [1, 2, 3]
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `list.copy()` - Ejemplo (4/5)
+
+<img src="iph/n3/img/Screenshot 2024-10-15 at 9.11.19 PM.png" alt="" style="object-fit: scale-down">
+
+
+```Python
+original = [1, 2, 3]
+copia = original.copy()
+print(original == copia)  # → True (mismo contenido)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `list.copy()` - Ejemplo (5/5)
+
+<img src="iph/n3/img/Screenshot 2024-10-15 at 9.11.19 PM.png" alt="" style="object-fit: scale-down">
+
+
+```Python
+original = [1, 2, 3]
+copia = original.copy()
+print(original is copia)  # → False (son distintos objetos)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `list.copy()`y list slicing
+
+```Python
+original = [1, 2, 3]
+copia_copy = original.copy()  # copia_copy = [1, 2, 3]
+copia_slicing = original[:]  # copia_slicing = [1, 2, 3]
+```
+
+- Copiar usando `list.copy()` y list slicing (`[:]`)     
+	- Es semánticamente equivalente
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Otra forma de copiar una lista (1/2)
+
+<img src="iph/n3/img/Screenshot 2024-10-15 at 9.11.19 PM.png" alt="" style="object-fit: scale-down">
+
+
+```Python
+original = [1, 2, 3]
+copia = original[:]  # Crea una copia independiente de la original
+print(original == copia)  # → True (mismo contenido)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Otra forma de copiar una lista (2/2)
+
+<img src="iph/n3/img/Screenshot 2024-10-15 at 9.11.19 PM.png" alt="" style="object-fit: scale-down">
+
+
+```Python
+original = [1, 2, 3]
+copia = original[:]  # Crea una copia independiente de la original
+print(original is copia)  # → False (son distintos objetos)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Referencias a listas (1/3)
+
+<img src="iph/n3/img/Screenshot 2024-10-15 at 9.20.15 PM.png" alt="" style="object-fit: scale-down">
+
+
+```Python
+# Se asigna un nombre a la lista [1, 2, 3]
+original = [1, 2, 3]  
+
+# Se asigna otro nombre a la misma lista
+esto_no_es_una_copia = original  
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Referencias a listas (2/3)
+
+<img src="iph/n3/img/Screenshot 2024-10-15 at 9.20.15 PM.png" alt="" style="object-fit: scale-down">
+
+
+- Es importante entender que hay **una sola lista**
+	- La cual tiene dos nombres
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Referencias a Listas (3/3)
+
+<img src="iph/n3/img/Screenshot 2024-10-15 at 9.20.15 PM.png" alt="" style="object-fit: scale-down">
+
+
+```Python
+original = [1, 2, 3]
+esto_no_es_una_copia = original
+print(original == esto_no_es_una_copia)  # → True
+print(original is esto_no_es_una_copia)  # → True
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VIII
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+lista1 = ['a', 'b', 'c', 'b']
+lista2 = lista1
+lista3 = lista1[:]
+lista4 = lista1.copy()  
+
+print(lista1 == lista2)
+print(lista1 is lista2)  
+  
+print(lista1 == lista3)
+print(lista1 is lista3)  
+
+print(lista1 == lista4)
+print(lista1 is lista4)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VIII - Solución
+
+```Python
+lista1 = ['a', 'b', 'c', 'b']
+lista2 = lista1
+lista3 = lista1[:]
+lista4 = lista1.copy()  
+ 
+print(lista1 == lista2)  # → True
+print(lista1 is lista2)  # → True  
+
+print(lista1 == lista3)  # → True
+print(lista1 is lista3)  # → False
+  
+print(lista1 == lista4)  # → True
+print(lista1 is lista4)  # → False
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IX
+
+- Se solicitó un programa que imprimiera la versión original y normalizada de una lista, ¿cuál es el problema de la siguiente implementación?  
+
+```Python
+def normalize_scores(scores: list) -> list:
+    max_score = max(scores)
+    for i in range(len(scores)):
+        scores[i] = round((scores[i] / max_score) * 100, 2)
+    return scores
+
+scores = [15, 37, 53, 45, 22]
+norm_scores = normalize_scores(scores)
+
+print('Original scores:', scores)     
+print('Normalized scores:', norm_scores)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IX - Solución
+
+Dado que la lista de puntuaciones es un objeto mutable, puede ser modificado cuando se pasa como argumento a una función. En consecuencia, la lista original de puntuaciones también se normaliza
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta X
+
+- ¿Cómo solucionar el problema siguiente de implementación?
+
+```Python
+def normalize_scores(scores: list) -> list:
+    max_score = max(scores)
+    for i in range(len(scores)):
+        scores[i] = round((scores[i] / max_score) * 100, 2)
+    return scores
+
+scores = [15, 37, 53, 45, 22]
+norm_scores = normalize_scores(scores)
+
+print('Original scores:', scores)  
+# → [28.3, 69.81, 100.0, 84.91, 41.51]
+print('Normalized scores:', norm_scores) 
+# → [28.3, 69.81, 100.0, 84.91, 41.51]
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta X - Solución (1/2)
+
+```Python
+def normalize_scores(scores: list) -> list:
+    scores_copy = scores[:]  # Se crea una copia en la función
+    max_score = max(scores_copy)
+    for i in range(len(scores_copy)):
+        scores_copy[i] = round((scores_copy[i] / max_score) * 100, 2)
+    return scores_copy
+
+scores = [15, 37, 53, 45, 22]
+norm_scores = normalize_scores(scores)
+
+print('Original scores:', scores)  
+# → [15, 37, 53, 45, 22]
+print('Normalized scores:', norm_scores)  
+# → [28.3, 69.81, 100.0, 84.91, 41.51]
+
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta X - Solución (2/2)
+
+```Python
+def normalize_scores(scores: list) -> list:
+    max_score = max(scores)
+    for i in range(len(scores)):
+        scores[i] = round((scores[i] / max_score) * 100, 2)
+    return scores
+
+scores = [15, 37, 53, 45, 22]
+# Se envía una copia de la lista:
+norm_scores = normalize_scores(scores.copy()) 
+
+print('Original scores:', scores)  
+# → [15, 37, 53, 45, 22]
+print('Normalized scores:', norm_scores)  
+# → [28.3, 69.81, 100.0, 84.91, 41.51]
+
+
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Para los siguientes ejercicios, no es necesario crear aserciones
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Importante
+
+- No es necesario entregar un plan de implementación en este laboratorio
+
+	<br>
+
+- Crear un plan de implementación paso a paso, es vital para *entender el problema, dividirlo en subproblemas y resolver cada uno por separado*
+
+	<br>
+
+- Algo que destaca a un mal programador, es empezar a codificar de inmediato y perder mucho tiempo produciendo código incorrecto <!-- .element: class="fragment highlight-red" -->
+
+	<br>
+
+- En cambio, con un buen plan de implementación, traducir la solución a Python (u otro lenguaje en un futuro o incluso pedírsela a una _IA_ en el contexto de un problema del mundo real) se vuelve trivial
+
+	<br>
+
+
+- Este curso no se trata solo de programar, sino de enseñarle a *pensar de manera lógica y estructurada* <!-- .element: class="fragment highlight-blue" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad II (1/8)
+
+- En `logica.py`:
+	- Copie y pegue el siguiente código
+	- Cree un _plan de implementación_ e implemente el `TODO2`:
+
+- **Nota:**
+	- En N3-L1 usted implementó otra función: `es_correo_uniandes()`
+		- En esta nueva versión, se valida que de haber un punto
+			- Debe haber al menos un carácter después de ese punto
+
+
+```python
+
+def es_correo_uniandes(email: str, min_usuario: int=4) -> bool:
+    """
+    Verifica si una dirección de correo electrónico dada cumple con el formato
+    de correo uniandes:
+    - El primer carácter del usuario debe ser alfabético
+    - El usuario debe tener como máximo un punto (.)
+    - Si el usuario tiene punto, debe haber al menos un carácter después de este
+    - El email debe contener exactamente un arroba (@)
+    - El nombre de usuario debe tener al menos un número `min_usuario` de caracteres.
+      Ejemplo, en este correo: ee.rosales24@uniandes.edu.co el usuario tiene
+      12 caracteres.
+    - Después de la arroba, debe tener el dominio 'uniandes',
+      seguido del dominio '.edu', terminando con el dominio '.co'
+
+    Args:
+        email (str): El correo electrónico a validar.
+        min_usuario (int): Longitud mínima del usuario del email. Por defecto: 4.
+
+    Returns:
+        bool: True si el correo electrónico es válido,
+        False en caso contrario. Para el string vacío retorna False.
+
+    >>> es_correo_uniandes('', 0)  # Caso string vacío
+    False
+    >>> es_correo_uniandes('ee.rosales24@uniandes.edu.co', 5)  # Caso email correcto
+    True
+    >>> es_correo_uniandes('1e.rosales24@uniandes.edu.co', 5)  # Caso primer carácter no alfabético
+    False
+    >>> es_correo_uniandes('ee.rosales.24@uniandes.edu.co', 4)  # Caso el usuario tiene dos puntos
+    False
+    >>> es_correo_uniandes('ee.rosales24uniandes.edu.co', 4)   # Caso no tiene arroba
+    False
+    >>> es_correo_uniandes('ee@uniandes.edu.co', 3)  # Caso usuario es de longitud menor al `min_usuario` dado
+    False
+    >>> es_correo_uniandes('ee.rosales24@edu.co', 4)  # Caso no tiene subdominio 'uniandes'
+    False
+    >>> es_correo_uniandes('ee.rosales24@uniandes.co', 10)  # Caso no tiene subdominio '.edu'
+    False
+    >>> es_correo_uniandes('ee.rosales24@uniandes.edu.co.error', 4)   # Caso no termina con dominio '.co'
+    False
+    >>> es_correo_uniandes('ee.@uniandes.edu.co', 3)  # Caso hay punto, pero no hay nada después
+    False
+    """
+    # TODO2: Implemente la función tal y como se describe en la documentación
+
+#doctest.run_docstring_examples(es_correo_uniandes, globals(), verbose=True)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad II (2/8)
+
+- En `logica.py`
+	- Copie y pegue el siguiente código
+	- Cree un _plan de implementación_
+		- No implemente la función hasta no tener un plan muy concreto
+	- Implemente el `TODO3`.
+
+```python
+def filtrar_correos_uniandes(correos: list, min_usuario: int=4) -> str:
+    """
+    Filtra una lista de correos electrónicos y retorna únicamente correos
+    Uniandes  válidos, separados por coma.
+
+    Usa a la función booleana: es_correo_uniandes(), para validar cada correo. 
+    Si no hay correos válidos, retorna un string vacío.
+
+    Args:
+        correos (list): Lista de correos electrónicos a filtrar. Todos son str.
+        min_usuario (int): Longitud mínima del usuario del email. Por defecto: 4.
+
+    Returns:
+        str: Un string con los correos válidos de Uniandes separados por coma.
+            Si no hay correos válidos, retorna un string vacío.
+
+    >>> filtrar_correos_uniandes([])  # Caso lista vacía
+    ''
+    >>> filtrar_correos_uniandes(['ee.rosales24@uniandes.edu.co'])  # Caso un correo válido
+    'ee.rosales24@uniandes.edu.co'
+    >>> filtrar_correos_uniandes(['gmail@gmail.com', 'ee.rosales24@uniandes.edu.co', 'ee.@uniandes.edu.co'])  # Caso mezcla de inválidos y válido
+    'ee.rosales24@uniandes.edu.co'
+    >>> filtrar_correos_uniandes(['ana@uniandes.edu.co', 'luisa.123@uniandes.edu.co'], 3)  # Caso varios válidos
+    'ana@uniandes.edu.co,luisa.123@uniandes.edu.co'
+    >>> filtrar_correos_uniandes(['1ana@uniandes.edu.co', 'ana..lopez@uniandes.edu.co', 'pedro@gmail.com'])  # Caso todos inválidos
+    ''
+    >>> filtrar_correos_uniandes(['ee@uniandes.edu.co', 'juan123@uniandes.edu.co'], 3)  # Caso uno no cumple min_usuario
+    'juan123@uniandes.edu.co'
+    >>> filtrar_correos_uniandes(['abc@uniandes.edu.co', 'abcd@uniandes.edu.co'], 4)  # Caso borde con min_usuario: uno no cumple y otro sí
+    'abcd@uniandes.edu.co'
+    >>> filtrar_correos_uniandes(['juan@uniandes.edu.co', 'juan@uniandes.edu.co', 'maria1@uniandes.edu.co'])  # Caso con correos válidos repetidos
+    'juan@uniandes.edu.co,juan@uniandes.edu.co,maria1@uniandes.edu.co'
+    """
+    # TODO3: Implemente la función tal y como se describe en la documentación
+
+#doctest.run_docstring_examples(filtrar_correos_uniandes, globals(), verbose=True)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad II (3/8)
+
+- En `logica.py`
+	- Copie y pegue el siguiente código
+	- Cree un _plan de implementación_
+		- No implemente la función hasta no tener un plan muy concreto
+	- Implemente el `TODO4`:
+
+<br>
+
+```python
+def eliminar_repetidos(lista: list) -> list:
+    """
+    Elimina los strings repetidos de una lista, conservando el primer orden
+    de aparición de cada elemento.
+
+    Args:
+        lista (list): Lista de strings de entrada.
+
+    Returns:
+        list: Una nueva lista sin elementos repetidos.
+
+    >>> eliminar_repetidos([])  # Caso lista vacía
+    []
+    >>> eliminar_repetidos(['hola'])  # Caso con un solo elemento
+    ['hola']
+    >>> eliminar_repetidos(['a', 'b', 'c'])  # Caso sin repetidos
+    ['a', 'b', 'c']
+    >>> eliminar_repetidos(['rojo', 'azul', 'rojo', 'verde', 'azul'])  # Caso con repetidos intermedios
+    ['rojo', 'azul', 'verde']
+    >>> eliminar_repetidos(['x', 'x', 'x', 'x'])  # Caso todos iguales
+    ['x']
+    >>> eliminar_repetidos(['sol', 'luna', 'sol', 'sol', 'estrella'])  # Caso con varias repeticiones
+    ['sol', 'luna', 'estrella']
+    >>> eliminar_repetidos(['Ana', 'ana', 'Ana'])  # Caso sensible a mayúsculas y minúsculas
+    ['Ana', 'ana']
+    >>> eliminar_repetidos(['', 'hola', '', 'mundo'])  # Caso con strings vacíos
+    ['', 'hola', 'mundo']
+    """
+    # TODO4: Implemente la función tal y como se describe en la documentación
+
+#doctest.run_docstring_examples(eliminar_repetidos, globals(), verbose=True)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad II (4/8)
+
+- En `logica.py`
+	- Copie y pegue el siguiente código
+	- Cree un _plan de implementación_
+		- No implemente la función hasta no tener un plan muy concreto
+	- Implemente el `TODO5`.
+
+```python
+def filtrar_correos_uniandes_sin_duplicados(correos: list, min_usuario: int=4) -> str:
+    """
+    Filtra una lista de correos electrónicos y retorna únicamente correos
+    Uniandes válidos, sin duplicados, separados por coma.
+
+    Usa a la función booleana: es_correo_uniandes(), para validar cada correo.
+    Si no hay correos válidos, retorna un string vacío.
+    
+    Usa a la función: eliminar_repetidos(), para eliminar repetidos de una lista
+    que contiene strings.
+
+    Args:
+        correos (list): Lista de correos electrónicos a filtrar. Todos son str.
+        min_usuario (int): Longitud mínima del usuario del email. Por defecto: 4.
+
+    Returns:
+        str: Un string con los correos válidos de Uniandes, sin duplicados,
+            separados por coma. Si no hay correos válidos, retorna un string vacío.
+
+    >>> filtrar_correos_uniandes_sin_duplicados([])  # Caso lista vacía
+    ''
+    >>> filtrar_correos_uniandes_sin_duplicados(['ee.rosales24@uniandes.edu.co'])  # Caso un correo válido
+    'ee.rosales24@uniandes.edu.co'
+    >>> filtrar_correos_uniandes_sin_duplicados(['gmail@gmail.com', 'ee.rosales24@uniandes.edu.co'])  # Caso mezcla de inválido y válido
+    'ee.rosales24@uniandes.edu.co'
+    >>> filtrar_correos_uniandes_sin_duplicados(['juan@uniandes.edu.co', 'maria1@uniandes.edu.co'])  # Caso varios válidos distintos
+    'juan@uniandes.edu.co,maria1@uniandes.edu.co'
+    >>> filtrar_correos_uniandes_sin_duplicados(['1ana@uniandes.edu.co', 'ana..lopez@uniandes.edu.co', 'pedro@gmail.com'])  # Caso todos inválidos
+    ''
+    >>> filtrar_correos_uniandes_sin_duplicados(['abc@uniandes.edu.co', 'abcd@uniandes.edu.co'], 4)  # Caso borde con min_usuario: uno no cumple y otro sí
+    'abcd@uniandes.edu.co'
+    >>> filtrar_correos_uniandes_sin_duplicados(['juan@uniandes.edu.co', 'juan@uniandes.edu.co', 'maria1@uniandes.edu.co'])  # Caso con un duplicado
+    'juan@uniandes.edu.co,maria1@uniandes.edu.co'
+    >>> filtrar_correos_uniandes_sin_duplicados(['ana1@uniandes.edu.co', 'ana1@uniandes.edu.co', 'ana1@uniandes.edu.co'])  # Caso con varias ocurrencias del mismo correo
+    'ana1@uniandes.edu.co'
+    >>> filtrar_correos_uniandes_sin_duplicados(['juan@uniandes.edu.co', 'gmail@gmail.com', 'juan@uniandes.edu.co', 'maria1@uniandes.edu.co', 'maria1@uniandes.edu.co'])  # Caso mezcla de inválidos y duplicados
+    'juan@uniandes.edu.co,maria1@uniandes.edu.co'
+    >>> filtrar_correos_uniandes_sin_duplicados(['ab.c@uniandes.edu.co', 'ab.c@uniandes.edu.co', 'abcd@uniandes.edu.co'], 4)  # Caso duplicados con usuario que contiene un punto
+    'ab.c@uniandes.edu.co,abcd@uniandes.edu.co'
+    """
+    # TODO5: Implemente la función tal y como se describe en la documentación
+
+#doctest.run_docstring_examples(filtrar_correos_uniandes_sin_duplicados, globals(), verbose=True)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Aprendamos más métodos de `str`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `str.join()`
+
+- Concatena todos los ítems de un iterable
+- Sintaxis: 
+```Python
+'sep'.join(iterable)
+```
+
+- `sep`: separador usado para concatenar los ítems
+- `iterable`: iterable (e.g., string, list(str))
+- Retorna **una concatenación (string)**
+	- De los ítems del iterable, separados por `sep`
+- Ayuda:   [str.join](https://docs.python.org/3/library/stdtypes.html#str.join)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `str.join()` - Ejemplos
+
+
+```python
+','.join([])  # → ''
+
+','.join(['a', 'b', 'c'])  # → 'a,b,c'
+
+' - '.join(['rojo', 'azul', 'verde']). # → 'rojo - azul - verde'
+
+''.join(['H', 'o', 'l', 'a'])  # → 'Hola'
+
+' '.join(['Hola', 'mundo'])  # →  'Hola mundo'
+
+nombres = ['Ana', 'Luis', 'Marta']  
+resultado = ', '.join(nombres)  
+print(resultado)  # →  Ana, Luis, Marta
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad II (5/8)
+
+- En `logica.py`
+	- Cree una nueva  implementación de la función:
+		- `filtrar_correos_uniandes_sin_duplicados`
+	- Usando el método `str.join()`
+	- Si no quiere perder la anterior versión
+		- Nombre a esta nueva función así:
+			- `filtrar_correos_uniandes_sin_duplicados_con_join`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `str.split()`
+
+- Divide una cadena en subcadenas 
+	- Utilizando un separador dado
+- Retorna **una lista** con las subcadenas
+- Sintaxis: 
+```Python
+string.split(sep, maxsplit)
+```
+- `sep`:  Separador (opcional, default: espacio)
+- `maxsplit`:  Número de separadores a considerar
+	- (opcional, por defecto: sin límite) 
+- Ayuda:  [str.split](https://docs.python.org/3/library/stdtypes.html#str.split)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `str.split()` - Ejemplos
+
+```python
+''.split(',')  # → ['']
+
+'a,b,c'.split(',')  # → ['a', 'b', 'c']
+
+'rojo - azul - verde'.split(' - ')  # → ['rojo', 'azul', 'verde']
+
+'Hola'.split('o')  # → ['H', 'la']
+
+'Hola mundo'.split(' ')  # → ['Hola', 'mundo']
+
+'ana,luis,marta'.split(',')  # → ['ana', 'luis', 'marta']
+
+'uno\ndos\ntres'.split('\n')  # → ['uno', 'dos', 'tres']
+
+'  hola   mundo  '.split()  # → ['hola', 'mundo']
+
+correo = 'ee.rosales24@uniandes.edu.co'
+partes = correo.split('@')
+print(partes)  # → ['ee.rosales24', 'uniandes.edu.co']
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XI
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+words = ["hello", "world", "python", "rocks"]
+sentence = " ".join(words)
+print(sentence)
+
+sentence = "-".join(words)
+print(sentence + '!')
+
+words = list("12345")    # words = ['1', '2', '3', '4', '5']
+joined_numbers = ",".join(words)
+print(joined_numbers)
+
+split_back = joined_numbers.split(",")
+print(split_back)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XI - Solución
+
+```Python
+words = ["hello", "world", "python", "rocks"]
+sentence = " ".join(words)
+print(sentence)  # → 'hello world python rocks'
+
+sentence = "-".join(words)
+print(sentence + '!')  # → 'hello-world-python-rocks!'
+
+words = list("12345")  # words = ['1', '2', '3', '4', '5']
+joined_numbers = ",".join(words)
+print(joined_numbers)  # → '1,2,3,4,5'
+
+split_back = joined_numbers.split(",")
+print(split_back)  # → ['1', '2', '3', '4', '5']
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XII
+
+- ¿Cuál es el propósito de la siguiente función\*?
+
+```Python
+def f(x):
+    r = ''
+    
+    if len(x) > 1:
+        w = x.split()
+        wi = w[::-1]
+        r = ' '.join(wi)
+    
+    return r
+```
+
+\*El nombre de la función es intencionalmente no significativo
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XII - Solución
+
+```Python
+def invertir_palabras(oracion: str) -> str:
+    """
+    Invierte el orden de las palabras en una oración dada.
+    Utiliza str.split() para dividir la oración y str.join() para unirla.
+
+    Args:
+        oracion (str): La oración de entrada con palabras separadas 
+        por espacios.
+
+    Returns:
+        (str): La oración con las palabras en orden inverso.
+
+    >>> invertir_palabras('')  # Caso string vacío
+    ''
+    >>> invertir_palabras('bienvenido')   # Caso string de una palabra
+    'bienvenido'
+    >>> invertir_palabras('Python es divertido')  # Caso string de 3 palabras
+    'divertido es Python'
+    """
+    resultado = ''  # Variable de retorno
+    
+    if len(oracion) > 1:
+        palabras = oracion.split()
+        palabras_invertidas = palabras[::-1]
+        resultado = ' '.join(palabras_invertidas)
+    
+    return resultado  # Uso de un solo return
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad II (6/8)
+
+- En `logica.py`
+	- Copie y pegue el siguiente código
+	- Cree un _plan de implementación_
+		- No implemente la función hasta no tener un plan muy concreto
+	- Implemente el `TODO6`.
+
+
+```python
+def filtrar_correos_desde_texto(texto: str, min_usuario: int=4) -> str:
+    """
+    Filtra un texto con correos separados por coma y retorna únicamente los
+    correos Uniandes válidos, también separados por coma.
+
+    Usa `split(',')` para separar el texto en posibles correos y la función
+    `es_correo_uniandes()` para validar cada uno.    
+
+    Args:
+        texto (str): String con correos separados por coma.
+        min_usuario (int): Longitud mínima del usuario del email. Por defecto: 4.
+
+    Returns:
+        str: String con los correos Uniandes válidos separados por coma.
+        Si no hay correos válidos, retorna un string vacío.
+
+    >>> filtrar_correos_desde_texto('')  # Caso string vacío
+    ''
+    >>> filtrar_correos_desde_texto('ee.rosales24@uniandes.edu.co')  # Caso un correo válido
+    'ee.rosales24@uniandes.edu.co'
+    >>> filtrar_correos_desde_texto('gmail@gmail.com,ee.rosales24@uniandes.edu.co')  # Caso mezcla de inválido y válido
+    'ee.rosales24@uniandes.edu.co'
+    >>> filtrar_correos_desde_texto('juan@uniandes.edu.co,maria1@uniandes.edu.co')  # Caso varios válidos distintos
+    'juan@uniandes.edu.co,maria1@uniandes.edu.co'
+    >>> filtrar_correos_desde_texto('1ana@uniandes.edu.co,ana..lopez@uniandes.edu.co,pedro@gmail.com')  # Caso todos inválidos
+    ''
+    >>> filtrar_correos_desde_texto('abc@uniandes.edu.co,abcd@uniandes.edu.co', 4)  # Caso borde con min_usuario
+    'abcd@uniandes.edu.co'
+    >>> filtrar_correos_desde_texto('juan@uniandes.edu.co,gmail@gmail.com,juan@uniandes.edu.co')  # Caso con repetidos, se conservan
+    'juan@uniandes.edu.co,juan@uniandes.edu.co'
+    """
+    # TODO6: Implemente la función tal y como se describe en la documentación
+
+#doctest.run_docstring_examples(filtrar_correos_desde_texto, globals(), verbose=True)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad II (7/8)
+
+- En `logica.py`
+	- Copie y pegue el siguiente código
+	- Cree un _plan de implementación_
+		- No implemente la función hasta no tener un plan muy concreto
+	- Implemente el `TODO7`.
+
+
+```python
+def contar_correos_por_dominio(texto: str, min_usuario: int=4) -> dict:
+    """
+    Recibe un string con correos separados por coma y retorna un
+    diccionario con el conteo de correos por dominio.
+    
+    Se puede asumir que todos los correos recibidos son válidos, es decir, 
+    en el formato genérico: usuario@dominio
+
+    La llave del diccionario es el dominio específico del correo y el valor asociado 
+    es la cantidad de correos que pertenecen a ese dominio.
+
+    Si se recibe un string vacío, retorna un diccionario vacío.
+
+    Args:
+        texto (str): String con correos separados por coma.
+
+    Returns:
+        dict: Diccionario con el conteo de correos por dominio.
+
+    >>> contar_correos_por_dominio('')  # Caso string vacío
+    {}
+    >>> contar_correos_por_dominio('ana@uniandes.edu.co')  # Caso un solo correo
+    {'uniandes.edu.co': 1}
+    >>> contar_correos_por_dominio('ana@uniandes.edu.co,luis@javeriana.edu.co')  # Caso dos dominios distintos
+    {'uniandes.edu.co': 1, 'javeriana.edu.co': 1}
+    >>> contar_correos_por_dominio('ana@uniandes.edu.co,juan@uniandes.edu.co,maria@unal.edu.co')  # Caso con dominio repetido
+    {'uniandes.edu.co': 2, 'unal.edu.co': 1}
+    >>> contar_correos_por_dominio('a@urosario.edu.co,b@urosario.edu.co,c@urosario.edu.co')  # Caso todos del mismo dominio
+    {'urosario.edu.co': 3}
+    >>> contar_correos_por_dominio('x@univalle.edu.co,y@javeriana.edu.co,z@univalle.edu.co,w@unal.edu.co, perro@uniandes.edu.co')  # Caso mezcla de varios dominios académicos
+    {'univalle.edu.co': 2, 'javeriana.edu.co': 1, 'unal.edu.co': 1, 'uniandes.edu.co': 1}
+    >>> contar_correos_por_dominio('x@gmail.com,y@outlook.com,z@icloud,w@proton.me, husky@mail.com, siberian@icloud, lobo@gmail.com')  # Caso mezcla de varios dominios genéricos
+    {'gmail.com': 2, 'outlook.com': 1, 'icloud': 2, 'proton.me': 1, 'mail.com': 1}
+    """
+    # TODO7: Implemente la función tal y como se describe en la documentación
+
+#doctest.run_docstring_examples(contar_correos_por_dominio, globals(), verbose=True)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad II (8/8)
+
+1. Revise si sus funciones cumplen con todas las buenas prácticas obligatorias del curso vistas hasta ahora
+
+	
+	<br>
+
+2. Si una función no cumple las anteriores buenas prácticas
+	- Por favor corrija su implementación
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Fin de la Actividad II
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Actividad III
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad III (1/5)
+
+- Ejecute el siguiente código en Spyder
+	- Puede agregarlo a `logica.py` o
+		- Ejecutarlo aparte
+
+```python
+def eliminar_agotados_erroneo(carrito: list, inventario_agotado: list) -> None:
+    """
+    Elimina del carrito los productos que están agotados.
+
+    Modifica la lista `carrito` directamente, pero recorre una copia para
+    evitar errores al remover elementos durante el recorrido.
+
+    Args:
+        carrito (list): Lista de nombres de productos.
+        inventario_agotado (list): Lista de productos agotados.
+    """
+    for producto in carrito:
+        if producto in inventario_agotado:
+            carrito.remove(producto)
+
+def eliminar_agotados_correcto(carrito: list, inventario_agotado: list) -> None:
+    """
+    Elimina del carrito los productos que están agotados.
+
+    Modifica la lista `carrito` directamente, pero recorre una copia para
+    evitar errores al remover elementos durante el recorrido.
+
+    Args:
+        carrito (list): Lista de nombres de productos.
+        inventario_agotado (list): Lista de productos agotados.
+    """
+    for producto in carrito[:]:
+        if producto in inventario_agotado:
+            carrito.remove(producto)
+
+
+# Erróneo:
+carrito = ['pan', 'leche', 'huevos', 'queso', 'cereal']
+agotados = ['pan', 'huevos', 'queso', 'cereal']
+
+print('- Caso erróneo:')
+print('Antes:', carrito)
+print('Agotados a eliminar: ', ", ".join(agotados))
+eliminar_agotados_erroneo(carrito, agotados)
+print('Después erróneo:', carrito)
+
+
+# Correcto:
+carrito = ['pan', 'leche', 'huevos', 'queso', 'cereal']
+agotados = ['pan', 'huevos', 'queso', 'cereal']
+
+print('\n- Caso correcto:')
+print('Antes:', carrito)
+print('Agotados a eliminar: ', ", ".join(agotados))
+eliminar_agotados_correcto(carrito, agotados)
+print('Después correcto:', carrito)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad III (2/5)
+
+- Ejemplo de resultado obtenido:
+  
+```python
+- Caso erróneo:
+Antes: ['pan', 'leche', 'huevos', 'queso', 'cereal']
+Agotados a eliminar:  pan, huevos, queso, cereal
+Después erróneo: ['leche', 'queso']
+
+- Caso correcto:
+Antes: ['pan', 'leche', 'huevos', 'queso', 'cereal']
+Agotados a eliminar:  pan, huevos, queso, cereal
+Después correcto: ['leche']
+```
+
+<br>
+
+- ¿Por qué, para este ejemplo, en la primera función no se remueve `queso`?
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad III (3/5)
+
+- Versión **incorrecta**:
+  
+```python
+def eliminar_agotados_erroneo(carrito: list, inventario_agotado: list) -> None:
+    for producto in carrito:
+        if producto in inventario_agotado:
+            carrito.remove(producto)
+```
+
+<br>
+
+- Recorre `carrito` y al mismo tiempo lo modifica
+    
+- Al hacer `remove()`, la lista cambia de tamaño
+    
+- Los elementos restantes se corren una posición a la izquierda
+    
+- El `for` sigue avanzando y puede saltarse elementos
+    
+- El resultado puede ser incorrecto: no elimina todos los que debería
+    
+- Esto produce comportamiento inesperado y errores lógicos
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad III (4/5)
+
+- Versión **correcta**:
+  
+```python
+def eliminar_agotados_correcto(carrito: list, inventario_agotado: list) -> None:
+    for producto in carrito[:]:
+        if producto in inventario_agotado:
+            carrito.remove(producto)
+```
+
+<br>
+
+- Recorre una copia de `carrito`, no la lista original
+    
+- La copia no cambia aunque `carrito` sí cambie
+    
+- Evita que el `for` se salte elementos
+    
+- Permite remover elementos de forma segura
+    
+- Conserva la lógica esperada: elimina todos los agotados
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad III (5/5)
+
+- Revisa una vez más esta práctica para afianzar su comprensión:
+
+	<br>
+
+	- [No remover elementos durante un recorrido](https://eerosales24.github.io/iph_2026_20/general/buenas_practicas/#/12)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Fin de la Actividad III
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Entrega (1/2)
+
+1. Comprima en un archivo `.zip` el archivo:
+	- `logica.py`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Entrega (2/2)
+
+2. Haga el envío del `.zip` en  [Bloque Neón](https://bloqueneon.uniandes.edu.co/)
+	- Vaya a **"Actividades"**
+		- **"N3-L3"**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Fin de N3-L3
+
+- Si no alcanzó a terminar el laboratorio
+	- Debe completar el laboratorio en su tiempo de 
+		- **Trabajo individual semanal** de IP Honores
+
+
+<br>
+
+ [<i class="fas fa-home  fa-3x"></i>](https://eerosales24.github.io/iph_2026_20/#)
+</div></script></section></div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/chart/chart.min.js"></script>
+	<script src="plugin/chart/plugin.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+	  function isLight(color) {
+		let hex = color.replace('#', '');
+
+		// convert #fff => #ffffff
+		if(hex.length == 3){
+			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+		}
+
+		const c_r = parseInt(hex.substr(0, 2), 16);
+		const c_g = parseInt(hex.substr(2, 2), 16);
+		const c_b = parseInt(hex.substr(4, 2), 16);
+		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+		return brightness > 155;
+	}
+
+	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+	var isLight = isLight(bgColor);
+
+	if(isLight){
+		document.body.classList.add('has-light-background');
+	} else {
+		document.body.classList.add('has-dark-background');
+	}
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+        ],
+
+
+    	allottedTime: 120 * 1000,
+
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
+
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
+
+		customcontrols: {
+			controls: [
+			]
+		},
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width":960,"height":700,"margin":"0.025","minScale":"0.1","maxScale":"2.0","controls":"true","controlsLayout":"bottom-right","progress":"true","slideNumber":"true","center":"false","transition":"slide","transitionSpeed":"default"}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+
+  <!-- created with Advanced Slides -->
+</html>

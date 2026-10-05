@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title></title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/iph.css" id="theme" />
+    <link rel="stylesheet" href="plugin/highlight/spyder.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
+
+
+
+    <script defer src="dist/fontawesome/all.min.js"></script>
+
+	<script type="text/javascript">
+		var forgetPop = true;
+		function onPopState(event) {
+			if(forgetPop){
+				forgetPop = false;
+			} else {
+				parent.postMessage(event.target.location.href, "app://obsidian.md");
+			}
+        }
+		window.onpopstate = onPopState;
+		window.onmessage = event => {
+			if(event.data == "reload"){
+				window.document.location.reload();
+			}
+			forgetPop = true;
+		}
+
+		function fitElements(){
+			const itemsToFit = document.getElementsByClassName('fitText');
+			for (const item in itemsToFit) {
+				if (Object.hasOwnProperty.call(itemsToFit, item)) {
+					var element = itemsToFit[item];
+					fitElement(element,1, 1000);
+					element.classList.remove('fitText');
+				}
+			}
+		}
+
+		function fitElement(element, start, end){
+
+			let size = (end + start) / 2;
+			element.style.fontSize = `${size}px`;
+
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
+					size--;
+					element.style.fontSize = `${size}px`;
+				}
+				return;
+			}
+
+			if(element.scrollHeight > element.offsetHeight){
+				fitElement(element, start, size);
+			} else {
+				fitElement(element, size, end);
+			}		
+		}
+
+
+		document.onreadystatechange = () => {
+			fitElements();
+			if (document.readyState === 'complete') {
+				if (window.location.href.indexOf("?export") != -1){
+					parent.postMessage(event.target.location.href, "app://obsidian.md");
+				}
+				if (window.location.href.indexOf("print-pdf") != -1){
+					let stateCheck = setInterval(() => {
+						clearInterval(stateCheck);
+						window.print();
+					}, 250);
+				}
+			}
+	};
+
+
+        </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### <i class="fas fa-award"></i> IP Honores
+
+ ####  *Patrón de Recorrido Parcial en Secuencias*
+
+[Eduardo Rosales](mailto:ee.rosales24@uniandes.edu.co)
+
+Departamento de Ingeniería de Sistemas y Computación
+
+Universidad de los Andes
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Patrón de recorrido parcial
+
+- Procesar elementos de uno en uno
+    - **Detenerse al cumplir una condición**
+        - O completar una parte de la secuencia
+
+	<br>
+
+- ¿Cuándo usarlo?
+    - Cuando **NO es necesario**
+        - Recorrer toda la secuencia
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Recorrido parcial - Ejemplos
+
+- Strings:
+    - Encontrar la primera vocal
+    - Verificar si hay algún dígito
+- Listas:
+    - Encontrar un elemento dado en la lista
+    - Determinar si existe un valor mayor/menor 
+        - A un umbral
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Recorrido parcial - Implementación
+
+- En el curso
+    - El patrón de recorrido parcial
+        - **SIEMPRE se implementa con `while`**
+- Hay dos formas de implementación:
+    - `while` con centinela
+    - `while` sin centinela
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Patrón de recorrido parcial - `while` con centinela
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🌀 Centinela (1/5) 🌀
+
+- Variable que indica cuándo terminar un ciclo 
+- Se utiliza en `while` para controlar su continuidad
+- Cambia de valor cuando se cumple una condición
+    - Terminando el ciclo
+- Evita la ejecución indefinida del ciclo
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🌀 Centinela(2/5) 🌀
+
+ - Típicamente una variable centinela es booleana 
+	 - Que se inicializa en `False`
+ - Estructura general:
+ 
+```Python
+centinela = False  # Declaración de variable centinela
+while not centinela:  # while chequea al centinela
+    # Cuerpo de while
+    centinela = True  # Cambio del centinela
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🌀 Centinela (3/5) 🌀
+
+```Python[2]
+contador = 0 
+es_cinco = False
+while not es_cinco: 
+    print(f"Iteración {contador}") 
+    contador += 1 
+    if contador == 5: 
+        es_cinco = True 
+print("Fin del ciclo")
+```
+
+- `es_cinco` es una variable centinela
+    - Es boolena
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🌀 Centinela (4/5) 🌀
+
+```Python[2, 3, 8]
+contador = 0 
+es_cinco = True  # Variable centinela 
+while not es_cinco:  # Evalúa a False
+    print(f"Iteración {contador}") 
+    contador += 1 
+    if contador == 5: 
+        es_cinco = True 
+print("Fin del ciclo")
+```
+
+- `while` depende de la variable centinela
+    - Si `es_cinco` es `True`
+        - Su negación será `False`
+            - El cuerpo de `while` no se ejecuta
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🌀 Centinela (5/5) 🌀
+
+```Python
+contador = 0 
+es_cinco = False  # Variable centinela 
+while not es_cinco:  # Evalúa a True
+    print(f"Iteración {contador}") 
+    contador += 1 
+    if contador == 5: 
+        es_cinco = True 
+print("Fin del ciclo")
+```
+
+- `while` depende de la variable centinela
+    - Si `es_cinco` es `False`
+        - Su negación será `True`
+            - El cuerpo de `while` se  ejecuta
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Patrón de recorrido parcial - `while` con centinela (1/8)
+
+```Python
+    # Inicializar índice y centinela
+    i = 0
+    encontrado = False
+    
+    # Ciclo para recorrer la secuencia parcialmente
+    while i < len(secuencia) and not encontrado:
+        # TODO: Evaluar condición para actualizar el centinela
+        encontrado = True
+        
+        # Avanzar al siguiente elemento
+        i += 1
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Patrón de recorrido parcial - `while` con centinela (2/8)
+
+```Python[3]
+    # Inicializar índice y centinela
+    i = 0
+    encontrado = False
+    
+    # Ciclo para recorrer la secuencia parcialmente
+    while i < len(secuencia) and not encontrado:
+        # TODO: Evaluar condición para actualizar el centinela
+        encontrado = True
+        
+        # Avanzar al siguiente elemento
+        i += 1
+```
+
+- `encontrado` es la variable centinela
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Patrón de recorrido parcial - `while` con centinela (3/8)
+
+```Python[3]
+    # Inicializar índice y centinela
+    i = 0
+    encontrado = False
+    
+    # Ciclo para recorrer la secuencia parcialmente
+    while i < len(secuencia) and not encontrado:
+        # TODO: Evaluar condición para actualizar el centinela
+        encontrado = True
+        
+        # Avanzar al siguiente elemento
+        i += 1
+```
+
+- Típicamente el centinela es del tipo `bool`
+    - Y se inicia en `False`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Patrón de recorrido parcial - `while` con centinela (4/8)
+
+```Python[2]
+    # Inicializar índice y centinela
+    i = 0
+    encontrado = False
+    
+    # Ciclo para recorrer la secuencia parcialmente
+    while i < len(secuencia) and not encontrado:
+        # TODO: Evaluar condición para actualizar el centinela
+        encontrado = True
+        
+        # Avanzar al siguiente elemento
+        i += 1
+```
+
+-  `i`  es la variable de control
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Patrón de recorrido parcial - `while` con centinela (5/8)
+
+```Python[2,3,6]
+    # Inicializar índice y centinela
+    i = 0
+    encontrado = False
+    
+    # Ciclo para recorrer la secuencia parcialmente
+    while i < len(secuencia) and not encontrado:
+        # TODO: Evaluar condición para actualizar el centinela
+        encontrado = True
+        
+        # Avanzar al siguiente elemento
+        i += 1
+```
+
+- La condición para continuar incluye:
+    - Que el índice `i`  sea menor que la longitud
+    - Y que el centinela sea `False`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Patrón de recorrido parcial - `while` con centinela (6/8)
+
+```Python[2, 6, 11]
+    # Inicializar índice y centinela
+    i = 0
+    encontrado = False
+    
+    # Ciclo para recorrer la secuencia parcialmente
+    while i < len(secuencia) and not encontrado:
+        # TODO: Evaluar condición para actualizar el centinela
+        encontrado = True
+        
+        # Avanzar al siguiente elemento
+        i += 1
+```
+
+- El índice `i` avanza de uno en uno
+    - Hasta encontrar el valor 
+        - O completar la secuencia
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Patrón de recorrido parcial - `while` con centinela (7/8)
+
+```Python[3, 6]
+    # Inicializar índice y centinela
+    i = 0
+    encontrado = False
+    
+    # Ciclo para recorrer la secuencia parcialmente
+    while i < len(secuencia) and not encontrado:
+        # TODO: Evaluar condición para actualizar el centinela
+        encontrado = True
+            
+        # Avanzar al siguiente elemento
+        i += 1
+```
+
+- El centinela controla si se debe continuar el ciclo
+    - Dada una condición
+        - Inicialmente no cumplida (es `False`)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Patrón de recorrido parcial - `while` con centinela (8/8)
+
+```Python[3, 6, 8]
+    # Inicializar índice y centinela
+    i = 0
+    encontrado = False
+    
+    # Ciclo para recorrer la secuencia parcialmente
+    while i < len(secuencia) and not encontrado:
+        # TODO: Evaluar condición para actualizar el centinela
+        encontrado = True
+            
+        # Avanzar al siguiente elemento
+        i += 1
+```
+
+- El centinela cambia si se cumple una condición
+    - En este ejemplo pasará a ser `True`
+        - Terminando así el ciclo
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III
+
+- Implemente la función `buscar_posicion_lista()`: 
+
+```Python
+def buscar_posicion_lista(lista: list, buscado: int) -> int:
+    """
+    Busca la posición de un elemento en la lista dada.  
+    Retorna el índice de la primera ocurrencia del elemento 
+    buscado o -1 si el elemento no está presente.
+
+    Args:
+        lista (list): La lista en la que se busca el elemento.
+        buscado (int): El elemento que se quiere encontrar.
+
+    Returns:
+        int: El índice de la primera aparición del elemento, 
+        o -1 si no se encuentra.
+
+    >>> buscar_posicion_lista([], 3)  # Lista vacía
+    -1
+    >>> buscar_posicion_lista([1, 2, 3, 4, 5], 3)  # Elemento en el medio
+    2
+    >>> buscar_posicion_lista([1, 2, 3, 4, 5], 6)  # Elemento no está
+    -1
+    >>> buscar_posicion_lista([7, 7, 7], 7)  # Múltiples ocurrencias, retorna la primera
+    0
+    """
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III - Explicación (1/9)
+
+
+```Python
+def buscar_posicion_lista(lista: list, buscado: int) -> int:
+    '''
+    Busca la posición de un elemento en la lista dada. 
+    Retorna el índice de la primera ocurrencia del elemento 
+    buscado o -1 si el elemento no está presente.
+    
+    ...
+    
+    '''
+```
+
+- ¿Se necesita recorrer toda la lista? 
+    - &shy;<!-- .element: class="fragment" data-fragment-index="1" -->No
+        - &shy;<!-- .element: class="fragment" data-fragment-index="2" -->Se busca solo la primera posición
+            - &shy;<!-- .element: class="fragment" data-fragment-index="3" -->Del elemento buscado
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III - Explicación (2/9)
+
+```Python
+def buscar_posicion_lista(lista: list, buscado: int) -> int:
+    '''
+    Busca la posición de un elemento en la lista dada. 
+    Retorna el índice de la primera ocurrencia del elemento 
+    buscado o -1 si el elemento no está presente.
+    
+    ...
+    
+    '''
+```
+
+- ¿Qué tipo de patrón se debe usar?
+    - &shy;<!-- .element: class="fragment" data-fragment-index="1" -->Patrón de recorrido **parcial**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III - Explicación (3/9)
+
+```Python
+def buscar_posicion_lista(lista: list, buscado: int) -> int:
+    '''
+    Busca la posición de un elemento en la lista dada. 
+    Retorna el índice de la primera ocurrencia del elemento 
+    buscado o -1 si el elemento no está presente.
+    
+    ...
+    
+    '''
+```
+
+- ¿Qué condiciones terminarán el ciclo?
+    - &shy;<!-- .element: class="fragment" data-fragment-index="1" -->Que se haya recorrido toda la lista
+    - &shy;<!-- .element: class="fragment" data-fragment-index="2" -->Que se haya encontrado 
+        - &shy;<!-- .element: class="fragment" data-fragment-index="3" -->Al elemento buscado
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III - Explicación (4/9)
+
+
+```Python
+def buscar_posicion_lista(lista: list, buscado: int) -> int:
+    '''
+    Busca la posición de un elemento en la lista dada. 
+    Retorna el índice de la primera ocurrencia del elemento 
+    buscado o -1 si el elemento no está presente.
+    
+    ...
+    
+    '''
+```
+
+- ¿Cuál es la variable de retorno?
+    - &shy;<!-- .element: class="fragment" data-fragment-index="1" -->Una posición
+- ¿Cuál es la valor inicial de esta variable?
+    - &shy;<!-- .element: class="fragment" data-fragment-index="2" -->`-1` (no se encontró)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III - Explicación (5/9)
+
+```Python
+def buscar_posicion_lista(lista: list, buscado: int) -> int:
+    posicion = -1  # Variable de retorno
+    
+    # TODO: Completar la función
+    
+    return posicion  # Se usa un solo return
+```
+
+- Inicializa `posicion` en `-1` 
+    - Para indicar posición "no encontrada"
+- Si nunca se encuentra
+    - Se retorna `-1`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III - Explicación (6/9)
+
+```Python[4,7,11]
+def buscar_posicion_lista(lista: list, buscado: int) -> int:
+    posicion = -1  # Variable de retorno
+    
+    i = 0
+    encontrado = False  # Centinela
+    
+    while i < len(lista) and not encontrado:
+        # TODO: Evaluar condición para actualizar el centinela
+        encontrado = True  # Cambio del centinela
+
+        i += 1
+    
+    return posicion  # Se usa un solo return
+```
+
+- ¿Qué variable termina el ciclo si se ha recorrido toda la lista?
+	- &shy;<!-- .element: class="fragment" data-fragment-index="1" --> La variable de control
+        - &shy;<!-- .element: class="fragment" data-fragment-index="2" -->Cuando `i` sea  `>= len(lista)`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III - Explicación (7/9)
+
+```Python[5,7,9]
+def buscar_posicion_lista(lista: list, buscado: int) -> int:
+    posicion = -1  # Variable de retorno
+    
+    i = 0
+    encontrado = False  # Centinela
+    
+    while i < len(lista) and not encontrado:
+        # TODO: Evaluar condición para actualizar el centinela
+        encontrado = True  # Cambio del centinela
+
+        i += 1
+    
+    return posicion  # Se usa un solo return
+```
+
+- ¿Qué variable termina el ciclo si se se ha encontrada al elemento buscado?
+    - &shy;<!-- .element: class="fragment" data-fragment-index="1" -->La variable centinela
+        - &shy;<!-- .element: class="fragment" data-fragment-index="2" -->Cuando sea `True`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III - Explicación (8/9)
+
+```Python[7]
+def buscar_posicion_lista(lista: list, buscado: int) -> int:
+    posicion = -1  # Variable de retorno
+    
+    i = 0
+    encontrado = False  # Centinela
+    
+    while i < len(lista) and not encontrado:
+        # TODO: Evaluar condición para actualizar el centinela
+        encontrado = True  # Cambio del centinela
+
+        i += 1
+    
+    return posicion  # Se usa un solo return
+```
+
+ - Si **No** se encuentra al elemento buscado
+     - Nunca se actualiza al centinela
+- El ciclo termina porque `i == len(lista)`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III - Explicación (9/9)
+
+```Python[7, 9, 10]
+def buscar_posicion_lista(lista: list, buscado: int) -> int:
+    posicion = -1  # Variable de retorno
+    
+    i = 0
+    encontrado = False  # Centinela
+    
+    while i < len(lista) and not encontrado:
+        # TODO: Evaluar condición para actualizar el centinela
+        encontrado = True  # Cambio del centinela
+        # TODO: Guardar la posición
+        
+        i += 1
+    
+    return posicion  # Se usa un solo return
+```
+
+ - Si se encuentra al elemento buscado
+     - Actualiza el centinela a `True`
+        - **Y guarda la posición encontrada**
+- El ciclo termina al encontrar el elemento
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III - Solución
+
+```Python
+def buscar_posicion_lista(lista: list, buscado: int) -> int:
+    """
+    Busca la posición de un elemento en la lista dada.  
+    Retorna el índice de la primera ocurrencia del elemento 
+    buscado o -1 si el elemento no está presente.
+
+    Args:
+        lista (list): La lista en la que se busca el elemento.
+        buscado (int): El elemento que se quiere encontrar.
+
+    Returns:
+        int: El índice de la primera aparición del elemento, 
+        o -1 si no se encuentra.
+
+    >>> buscar_posicion_lista([], 3)  # Lista vacía
+    -1
+    >>> buscar_posicion_lista([1, 2, 3, 4, 5], 3)  # Elemento en el medio
+    2
+    >>> buscar_posicion_lista([1, 2, 3, 4, 5], 6)  # Elemento no está
+    -1
+    >>> buscar_posicion_lista([7, 7, 7], 7)  # Múltiples ocurrencias, retorna la primera
+    0
+    """
+    i = 0
+    posicion = -1  # Variable de retorno
+    encontrado = False  # Centinela
+
+    while i < len(lista) and not encontrado:
+        if lista[i] == buscado:
+            encontrado = True  # Cambio del centinela
+            posicion = i
+        i += 1
+
+    return posicion  # Se usa un solo return
+
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Patrón de recorrido parcial - `while` sin centinela
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Patrón de recorrido parcial - `while` sin centinela (1/6)
+
+```Python
+    # Inicializar resultado e índice
+    resultado = -1
+    i = 0
+
+    # Ciclo para recorrer la secuencia parcialmente
+    while i < len(secuencia) and secuencia[i] != buscado:
+        i += 1
+
+    # TODO: Evaluar condición para actualizar
+    # La variable resultado 
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Patrón de recorrido parcial - `while` sin centinela (2/6)
+
+```Python[3]
+    # Inicializar resultado e índice
+    resultado = -1
+    i = 0
+
+    # Ciclo para recorrer la secuencia parcialmente
+    while i < len(secuencia) and secuencia[i] != buscado:
+        i += 1
+
+    # TODO: Evaluar condición para actualizar
+    # La variable resultado 
+```
+
+-  `i`  es la variable de control
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Patrón de recorrido parcial - `while` sin centinela (3/6)
+
+```Python[6]
+    # Inicializar resultado e índice
+    resultado = -1
+    i = 0
+
+    # Ciclo para recorrer la secuencia parcialmente
+    while i < len(secuencia) and secuencia[i] != buscado:
+        i += 1
+
+    # TODO: Evaluar condición para actualizar
+    # La variable resultado 
+```
+
+-  `i`  también es un índice
+    - Para acceder a la secuencia por posición
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Patrón de recorrido parcial - `while` sin centinela (4/6)
+
+```Python[2,3,6]
+    # Inicializar resultado e índice
+    resultado = -1
+    i = 0
+
+    # Ciclo para recorrer la secuencia parcialmente
+    while i < len(secuencia) and secuencia[i] != buscado:
+        i += 1
+
+    # TODO: Evaluar condición para actualizar
+    # La variable resultado 
+```
+
+- La condición para continuar incluye:
+    - Que `i`  sea menor que la longitud de la lista
+        - Y que elemento actual sea distinto
+            - Del buscado
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Patrón de recorrido parcial - `while` sin centinela (5/6)
+
+```Python[3, 6, 7]
+    # Inicializar resultado e índice
+    resultado = -1
+    i = 0
+
+    # Ciclo para recorrer la secuencia parcialmente
+    while i < len(secuencia) and secuencia[i] != buscado:
+        i += 1
+
+    # TODO: Evaluar condición para actualizar
+    # La variable resultado 
+```
+
+-  `i` avanza de uno en uno
+    - Hasta completar la secuencia
+        - O encontrar a `buscado`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Patrón de recorrido parcial - `while` sin centinela (6/6)
+
+```Python[3, 6]
+    # Inicializar resultado e índice
+    resultado = -1
+    i = 0
+
+    # Ciclo para recorrer la secuencia parcialmente
+    while i < len(secuencia) and secuencia[i] != buscado:
+        i += 1
+
+    # TODO: Evaluar condición para actualizar
+    # La variable resultado 
+```
+
+- Si el elemento actual es igual al  buscado
+    - El `and` evaluará a `False`
+        - Terminando así el ciclo
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IV
+
+- Implemente la función `buscar_posicion_lista()` sin centinela:
+
+```Python
+def buscar_posicion_lista(lista: list, buscado: int) -> int:
+    """
+    Busca la posición de un elemento en la lista dada.  
+    Retorna el índice de la primera ocurrencia del elemento 
+    buscado o -1 si el elemento no está presente.
+
+    Args:
+        lista (list): La lista en la que se busca el elemento.
+        buscado (int): El elemento que se quiere encontrar.
+
+    Returns:
+        int: El índice de la primera aparición del elemento, 
+        o -1 si no se encuentra.
+
+    >>> buscar_posicion_lista([], 3)  # Lista vacía
+    -1
+    >>> buscar_posicion_lista([1, 2, 3, 4, 5], 3)  # Elemento en el medio
+    2
+    >>> buscar_posicion_lista([1, 2, 3, 4, 5], 6)  # Elemento no está
+    -1
+    >>> buscar_posicion_lista([7, 7, 7], 7)  # Múltiples ocurrencias, retorna la primera
+    0
+    """
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IV - Explicación (1/5)
+
+```Python
+def buscar_posicion_lista(lista: list, buscado: int) -> int:
+    posicion = -1  # Variable de retorno
+    
+    # TODO: Completar la función
+    
+    return posicion  # Se usa un solo return
+```
+
+- Inicializa `posicion` en `-1` 
+    - Para indicar posición "no encontrada"
+- Si nunca se encuentra
+    - Se retorna `-1`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IV - Explicación (2/5)
+
+```Python
+def buscar_posicion_lista(lista: list, buscado: int) -> int:
+    posicion = -1  # Variable de retorno
+    i = 0
+
+    while i < len(lista) and lista[i] != buscado:
+        i += 1
+        
+    # TODO: Evaluar condición para actualizar
+    # La variable de retorno
+
+    return posicion  # Se usa un solo return
+```
+
+- ¿Qué variable termina el ciclo si se ha recorrido toda la lista?
+    - &shy;<!-- .element: class="fragment" data-fragment-index="1" -->La variable de control
+        - &shy;<!-- .element: class="fragment" data-fragment-index="2" -->Cuando `i` sea  `>= len(lista)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IV - Explicación (3/5)
+
+```Python
+def buscar_posicion_lista(lista: list, buscado: int) -> int:
+    posicion = -1  # Variable de retorno
+    i = 0
+
+    while i < len(lista) and lista[i] != buscado:
+        i += 1
+        
+    # TODO: Evaluar condición para actualizar
+    # La variable de retorno
+
+    return posicion  # Se usa un solo return
+```
+
+- ¿Qué  termina el ciclo si se se ha encontrada al elemento buscado?
+    - &shy;<!-- .element: class="fragment" data-fragment-index="1" -->Una condición que evalúe a `False`
+        - &shy;<!-- .element: class="fragment" data-fragment-index="2" -->Cuando
+            - &shy;<!-- .element: class="fragment" data-fragment-index="3" -->`lista[i] == buscado`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IV - Explicación (4/5)
+
+```Python[3]
+    # TODO: Evaluar condición para actualizar
+    # La variable de retorno
+        if i != len(lista):
+            posicion = i
+```
+
+ - Caso elemento **no encontrado**
+     - Si `i == len(lista)`
+         - Se recorrió toda la lista
+	         - Sin éxito alguno
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IV - Explicación (5/5)
+
+```Python
+    # TODO: Evaluar condición para actualizar
+    # La variable de retorno
+        if i != len(lista):
+            posicion = i
+```
+
+ - Caso elemento **encontrado**
+     - Si `i != len(lista)`
+         - **No** se recorrió toda la lista
+	         - Se encontró al elemento
+             - **Se guarda la posición**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IV - Solución
+
+```Python
+def buscar_posicion_lista(lista: list, buscado: int) -> int:
+    """
+    Busca la posición de un elemento en la lista dada.  
+    Retorna el índice de la primera ocurrencia del elemento 
+    buscado o -1 si el elemento no está presente.
+
+    Args:
+        lista (list): La lista en la que se busca el elemento.
+        buscado (int): El elemento que se quiere encontrar.
+
+    Returns:
+        int: El índice de la primera aparición del elemento, 
+        o -1 si no se encuentra.
+
+    >>> buscar_posicion_lista([], 3)  # Lista vacía
+    -1
+    >>> buscar_posicion_lista([1, 2, 3, 4, 5], 3)  # Elemento en el medio
+    2
+    >>> buscar_posicion_lista([1, 2, 3, 4, 5], 6)  # Elemento no está
+    -1
+    >>> buscar_posicion_lista([7, 7, 7], 7)  # Múltiples ocurrencias, retorna la primera
+    0
+    """
+    posicion = -1  # Variable de retorno
+    i = 0
+
+    while i < len(lista) and lista[i] != buscado:
+        i += 1
+
+    # Condición para actualizar la variable de retorno
+    if i != len(lista):
+        posicion = i
+
+    return posicion  # Se usa un solo return
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta II
+
+- Implemente la función `encontrar_primer_impar()` **con centinela**:  
+
+```Python
+def encontrar_primer_impar(lista: list) -> int:
+    """
+    Encuentra la posición del primer número impar en la lista 
+    dada. Retorna el índice del primer número impar o -1 si 
+    no se encuentra ningún número impar.
+
+    Args:
+        lista (list): La lista en la que se busca el 
+        primer número impar.
+
+    Returns:
+        int: El índice del primer número impar 
+        o -1 si no hay números impares.
+
+    >>> encontrar_primer_impar([2, 4, 6, 8, 10])  # Todos pares
+    -1
+    >>> encontrar_primer_impar([2, 4, 7, 8, 10])  # Impar en el índice 2
+    2
+    >>> encontrar_primer_impar([1, 2, 3, 4, 5])  # Impar al inicio
+    0
+    >>> encontrar_primer_impar([])  # Lista vacía
+    -1
+    >>> encontrar_primer_impar([8, 10, 12, 11, 14])  # Impar en el índice 3
+    3
+    """
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta II - Solución
+
+```Python
+def encontrar_primer_impar(lista: list) -> int:
+    """
+    Encuentra la posición del primer número impar en la lista 
+    dada. Retorna el índice del primer número impar o -1 si 
+    no se encuentra ningún número impar.
+
+    Args:
+        lista (list): La lista en la que se busca el 
+        primer número impar.
+
+    Returns:
+        int: El índice del primer número impar 
+        o -1 si no hay números impares.
+
+    >>> encontrar_primer_impar([2, 4, 6, 8, 10])  # Todos pares
+    -1
+    >>> encontrar_primer_impar([2, 4, 7, 8, 10])  # Impar en el índice 2
+    2
+    >>> encontrar_primer_impar([1, 2, 3, 4, 5])  # Impar al inicio
+    0
+    >>> encontrar_primer_impar([])  # Lista vacía
+    -1
+    >>> encontrar_primer_impar([8, 10, 12, 11, 14])  # Impar en el índice 3
+    3
+    """
+    i = 0
+    posicion = -1  # Variable de retorno
+    encontrado = False  # Centinela
+
+    # Ciclo para recorrer la lista parcialmente
+    while i < len(lista) and not encontrado:
+        if lista[i] % 2 != 0:  # Verifica si el número es impar
+            encontrado = True  # Cambio del centinela
+            posicion = i
+        i += 1
+
+    return posicion  # Se usa un solo return
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III
+
+- Implemente la función `encontrar_primer_impar()` **sin centinela**:  
+
+```Python
+def encontrar_primer_impar(lista: list) -> int:
+    """
+    Encuentra la posición del primer número impar en la lista 
+    dada. Retorna el índice del primer número impar o -1 si 
+    no se encuentra ningún número impar.
+
+    Args:
+        lista (list): La lista en la que se busca el 
+        primer número impar.
+
+    Returns:
+        int: El índice del primer número impar 
+        o -1 si no hay números impares.
+
+    >>> encontrar_primer_impar([2, 4, 6, 8, 10])  # Todos pares
+    -1
+    >>> encontrar_primer_impar([2, 4, 7, 8, 10])  # Impar en el índice 2
+    2
+    >>> encontrar_primer_impar([1, 2, 3, 4, 5])  # Impar al inicio
+    0
+    >>> encontrar_primer_impar([])  # Lista vacía
+    -1
+    >>> encontrar_primer_impar([8, 10, 12, 11, 14])  # Impar en el índice 3
+    3
+    """
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III - Solución
+
+```Python
+def encontrar_primer_impar(lista: list) -> int:
+    """
+    Encuentra la posición del primer número impar en la lista 
+    dada. Retorna el índice del primer número impar o -1 si 
+    no se encuentra ningún número impar.
+
+    Args:
+        lista (list): La lista en la que se busca el 
+        primer número impar.
+
+    Returns:
+        int: El índice del primer número impar 
+        o -1 si no hay números impares.
+
+    >>> encontrar_primer_impar([2, 4, 6, 8, 10])  # Todos pares
+    -1
+    >>> encontrar_primer_impar([2, 4, 7, 8, 10])  # Impar en el índice 2
+    2
+    >>> encontrar_primer_impar([1, 2, 3, 4, 5])  # Impar al inicio
+    0
+    >>> encontrar_primer_impar([])  # Lista vacía
+    -1
+    >>> encontrar_primer_impar([8, 10, 12, 11, 14])  # Impar en el índice 3
+    3
+    """
+    i = 0
+    posicion = -1  # Variable de retorno
+
+    # Ciclo para recorrer la lista parcialmente
+    while i < len(lista) and lista[i] % 2 == 0:
+        i += 1
+
+    # Condición para actualizar la variable de retorno
+    if i < len(lista):
+        posicion = i
+
+    return posicion  # Se usa un solo return
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Para cerrar
+
+- Revise las siguientes buenas prácticas:
+
+	- [Usar  el patrón de recorrido adecuado](https://eerosales24.github.io/iph_2026_20/general/buenas_practicas/#/29)
+
+	- [Nunca interrumpir un ciclo](https://eerosales24.github.io/iph_2026_20/general/buenas_practicas/#/30)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<i class="fas fa-question-circle fa-2x fa-spin fa-4x"></i>
+
+<br>
+<br>
+
+ [<i class="fas fa-home  fa-3x"></i>](https://eerosales24.github.io/iph_2026_20/#)
+</div></script></section></div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/chart/chart.min.js"></script>
+	<script src="plugin/chart/plugin.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+	  function isLight(color) {
+		let hex = color.replace('#', '');
+
+		// convert #fff => #ffffff
+		if(hex.length == 3){
+			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+		}
+
+		const c_r = parseInt(hex.substr(0, 2), 16);
+		const c_g = parseInt(hex.substr(2, 2), 16);
+		const c_b = parseInt(hex.substr(4, 2), 16);
+		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+		return brightness > 155;
+	}
+
+	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+	var isLight = isLight(bgColor);
+
+	if(isLight){
+		document.body.classList.add('has-light-background');
+	} else {
+		document.body.classList.add('has-dark-background');
+	}
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+        ],
+
+
+    	allottedTime: 120 * 1000,
+
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
+
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
+
+		customcontrols: {
+			controls: [
+			]
+		},
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width":960,"height":700,"margin":"0.025","minScale":"0.1","maxScale":"2.0","controls":"true","controlsLayout":"bottom-right","progress":"true","slideNumber":"true","center":"false","transition":"slide","transitionSpeed":"default"}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+
+  <!-- created with Advanced Slides -->
+</html>

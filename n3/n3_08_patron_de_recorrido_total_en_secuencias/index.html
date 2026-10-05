@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title></title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/iph.css" id="theme" />
+    <link rel="stylesheet" href="plugin/highlight/spyder.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
+
+
+
+    <script defer src="dist/fontawesome/all.min.js"></script>
+
+	<script type="text/javascript">
+		var forgetPop = true;
+		function onPopState(event) {
+			if(forgetPop){
+				forgetPop = false;
+			} else {
+				parent.postMessage(event.target.location.href, "app://obsidian.md");
+			}
+        }
+		window.onpopstate = onPopState;
+		window.onmessage = event => {
+			if(event.data == "reload"){
+				window.document.location.reload();
+			}
+			forgetPop = true;
+		}
+
+		function fitElements(){
+			const itemsToFit = document.getElementsByClassName('fitText');
+			for (const item in itemsToFit) {
+				if (Object.hasOwnProperty.call(itemsToFit, item)) {
+					var element = itemsToFit[item];
+					fitElement(element,1, 1000);
+					element.classList.remove('fitText');
+				}
+			}
+		}
+
+		function fitElement(element, start, end){
+
+			let size = (end + start) / 2;
+			element.style.fontSize = `${size}px`;
+
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
+					size--;
+					element.style.fontSize = `${size}px`;
+				}
+				return;
+			}
+
+			if(element.scrollHeight > element.offsetHeight){
+				fitElement(element, start, size);
+			} else {
+				fitElement(element, size, end);
+			}		
+		}
+
+
+		document.onreadystatechange = () => {
+			fitElements();
+			if (document.readyState === 'complete') {
+				if (window.location.href.indexOf("?export") != -1){
+					parent.postMessage(event.target.location.href, "app://obsidian.md");
+				}
+				if (window.location.href.indexOf("print-pdf") != -1){
+					let stateCheck = setInterval(() => {
+						clearInterval(stateCheck);
+						window.print();
+					}, 250);
+				}
+			}
+	};
+
+
+        </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### <i class="fas fa-award"></i> IP Honores
+
+ ####  *Patrón de Recorrido Total en Secuencias*
+
+[Eduardo Rosales](mailto:ee.rosales24@uniandes.edu.co)
+
+Departamento de Ingeniería de Sistemas y Computación
+
+Universidad de los Andes
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Patrones de recorrido total en secuencias
+
+- [Sin usar índices](https://eerosales24.github.io/iph_2026_20/n3/n3_08_patron_de_recorrido_total_en_secuencias/#/14)
+    - **No se necesita** acceder a la secuencia
+        - Mediante índices
+
+- [Con índices](https://eerosales24.github.io/iph_2026_20/n3/n3_08_patron_de_recorrido_total_en_secuencias/#/24)
+    - **Se necesita** acceder a la secuencia m
+        - Mediante índices
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Patrón de recorrido total
+
+- Procesar a los elementos
+    - De uno en uno
+        - Desde el inicio
+            - Y hasta el final
+- ¿Cuándo usarlo?
+    - Cuando se requiere recorrer 
+        - **Toda la secuencia**
+            - Ej: String o lista
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Recorrido total - Ejemplos
+ 
+- Strings:
+    - Contar la cantidad de vocales
+    - Sumar los dígitos de un string
+- Listas:
+    - Sumar todos los valores
+    - Obtener el elemento menor
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Recorrido total con  `while`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Patrón de recorrido total - `while` (1/6)
+
+```Python
+    resultado = valor_inicial
+    i = 0
+    
+    # Ciclo para recorrer la secuencia completa
+    while i < len(secuencia):
+        # TODO: Actualizar el resultado 
+        # basado en el ítem actual
+        
+        # Avanzar al siguiente elemento
+        i += 1
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Patrón de recorrido total - `while` (2/6)
+
+```Python[2,10]
+    resultado = valor_inicial
+    i = 0
+    
+    # Ciclo para recorrer la secuencia completa
+    while i < len(secuencia):
+        # TODO: Actualizar el resultado 
+        # basado en el ítem actual
+        
+        # Avanzar al siguiente elemento
+        i += 1
+```
+
+- `i` Es una variable de control
+    - Inicia en `0`
+    - Definirá cuándo terminar el ciclo
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Patrón de recorrido total - `while` (3/6)
+
+```Python[8]
+    resultado = valor_inicial
+    i = 0
+    
+    # Ciclo para recorrer la secuencia completa
+    while i < len(secuencia):
+        # TODO: Actualizar el resultado 
+        # basado en el elemento actual
+        secuencia[i]
+        
+        # Avanzar al siguiente elemento
+        i += 1
+```
+
+- `i` también se usa como índice 
+    - Para moverse a través de la secuencia
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Patrón de recorrido total - `while` (4/6)
+
+```Python[5]
+    resultado = valor_inicial
+    i = 0
+    
+    # Ciclo para recorrer la secuencia completa
+    while i < len(secuencia):
+        # TODO: Actualizar el resultado 
+        # basado en el elemento actual
+        
+        # Avanzar al siguiente elemento
+        i += 1
+```
+
+- Condición para continuar
+    - `i` debe ser
+        - Menor que la longitud de la lista
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Patrón de recorrido total - `while` (5/6)
+
+```Python[5-8]
+    resultado = valor_inicial
+    i = 0
+    
+    # Ciclo para recorrer la secuencia completa
+    while i < len(secuencia):
+        # TODO: Actualizar el resultado 
+        # basado en el elemento actual
+        secuencia[i]
+        
+        # Avanzar al siguiente elemento
+        i += 1
+```
+
+- Mientras la condición para continuar 
+    - Evalúe a `True`
+        - Se procesa la secuencia
+            - Actualizando un resultado
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Patrón de recorrido total - `while` (6/6)
+
+```Python[10]
+    resultado = valor_inicial
+    i = 0
+    
+    # Ciclo para recorrer la secuencia completa
+    while i < len(secuencia):
+        # TODO: Actualizar el resultado 
+        # basado en el elemento actual
+        
+        # Avanzar al siguiente elemento
+        i += 1
+```
+
+- `i` Se incrementa
+    - Si no se incrementa
+        - El ciclo sería infinito
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Ejemplos con las secuencias: strings y listas
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Patrón de recorrido total - `while` - Ejemplo strings
+
+```Python
+def contar_vocales(cadena: str) -> int:
+    """
+    Cuenta la cantidad de vocales en la cadena dada.  
+    Las vocales se consideran tanto mayúsculas como minúsculas.
+
+    Args:
+        cadena (str): La cadena en la que se cuentan las vocales.
+
+    Returns:
+        int: El número de vocales en la cadena.
+
+    >>> contar_vocales("bcdfg")  # Caso sin vocales
+    0
+    >>> contar_vocales("")  # Caso cadena vacía
+    0
+    >>> contar_vocales("Python")  # Caso con 1 vocal
+    1
+    >>> contar_vocales("Hola Mundo")  # Caso con 4 vocales
+    4
+    >>> contar_vocales("AEIOU")  # Caso con 5 vocales mayúsculas
+    5
+    """
+    # Inicializar resultado e índice
+    contador = 0  # Variable de retorno
+    i = 0
+    
+    # Ciclo para recorrer la cadena completa
+    while i < len(cadena):
+        # Verificar si el carácter actual es una vocal
+        if cadena[i].lower() in 'aeiou':
+            # Actualizar el contador
+            contador += 1
+        # Avanzar al siguiente carácter
+        i += 1
+        
+    # Retornar el resultado final
+    return contador  # Se usa un solo return
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Patrón de recorrido total - `while` - Ejemplo listas
+
+- Sumar todos los valores en la lista:
+
+```Python
+def sumar_lista(lista: list) -> int:
+    """
+    Calcula la suma de todos los elementos en la lista dada.
+
+    Args:
+        lista (list): La lista de números a sumar.
+
+    Returns:
+        int: La suma de los elementos en la lista.
+
+    >>> sumar_lista([0, -1, 1])  # Caso con suma cero
+    0
+    >>> sumar_lista([])  # Caso de lista vacía
+    0
+    >>> sumar_lista([1, 2, 3, 4, 5])  # Caso con suma positiva
+    15
+    >>> sumar_lista([10, 20, 30])  # Caso con múltiplos de 10
+    60
+    >>> sumar_lista([-5, -10, 5])  # Caso con negativos y positivos
+    -10
+    """
+    # Inicializar resultado e índice
+    suma = 0  # Variable de retorno
+    i = 0
+    
+    # Ciclo para recorrer la lista completa
+    while i < len(lista):
+        # Actualizar el resultado basado en el ítem actual
+        suma += lista[i]
+        # Avanzar al siguiente elemento
+        i += 1
+        
+    # Retornar el resultado final
+    return suma  # Se usa un solo return
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Recorrido total con `for-in`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Patrón de recorrido total - `for-in` (1/5)
+
+```Python
+    # Inicializar resultado
+    resultado = valor_inicial
+    
+    # Ciclo para recorrer cada ítem en la secuencia
+    for item_actual in secuencia:
+        # TODO: Actualizar el resultado
+        # basado en el ítem actual
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Patrón de recorrido total - `for-in` (2/5)
+
+```Python[5]
+    # Inicializar resultado
+    resultado = valor_inicial
+    
+    # Ciclo para recorrer cada ítem en la secuencia
+    for item_actual in secuencia:
+        # TODO: Actualizar el resultado
+        # basado en el ítem actual
+```
+
+- `item_actual` representa al ítem actual
+    - Al recorrer la secuencia
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Patrón de recorrido total - `for-in` (3/5)
+
+```Python[5]
+    # Inicializar resultado
+    resultado = valor_inicial
+    
+    # Ciclo para recorrer cada ítem en la secuencia
+    for item_actual in secuencia:
+        # TODO: Actualizar el resultado
+        # basado en el ítem actual
+```
+
+- El ciclo recorre la secuencia de principio a fin
+    - ✅ Más directo y sencillo que `while`
+        - ✅ No se requieren índices
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Patrón de recorrido total - `for-in` (4/5)
+
+```Python[6-8]
+    # Inicializar resultado
+    resultado = valor_inicial
+    
+    # Ciclo para recorrer cada ítem en la secuencia
+    for item_actual in secuencia:
+        # TODO: Actualizar el resultado
+        # basado en el ítem actual
+        iteam_actual 
+```
+
+- Cada iteración procesa un único elemento
+    - Actualizando un resultado
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Patrón de recorrido total - `for-in` (5/5)
+
+```Python[]
+    # Inicializar resultado
+    resultado = valor_inicial
+    
+    # Ciclo para recorrer cada ítem en la secuencia
+    for item_actual in secuencia:
+        # TODO: Actualizar el resultado
+        # basado en el ítem actual
+```
+
+- El ciclo se detiene **automáticamente**
+    - Cuando **todos los ítems**
+        - Han sido procesados
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Patrón de recorrido total - `for-in` - Ejemplo strings
+
+```Python
+def contar_vocales(cadena: str) -> int:
+    contador = 0  # Variable de retorno
+    
+    # Ciclo para recorrer cada carácter en la cadena
+    for caracter_actual in cadena:
+        # Verificar si el carácter es una vocal
+        if caracter_actual.lower() in 'aeiou':
+            # Actualizar el contador
+            contador += 1
+    
+    # Retornar el resultado final
+    return contador  # Se usa un solo return
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Patrón de recorrido total - `for-in` - Ejemplo listas
+
+- Sumar todos los valores en la lista:
+
+```Python
+def sumar_lista(lista: list) -> int:
+    suma = 0  # Variable de retorno
+    
+    # Ciclo para recorrer cada elemento en la lista
+    for numero_actual in lista:
+        # Actualizar la suma
+        suma += numero_actual
+    
+    # Retornar el resultado final
+    return suma  # Se usa un solo return
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta I
+
+- Implemente la función `contar_alfabeticos()`: 
+
+```Python
+def contar_alfabeticos(cadena: str) -> int:
+    """
+    Cuenta la cantidad de caracteres alfabéticos en la cadena dada.  
+    Un carácter alfabético es una letra (a-z, A-Z).
+
+    Args:
+        cadena (str): La cadena en la que se cuentan los 
+        caracteres alfabéticos.
+
+    Returns:
+        int: El número de caracteres alfabéticos en la cadena.
+
+    >>> contar_alfabeticos("1234!@#")  # Solo símbolos y dígitos
+    0
+    >>> contar_alfabeticos("")  # Cadena vacía
+    0
+    >>> contar_alfabeticos("Hola Mundo123!")  # Letras con números y símbolos
+    9
+    >>> contar_alfabeticos("Python3.9")  # Letras y números con punto
+    6
+    >>> contar_alfabeticos("Código123!")  # Letras con tilde y otros caracteres
+    6
+    """
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta I - Solución
+
+```Python
+def contar_alfabeticos(cadena: str) -> int:
+    """
+    Cuenta la cantidad de caracteres alfabéticos en la cadena dada.  
+    Un carácter alfabético es una letra (a-z, A-Z).
+
+    Args:
+        cadena (str): La cadena en la que se cuentan los 
+        caracteres alfabéticos.
+
+    Returns:
+        int: El número de caracteres alfabéticos en la cadena.
+
+    >>> contar_alfabeticos("1234!@#")  # Solo símbolos y dígitos
+    0
+    >>> contar_alfabeticos("")  # Cadena vacía
+    0
+    >>> contar_alfabeticos("Hola Mundo123!")  # Letras con números y símbolos
+    9
+    >>> contar_alfabeticos("Python3.9")  # Letras y números con punto
+    6
+    >>> contar_alfabeticos("Código123!")  # Letras con tilde y otros caracteres
+    6
+    """
+    contador = 0  # Variable de retorno
+
+    # Recorrido total de la cadena
+    for caracter_actual in cadena:
+        # Verificar si el carácter es alfabético
+        if caracter_actual.isalpha():
+            contador += 1
+
+    return contador  # Se usa un solo return
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# `for in range`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Patrón de recorrido total - `for-in range` (1/4)
+
+```Python
+    # Inicializar resultado
+    resultado = valor_inicial
+    
+    # Ciclo para recorrer la secuencia usando un rango
+    for i in range(len(secuencia)):
+        # TODO: Actualizar el resultado
+        # basado en el elemento actual (secuencia[i])
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Patrón de recorrido total - `for-in range` (2/4)
+
+```Python[5]
+    # Inicializar resultado
+    resultado = valor_inicial
+    
+    # Ciclo para recorrer la secuencia usando un rango
+    for i in range(len(secuencia)):
+        # TODO: Actualizar el resultado
+        # basado en el elemento actual (secuencia[i])
+```
+
+-  `i` es un índice
+    - Inicia en `0` 
+    - Y termina en `len(secuencia) - 1`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Patrón de recorrido total - `for-in range` (3/4)
+
+```Python[6-8]
+    # Inicializar resultado
+    resultado = valor_inicial
+    
+    # Ciclo para recorrer la secuencia usando un rango
+    for i in range(len(secuencia)):
+        # TODO: Actualizar el resultado
+        # basado en el elemento actual
+        secuencia[i]
+```
+
+- ✅ Permite acceder por índice
+    - A los elementos de la secuencia
+        - Usando `secuencia[i]`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Patrón de recorrido total - `for-in range` (4/4)
+
+```Python[5]
+    # Inicializar resultado
+    resultado = valor_inicial
+    
+    # Ciclo para recorrer la secuencia usando un rango
+    for i in range(len(secuencia)):
+        # TODO: Actualizar el resultado
+        # basado en el elemento actual (secuencia[i])
+```
+
+- El ciclo se detiene **automáticamente**
+  - Cuando `i` alcanza la longitud de la secuencia
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Patrón de recorrido total - `for-in range` - Ejemplo strings
+
+- Intercalar minúsculas y mayúsculas:
+
+```Python
+def intercalar_mayus_minus(cadena: str) -> str:
+    """
+    Intercala mayúsculas y minúsculas en un string según la posición de cada
+    carácter. Los caracteres en posiciones pares se convierten a mayúsculas y 
+    en posiciones impares a minúsculas.
+
+    Args:
+        cadena (str): La cadena de entrada.
+
+    Returns:
+        str: La cadena resultante con caracteres intercalados 
+        en mayúsculas y minúsculas.
+
+    >>> intercalar_mayus_minus('')  # Cadena vacía
+    ''
+    >>> intercalar_mayus_minus('hola')  # Minúsculas simples
+    'HoLa'
+    >>> intercalar_mayus_minus('Python')  # Mezcla con mayúscula inicial
+    'PyThOn'
+    >>> intercalar_mayus_minus('Intercalar Mayus Minus')  # Frase con espacios
+    'InTeRcAlAr mAyUs mInUs'
+    >>> intercalar_mayus_minus('12345')  # Solo números
+    '12345'
+    >>> intercalar_mayus_minus('alternar CASOS')  # Frase con mayúsculas y minúsculas
+    'AlTeRnAr cAsOs'
+    """
+    resultado = ''  # Variable de retorno
+
+    # Ciclo para recorrer la cadena con for-in range
+    for i in range(len(cadena)):
+        # Si el índice es par, convertir a mayúsculas
+        if i % 2 == 0:
+            resultado += cadena[i].upper()
+        # Si el índice es impar, convertir a minúsculas
+        else:
+            resultado += cadena[i].lower()
+
+    # Retornar el resultado final
+    return resultado  # Se usa un solo return
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Patrón de recorrido total - `for-in range` - Ejemplo listas
+
+- Encontrar todos los *picos* en una lista de números
+    - Un pico es un elemento que es mayor 
+        - Que su(s) vecino(s) adyacente(s)
+
+```Python
+def encontrar_picos(lista: list) -> list:
+    """
+    Retorna una lista de todos los picos en la lista dada.  Un pico es un elemento 
+    que es mayor que sus vecinos adyacentes. Para la primera y última posición,
+    solo deben ser mayores que su único vecino.
+
+    Args:
+        lista (list): La lista de números a evaluar.
+
+    Returns:
+        list: Una lista con los elementos que son picos.
+
+    >>> encontrar_picos([])  # Lista vacía
+    []
+    >>> encontrar_picos([1, 2, 3, 4, 5])  # Pico al final
+    [5]
+    >>> encontrar_picos([2, 5, 2])  # Pico en el centro
+    [5]
+    >>> encontrar_picos([3, 2, 3, 2, 3, 2, 3])  # Múltiples picos alternados
+    [3, 3, 3, 3]
+    >>> encontrar_picos([10, 5, 2, 7, 6, 5, 11, 3])  # Picos al inicio, medio y final
+    [10, 7, 11]
+    >>> encontrar_picos([1, 3, 7, 1, 2, 6, 3, 2, 7, 8, 1])  # Secuencia con varios picos
+    [7, 6, 8]
+    """
+    picos = []  # Variable de retorno
+
+    tamanio_lista = len(lista)
+
+    # Ciclo para recorrer toda la lista
+    for i in range(tamanio_lista):
+        # Caso de la primera posición:
+        if i == 0 and tamanio_lista > 1:
+            if lista[i] > lista[i + 1]:
+                picos.append(lista[i])
+        # Caso de la última posición:
+        elif i == tamanio_lista - 1 and tamanio_lista > 1:
+            if lista[i] > lista[i - 1]:
+                picos.append(lista[i])
+        # Caso de los elementos intermedios:
+        elif i > 0 and i < (tamanio_lista - 1):
+            if lista[i] > lista[i - 1] and lista[i] > lista[i + 1]:
+                picos.append(lista[i])
+
+    return picos  # Se usa un solo retorno
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta II
+
+- Implemente la función `reemplazar_none_por_cero()`: 
+
+```Python
+def reemplazar_none_por_cero(lista: list) -> list:
+    """
+    Reemplaza cada elemento None en la lista con el valor 0.
+
+    Args:
+        lista (list): La lista original que contiene 
+        números enteros y None.
+
+    Returns:
+        list: La lista modificada con los elementos None 
+        reemplazados por 0.
+
+    >>> reemplazar_none_por_cero([None, None, None])  # Solo None
+    [0, 0, 0]
+    >>> reemplazar_none_por_cero([1, None, 3, None, 5])  # Alternando enteros y None
+    [1, 0, 3, 0, 5]
+    >>> reemplazar_none_por_cero([10, 20, 30])  # Sin None
+    [10, 20, 30]
+    >>> reemplazar_none_por_cero([])  # Lista vacía
+    []
+    >>> reemplazar_none_por_cero([None, 0, None, 4])  # Mezcla de None y ceros
+    [0, 0, 0, 4]
+    """
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta II - Solución
+
+```Python
+def reemplazar_none_por_cero(lista: list) -> list:
+    """
+    Reemplaza cada elemento None en la lista con el valor 0.
+
+    Args:
+        lista (list): La lista original que contiene 
+        números enteros y None.
+
+    Returns:
+        list: La lista modificada con los elementos None 
+        reemplazados por 0.
+
+    >>> reemplazar_none_por_cero([None, None, None])  # Solo None
+    [0, 0, 0]
+    >>> reemplazar_none_por_cero([1, None, 3, None, 5])  # Alternando enteros y None
+    [1, 0, 3, 0, 5]
+    >>> reemplazar_none_por_cero([10, 20, 30])  # Sin None
+    [10, 20, 30]
+    >>> reemplazar_none_por_cero([])  # Lista vacía
+    []
+    >>> reemplazar_none_por_cero([None, 0, None, 4])  # Mezcla de None y ceros
+    [0, 0, 0, 4]
+    """
+    # Recorrido total de la lista con for-in range
+    for i in range(len(lista)):
+        if lista[i] is None:
+            lista[i] = 0
+    return lista  # Se usa un solo return
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Para cerrar
+
+- Revise la siguiente buena práctica:
+
+    - [Usar `for-in` cuando no se necesite procesar índices](https://eerosales24.github.io/iph_2026_20/general/buenas_practicas/#/28)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<i class="fas fa-question-circle fa-2x fa-spin fa-4x"></i>
+
+<br>
+<br>
+
+ [<i class="fas fa-home  fa-3x"></i>](https://eerosales24.github.io/iph_2026_20/#)
+</div></script></section></div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/chart/chart.min.js"></script>
+	<script src="plugin/chart/plugin.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+	  function isLight(color) {
+		let hex = color.replace('#', '');
+
+		// convert #fff => #ffffff
+		if(hex.length == 3){
+			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+		}
+
+		const c_r = parseInt(hex.substr(0, 2), 16);
+		const c_g = parseInt(hex.substr(2, 2), 16);
+		const c_b = parseInt(hex.substr(4, 2), 16);
+		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+		return brightness > 155;
+	}
+
+	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+	var isLight = isLight(bgColor);
+
+	if(isLight){
+		document.body.classList.add('has-light-background');
+	} else {
+		document.body.classList.add('has-dark-background');
+	}
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+        ],
+
+
+    	allottedTime: 120 * 1000,
+
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
+
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
+
+		customcontrols: {
+			controls: [
+			]
+		},
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width":960,"height":700,"margin":"0.025","minScale":"0.1","maxScale":"2.0","controls":"true","controlsLayout":"bottom-right","progress":"true","slideNumber":"true","center":"false","transition":"slide","transitionSpeed":"default"}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+
+  <!-- created with Advanced Slides -->
+</html>

@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title></title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/iph.css" id="theme" />
+    <link rel="stylesheet" href="plugin/highlight/spyder.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
+
+
+
+    <script defer src="dist/fontawesome/all.min.js"></script>
+
+	<script type="text/javascript">
+		var forgetPop = true;
+		function onPopState(event) {
+			if(forgetPop){
+				forgetPop = false;
+			} else {
+				parent.postMessage(event.target.location.href, "app://obsidian.md");
+			}
+        }
+		window.onpopstate = onPopState;
+		window.onmessage = event => {
+			if(event.data == "reload"){
+				window.document.location.reload();
+			}
+			forgetPop = true;
+		}
+
+		function fitElements(){
+			const itemsToFit = document.getElementsByClassName('fitText');
+			for (const item in itemsToFit) {
+				if (Object.hasOwnProperty.call(itemsToFit, item)) {
+					var element = itemsToFit[item];
+					fitElement(element,1, 1000);
+					element.classList.remove('fitText');
+				}
+			}
+		}
+
+		function fitElement(element, start, end){
+
+			let size = (end + start) / 2;
+			element.style.fontSize = `${size}px`;
+
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
+					size--;
+					element.style.fontSize = `${size}px`;
+				}
+				return;
+			}
+
+			if(element.scrollHeight > element.offsetHeight){
+				fitElement(element, start, size);
+			} else {
+				fitElement(element, size, end);
+			}		
+		}
+
+
+		document.onreadystatechange = () => {
+			fitElements();
+			if (document.readyState === 'complete') {
+				if (window.location.href.indexOf("?export") != -1){
+					parent.postMessage(event.target.location.href, "app://obsidian.md");
+				}
+				if (window.location.href.indexOf("print-pdf") != -1){
+					let stateCheck = setInterval(() => {
+						clearInterval(stateCheck);
+						window.print();
+					}, 250);
+				}
+			}
+	};
+
+
+        </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### <i class="fas fa-award"></i> IP Honores
+
+ ####  *Laboratorio 1 de Nivel 3 - N3-L1*
+
+[Eduardo Rosales](mailto:ee.rosales24@uniandes.edu.co)
+
+Departamento de Ingeniería de Sistemas y Computación
+
+Universidad de los Andes
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Siga paso a paso las siguientes instrucciones
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Trabajo individual
+
+- Este laboratorio es
+	- **Completamente individual**<!-- .element: class="fragment highlight-blue" -->
+
+	<br>
+
+- El tiempo para terminar el laboratorio es muy corto
+	- Por favor:
+		- Evite las distracciones
+		- Guarde **silencio**<!-- .element: class="fragment highlight-blue" -->
+
+	<br>
+
+- Si no termina el laboratorio
+	- Debe finalizarlo (**y comprenderlo**) 
+		- En las 5h
+			- De trabajo individual semanal
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Quiz I - N3
+
+- El martes 13 de octubre tendremos el primer quiz de N3
+	- El tema estará relacionado
+		- Con los **temas en este laboratorio** <!-- .element: class="fragment highlight-red" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Preguntas
+
+- En caso de dudas, por favor:
+
+<br> 
+
+1. Formule su pregunta de forma **muy clara y concisa**
+
+<br>
+
+2. Luego (**y solo luego de esto**)
+	- Levante la mano
+
+<br>
+
+<i class="fas fa-question-circle fa-1x fa-spin fa-1x"></i> _Al plantearse correctamente la pregunta, la respuesta a veces se revela sola_
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad I (1/3)
+
+- Cree un archivo llamado: `logica.py`
+	- Copie y pegue el siguiente código
+	- Codifique el plan de implementación paso a paso  que hizo ayer
+
+
+```python
+def suma_digitos(n: int) -> int:
+    """
+    Suma recursivamente los dígitos de un número entero no negativo.
+    Nota: Debe usar recursividad.
+
+    Args:
+        n (int): El número entero no negativo cuyos dígitos se van a sumar.
+
+    Returns:
+        int: La suma de los dígitos del número.
+
+    >>> suma_digitos(5)
+    5
+    >>> suma_digitos(123)
+    6
+    >>> suma_digitos(9876)
+    30
+    """
+    # TODO1: Implemente la función tal y como se describe en la documentación
+
+#doctest.run_docstring_examples(suma_digitos, globals(), verbose=True)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Ejemplo de plan de implementación:
+
+- Validar que `n` sea `int` y `n >= 0`
+
+- ¿Qué operaciones necesito?
+	- Obtener último dígito: `n % 10`
+	- Remover el  último dígito: `n // 10` 
+    
+- **Caso base:**
+	- si `n < 10`, retornar `n`
+    
+- **Caso recursivo:**	
+	- Algoritmo:
+		- Sumar el último dígito al procesamiento recursivo del resto
+			- `(n % 10) + suma_digitos(n // 10)`
+    
+	- Verificación:
+		- `n // 10` reduce el valor de `n`  
+			-  ✅ Eventualmente se alcanza el caso base
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad I (2/3)
+
+- En: `logica.py`
+	- Copie y pegue el siguiente código
+	- Codifique el plan de implementación paso a paso  que hizo ayer
+
+```python
+def contar_vocales_recursivo(cadena: str) -> int:
+    """
+    Cuenta recursivamente la cantidad de vocales (a, e, i, o, u) en un string.
+    Nota: Debe usar recursividad.
+
+    Args:
+        cadena (str): String en el que se desea contar las vocales.
+        
+    Returns:
+        int: Número total de vocales presentes en el string.
+
+    >>> contar_vocales_recursivo("")  # Caso de string vacío
+    0
+    >>> contar_vocales_recursivo("rhythm")  # Caso sin vocales
+    0
+    >>> contar_vocales_recursivo("hola mundo")  # Caso con varias vocales
+    4
+    >>> contar_vocales_recursivo("AEIOU")  # Caso con vocales en mayúscula
+    5
+    >>> contar_vocales_recursivo("Python 3.10")  # Caso con mezcla de caracteres
+    1
+    """
+    # TODO2: Implemente la función tal y como se describe en la documentación
+
+#doctest.run_docstring_examples(contar_vocales_recursivo, globals(), verbose=True)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Aclaración
+
+- Las implementaciones recursivas previas
+	- Se usan solo con fines de práctica
+
+	<br>
+
+- Estas no son eficientes para valores grandes
+    
+	- Próximamente estudiaremos versiones **iterativas** y eficientes
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad I (3/3)
+
+1. Revise si sus funciones cumplen con las siguientes buenas prácticas obligatorias del curso:
+
+	- <a href="https://eerosales24.github.io/iph_2026_20/general/buenas_practicas/#/3" target="_blank" rel="noopener noreferrer">Definir el caso base</a>
+	- <a href="https://eerosales24.github.io/iph_2026_20/general/buenas_practicas/#/4" target="_blank" rel="noopener noreferrer">Converger al caso base</a>
+
+	<br>
+
+2. Si una función no cumple las anteriores buenas prácticas
+	- Por favor corrija su implementación
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Fin de la Actividad I
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Ahora, vamos a practicar más con strings
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Aclaración: En los siguientes ejercicios, NO DEBE usar recursividad
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad II (1/9)
+
+- En: `logica.py`
+	- Copie y pegue el siguiente código
+	- Escriba un plan de implementación paso a paso 
+		- **Antes** de  implementar el `TODO3`
+	- Una vez su plan sea concreto, proceda a codificar la solución
+
+```python
+import doctest
+
+def es_palindrome_basico(cadena: str) -> bool:
+    """
+    Verifica si un string (sin espacios) es un palíndromo, esto es, 
+    si se lee igual en ambos sentidos.
+
+    Args:
+        cadena (str): La palabra o frase de entrada a verificar (sin espacios).
+
+    Returns:
+        bool: True si el string es un palíndromo, False en caso contrario.
+
+    >>> es_palindrome_basico('Wow')  # Caso no es palíndromo (mayúscula inicial)
+    False
+    >>> es_palindrome_basico('wow')  # Caso es palíndromo
+    True
+    >>> es_palindrome_basico('12321')  # Caso es palíndromo (número)
+    True
+    >>> es_palindrome_basico('1234')  # Caso no es palíndromo (número)
+    False
+    """
+    # TODO3: Implemente la función tal y como se describe en la documentación
+
+#doctest.run_docstring_examples(es_palindrome_basico, globals(), verbose=True)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad II (2/9)
+
+- En: `logica.py`
+	- Copie y pegue el siguiente código
+	- Escriba un plan de implementación paso a paso 
+		- **Antes** de  implementar el `TODO4`
+	- Una vez su plan sea concreto, proceda a codificar la solución
+
+```python
+def es_palindrome_ignora_mayusculas(cadena: str) -> bool:
+    """
+    Verifica si un string (sin espacios) es un palíndromo, esto es, 
+    si se lee igual en ambos sentidos, ignorando diferencias entre mayúsculas y
+    minúsculas.
+
+    Args:
+        cadena (str): La palabra o frase de entrada a verificar.
+
+    Returns:
+        bool: True si el string es un palíndromo, False en caso contrario.
+
+    >>> es_palindrome_ignora_mayusculas('Wow')  # Caso es palíndromo (ignora mayúscula inicial)
+    True
+    >>> es_palindrome_ignora_mayusculas('wow')  # Caso es palíndromo
+    True
+    >>> es_palindrome_ignora_mayusculas('12321')  # Caso es palíndromo (número)
+    True
+    >>> es_palindrome_ignora_mayusculas('1234')  # Caso no es palíndromo (número)
+    False
+    """
+    # TODO4: Implemente la función tal y como se describe en la documentación
+
+#doctest.run_docstring_examples(es_palindrome_ignora_mayusculas, globals(), verbose=True)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Parámetro opcional en Python
+
+-  Aquel que tiene un **valor por defecto** asignado en la definición de una función
+    
+- Su sintaxis es:
+```python
+def funcion(parámetro=valor_por_defecto):
+```
+    
+- Si **no se proporciona** ese argumento al llamar la función
+	- Se usará el **valor por defecto**
+    
+- Si **se proporciona**
+	- El valor dado **sobrescribe** el valor por defecto
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Parámetro opcional en Python - Ejemplo
+
+```python
+def es_palindrome_3(cadena: str, sensible_mayusculas: bool=False) -> bool:
+```
+
+- `sensible_mayusculas` 
+	- Es un **parámetro opcional**
+    
+- Por defecto, su valor es `False`
+	- Es decir, **no distingue entre mayúsculas y minúsculas**
+    
+- Si se quiere que sí distinga, se debe invocar así a la función:  
+
+```python
+es_palindrome_3("Oso", True)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad II (3/9)
+
+- En: `logica.py`
+	- Copie y pegue el siguiente código
+	- Escriba un plan de implementación paso a paso 
+		- **Antes** de  implementar el `TODO5`
+	- Una vez su plan sea concreto, proceda a codificar la solución
+
+```python
+def es_palindromo_configurable(cadena: str, sensible_mayusculas: bool=False) -> bool:
+    """
+    Verifica si un string es un palíndromo (sin espacios), esto es, si se lee
+    igual en ambos sentidos. Se puede especificar si la verificación es sensible
+    a mayúsculas y minúsculas.
+
+    Args:
+        cadena (str): La palabra o frase de entrada a verificar.
+        sensible_mayusculas (bool, opcional): Indica si la verificación debe ser
+        sensible a las mayúsculas y minúsculas. Por defecto: False.
+
+    Returns:
+        bool: True si el string es un palíndromo, False en caso contrario.
+
+    >>> es_palindromo_configurable('Wow', True)  # Caso no es palíndromo (no ignora mayúscula inicial)
+    False
+    >>> es_palindromo_configurable('Wow')  # Caso es palíndromo (ignora mayúscula inicial)
+    True
+    >>> es_palindromo_configurable('radar')  # Caso es palíndromo
+    True
+    >>> es_palindromo_configurable('Radar', True)  # Caso no es palíndromo (no ignora mayúscula inicial)
+    False
+    >>> es_palindromo_configurable('12321')  # Caso es palíndromo (número)
+    True
+    >>> es_palindromo_configurable('1234')  # Caso no es palíndromo (número)
+    False
+    """
+    # TODO5: Implemente la función tal y como se describe en la documentación
+
+#doctest.run_docstring_examples(es_palindromo_configurable, globals(), verbose=True)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad II (4/9)
+
+- En: `logica.py`
+	- Copie y pegue el siguiente código
+	- Escriba un plan de implementación paso a paso 
+		- **Antes** de  implementar el `TODO6`
+	- Una vez su plan sea concreto, proceda a codificar la solución
+
+```python
+def es_palindromo_ignorando_espacios(cadena: str, sensible_mayusculas: bool=False) -> bool:
+    """
+    Verifica si un string es un palíndromo, esto es, si se lee igual en ambos
+    sentidos. Se puede especificar si la verificación es sensible a mayúsculas 
+    y minúsculas. Si el string tiene espacios, se ignoran los espacios durante
+    la verificación.
+
+    Args:
+        cadena (str): La palabra o frase de entrada a verificar.
+        sensible_mayusculas (bool, opcional): Indica si la verificación es
+        sensible a las mayúsculas y minúsculas. Por defecto: False.
+
+    Returns:
+        bool: True si el string es un palíndromo, False en caso contrario.
+        
+    >>> es_palindromo_ignorando_espacios('Wow', True)  # Caso no es palíndromo (no ignora mayúscula inicial)
+    False
+    >>> es_palindromo_ignorando_espacios('Wow')  # Caso es palíndromo (ignora mayúscula inicial)
+    True
+    >>> es_palindromo_ignorando_espacios('radar')  # Caso es palíndromo
+    True
+    >>> es_palindromo_ignorando_espacios('1234')  # Caso es palíndromo (número)
+    False
+    >>> es_palindromo_ignorando_espacios('anita lava la tina')  # Caso es palíndromo (ignorando espacios)
+    True
+    >>> es_palindromo_ignorando_espacios('La ruta nos aporto otro paso natural')  # Caso es palíndromo (ignorando espacios)
+    True
+    >>> es_palindromo_ignorando_espacios('La ruta nos aporto otro paso natural, True')  # Caso no es palíndromo (no ignora mayúscula inicial)
+    False
+    """
+    # TODO6: Implemente la función tal y como se describe en la documentación
+
+#doctest.run_docstring_examples(es_palindromo_ignorando_espacios, globals(), verbose=True)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad II (5/9)
+
+- En: `logica.py`
+	- Copie y pegue el siguiente código
+	- Escriba un plan de implementación paso a paso 
+		- **Antes** de  implementar el `TODO7`
+	- Una vez su plan sea concreto, proceda a codificar la solución
+
+```python
+def es_palindromo_configurable_espacios(cadena: str, sensible_mayusculas: bool = False, ignorar_espacios: bool = True) -> bool:
+    """
+    Verifica si un string es un palíndromo, es decir, si se lee igual en ambos sentidos.
+    Se puede especificar si la verificación es sensible a mayúsculas y minúsculas,
+    y si se deben ignorar los espacios.
+
+    Args:
+        cadena (str): La palabra o frase de entrada a verificar.
+        sensible_mayusculas (bool, opcional): Indica si la verificación es sensible
+            a las mayúsculas y minúsculas. Por defecto: False.
+        ignorar_espacios (bool, opcional): Indica si los espacios deben ser ignorados.
+            Por defecto: True.
+
+    Returns:
+        bool: True si el string es un palíndromo, False en caso contrario.
+        
+    >>> es_palindromo_configurable_espacios('Wow', True)  # Caso no es palíndromo (sensible a mayúsculas)
+    False
+    >>> es_palindromo_configurable_espacios('Wow')  # Caso es palíndromo (no sensible a mayúsculas)
+    True
+    >>> es_palindromo_configurable_espacios('radar')  # Caso es palíndromo (solo letras minúsculas)
+    True
+    >>> es_palindromo_configurable_espacios('1234')  # Caso no es palíndromo (números no coinciden en reversa)
+    False
+    >>> es_palindromo_configurable_espacios('anita lava la tina')  # Caso es palíndromo (frase con espacios)
+    True
+    >>> es_palindromo_configurable_espacios('La ruta nos aporto otro paso natural')  # Caso es palíndromo (frase con espacios y mayúsculas, sin sensibilidad)
+    True
+    >>> es_palindromo_configurable_espacios('La ruta nos aporto otro paso natural', True)  # Caso no es palíndromo (sensible a mayúsculas)
+    False
+    >>> es_palindromo_configurable_espacios('anita lava la tina', ignorar_espacios=False)  # Caso no es palíndromo (no se ignoran espacios)
+    False
+    """
+    # TODO7: Implemente la función tal y como se describe en la documentación
+
+#doctest.run_docstring_examples(es_palindromo_configurable_espacios, globals(), verbose=True)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad II (6/9)
+
+- En: `logica.py`
+	- Copie y pegue el siguiente código
+	- Escriba un plan de implementación paso a paso 
+		- **Antes** de  implementar el `TODO8`
+	- Una vez su plan sea concreto, proceda a codificar la solución
+
+```python
+def es_correo_uniandes(email: str, min_usuario: int=4) -> bool:
+    """
+    Verifica si una dirección de correo electrónico dada cumple con el formato
+    de correo uniandes:
+    - El primer carácter del usuario debe ser alfabético
+    - El usuario debe tener como máximo un punto (.)
+    - El email debe contener exactamente un arroba (@)
+    - El nombre de usuario debe tener al menos un número `min_usuario` de caracteres. 
+      Ejemplo, en este correo: ee.rosales24@uniandes.edu.co el usuario tiene 
+      12 caracteres.
+    - Después de la arroba, debe tener el dominio 'uniandes', 
+      seguido del dominio '.edu', terminando con el dominio '.co'
+      
+    Nota: Se puede implementar sin hacer uso de condicionales (si lo prefiere).
+
+    Args:
+        email (str): El correo electrónico a validar.
+        min_usuario (int): Longitud mínima del usuario del email. Por defecto: 4.
+
+    Returns:
+        bool: True si el correo electrónico es válido, 
+        False en caso contrario. Para el string vacío retorna False.
+
+    >>> es_correo_uniandes('', 0)  # Caso string vacío
+    False
+    >>> es_correo_uniandes('ee.rosales24@uniandes.edu.co', 5)  # Caso email correcto
+    True
+    >>> es_correo_uniandes('1e.rosales24@uniandes.edu.co', 5)  # Caso primer carácter no alfabético
+    False
+    >>> es_correo_uniandes('ee.rosales.24@uniandes.edu.co', 4)  # Caso el usuario tiene dos puntos
+    False
+    >>> es_correo_uniandes('ee.rosales24uniandes.edu.co', 4)   #  Caso no tiene arroba
+    False
+    >>> es_correo_uniandes('ee@uniandes.edu.co', 3)  # Caso usuario es de longitud menor al `min_usuario` dado
+    False
+    >>> es_correo_uniandes('ee.rosales24@edu.co', 4)  # Caso no tiene subdominio 'uniandes'
+    False
+    >>> es_correo_uniandes('ee.rosales24@uniandes.co', 10)  # Caso no tiene subdominio '.edu'
+    False
+    >>> es_correo_uniandes('ee.rosales24@uniandes.edu.co.error', 4)   # Caso no termina con dominio '.co'
+    False
+    """
+    # TODO8: Implemente la función tal y como se describe en la documentación
+
+#doctest.run_docstring_examples(es_correo_uniandes, globals(), verbose=True)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad II (7/9)
+
+- En: `logica.py`
+	- Copie y pegue el siguiente código
+	- Escriba un plan de implementación paso a paso 
+		- **Antes** de  implementar el `TODO9`
+	- Una vez su plan sea concreto, proceda a codificar la solución
+
+```python
+def ocultar_usuario_email(email: str, caracteres_visibles: int=2) -> str:
+    """
+    Oculta el usuario de un email dado dejando visibles sólo los primeros
+    'caracteres_visibles'. Si el número de 'caracteres_visibles' es mayor o
+    igual a la longitud al usuario, se devuelve el email completo sin modificar.
+
+    Args:
+        email (str): El correo electrónico del que se desea ocultar el usuario.
+        caracteres_visibles (int, opcional): El número de caracteres visibles
+        del usuario del email. Por defecto: 2.
+
+    Returns:
+        str: El email con el usuario parcialmente oculto, dependiendo de
+         'caracteres_visibles', 
+        o el email sin modificar, cuando caracteres_visibles sea mayor o igual a
+         la longitud del usuario.
+
+    >>> ocultar_usuario_email('ejemplo@dominio.com') # Caso muestra 2 caracteres (por defecto)
+    'ej*****@dominio.com'
+    >>> ocultar_usuario_email('ejemplo@dominio.com', 4) # Caso oculta 4 caracteres (de 7)
+    'ejem***@dominio.com'
+    >>> ocultar_usuario_email('ejemplo@dominio.com', 8) # Caso no oculta nada porque 8 > 7 ('ejemplo')
+    'ejemplo@dominio.com'
+    """
+    # TODO9: Implemente la función tal y como se describe en la documentación
+
+#doctest.run_docstring_examples(ocultar_usuario_email, globals(), verbose=True)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad II (8/9)
+
+- En: `logica.py`
+	- Copie y pegue el siguiente código
+	- Escriba un plan de implementación paso a paso 
+		- **Antes** de  implementar el `TODO10`
+	- Una vez su plan sea concreto, proceda a codificar la solución
+
+```python
+def formatear_numero_telefono(numero: str, formato: str = "NACIONAL") -> str:
+    """
+    Da formato a un número telefónico colombiano de 10 dígitos.
+    El usuario puede elegir entre dos estilos de formato:
+    - "NACIONAL": Agrupa el número como '300 123 4567'.
+    - "INTERNACIONAL": Antepone el indicativo +57 y lo agrupa como '+57 300 123 4567'.
+
+    Si el parámetro 'formato' no es exactamente "NACIONAL" o "INTERNACIONAL"
+    (ignorando mayúsculas/minúsculas), el número se retorna sin modificar.
+
+    Args:
+        numero (str): Número de teléfono de 10 dígitos (solo números).
+        formato (str, opcional): Formato deseado. Por defecto: "NACIONAL".
+
+    Returns:
+        str: El número formateado si es válido y el formato es reconocido,
+             o el número original sin modificar en caso contrario.
+
+    >>> formatear_numero_telefono("3001234567")  # Caso número móvil, formato nacional
+    '300 123 4567'
+    >>> formatear_numero_telefono("3001234567", "INTERNACIONAL")  # Caso Número móvil, formato internacional
+    '+57 300 123 4567'
+    >>> formatear_numero_telefono("1234567890", "OTRO")  # Caso formato no reconocido
+    '1234567890'
+    """
+    # TODO 10: Implemente la función tal y como se describe en la documentación
+
+#doctest.run_docstring_examples(formatear_numero_telefono, globals(), verbose=True)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad II (9/9)
+
+1. Revise si sus funciones cumplen con todas las buenas prácticas obligatorias del curso vistas hasta ahora
+	
+
+	<br>
+
+2. Si una función no cumple las anteriores buenas prácticas
+	- Por favor **corrija su implementación**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Fin de la Actividad II
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Entrega (1/2)
+
+1. Comprima en un archivo `.zip` el archivo:
+	- `logica.py`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Entrega (2/2)
+
+2. Haga el envío del `.zip` en  [Bloque Neón](https://bloqueneon.uniandes.edu.co/)
+	- Vaya a **"Actividades"**
+		- **"N3-L1"**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Fin de N3-L1
+
+- Si no alcanzó a terminar el laboratorio
+	- Debe completar el laboratorio en su tiempo de 
+		- **Trabajo individual semanal** de IP Honores
+
+
+<br>
+
+ [<i class="fas fa-home  fa-3x"></i>](https://eerosales24.github.io/iph_2026_20/#)
+</div></script></section></div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/chart/chart.min.js"></script>
+	<script src="plugin/chart/plugin.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+	  function isLight(color) {
+		let hex = color.replace('#', '');
+
+		// convert #fff => #ffffff
+		if(hex.length == 3){
+			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+		}
+
+		const c_r = parseInt(hex.substr(0, 2), 16);
+		const c_g = parseInt(hex.substr(2, 2), 16);
+		const c_b = parseInt(hex.substr(4, 2), 16);
+		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+		return brightness > 155;
+	}
+
+	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+	var isLight = isLight(bgColor);
+
+	if(isLight){
+		document.body.classList.add('has-light-background');
+	} else {
+		document.body.classList.add('has-dark-background');
+	}
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+        ],
+
+
+    	allottedTime: 120 * 1000,
+
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
+
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
+
+		customcontrols: {
+			controls: [
+			]
+		},
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width":960,"height":700,"margin":"0.025","minScale":"0.1","maxScale":"2.0","controls":"true","controlsLayout":"bottom-right","progress":"true","slideNumber":"true","center":"false","transition":"slide","transitionSpeed":"default"}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+
+  <!-- created with Advanced Slides -->
+</html>

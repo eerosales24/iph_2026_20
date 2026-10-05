@@ -1,0 +1,1366 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title></title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/iph.css" id="theme" />
+    <link rel="stylesheet" href="plugin/highlight/spyder.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
+
+
+
+    <script defer src="dist/fontawesome/all.min.js"></script>
+
+	<script type="text/javascript">
+		var forgetPop = true;
+		function onPopState(event) {
+			if(forgetPop){
+				forgetPop = false;
+			} else {
+				parent.postMessage(event.target.location.href, "app://obsidian.md");
+			}
+        }
+		window.onpopstate = onPopState;
+		window.onmessage = event => {
+			if(event.data == "reload"){
+				window.document.location.reload();
+			}
+			forgetPop = true;
+		}
+
+		function fitElements(){
+			const itemsToFit = document.getElementsByClassName('fitText');
+			for (const item in itemsToFit) {
+				if (Object.hasOwnProperty.call(itemsToFit, item)) {
+					var element = itemsToFit[item];
+					fitElement(element,1, 1000);
+					element.classList.remove('fitText');
+				}
+			}
+		}
+
+		function fitElement(element, start, end){
+
+			let size = (end + start) / 2;
+			element.style.fontSize = `${size}px`;
+
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
+					size--;
+					element.style.fontSize = `${size}px`;
+				}
+				return;
+			}
+
+			if(element.scrollHeight > element.offsetHeight){
+				fitElement(element, start, size);
+			} else {
+				fitElement(element, size, end);
+			}		
+		}
+
+
+		document.onreadystatechange = () => {
+			fitElements();
+			if (document.readyState === 'complete') {
+				if (window.location.href.indexOf("?export") != -1){
+					parent.postMessage(event.target.location.href, "app://obsidian.md");
+				}
+				if (window.location.href.indexOf("print-pdf") != -1){
+					let stateCheck = setInterval(() => {
+						clearInterval(stateCheck);
+						window.print();
+					}, 250);
+				}
+			}
+	};
+
+
+        </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### <i class="fas fa-award"></i> IP Honores
+
+ ####  *Recursividad*
+
+[Eduardo Rosales](mailto:ee.rosales24@uniandes.edu.co)
+
+Departamento de Ingeniería de Sistemas y Computación
+
+Universidad de los Andes
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Repetición en Python
+
+1. **Recursividad**
+
+	<br>
+
+2. Iterativa - ciclos:
+	- `while`
+	- `for`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Recursividad
+
+- La función se invoca a sí misma
+	- Para resolver una instancia más pequeña del problema
+- Divide y vencerás
+	- Descomponer problemas en sub-problemas
+- En la vida  real → Muñecas  rusas
+	- Versiones más pequeñas anidadas
+	- Profundidad finita
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Recursividad
+
+- Componentes:
+	- **Caso base**: 
+		- Condición que detiene la recursión
+			- La función no se invoca a sí misma
+	- **Caso recursivo**: 
+		- Función se invoca a sí misma 
+			- En una versión más pequeña del problema
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Metodología del curso
+
+- El orden importa:
+	
+<img src="iph/n1/img/sw.png" alt="" style="object-fit: scale-down">
+
+<!-- .element: style="width: 15%; height: 25%" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Análisis (1/9)
+
+1.  Identificar y especificar el problema
+2.  Identificar restricciones
+3.  Documentar
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Análisis (2/9)
+
+- **¿Cuál es el problema a solucionar?**
+	- El cálculo del factorial
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Factorial (1/2)
+
+- Denotado como `n!`, donde `n` es un número
+	- Producto de todos los enteros positivos `≤ n`
+- Ej:
+
+```plaintext
+No hay enteros positivos menores que 1, así que el producto vacío es 1:
+factorial(0) = 1 
+
+factorial(1) = 1
+
+factorial(2) = 2 × factorial(1) = 2
+
+factorial(3) = 3 × factorial(2) = 6
+
+factorial(4) = 4 × factorial(3) = 24
+
+factorial(5) = 5 × factorial(4) = 120
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Factorial (2/2)
+
+```plaintext
+factorial(0) = 1 
+factorial(1) = 1
+factorial(2) = 2 × factorial(1) = 2
+factorial(3) = 3 × factorial(2) = 6
+factorial(4) = 4 × factorial(3) = 24
+factorial(5) = 5 × factorial(4) = 120
+```
+
+<img src="eda/modulo_1/img/factorial.png" alt="" style="width: 70%; height: 10%; object-fit: fill">
+
+
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->✅  Entender la definición matemática del factorial
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Análisis (3/9)
+
+- **¿Cuál es el propósito de la función?**
+	- Calcular el factorial de un número entero positivo
+	
+<br>
+
+- **¿Cuál será el nombre la función?**
+	- El nombre debe ser **auto explicativo**
+		- Ej:
+			- `factorial`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Análisis (4/9)
+		
+- **¿Qué dato(s) de entrada requiere?**
+	- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->Un número entero
+
+<br>
+
+- **¿Qué salida (resultado) producirá?**
+	- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->Un número entero que es
+		- El factorial del número dado
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Análisis (5/9)
+		
+- **Especificar las restricciones:**
+
+<br>
+
+- **¿Qué restricciones le aplican a los datos de entrada?**
+	- El factorial sólo está definido para enteros no negativos
+	
+<br>
+
+- **¿Qué restricciones le aplican a la salida?**
+	- Debe ser un número entero positivo
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Análisis (6/9)
+
+- Escribir la documentación: 
+	- **¿Cuál es el propósito de la función?**
+
+```Python[2]
+    """
+    Calcula el factorial de un número (n!).
+
+    Args:
+        numero (int): El número positivo para calcular su factorial.
+
+    Returns:
+        int: El factorial del número proporcionado.
+    """
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Análisis (7/9)
+
+- Escribir la documentación: 
+	-  **¿Qué dato(s) de entrada requiere?**
+
+```Python[4,5]
+    """
+    Calcula el factorial de un número (n!).
+
+    Args:
+        numero (int): El número positivo para calcular su factorial.
+
+    Returns:
+        int: El factorial del número proporcionado.
+    """
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Análisis (8/9)
+
+- Escribir la documentación: 
+	- **¿Qué salida (resultado) producirá?**
+
+```Python[7,8]
+    """
+    Calcula el factorial de un número (n!).
+
+    Args:
+        numero (int): El número positivo para calcular su factorial.
+
+    Returns:
+        int: El factorial del número proporcionado.
+    """
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Análisis (9/9)
+
+- Así se ve la documentación básica producida en el análisis:
+
+```Python
+    """
+    Calcula el factorial de un número (n!).
+
+    Args:
+        numero (int): El número positivo para calcular su factorial.
+
+    Returns:
+        int: El factorial del número proporcionado.
+    """
+```
+
+- Note que la documentación refleja las restricciones
+	- `(int)` indica 
+		- Que el tipo de dato de entrada esperado es un entero
+		- Que el tipo de dato a retornar es un entero
+	- Se especifica la naturaleza positiva de la entrada
+		- El factorial es por definición positivo
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Diseño (1/8)
+
+ 1. Formular ejemplos
+	- Casos significativos y no redundantes
+ 2. Diseñar el algoritmo
+ 3. Diseñar y documentar las pruebas
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Diseño (2/8)
+
+- **Formular ejemplos**
+	- Usando casos significativos y no redundantes
+
+```plaintext
+factorial(0) = 1 
+factorial(1) = 1
+factorial(2) = 2
+factorial(3) = 6
+factorial(4) = 24
+factorial(5) = 120
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Diseño (3/8)
+
+- Diseñar el algoritmo para solucionar el problema 
+	- A partir de la formulación de ejemplos
+
+<br>
+
+- El algoritmo será recursivo
+	- Entonces se necesita:
+	    1. Caso base
+	    2. Caso recursivo
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Diseño (4/8)
+
+- ¿Cuál es el **caso base**?
+	- Cuando la función NO se llama a sí misma
+	
+```plaintext
+factorial(0) = 1
+factorial(1) = 1
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Diseño (5/8)
+
+- ¿Cuál es el **caso recursivo**?
+	- Cuando la función se llama a sí misma
+	
+```plaintext
+factorial(2) = 2 × factorial(1) = 2
+factorial(3) = 3 × factorial(2) = 6
+factorial(4) = 4 × factorial(3) = 24
+factorial(5) = 5 × factorial(4) = 120
+```
+
+- Es decir:
+	- `n` multiplicado por el factorial de `n − 1`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Diseño (6/8)
+
+- Se define y documenta cada caso de prueba
+	- Así se veía un ejemplo:
+```plaintext
+factorial(0) = 1
+```
+- Así se ve un caso de prueba, documentado:
+```Python
+>>> factorial(0)  #  Caso base
+1
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Diseño (7/8)
+
+```Python
+>>> factorial(0)  #  Caso base
+1
+```
+
+- Explicación:
+	- Si se llama a la función `factorial()`
+		- Usando como dato de entrada: **`0`** 
+		- Se **debe** obtener como resultado: **`1`**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Diseño (8/8)
+
+- En este caso se usarán solo **6** casos
+
+```Python
+"""
+    >>> factorial(0)  # Caso base
+    1
+    >>> factorial(1)  # Caso base
+    1
+    >>> factorial(2)  # Caso recursivo - 2
+    2
+    >>> factorial(3)  # Caso recursivo - 3
+    6
+    >>> factorial(4)  # Caso recursivo - 4
+    24
+    >>> factorial(5)  # Caso recursivo - 5
+    120
+"""
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Construcción (1/10)
+
+- **Construcción**:
+	- Codificar/implementar el diseño usando:
+		- Documentación
+        - Convenciones
+        - Buenas prácticas de programación
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Construcción (2/10)
+
+- Definir (declarar) la función:
+
+```Python
+def factorial(n: int) -> int:
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Construcción (3/10)
+
+-  Escribir la implementación de la función
+- Por ahora, se omitirá la validación de las restricciones
+	- Sólo serán documentadas
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Construcción (4/10)
+
+- Escribir el caso base:
+        
+```Python
+    if n == 0 or n == 1:
+        resultado = 1
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Construcción (5/10)
+
+- Escribir el caso recursivo:
+        
+```Python[3-11]
+if n == 0 or n == 1:
+    resultado = 1
+elif n == 2:
+        resultado = 2 * factorial(2 - 1)
+    elif n == 3:
+        resultado = 3 * factorial(3 - 1)
+    elif n == 4:
+        resultado = 4 * factorial(4 - 1)
+    elif n == 5:
+        resultado = 5 * factorial(5 - 1)
+# Y continuaría…
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Construcción (6/10)
+
+- Escribir el caso recursivo:
+        
+```Python
+elif n == 2:
+        resultado = 2 * factorial(2 - 1)
+    elif n == 3:
+        resultado = 3 * factorial(3 - 1)
+    elif n == 4:
+        resultado = 4 * factorial(4 - 1)
+    elif n == 5:
+        resultado = 5 * factorial(5 - 1)
+# Y continuaría…
+```
+
+❌ Esta implementación sería impráctica para `n` muy grandes
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Construcción (7/10)
+
+- Se refina el código con base a la definición matemática:
+<img src="eda/modulo_1/img/factorial.png" alt="" style="width: 55%; height: 8%; object-fit: fill">
+
+
+```python
+    if n == 0 or n == 1:
+        resultado = 1
+    else:
+        resultado = n * factorial(n - 1)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Construcción (8/10)
+
+-   Pulir el código:
+
+```python
+def factorial(n: int) -> int:
+    return 1 if n <= 1 else n * factorial(n - 1)
+```
+
+- Se usa un solo `return` en la función
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Construcción (9/10)
+
+```python
+def factorial(n: int) -> int:
+    """
+    Calcula el factorial de un número (n!).
+
+    Args:
+        n (int): El número positivo para calcular su factorial.
+
+    Returns:
+        int: El factorial del número proporcionado.
+    """
+    # Aserciones de validación del parámetro:
+    assert isinstance(n, int), "El número debe ser un entero"
+    assert n >= 0, "El número debe ser positivo o cero"
+```
+
+- Note que la aserciones 
+	- Permiten garantizar las condiciones sobre el parámetro
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Construcción (10/10)
+
+- Así se ve la implementación completa de la función `factorial()`:
+
+```Python
+def factorial(n: int) -> int:
+    """
+    Calcula el factorial de un número (n!).
+
+    Args:
+        numero (int): El número positivo para calcular su factorial.
+
+    Returns:
+        int: El factorial del número proporcionado.
+
+    >>> factorial(0)  # Caso base
+    1
+    >>> factorial(1)  # Caso base
+    1
+    >>> factorial(2)  # Caso recursivo - 2
+    2
+    >>> factorial(3)  # Caso recursivo - 3
+    6
+    >>> factorial(4)  # Caso recursivo - 4
+    24
+    >>> factorial(5)  # Caso recursivo - 5
+    120
+    """
+    assert isinstance(n, int), "El número debe ser un entero"
+    assert nu >= 0, "El número debe ser positivo o cero"
+    
+    return 1 if n <= 1 else n * factorial(n - 1)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pila
+
+- Estructura de datos con comportamiento LIFO
+	- Último en entrar, primero en salir (Last In, First Out)
+
+<img src="Pasted image 20250126111839.png" alt="" style="width: 60%; height: 35%; object-fit: fill">
+
+
+- El Stack de Python es una pila
+	- Donde se almacenan invocaciones a funciones y variables locales
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Stack de Python y recursividad
+
+- Almacena invocaciones a funciones y variables locales 
+	- Durante la ejecución de un programa
+- Cada vez que una función es invocada
+	- Su contexto (parámetros y variables locales) se apila
+		- En un _frame_
+- El contexto se desapila, solo cuando la función termina
+	- Al retornar, el estado de la pila vuelve al estado antes de apilar
+- Permite seguir el flujo de ejecución 
+	- Y resolver llamadas anidadas o recursivas de manera ordenada
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Comprendiendo la recursividad (1/17)
+
+```python
+def factorial(n: int) -> int:
+    return 1 if n <= 1 else n * factorial(n - 1)
+
+factorial(4)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Comprendiendo la recursividad (2/17)
+
+```python
+def factorial(n: int) -> int:
+    return 1 if n <= 1 else n * factorial(n - 1)
+
+factorial(4)
+```
+
+<img src="iph/n3/img/fb_1.png" alt="" style="object-fit: scale-down">
+
+
+<br>
+
+- Nota se omite el nombre de la función en cada Frame
+	- El cual siempre sería: `factorial()`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Comprendiendo la recursividad (3/17)
+
+```python
+    return 1 if n <= 1 else n * factorial(n - 1)
+```
+
+<img src="iph/n3/img/fb_2.png" alt="" style="width: 55%; height: 40%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Comprendiendo la recursividad (4/17)
+
+```python
+    return 1 if n <= 1 else n * factorial(n - 1)
+```
+
+<img src="iph/n3/img/fb_3.png" alt="" style="width: 55%; height: 45%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Comprendiendo la recursividad (5/17)
+
+```python
+    return 1 if n <= 1 else n * factorial(n - 1)
+```
+
+<img src="iph/n3/img/fb_4.png" alt="" style="width: 55%; height: 50%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Comprendiendo la recursividad (6/17)
+
+```python
+    return 1 if n <= 1 else n * factorial(n - 1)
+```
+
+<img src="iph/n3/img/fb_5.png" alt="" style="width: 55%; height: 50%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Comprendiendo la recursividad (7/17)
+
+```python
+    return 1 if n <= 1 else n * factorial(n - 1)
+```
+
+<img src="iph/n3/img/fb_6.png" alt="" style="width: 55%; height: 50%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Comprendiendo la recursividad (8/17)
+
+```python
+    return 1 if n <= 1 else n * factorial(n - 1)
+```
+
+<img src="iph/n3/img/fb_7.png" alt="" style="width: 55%; height: 50%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Comprendiendo la recursividad (9/17)
+
+```python
+    return 1 if n <= 1 else n * factorial(n - 1)
+```
+
+<img src="iph/n3/img/fb_8.png" alt="" style="width: 55%; height: 50%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Comprendiendo la recursividad (10/17)
+
+```python
+    return 1 if n <= 1 else n * factorial(n - 1)
+```
+
+<img src="iph/n3/img/fb_9.png" alt="" style="width: 55%; height: 50%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Comprendiendo la recursividad (11/17)
+
+```python
+    return 1 if n <= 1 else n * factorial(n - 1)
+```
+
+<img src="iph/n3/img/fb_10.png" alt="" style="width: 55%; height: 50%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Comprendiendo la recursividad (12/17)
+
+```python
+    return 1 if n <= 1 else n * factorial(n - 1)
+```
+
+<img src="iph/n3/img/fb_11.png" alt="" style="width: 55%; height: 50%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Comprendiendo la recursividad (13/17)
+
+```python
+    return 1 if n <= 1 else n * factorial(n - 1)
+```
+
+<img src="iph/n3/img/fb_12.png" alt="" style="width: 55%; height: 50%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Comprendiendo la recursividad (14/17)
+
+```python
+    return 1 if n <= 1 else n * factorial(n - 1)
+```
+
+<img src="iph/n3/img/fb_13.png" alt="" style="width: 55%; height: 50%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Comprendiendo la recursividad (15/17)
+
+```python
+    return 1 if n <= 1 else n * factorial(n - 1)
+```
+
+<img src="iph/n3/img/fb_14.png" alt="" style="width: 55%; height: 50%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Comprendiendo la recursividad (16/17)
+
+<img src="iph/n3/img/fb_15.png" alt="" style="object-fit: scale-down">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Comprendiendo la recursividad (17/17)
+
+```python
+def factorial(n: int) -> int:
+    return 1 if n <= 1 else n * factorial(n - 1)
+
+factorial(4)  # → 24
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pruebas (1/3)
+
+1. Verificar si el resultado obtenido es el esperado
+2. Depurar:
+	- Corregir errores
+	- Pulir/mejorar/optimizar
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pruebas (2/3)
+
+- Ejecutar los doctests:
+
+```Python[1,28]
+import doctest
+
+def factorial(n: int) -> int:
+    """
+    Calcula el factorial de un número (n!).
+
+    Args:
+        numero (int): El número positivo para calcular su factorial.
+
+    Returns:
+        int: El factorial del número proporcionado.
+
+    >>> factorial(0)  # Caso base
+    1
+    >>> factorial(1)  # Caso base
+    1
+    >>> factorial(2)  # Caso recursivo - 2
+    2
+    >>> factorial(3)  # Caso recursivo - 3
+    6
+    >>> factorial(4)  # Caso recursivo - 4
+    24
+    >>> factorial(5)  # Caso recursivo - 5
+    120
+    """
+    return 1 if n <= 1 else n * factorial(n - 1)
+
+doctest.run_docstring_examples(factorial, globals(), verbose=True)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pruebas (3/3)
+
+- Revisar los resultados y corregir si es necesario:
+
+```plaintext
+Trying:
+    factorial(0)
+Expecting:
+    1
+ok
+Trying:
+    factorial(1)
+Expecting:
+    1
+ok
+Trying:
+    factorial(2)
+Expecting:
+    2
+ok
+Trying:
+    factorial(3)
+Expecting:
+    6
+ok
+Trying:
+    factorial(4)
+Expecting:
+    24
+ok
+Trying:
+    factorial(5)
+Expecting:
+    120
+ok
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Reglas de recursividad:
+
+1. Definir el(los) caso(s) base con solución conocida
+2. Establecer el(los) caso(s) recursivo(s) que resuelvan sub-problemas similares
+3. Garantizar que los casos recursivos converjan al caso base
+4. Si hay múltiples casos recursivos, deben ser disyuntos
+5. La solución debe combinar los resultados de los casos base y recursivos
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta I
+
+- Implemente la función `fibonacci()` recursivamente
+
+- **Serie de fibonacci**:
+	- Serie en donde cada número es la suma de los dos anteriores
+	- Ej:
+```plaintext
+fibonacci(0) = 0
+fibonacci(1) = 1
+fibonacci(2) = fibonacci(1) + fibonacci(0) = 1 + 0 = 1
+fibonacci(3) = fibonacci(2) + fibonacci(1) = 1 + 1 = 2
+fibonacci(4) = fibonacci(3) + fibonacci(2) = 2 + 1 = 3
+fibonacci(5) = fibonacci(4) + fibonacci(3) = 3 + 2 = 5
+…
+fibonacci(n) = fibonacci(n−1) + fibonacci(n−2)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta I - Solución
+
+```python
+def fibonacci(n: int) -> int:
+    """
+    Calcula el n-ésimo número de la secuencia de Fibonacci.
+
+    Args:
+        n (int): La posición en la secuencia de Fibonacci (entero no negativo).
+
+    Returns:
+        int: El n-ésimo número de Fibonacci.
+
+    >>> fibonacci(0)  # Caso base
+    0
+    >>> fibonacci(1)  # Caso base
+    1
+    >>> fibonacci(2)  # Caso recursivo - 2
+    1
+    >>> fibonacci(12)  # Caso recursivo - 12
+    144
+    >>> fibonacci(24)  # Caso recursivo - 24
+    46368
+    """
+    assert isinstance(n, int), "n debe ser un entero"  
+    assert n >= 0, "n debe ser un entero no negativo"
+    return n if n <= 1 else fibonacci(n - 1) + fibonacci(n - 2)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `RecursionError`
+
+<a href="https://eerosales24.github.io/iph_2026_20/general/errores_comunes/#/42" target="_blank" rel="noopener noreferrer">RecursionError</a>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta II
+
+- Implemente una función `sum_n()`  recursivamente
+	- Calcula la suma de todos los enteros desde 1 hasta un número positivo `n`
+
+```
+∑ⁱⁿᵢ₌₁ i: 1
+
+∑ⁱⁿᵢ₌₁ i: 1 + 2 = 3
+
+∑ⁱⁿᵢ₌₁ i: 1 + 2 + 3 = 6
+
+∑ⁱⁿᵢ₌₁ i: 1 + 2 + 3 + 4 = 10
+
+∑ⁱⁿᵢ₌₁ i: 1 + 2 + 3 + 4 + 5 = 15
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta II - Solución
+
+```python
+def sum_n(n: int) -> int:
+    """
+    Calcula la suma de los enteros desde 1 hasta n, de forma recursiva.
+
+    Args:
+        n (int): Límite superior positivo de la suma.
+
+    Returns:
+        int: La suma de los enteros desde 1 hasta n.
+
+    >>> sum_n(1)
+    1
+    >>> sum_n(7)
+    28
+    >>> sum_n(10)
+    55
+    """
+    assert isinstance(n, int), "n debe ser un entero"
+    assert n > 0, "n debe ser un entero positivo"
+
+    return 1 if n == 1 else n + sum_n(n - 1)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Aclaración (1/2)
+
+- Esta es solo una implementación de ejemplo con fines de práctica
+    
+- No es eficiente para valores grandes de `n`
+    
+- Para calcular eficientemente la suma de un rango de enteros positivos
+	- Use la siguiente fórmula:
+    
+
+    **n(n + 1) / 2**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Aclaración (2/2)
+
+```python
+def sum_n(n: int) -> int:
+    """
+    Calcula la suma de los enteros desde 1 hasta n usando una fórmula matemática.
+
+    Args:
+        n (int): Límite superior positivo de la suma.
+
+    Returns:
+        int: La suma de los enteros desde 1 hasta n.
+
+    >>> sum_n(1)
+    1
+    >>> sum_n(5)
+    15
+    >>> sum_n(100)
+    5050
+    """
+    assert isinstance(n, int), "n debe ser un entero"
+    assert n > 0, "n debe ser un entero positivo"
+    
+    return n * (n + 1) // 2
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III
+
+- Implemente una función `contar_digitos()`  recursivamente
+	- Cuenta la cantidad de dígitos en un número entero mayor a cero
+	- Ej: 
+		- `contar_digitos(7)` debe retornar `1`
+		- `contar_digitos(12345)` debe retornar `5`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III - Tips
+
+- Use `n // 10` para eliminar el último dígito
+- Repetir esto recursivamente 
+	- Hasta que el número tenga un solo dígito 
+
+
+```python
+    """
+    Cuenta recursivamente la cantidad de dígitos en un número entero no negativo.
+
+    Args:
+        n (int): El número entero no negativo al que se le contarán los dígitos.
+
+    Returns:
+        int: La cantidad de dígitos del número proporcionado.
+
+    >>> contar_digitos(1)
+    1
+    >>> contar_digitos(987654)
+    6
+    """
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III - Solución
+
+
+```python
+def contar_digitos(n: int) -> int:
+    """
+    Cuenta recursivamente la cantidad de dígitos en un número entero no negativo.
+
+    Args:
+        n (int): El número entero no negativo al que se le contarán los dígitos.
+
+    Returns:
+        int: La cantidad de dígitos del número proporcionado.
+
+    >>> contar_digitos(1)
+    1
+    >>> contar_digitos(987654)
+    6
+    """
+    assert isinstance(n, int), "n debe ser un entero"
+    assert n >= 0, "n debe ser un entero no negativo"
+
+    return 1 if n < 10 else 1 + contar_digitos(n // 10)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Aclaración (1/2)
+
+- Esta es solo una implementación de ejemplo con fines de práctica
+    
+- No es eficiente para valores grandes de `n`
+    
+- Para calcular eficientemente se usaría `int(math.log10(n)) + 1`
+	- El logaritmo base 10 de un número
+		- Indica el orden de magnitud en potencias de 10 
+
+<table border="1">
+  <thead>
+    <tr>
+      <th>Número</th>
+      <th>log10(n)</th>
+      <th>int(log10(n))</th>
+      <th>Dígitos (esperados)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>9</td>
+      <td>0.95</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>1.0</td>
+      <td>1</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>99</td>
+      <td>1.99</td>
+      <td>1</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>100</td>
+      <td>2.0</td>
+      <td>2</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <td>123456</td>
+      <td>5.09</td>
+      <td>5</td>
+      <td>6</td>
+    </tr>
+  </tbody>
+</table>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Aclaración (2/2)
+
+```python
+import math
+
+def contar_digitos(n: int) -> int:
+    """
+    Cuenta la cantidad de dígitos en un número entero no negativo de forma eficiente.
+
+    Args:
+        n (int): El número entero no negativo.
+
+    Returns:
+        int: La cantidad de dígitos del número.
+
+    >>> contar_digitos(1)
+    1
+    >>> contar_digitos(987654)
+    6
+    """
+    return 1 if n == 0 else int(math.log10(n)) + 1
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### ¿Cuándo la recursividad  es eficiente?
+
+
+<table border="1">
+  <thead>
+    <tr>
+      <th>Tipo de problema*</th>
+      <th>¿Cuándo la recursión es eficiente o conveniente?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Algunos algoritmos de árboles</td>
+      <td>Siempre. Por su naturaleza jerárquica</td>
+    </tr>
+    <tr>
+      <td>Divide &amp; vencerás</td>
+      <td>Cuando el problema puede dividirse en mitades</td>
+    </tr>
+    <tr>
+      <td>Backtracking</td>
+      <td>Cuando hay que probar muchas combinaciones</td>
+    </tr>
+    <tr>
+      <td>Programación dinámica</td>
+      <td>Si se usa memoización para evitar redundancias</td>
+    </tr>
+    <tr>
+      <td>Algunos algoritmos de grafos</td>
+      <td>Por claridad y alineación con la lógica de pila</td>
+    </tr>
+  </tbody>
+</table>
+
+\* Temas estudiados en el siguiente curso (Estructuras de Datos y Algoritmos - EDA)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Para cerrar
+
+- Revise las siguientes buenas prácticas:
+	- <a href="https://eerosales24.github.io/iph_2026_20/general/buenas_practicas/#/3" target="_blank" rel="noopener noreferrer">Definir el caso base</a>
+	- <a href="https://eerosales24.github.io/iph_2026_20/general/buenas_practicas/#/4" target="_blank" rel="noopener noreferrer">Converger al caso base</a>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<img src="iph/n3/img/re_meme.png" alt="" style="object-fit: scale-down">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<i class="fas fa-question-circle fa-2x fa-spin fa-4x"></i>
+
+<br>
+<br>
+
+ [<i class="fas fa-home  fa-3x"></i>](https://eerosales24.github.io/iph_2026_20/#)
+</div></script></section></div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/chart/chart.min.js"></script>
+	<script src="plugin/chart/plugin.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+	  function isLight(color) {
+		let hex = color.replace('#', '');
+
+		// convert #fff => #ffffff
+		if(hex.length == 3){
+			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+		}
+
+		const c_r = parseInt(hex.substr(0, 2), 16);
+		const c_g = parseInt(hex.substr(2, 2), 16);
+		const c_b = parseInt(hex.substr(4, 2), 16);
+		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+		return brightness > 155;
+	}
+
+	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+	var isLight = isLight(bgColor);
+
+	if(isLight){
+		document.body.classList.add('has-light-background');
+	} else {
+		document.body.classList.add('has-dark-background');
+	}
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+        ],
+
+
+    	allottedTime: 120 * 1000,
+
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
+
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
+
+		customcontrols: {
+			controls: [
+			]
+		},
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width":960,"height":700,"margin":"0.025","minScale":"0.1","maxScale":"2.0","controls":"true","controlsLayout":"bottom-right","progress":"true","slideNumber":"true","center":"false","transition":"slide","transitionSpeed":"default"}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+
+  <!-- created with Advanced Slides -->
+</html>

@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title></title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/iph.css" id="theme" />
+    <link rel="stylesheet" href="plugin/highlight/spyder.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
+
+
+
+    <script defer src="dist/fontawesome/all.min.js"></script>
+
+	<script type="text/javascript">
+		var forgetPop = true;
+		function onPopState(event) {
+			if(forgetPop){
+				forgetPop = false;
+			} else {
+				parent.postMessage(event.target.location.href, "app://obsidian.md");
+			}
+        }
+		window.onpopstate = onPopState;
+		window.onmessage = event => {
+			if(event.data == "reload"){
+				window.document.location.reload();
+			}
+			forgetPop = true;
+		}
+
+		function fitElements(){
+			const itemsToFit = document.getElementsByClassName('fitText');
+			for (const item in itemsToFit) {
+				if (Object.hasOwnProperty.call(itemsToFit, item)) {
+					var element = itemsToFit[item];
+					fitElement(element,1, 1000);
+					element.classList.remove('fitText');
+				}
+			}
+		}
+
+		function fitElement(element, start, end){
+
+			let size = (end + start) / 2;
+			element.style.fontSize = `${size}px`;
+
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
+					size--;
+					element.style.fontSize = `${size}px`;
+				}
+				return;
+			}
+
+			if(element.scrollHeight > element.offsetHeight){
+				fitElement(element, start, size);
+			} else {
+				fitElement(element, size, end);
+			}		
+		}
+
+
+		document.onreadystatechange = () => {
+			fitElements();
+			if (document.readyState === 'complete') {
+				if (window.location.href.indexOf("?export") != -1){
+					parent.postMessage(event.target.location.href, "app://obsidian.md");
+				}
+				if (window.location.href.indexOf("print-pdf") != -1){
+					let stateCheck = setInterval(() => {
+						clearInterval(stateCheck);
+						window.print();
+					}, 250);
+				}
+			}
+	};
+
+
+        </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### <i class="fas fa-award"></i> IP Honores
+
+ ####  *Instrucciones Iterativas - for*
+
+[Eduardo Rosales](mailto:ee.rosales24@uniandes.edu.co)
+
+Departamento de Ingeniería de Sistemas y Computación
+
+Universidad de los Andes
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### La Instrucción `for` 
+
+<img src="iph/n3/img/Screenshot 2024-10-03 at 4.02.28 PM.png" alt="" style="object-fit: scale-down">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `for`
+
+- Palabra clave usada para crear un ciclo ó bucle
+
+- La instrucción `for` es conocida también como:
+    - *Bucle for*
+    - *Ciclo for*
+    - *for each*
+    - Ó simplemente *for*
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<img src="iph/n3/img/Screenshot 2024-10-03 at 4.05.23 PM.png" alt="" style="width: 50%; height: 35%; object-fit: fill">
+
+ 
+- `for`  itera o recorre
+    - Un iterable
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## **¿Qué es un iterable?**
+
+- Un objeto que puede ser recorrido 
+    - De elemento en elemento
+        - Ej: Mediante `for`
+- Ejemplos de iterables comunes en Python:
+    - Listas, tuplas, strings, diccionarios, sets
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<img src="iph/n3/img/Screenshot 2024-10-03 at 4.06.23 PM.png" alt="" style="width: 50%; height: 30%; object-fit: fill">
+
+
+<br>
+
+- `in`
+    -  Palabra clave usada para configurar el bucle 
+        - Para recorrer cada elemento del iterable
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<img src="iph/n3/img/Screenshot 2024-10-03 at 4.08.03 PM.png" alt="" style="width: 50%; height: 35%; object-fit: fill">
+
+
+<br>
+
+- *item*
+    - Nombre dado al elemento actual recorrido
+        - En *singular*
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `for` - Cuerpo (1/2)
+
+- El cuerpo de `for`
+    - Es un bloque de código
+- No hay límite en el número de instrucciones
+- **Toda instrucción** que sea parte de `for`
+    - Debe estar indentada
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `for` - Cuerpo (2/2)
+
+<img src="iph/n3/img/Screenshot 2024-10-03 at 4.09.46 PM.png" alt="" style="object-fit: scale-down">
+
+
+- El cuerpo de `for` está indentado
+    - 4 espacios
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `for` Ejemplo (1/3)
+
+```Python[1]
+for caracter in 'Hola':
+    print(caracter)
+```
+
+- **Para cada carácter en `'Hola'`**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `for` Ejemplo (2/3)
+
+```Python[2]
+for caracter in 'Hola':
+    print(caracter)
+```
+
+- Para cada carácter en `'Hola'`
+    - **Imprimir cada carácter**
+
+```plaintext
+H
+o
+l
+a
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `for` Ejemplo (3/3)
+
+<img src="iph/n3/img/Screenshot 2024-10-03 at 4.22.24 PM.png" alt="" style="object-fit: scale-down">
+
+
+- Si el iterable está vacío
+    - No se imprime nada
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta I
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+for letra in 'vertical':
+    print(letra)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta I - Solución
+
+
+```Python
+for letra in 'vertical':
+    print(letra)
+```
+
+```plaintext
+v
+e
+r
+t
+i
+c
+a
+l
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta II
+
+-  Implemente la función `ocurrencias_caracter()`:
+
+```Python
+def ocurrencias_caracter(cadena: str, caracter_buscado: str) -> int:
+    """
+    Retorna el número de veces que un carácter aparece en una cadena.  
+    Nota: usar for.
+
+    Args:
+        cadena (str): La cadena de caracteres en donde buscar.
+        caracter (str): El carácter a contar en la cadena.
+
+    Returns:
+        int: El número de ocurrencias del carácter en la cadena.
+
+    >>> ocurrencias_caracter('hola mundo', 'o')  # Caso dos ocurrencias
+    2
+    >>> ocurrencias_caracter('repetición', 'r')  # Caso una ocurrencia
+    1
+    >>> ocurrencias_caracter('ejemplo', 'z')  # Caso cero ocurrencias
+    0
+    """
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta II - Explicación (1/6)
+
+```Python
+def ocurrencias_caracter(cadena: str, caracter_buscado: str) -> int:
+    ocurrencias = 0  # Variable de retorno y contador
+    
+    # TODO: Completar el resto de la función
+    
+    return ocurrencias  # Un solo return
+```
+
+- `ocurrencias` se inicializa con el que sería
+    - El valor por defecto a retornar
+        - Al ser un contador
+            - El mínimo conteo es `0`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta II - Explicación (2/6)
+
+```Python
+def ocurrencias_caracter(cadena: str, caracter_buscado: str) -> int:
+    ocurrencias = 0  # Variable de retorno y contador
+    
+    # TODO: Completar el resto de la función
+    
+    return ocurrencias  # Un solo return
+```
+
+- Si `ocurrencias` nunca cambia
+    - Se retornaría `0`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta II - Explicación (3/6)
+
+- ¿Qué condición puede cambiar a la variable de retorno?
+    - &shy;<!-- .element: class="fragment" data-fragment-index="1" -->Que existan ocurrencias del carácter buscado
+- ¿Cómo se puede buscar estas ocurrencias?
+    - &shy;<!-- .element: class="fragment" data-fragment-index="2" -->Recorriendo el string
+- ¿Es necesario recorrer todo el string?
+    - &shy;<!-- .element: class="fragment" data-fragment-index="3" -->Sí, porque se buscan **todas las ocurrencias**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta II - Explicación (4/6)
+
+¿Cómo recorrer todo el string?
+
+```Python
+    for caracter_actual in cadena:
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta II - Explicación (5/6)
+
+¿Cómo saber si el carácter actual es el carácter buscado?
+
+```Python[2]
+    for caracter_actual in cadena:
+        if caracter_actual == caracter_buscado:
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta II - Explicación (6/6)
+
+¿Cómo contar que se encontró una ocurrencia?
+
+```Python[1,5]
+    ocurrencias = 0  # Variable de retorno y contador
+    
+    for caracter_actual in cadena:
+        if caracter_actual == caracter_buscado:
+            ocurrencias += 1
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta II - Solución
+
+```Python
+def ocurrencias_caracter(cadena: str, caracter_buscado: str) -> int:
+    """
+    Retorna el número de veces que un carácter aparece en una cadena.  
+    Nota: usar for.
+
+    Args:
+        cadena (str): La cadena de caracteres en donde buscar.
+        caracter (str): El carácter a contar en la cadena.
+
+    Returns:
+        int: El número de ocurrencias del carácter en la cadena.
+
+    >>> ocurrencias_caracter('hola mundo', 'o')  # Caso dos ocurrencias
+    2
+    >>> ocurrencias_caracter('repetición', 'r')  # Caso una ocurrencia
+    1
+    >>> ocurrencias_caracter('ejemplo', 'z')  # Caso cero ocurrencias
+    0
+    """
+    ocurrencias = 0  # Variable de retorno y contador
+
+    for caracter_actual in cadena:  # Recorrer toda la cadena
+        if caracter_actual == caracter_buscado:
+            ocurrencias += 1
+            
+    return ocurrencias  # Un solo return
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III
+
+-  Implemente la función `cantidad_digitos()`:
+
+```Python
+def cantidad_digitos(cadena: str) -> int:
+    """
+    Retorna la cantidad de dígitos positivos (1-9) encontrados 
+    en la cadena de entrada. Recordatorio: la función 
+    str.isdigit() retorna True si el string contiene solo dígitos. 
+    Nota: usar for.
+
+    Args:
+        cadena (str): La cadena de entrada en la que buscar números.
+
+    Returns:
+        int: La cantidad de dígitos encontrados en la cadena,
+        o 0 si no hay dígitos o la cadena está vacía.
+
+    >>> cantidad_digitos('a5b5d55z')  # Caso cuatro dígitos
+    4
+    >>> cantidad_digitos('abdz')  # Caso cero dígitos
+    0
+    """
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III - Tips (1/3)
+
+- ¿De qué tipo es la variable de retorno?
+    - &shy;<!-- .element: class="fragment" data-fragment-index="1" -->Un contador entero (`int`)
+- ¿Qué valor debe asignarse inicialmente a la variable de retorno?
+    - &shy;<!-- .element: class="fragment" data-fragment-index="2" -->`0`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III - Tips (2/3)
+
+ - ¿Qué condición puede cambiar a la variable de retorno?
+    - &shy;<!-- .element: class="fragment" data-fragment-index="1" -->Que existan ocurrencias de dígitos en la cadena
+- ¿Cómo se puede buscar estas ocurrencias?
+    - &shy;<!-- .element: class="fragment" data-fragment-index="2" -->Recorriendo el string
+- ¿Es necesario recorrer todo el string?
+    - &shy;<!-- .element: class="fragment" data-fragment-index="3" -->Sí, porque se buscan **todas las ocurrencias**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III - Tips (3/3)
+
+ - ¿Cómo saber si el carácter actual es un dígito?
+    - &shy;<!-- .element: class="fragment" data-fragment-index="1" -->Usando `str.isdigit()`
+- ¿Cómo contar la ocurrencia de un dígito?
+    - &shy;<!-- .element: class="fragment" data-fragment-index="2" -->Incrementando el contador (`+=1`)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III - Solución
+
+```Python
+def cantidad_digitos(cadena: str) -> int:
+    """
+    Retorna la cantidad de dígitos positivos (1-9) encontrados 
+    en la cadena de entrada. Recordatorio: la función 
+    str.isdigit() retorna True si el string contiene solo dígitos. 
+    Nota: usar for.
+
+    Args:
+        cadena (str): La cadena de entrada en la que buscar números.
+
+    Returns:
+        int: La cantidad de dígitos encontrados en la cadena,
+        o 0 si no hay dígitos o la cadena está vacía.
+
+    >>> cantidad_digitos('a5b5d55z')  # Caso cuatro dígitos
+    4
+    >>> cantidad_digitos('abdz')  # Caso cero dígitos
+    0
+    """
+    cantidad = 0  # Variable de retorno y contador
+    
+    for caracter_actual in cadena:
+        if caracter_actual.isdigit():
+            cantidad += 1
+            
+    return cantidad  # Un solo return
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IV
+
+-  Implemente la función `sumar_digitos_positivos()`:
+
+```Python
+def sumar_digitos_positivos(cadena: str) -> int:
+    """
+    Retorna la suma de todos los dígitos positivos (1-9) encontrados en l
+    a cadena de entrada. Recordatorio: la función str.isdigit() retorna True 
+    si el string contiene solo dígitos.
+
+    Args:
+        cadena (str): La cadena de entrada en la que buscar números.
+
+    Returns:
+        int: La suma de todos los dígitos encontrados en la cadena, 
+        o 0 si no hay dígitos o la cadena está vacía.
+
+    >>> sumar_digitos_positivos('a5b5d55z')  # Caso cuatro dígitos
+    20
+    >>> sumar_digitos_positivos('abdz')  # Caso cero dígitos
+    0
+    """
+
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IV - Solución
+
+-  Implemente la función `sumar_digitos_positivos()`:
+
+```Python
+def sumar_digitos_positivos(cadena: str) -> int:
+    """
+    Retorna la suma de todos los dígitos positivos (1-9) encontrados en l
+    a cadena de entrada. Recordatorio: la función str.isdigit() retorna True 
+    si el string contiene solo dígitos.
+    
+    Args:
+        cadena (str): La cadena de entrada en la que buscar números.
+
+    Returns:
+        int: La suma de todos los dígitos encontrados en la cadena, 
+        o 0 si no hay dígitos o la cadena está vacía.
+
+    >>> sumar_digitos_positivos('a5b5d55z')  # Caso cuatro dígitos
+    20
+    >>> sumar_digitos_positivos('abdz')  # Caso cero dígitos
+    0
+    """
+
+    suma = 0  # Variable de retorno y contador
+    
+    for caracter_actual in cadena:
+        if caracter_actual.isdigit():
+            suma += int(caracter_actual)
+            
+    return suma  # Un solo return
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `range()`
+
+- Genera un *rango*
+    - Secuencia inmutable e iterable de enteros
+- Sintaxis: 
+```Python
+range(end) ó range(start, end, step)
+```
+    - `start`: inicio (inclusivo, opcional: 0)
+    - `end`: fin (excluyente)
+    - `step`: incremento (opcional: 1)
+- Genera números bajo demanda
+- Ayuda:  [range](https://docs.python.org/3/library/functions.html#func-range)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `range()` - Ejemplo con `for` (1/2)
+
+```Python
+for i in range(5): # start = 0, end = 4, step = 1
+    print(i)
+```
+- `start`: Por defecto es 0 
+- `end`: Es excluyente, es decir `4` (no `5`)
+- `step`: Por defecto es `1`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `range()` - Ejemplo con `for` (2/2)
+
+```Python
+for i in range(5): # start = 0, end = 4, step = 1
+    print(i)
+```
+
+```plaintext
+0
+1
+2
+3
+4
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta V
+
+- ¿Cuáles son los valores de `start`, `end`  y `step`  configurados para `range()`?
+
+```Python
+for i in range(5, 9):
+    print(i)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta V - Solución
+
+
+```Python
+for i in range(5, 9):  # start = 5, end = 8, step = 1
+    print(i)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VI
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+for i in range(5, 9):  # start = 5, end = 8, step = 1
+    print(i)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VI - Solución
+
+```Python
+for i in range(5, 9):  # start = 5, end = 8, step = 1
+    print(i)
+```
+
+```plaintext
+5
+6
+7
+8
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VII
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+for i in range(2, 13, 2):  # start = 2, end = 12, step = 2
+    print(i)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VII - Solución
+
+
+```Python
+for i in range(2, 13, 2):  # start = 2, end = 12, step = 2
+    print(i)
+```
+
+```plaintext
+2
+4
+6
+8
+10
+12
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VIII
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+for i in range(1, 12, 2):
+    print(i)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VIII - Solución
+
+```Python
+for i in range(1, 12, 2):  # start = 1, stop = 11, end = 2
+    print(i)
+```
+
+```plaintext
+1
+3
+5
+7
+9
+11
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IX
+
+- ¿Qué instrucción `for`  con `range()` imprimiría la siguiente salida?
+
+```plaintext
+0
+1
+2
+3
+4
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IX - Solución
+
+```Python
+for i in range(5):
+    print(i)
+```
+
+```plaintext
+0
+1
+2
+3
+4
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta X
+
+- ¿Qué instrucción `for`  con `range()` imprimiría la siguiente salida?
+
+```plaintext
+5
+4
+3
+2
+1
+0
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta X - Solución
+
+
+```Python
+for i in range(5, -1, -1):
+    print(i)
+```
+
+```plaintext
+5
+4
+3
+2
+1
+0
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XI
+
+- ¿Qué instrucción `for`  con `range()` imprimiría la siguiente salida?
+
+```plaintext
+10
+8
+6
+4
+2
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XI - Solución
+
+
+```Python
+for i in range(10, 1, -2):
+    print(i)
+```
+
+```plaintext
+10
+8
+6
+4
+2
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XII
+
+- ¿Cuál sería el código equivalente usando la instrucción for?
+
+```Python
+iteraciones = 0
+sumatoria = 0
+i = 1
+n = 10
+
+while i <= n:
+    iteraciones += 1
+    sumatoria += i
+    i += 1  
+  
+print(f'Sumatoria = {sumatoria}')  # → Sumatoria = 55
+print(f'Iteraciones = {iteraciones}')  # → Iteraciones = 10
+print(f'i = {i}')  # → i = 11
+print(f'n = {n}')  # → n = 10
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XII - Solución
+
+```Python
+iteraciones = 0
+sumatoria = 0
+n = 10
+
+for i in range(1, n + 1):  # n inclusivo
+    iteraciones += 1
+    sumatoria += i
+
+print(f'Sumatoria = {sumatoria}')  # → Sumatoria = 55
+print(f'Iteraciones = {iteraciones}')  # → Iteraciones = 10
+print(f'i = {i}')  # → i = 10
+print(f'n = {n}')  # → n = 10
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XIII
+
+- ¿Cuál sería el código equivalente usando la instrucción for?
+
+```Python
+palabra = 'python'
+i = 0
+
+while i < len(palabra):
+    print(palabra[i])
+    i += 1
+```
+
+```plaintext
+p
+y
+t
+h
+o
+n
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XIII - Solución
+
+
+```Python
+palabra = 'python'
+
+for letra in palabra:
+    print(letra)
+```
+
+```plaintext
+p
+y
+t
+h
+o
+n
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### ¿Cómo sabe `for` cuando terminar de iterar un iterable?
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🌀 **¿Qué es un iterable?** 🌀
+
+- Un objeto que puede ser recorrido 
+	- De elemento en elemento
+		- Ej: Mediante `for`
+- Ejemplos de iterables comunes en Python:
+	- Listas, strings, diccionarios
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🌀 ¿Qué es un iterador? 🌀
+
+- Un objeto que representa un flujo de datos (stream of data)
+- Se _consume_ elemento por elemento
+	- Sin almacenar toda la secuencia en memoria
+- Implementa el protocolo de iteración
+	- `iter()` y `next()`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Protocolo de iteración
+
+Para que un objeto sea iterador, debe implementar:
+
+1. **`__iter__()`**:
+    - Si es un iterable, 
+	    - Retorna un nuevo iterador
+    - Si es un iterador, 
+	    - Se retorna a a sí mismo
+	    
+2. **`__next__()`**:
+    - Retorna el siguiente elemento en la secuencia
+    - Lanza **`StopIteration`** 
+	    - Cuando no hay más elementos
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## **`StopIteration`: El fin del iterador**
+
+- Excepción que se lanza automáticamente
+	- Cuando un iterador no tiene más elementos
+- Python maneja esta excepción internamente 
+	- En ciclos como `for`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### ¿Cómo funciona un iterador? (1/2)
+
+- Convertir un iterable en un iterador:
+
+```python
+lista = [10, 20, 30]
+iterador = iter(lista)  # Convierte lista en iterador
+
+print(next(iterador))  # → 10
+print(next(iterador))  # → 20
+print(next(iterador))  # → 30
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### ¿Cómo funciona un iterador? (2/2)
+
+- Si ya es un iterable
+	- Se retorna a sí mismo:
+	
+```python
+numeros = iter([1, 2, 3]) 
+print(iter(numeros) is numeros)  # → True (ya es un iterador)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### ¿Cómo funciona `next()`?
+
+- Retorna el siguiente elemento del iterador
+- Cuando no hay más elementos
+	- Lanza `StopIteration`
+
+```python
+iterador = iter([5, 10, 15])
+print(next(iterador))  # → 5
+print(next(iterador))  # → 10
+print(next(iterador))  # → 15
+print(next(iterador))  # → StopIteration ❌
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  `for` usa a `iter()` y `next()` (1/6)
+
+
+- Python llama a `iter(obj)`
+	- Para obtener un iterador
+- Luego, en cada iteración
+	- Llama a `next(iterador)`
+		- Para obtener el siguiente elemento
+-  Cuando `next()` lanza `StopIteration`
+	- `for` se detiene automáticamente
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  `for` usa a `iter()` y `next()` (2/6)
+
+- Ejemplo manual con un string:
+
+```python
+texto = "Hola"
+
+iterador = iter(texto)  # Se llama manualmente a iter()
+print(next(iterador))  # → 'H'
+print(next(iterador))  # → 'o'
+print(next(iterador))  # → 'l'
+print(next(iterador))  # → 'a'
+
+print(next(iterador))  # → StopIteration ❌
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  `for` usa a `iter()` y `next()` (3/6)
+
+- Ejemplo con `for` y un iterable (string):
+
+```python
+for letra in "Hola":
+    print(letra)
+```
+
+- Internamente, Python usa `iter()` y `next()` 
+	- Igual que en el ejemplo anterior
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  `for` usa a `iter()` y `next()` (4/6)
+
+<img src="eda/img/iter_protocol.png" alt="" style="object-fit: scale-down">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  `for` usa a `iter()` y `next()` (5/6)
+
+
+- `for` usa el protocolo de iteración (o iterador) con `iter()` y `next()`
+-  Esto ocurre automáticamente
+	- El programador no necesita llamar a `iter()` o a `next()` 
+-  `StopIteration` también se maneja automáticamente
+	- Deteniendo el ciclo cuando no hay más elementos
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `for` usa a `iter()` y `next()` (6/6)
+ 
+- ¿Por qué `for` usa iteradores en Python?
+
+	- Flexibilidad:
+		- Puede recorrer cualquier objeto iterable
+			- Ej: `string`, `list`, `dict`, etc.
+		
+	-  Evaluación perezosa (lazy):
+		- No necesita cargar todos los elementos en memoria
+			- Solo obtiene los elementos cuando se necesitan
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Para cerrar
+
+- Revise la siguiente buena práctica:
+	- [Usar nombres de variables autoexplicativos al iterar](https://eerosales24.github.io/iph_2026_20/general/buenas_practicas/#/9)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<i class="fas fa-question-circle fa-2x fa-spin fa-4x"></i>
+
+<br>
+<br>
+
+ [<i class="fas fa-home  fa-3x"></i>](https://eerosales24.github.io/iph_2026_20/#)
+</div></script></section></div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/chart/chart.min.js"></script>
+	<script src="plugin/chart/plugin.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+	  function isLight(color) {
+		let hex = color.replace('#', '');
+
+		// convert #fff => #ffffff
+		if(hex.length == 3){
+			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+		}
+
+		const c_r = parseInt(hex.substr(0, 2), 16);
+		const c_g = parseInt(hex.substr(2, 2), 16);
+		const c_b = parseInt(hex.substr(4, 2), 16);
+		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+		return brightness > 155;
+	}
+
+	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+	var isLight = isLight(bgColor);
+
+	if(isLight){
+		document.body.classList.add('has-light-background');
+	} else {
+		document.body.classList.add('has-dark-background');
+	}
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+        ],
+
+
+    	allottedTime: 120 * 1000,
+
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
+
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
+
+		customcontrols: {
+			controls: [
+			]
+		},
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width":960,"height":700,"margin":"0.025","minScale":"0.1","maxScale":"2.0","controls":"true","controlsLayout":"bottom-right","progress":"true","slideNumber":"true","center":"false","transition":"slide","transitionSpeed":"default"}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+
+  <!-- created with Advanced Slides -->
+</html>

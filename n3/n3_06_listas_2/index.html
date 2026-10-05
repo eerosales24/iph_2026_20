@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title></title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/iph.css" id="theme" />
+    <link rel="stylesheet" href="plugin/highlight/spyder.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
+
+
+
+    <script defer src="dist/fontawesome/all.min.js"></script>
+
+	<script type="text/javascript">
+		var forgetPop = true;
+		function onPopState(event) {
+			if(forgetPop){
+				forgetPop = false;
+			} else {
+				parent.postMessage(event.target.location.href, "app://obsidian.md");
+			}
+        }
+		window.onpopstate = onPopState;
+		window.onmessage = event => {
+			if(event.data == "reload"){
+				window.document.location.reload();
+			}
+			forgetPop = true;
+		}
+
+		function fitElements(){
+			const itemsToFit = document.getElementsByClassName('fitText');
+			for (const item in itemsToFit) {
+				if (Object.hasOwnProperty.call(itemsToFit, item)) {
+					var element = itemsToFit[item];
+					fitElement(element,1, 1000);
+					element.classList.remove('fitText');
+				}
+			}
+		}
+
+		function fitElement(element, start, end){
+
+			let size = (end + start) / 2;
+			element.style.fontSize = `${size}px`;
+
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
+					size--;
+					element.style.fontSize = `${size}px`;
+				}
+				return;
+			}
+
+			if(element.scrollHeight > element.offsetHeight){
+				fitElement(element, start, size);
+			} else {
+				fitElement(element, size, end);
+			}		
+		}
+
+
+		document.onreadystatechange = () => {
+			fitElements();
+			if (document.readyState === 'complete') {
+				if (window.location.href.indexOf("?export") != -1){
+					parent.postMessage(event.target.location.href, "app://obsidian.md");
+				}
+				if (window.location.href.indexOf("print-pdf") != -1){
+					let stateCheck = setInterval(() => {
+						clearInterval(stateCheck);
+						window.print();
+					}, 250);
+				}
+			}
+	};
+
+
+        </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### <i class="fas fa-award"></i> IP Honores
+
+ ####  *Listas 2*
+
+[Eduardo Rosales](mailto:ee.rosales24@uniandes.edu.co)
+
+Departamento de Ingeniería de Sistemas y Computación
+
+Universidad de los Andes
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `list.index()`
+
+- Retorna el primer índice 
+	- Que contiene al valor especificado
+- Sintaxis:
+```Python
+lista.index(value, start, end)
+```
+
+- `value`: Valor cuyo índice buscar
+- `start`: Inicio de búsqueda (opcional: 0)
+- `end`: Fin de búsqueda (opcional: fin de la lista, excluyente)
+- Si el valor dado no se encuentra
+	- Genera un `ValueError`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `list.index()` - Ejemplo (1/2)
+
+```Python
+nums = [-2, -1, 0, 1, 2]
+
+nums.index(-2)  # → 0
+nums.index(-1)  # → 1
+nums.index(0)  # → 2
+nums.index(1)  # → 3
+nums.index(2)  # → 4
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `list.index()` - Ejemplo (2/2)
+
+<img src="iph/n3/img/Screenshot 2024-10-13 at 11.51.30 AM.png" alt="" style="object-fit: scale-down">
+
+
+```Python
+[1, 0, 1, 0].index(1)  # → 0 (índice de la primera ocurrencia)
+[1, 0, 1, 0].index(1, 2)  # → 2 (índice de la 1ra ocurrencia, desde 2)
+```
+
+- Errores:
+
+```Python
+[1, 0, 1, 0].index(10)  # → ValueError: value not found
+[1, 0, 1, 0].index('1')  # → ValueError: value not found
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Estudiemos algunos métodos de las listas
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Eliminación en listas (1/2)
+    
+- List slicing se puede usar para eliminar en listas
+- Al asignar la lista vacía 
+	- A una sublista de la lista original
+- Sin embargo, este método es poco claro
+	- Compromete la legibilidad del código
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Eliminación en listas (2/2)
+
+- Hay 3 formas más explícitas (claras) 
+	- De eliminar en listas:
+	- `del`  
+		- Cuando se sabe la posición del elemento  
+	- `list.remove()`  
+		- Cuando se conoce al elemento  
+	- `list.pop()`
+		- Cuando se sabe la posición del elemento
+			- Y se desea retornarlo
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `del` con listas - Por índice
+- Elimina un ítem por índice
+- Sintaxis: 
+```Python
+del lista[i]
+```
+
+-  `i`: Posición (índice) del ítem a eliminar 
+- Útil cuando se sabe la posición (índice) 
+	- A eliminar
+- La lista se modifica en sitio
+	- **No hay ningún retorno**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `del` con listas - Por índice - Ejemplo
+
+```Python
+items = ['z', 'a', 'b', 'c']
+
+del items[0]  # Elimina al ítem en el índice 0
+
+print(items)  # → ['a', 'b', 'c']
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `del` con listas - Vía slicing
+
+- Elimina vía notación slicing 
+- Sintaxis: 
+```Python
+del lista[start:stop]
+```
+
+- `start`: Inicio (opcional: 0, inclusivo)
+- `stop`: Fin (opcional: fin de la lista, excluyente)
+- Útil cuando se sabe la posición (rango)
+	- De los ítems a eliminar
+- La lista se modifica en sitio
+	- **No hay ningún retorno**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `del` con listas - Vía slicing - Ejemplo
+
+```Python
+items = ['a', 'z', 'y', 'b']
+
+del items[1:3]  # Elimina a los ítems en el índice 1 y 2
+
+print(items)  # → ['a', 'b']
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Eliminación en listas
+
+- Hay 3 formas más explícitas (claras) 
+	- De eliminar en listas:
+	- ✅ `del`  
+		- Cuando se sabe la posición del elemento  
+	- **`list.remove()`**
+		- Cuando se conoce al elemento  
+	- `list.pop()`
+		- Cuando se sabe la posición del elemento
+			- Y se desea retornarlo
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `list.remove()` (1/2)
+
+- Remueve la primera ocurrencia de un ítem dado
+- Sintaxis: 
+```Python 
+lista.remove(x)
+```
+
+- `x`: Ítem a ser eliminado
+	- En la lista
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `list.remove()` (2/2)
+
+- Sintaxis: 
+```Python 
+lista.remove(x)
+```
+
+- si `x` no se encuentra, genera un `ValueError`
+- Útil cuando el ítem a eliminar es conocido
+	- Y se sabe que existe en la lista
+- La lista se modifica en sitio
+	- `list.remove()` retorna `None`
+- Ayuda:  [list.remove](https://docs.python.org/3/tutorial/datastructures.html)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `list.remove()`  - Ejemplo (1/3)
+
+```Python
+items = ['z', 'a', 'b', 'c']
+
+items.remove('z')  # Elimina al ítem igual a 'z'
+
+print(items)  # → ['a', 'b', 'c']
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `list.remove()`  - Ejemplo (2/3)
+
+```Python
+items = ['a', 'a', 'a', 'a']
+
+items.remove('a')  # Elimina la 1ra ocurrencia de 'a'
+
+print(items)  # → ['a', 'a', 'a']
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `list.remove()`  - Ejemplo (3/3)
+
+```Python
+items = ['a', 'a', 'a', 'a']
+
+items.remove('b')  # → ValueError
+```
+
+- Usar `list.remove()`
+	- Cuando se sabe que el ítem existe en la lista
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Operadores de pertenencia (o membresía) (1/2)
+
+- `in`
+- Sintaxis:
+```Python
+x in s
+```
+- `x`: elemento a buscar
+- `s`: secuencia dentro de la cual buscar
+- `x in s` : devuelve `True` 
+	- Si se encuentra `x` en `s`
+	- Caso contrario `False`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Operadores de pertenencia (o membresía) (2/2)
+
+-  `not in`
+- Sintaxis:
+```Python
+x not in s
+```
+- `x`: elemento a buscar
+- `s`: secuencia dentro de la cual buscar
+- `x not in s` : devuelve `True`
+	- Si no se encuentra `x` en `s`
+	- Caso contrario `False`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Operadores de pertenencia (o membresía) - Ejemplos
+
+```Python
+# Asumir ejecución secuencial de cada línea:
+numeros = [1, 2, 3, 4, 5, 6]
+
+2 in numeros  # → True
+7 in numeros  # → False
+2 not in numeros  # → False
+7 not in numeros  # → True
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `list.remove()` - Con comprobación
+
+```Python
+if item_actual in items:    
+    items.remove(item_actual)
+```
+
+- Usar `list.remove()`
+	- Cuando se sabe que el ítem existe en la lista
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `list.remove()` - Con comprobación - Ejemplo
+
+```Python
+items = ['a', 'a', 'a', 'a']
+
+item_a_borrar = 'z'
+if item_a_borrar in items:  # → False    
+    items.remove(item_a_borrar)
+print(items)  # → ['a', 'a', 'a', 'a']
+
+item_a_borrar = 'a'
+if item_a_borrar in items:  # → True
+    items.remove(item_a_borrar)
+print(items)  # → [a', 'a', 'a']
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Eliminación en listas
+
+- Hay 3 formas más explícitas (claras) 
+	- De eliminar en listas:
+	- ✅ `del`  
+		- Cuando se sabe la posición del elemento  
+	- ✅ `list.remove()`
+		- Cuando se conoce al elemento  
+	- **`list.pop()`**
+		- Cuando se sabe la posición del elemento
+			- Y se desea retornarlo
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `list.pop()` (1/2)
+
+- Remueve y retorna un ítem en una posición dada
+	- La última por defecto
+- Sintaxis: 
+```Python
+lista.pop(i)
+```
+
+- `i`: Posición del elemento a retornar 
+	- Y eliminar (opcional: `-1`)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `list.pop()` (2/2)
+
+- Sintaxis: 
+```Python
+lista.pop(i)
+```
+
+- Útil cuando se sabe la posición del ítem a eliminar
+	- Y se quiere retornar su valor para usarlo 
+- Ayuda:  [list.pop](https://docs.python.org/3/tutorial/datastructures.html)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `list.pop()` - Ejemplo (1/3)
+
+```Python
+items = [1, 2, 3, 4]
+item_retornado = items.pop()  # Por defecto, elimina el último
+
+print(items)  # → [1, 2, 3]
+print(item_retornado)  # → 4
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `list.pop()` - Ejemplo (2/3)
+
+```Python
+items = [1, 2, 3, 4]
+item_retornado = items.pop(-2)   # Elimina el penúltimo
+
+print(items)  # → [1, 2, 4]
+print(item_retornado)  # → 3
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `list.pop()`  - Ejemplo (3/3)
+
+```Python
+items = []
+items.pop()   # IndexError
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `list.pop()` - Con Comprobación
+
+```Python
+items = []
+if items != []:  # → False  
+    item_retornado = items.pop() 
+print(items)  # → []
+
+items = [1, 2, 3]
+if items != []:  # → True  
+    item_retornado = items.pop() 
+print(items)  # → [1, 2]
+print(item_retornado)  # → 3
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Eliminación en listas
+
+- Hay 3 formas más explícitas (claras) 
+	- De eliminar en listas:
+	- ✅ `del`  
+		- Cuando se sabe la posición del elemento  
+	- ✅ `list.remove()`
+		- Cuando se conoce al elemento  
+	- ✅ `list.pop()`
+		- Cuando se sabe la posición del elemento
+			- Y se desea retornarlo
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `list.clear()`
+    
+- Remueve todos los elementos de una lista
+- La lista se modifica en sitio
+- `list.clear()` retorna `None`
+- Útil para resetear el estado a lista vacía
+- Ayuda:  [list.clear](https://docs.python.org/3/tutorial/datastructures.html)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `list.clear()` - Ejemplos
+
+```Python
+items = []
+items.clear()  # items = []
+
+items = [1, 2, 3]
+items.clear()  # items = []
+
+items = ['a', 1]
+items.clear()  # items = []
+
+items1 = [1, 2, 3]
+items2 = items1
+items2.clear()  # items1 e items2 = []
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta I
+
+- Complete los TODOs:
+
+```Python
+admins = ['Tom', 'Leah', 'Ian', 'Peter', 'Marry']
+# TODO 1: Remover a 'Peter' de la lista `admins`
+
+# TODO 2: Remover el último ítem de `admins` 
+# e imprimirlo (todo en una sóla línea)
+
+# TODO 3: Remover los primeros 2 ítems de `admins` vía `del`
+
+print(admins)  # → ['Ian']
+# TODO 4: Resetear la lista `admins`
+
+print(admins)  # → []
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta I - Solución
+
+```Python
+admins = ['Tom', 'Leah', 'Ian', 'Peter', 'Marry']
+# TODO 1 - DONE: Remover a 'Peter' de la lista `admins`
+admins.remove('Peter')
+# TODO 2  - DONE: Remover el último ítem de `admins` 
+# e imprimirlo (todo en una sóla línea)
+print(admins.pop())  # → Marry
+# TODO 3  - DONE: Remover los primeros 2 ítems de `admins` vía `del`
+del admins[:2]
+print(admins)  # → ['Ian']
+# TODO 4 - DONE: Resetear la lista `admins`
+admins.clear()
+print(admins)  # → []
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Inserción en listas (1/2)
+    
+- List slicing se puede usar para insertar en listas
+- Al asignar una lista a una sublista de la  original
+	- Sin embargo, este método es poco claro
+		- Compromete la legibilidad del código
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Inserción en listas (2/2)
+
+- Hay 3 formas más explícitas (claras) 
+	- De insertar en listas:
+		-  `list.insert()`  
+			- En una posición dada y 1 solo ítem  
+		-  `list.append()`
+			- Al final y como 1 solo ítem
+		-  `list.extend()`
+			- Extiende la lista al insertar los ítems 
+				- Desde un iterable dado
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### `list.insert()`
+
+- Inserta un ítem en una lista en una posición dada
+- Sintaxis: 
+```Python
+lista.insert(i, x)
+```
+- `i`: Posición en donde se va insertar
+- `x`: Ítem a ser insertado
+- Si `i > len(lista)`, inserta al final
+- Si `i < -len(lista)`, inserta al inicio
+- La lista se modifica en sitio
+	- `list.insert()` retorna `None`
+- Ayuda:  [list.insert](https://docs.python.org/3/tutorial/datastructures.html)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### `list.insert()` - Ejemplos
+
+```Python
+items = [1, 2, 3]
+items.insert(0, 0)  # Insertar 0 en la posición 0
+print(items)  # → [0, 1, 2, 3]
+
+items = [1, 2, 4]
+items.insert(2, 3)   # Insertar 3 en la posición 2
+print(items)  # → [1, 2, 3, 4]
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Inserción en listas
+
+- Hay 3 formas más explícitas (claras) 
+	- De insertar en listas:
+		- ✅  `list.insert()`  
+			- En una posición dada y 1 solo ítem  
+		-  **`list.append()`**
+			- Al final y como 1 solo ítem
+		-  `list.extend()`
+			- Extiende la lista al insertar los ítems 
+				- Desde un iterable dado
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `list.append()`
+
+- Inserta (agrega) un ítem al final de la lista
+- Sintaxis: 
+```Python
+lista.append(x)
+```
+
+- `x`: ítem a ser agregado
+- Inserta `x` al final de la lista
+	- Como un **ítem único**
+- La lista se modifica en sitio
+	- `list.append()` retorna `None`
+- Ayuda:  [list.append](https://docs.python.org/3/tutorial/datastructures.html)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `list.append()` - Ejemplos
+
+```Python
+items = [1, 2, 3]
+items.append(4)  # Agrega `4`
+print(items)  # → [1, 2, 3, 4]
+
+items = [1, 2, 3]
+items.append([4, 5])  # Agrega `[4, 5]` como 1 solo ítem
+print(items)  # → [1, 2, 3, [4, 5]]
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Inserción en listas
+
+- Hay 3 formas más explícitas (claras) 
+	- De insertar en listas:
+		- ✅  `list.insert()`  
+			- En una posición dada y 1 solo ítem  
+		-  ✅ `list.append()`
+			- Al final y como 1 solo ítem
+		- **`list.extend()`**
+			-  Extiende la lista al insertar los ítems 
+				- Desde un iterable dado
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `list.extend()`
+- Extiende la lista al insertar todos los ítems 
+	- Desde un iterable dado
+- Sintaxis: 
+```Python
+lista.extend(iterable)
+```
+
+- `iterable`: Objeto iterable (Ej: string, lista)
+- La lista se modifica en sitio
+	- `list.extend()` retorna `None`
+- Ayuda:  [list.extend](https://docs.python.org/3/tutorial/datastructures.html)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `list.extend()` - Ejemplos
+
+```Python
+items = [1, 2, 3]
+items.extend([4])  # Agrega `4`
+print(items)  # → [1, 2, 3, 4]
+
+items = [1, 2, 3]
+items.extend([4, 5])  # Agrega `4`, `5` independientes
+print(items)  # → [1, 2, 3, 4, 5]
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `list.append()` vs `list.extend()`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `list.append()` vs `list.extend()` (1/3)
+
+- Similitudes:
+	- Modifican en sitio
+	- Retornan `None`
+	- Mantienen el orden de la secuencia
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `list.append()` vs `list.extend()` (2/3)
+
+- Diferencias:
+	- `append()` agrega como un solo ítem
+	- `extend()` agrega separadamente
+
+```Python
+items = [1]
+items.append([2, 3])   
+print(items)  # → [1, [2, 3]]
+
+items = [1]
+items.extend([2, 3])
+print(items)  # → [1, 2, 3]
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `list.append()` vs `list.extend()` 3/3
+
+- Diferencias:
+	- `append()` agrega no iterables
+	- `extend()` sólo recibe iterables
+	
+```Python
+items = [1]
+items.append(2)
+print(items)  # → [1, 2]
+
+items = [1]
+items.extend(2)   # TypeError: non-iterable unsupported
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta II
+
+- Complete el TODO:
+
+```Python
+nums = [-3, -2, -1]
+zero = 0
+nums2 = [1, 2, 3]
+# TODO: Usar append() y extend() para actualizar a `nums`
+# de tal forma que su estado sea tal y como se imprime
+
+
+
+print(nums)  # → [-3, -2, -1, 0, 1, 2, 3]
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta II - Solución
+
+```Python
+nums = [-3, -2, -1]
+zero = 0
+nums2 = [1, 2, 3]
+# TODO - DONE: Usar append() y extend() para actualizar a `l1`
+# de tal forma que su estado sea tal y como se imprime
+nums.append(zero)
+nums.extend(nums2)
+
+print(nums)  # → [-3, -2, -1, 0, 1, 2, 3]
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `list.count()`
+
+- Retorna el número de ocurrencias 
+	- De un valor dado en la lista
+- Sintaxis: 
+```Python
+lista.count(valor)
+```
+
+- `valor`: Valor a buscar
+- Retorna el número de ocurrencias ó 
+	- `0 `si no se encuentra el valor dado
+- Ayuda:  [list.count](https://docs.python.org/3/tutorial/datastructures.html)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `list.count()` - Ejemplos
+
+```Python
+['b','a','n','a','n','a'].count('a')  # → 3
+
+[1, 1.5, 'a', True].count(1.5)  # → 1
+
+['a','b','c'].count(['d'])  # → 0
+
+['a','b','c'].count(5)  # → 0
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `list.reverse()`
+- Invierte el orden de los ítems en la lista
+- Sintaxis: 
+```Python
+lista.reverse()
+```
+
+- La lista se modifica en sitio
+	- `list.reverse()` retorna `None`
+- Ayuda:  [list.reverse](https://docs.python.org/3/tutorial/datastructures.html)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `list.reverse()` - Ejemplos
+
+```Python
+# Asumir ejecución secuencial de cada línea:
+items = []
+items.reverse()
+print(items)  # → []
+
+items = [1, 2, 3, 4, 5]
+items.reverse()
+print(items)  # → [5, 4, 3, 2, 1]
+
+items = ['h', 'o', 'l', 'a']
+items.reverse()
+print(items)  # → ['a', 'l', 'o', 'h']
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `list.sort()`
+
+- Ordena los ítems en la lista
+- Sintaxis:
+```Python
+lista.sort(key, reverse)
+```
+- `key`: Función de un solo argumento para  comparación 
+(opcional, por defecto: None)
+- `reverse`: Si es `True`, ordena en orden descendente (opcional, por defecto: `False`)
+- La lista se modifica en sitio
+	- `list.sort()` retorna `None`
+- Ayuda:  [list.sort](https://docs.python.org/3/tutorial/datastructures.html)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `list.sort()` - Ejemplos
+
+```Python
+# Asumir ejecución secuencial de cada línea:
+items = [1, -1, 0] 
+items.sort()
+print(items)  # → [-1, 0, 1]
+
+items.sort(reverse=True)
+print(items)  # → [1, 0, -1]
+
+items = ['abc', 'z']
+items.sort(key=len)
+print(items)  # → ['z', 'abc']
+
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+words = ["apple", "orange", "banana", "kiwi"]
+words.sort()
+print(words)
+
+words.sort(reverse=True)
+print(words)
+
+words.sort(key=len)
+print(words)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III - Solución
+
+```Python
+words = ["apple", "orange", "banana", "kiwi"]
+words.sort()
+# Ordena alfabéticamente de A a Z:
+print(words)  # → ['apple', 'banana', 'kiwi', 'orange']
+
+words.sort(reverse=True)
+# Ordena alfabéticamente de Z a A:
+print(words)  # → ['orange', 'kiwi', 'banana', 'apple']
+
+words.sort(key=len)
+# Ordena por longitud (de menor a mayor)
+# Si hay empate, mantiene el orden original (orden estable):
+print(words)  # → ['kiwi', 'apple', 'orange', 'banana']
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Para cerrar
+
+- Revise las siguientes buenas prácticas:
+
+	- [No remover elementos durante un recorrido](https://eerosales24.github.io/iph_2026_20/general/buenas_practicas/#/12)
+
+	- [Validaciones seguras de métodos de `list`](https://eerosales24.github.io/iph_2026_20/general/buenas_practicas/#/15)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<i class="fas fa-question-circle fa-2x fa-spin fa-4x"></i>
+
+<br>
+<br>
+
+ [<i class="fas fa-home  fa-3x"></i>](https://eerosales24.github.io/iph_2026_20/#)
+</div></script></section></div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/chart/chart.min.js"></script>
+	<script src="plugin/chart/plugin.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+	  function isLight(color) {
+		let hex = color.replace('#', '');
+
+		// convert #fff => #ffffff
+		if(hex.length == 3){
+			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+		}
+
+		const c_r = parseInt(hex.substr(0, 2), 16);
+		const c_g = parseInt(hex.substr(2, 2), 16);
+		const c_b = parseInt(hex.substr(4, 2), 16);
+		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+		return brightness > 155;
+	}
+
+	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+	var isLight = isLight(bgColor);
+
+	if(isLight){
+		document.body.classList.add('has-light-background');
+	} else {
+		document.body.classList.add('has-dark-background');
+	}
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+        ],
+
+
+    	allottedTime: 120 * 1000,
+
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
+
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
+
+		customcontrols: {
+			controls: [
+			]
+		},
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width":960,"height":700,"margin":"0.025","minScale":"0.1","maxScale":"2.0","controls":"true","controlsLayout":"bottom-right","progress":"true","slideNumber":"true","center":"false","transition":"slide","transitionSpeed":"default"}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+
+  <!-- created with Advanced Slides -->
+</html>

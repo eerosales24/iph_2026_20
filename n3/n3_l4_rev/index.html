@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title></title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/iph.css" id="theme" />
+    <link rel="stylesheet" href="plugin/highlight/spyder.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
+
+
+
+    <script defer src="dist/fontawesome/all.min.js"></script>
+
+	<script type="text/javascript">
+		var forgetPop = true;
+		function onPopState(event) {
+			if(forgetPop){
+				forgetPop = false;
+			} else {
+				parent.postMessage(event.target.location.href, "app://obsidian.md");
+			}
+        }
+		window.onpopstate = onPopState;
+		window.onmessage = event => {
+			if(event.data == "reload"){
+				window.document.location.reload();
+			}
+			forgetPop = true;
+		}
+
+		function fitElements(){
+			const itemsToFit = document.getElementsByClassName('fitText');
+			for (const item in itemsToFit) {
+				if (Object.hasOwnProperty.call(itemsToFit, item)) {
+					var element = itemsToFit[item];
+					fitElement(element,1, 1000);
+					element.classList.remove('fitText');
+				}
+			}
+		}
+
+		function fitElement(element, start, end){
+
+			let size = (end + start) / 2;
+			element.style.fontSize = `${size}px`;
+
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
+					size--;
+					element.style.fontSize = `${size}px`;
+				}
+				return;
+			}
+
+			if(element.scrollHeight > element.offsetHeight){
+				fitElement(element, start, size);
+			} else {
+				fitElement(element, size, end);
+			}		
+		}
+
+
+		document.onreadystatechange = () => {
+			fitElements();
+			if (document.readyState === 'complete') {
+				if (window.location.href.indexOf("?export") != -1){
+					parent.postMessage(event.target.location.href, "app://obsidian.md");
+				}
+				if (window.location.href.indexOf("print-pdf") != -1){
+					let stateCheck = setInterval(() => {
+						clearInterval(stateCheck);
+						window.print();
+					}, 250);
+				}
+			}
+	};
+
+
+        </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### <i class="fas fa-award"></i> IP Honores
+
+ ####  *Laboratorio 3 de Nivel 3 - N3-L4*
+
+[Eduardo Rosales](mailto:ee.rosales24@uniandes.edu.co)
+
+Departamento de Ingeniería de Sistemas y Computación
+
+Universidad de los Andes
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Siga paso a paso las siguientes instrucciones
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Trabajo individual
+
+- Este laboratorio debe realizarse de forma
+	- **Completamente individual**<!-- .element: class="fragment highlight-red" -->
+	
+
+	<br>
+	
+	
+
+- El tiempo para terminar el laboratorio es muy corto
+
+	- Por favor:
+		- Aproveche el tiempo para adelantar **N3-PROY**<!-- .element: class="fragment highlight-green" -->
+		- Evite las distracciones
+		- Guarde **silencio**<!-- .element: class="fragment highlight-blue" -->
+
+	<br>
+
+- Si no termina el laboratorio
+	- Debe finalizarlo (**y comprenderlo**)<!-- .element: class="fragment highlight-green" --> 
+		- En las 5h
+			- De trabajo individual semanal
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Preguntas
+
+- En caso de dudas, por favor:
+
+<br> 
+
+1. Formule su pregunta de forma **muy clara y concisa**
+
+<br>
+
+2. Luego (**y solo luego de esto**)
+	- Levante la mano
+
+<br>
+
+<i class="fas fa-question-circle fa-1x fa-spin fa-1x"></i> _Al plantearse correctamente la pregunta, la respuesta a veces se revela sola_
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Estudiemos el concepto de Estructura de Datos Compuesta
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Estructura de datos compuesta (1/2)
+
+- Estructura que puede estar formada por varias subestructuras 
+- En N3, puede estar formada por:
+	- Listas
+	- Diccionarios
+
+
+- Las estructuras de datos
+	- Están anidadas entre sí
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Estructura de datos compuesta (2/2)
+
+- Ventaja principal:
+	- Permiten organizar información
+		- De forma más clara y flexible
+
+- Son útiles cuando
+	- Una sola estructura no es suficiente
+		- Para representar muchos datos
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Diccionarios de diccionarios
+
+- Los diccionarios pueden contener 
+	- A otros diccionarios
+    
+- *Sub-diccionario* 
+	- Diccionario que está dentro 
+		- De otro diccionario
+    
+- Utilidad
+	- Acceso rápido por llave
+		- Y acceso rápido a más información
+			- También localizada mediante llave
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Veamos un ejemplo de un diccionario de diccionarios
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<img src="iph/n3/img/Screenshot 2024-10-27 at 8.56.13 AM.png" alt="" style="width: 75%; height: 70%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### ¿Cómo construir el anterior diccionario de diccionarios?
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Construyendo un diccionario de diccionarios - Ejemplo
+
+```Python
+directorio = {}
+
+directorio['Juan'] = {
+    'celular': '300 235 87 45',
+    'email': 'juan@gmail.com',
+    'cumple': '10-04'
+}
+
+directorio['Luis'] = {
+    'celular': '311 986 47 00',
+    'email': 'luis@hotmail.com',
+    'cumple': '01-03'
+}
+
+directorio['Ana'] = {
+    'celular': '320 700 62 15',
+    'email': 'ana@yahoo.com',
+    'cumple': '15-09'
+}
+
+directorio['Maria'] = {
+    'celular': '312 958 88 50',
+    'email': 'maria@tamalo.com',
+    'cumple': '31-10'
+}
+
+print(directorio)
+# → {
+#     'Juan': {'celular': '300 235 87 45', 'email': 'juan@gmail.com',
+#              'cumple': '10-04'},
+#     'Luis': {'celular': '311 986 47 00', 'email': 'luis@hotmail.com',
+#              'cumple': '01-03'},
+#     'Ana': {'celular': '320 700 62 15', 'email': 'ana@yahoo.com',
+#             'cumple': '15-09'},
+#     'Maria': {'celular': '312 958 88 50', 'email': 'maria@tamalo.com',
+#               'cumple': '31-10'}
+# }
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### ¿Cómo recorrer el anterior diccionario de diccionarios?
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Recorriendo un diccionario de diccionarios - Ejemplo
+
+```Python
+for llave_actual in directorio:
+    print(f'Llave: {llave_actual} -> {directorio[llave_actual]}')
+```
+
+```plaintext
+Llave: Juan -> {'celular': '300 235 87 45', 'email': 'juan@gmail.com', 'cumple': '10-04'}
+Llave: Luis -> {'celular': '311 986 47 00', 'email': 'luis@hotmail.com', 'cumple': '01-03'}
+Llave: Ana -> {'celular': '320 700 62 15', 'email': 'ana@yahoo.com', 'cumple': '15-09'}
+Llave: Maria -> {'celular': '312 958 88 50', 'email': 'maria@tamalo.com', 'cumple': '31-10'}
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Comprendamos como crear un diccionario de diccionarios desde un archivo CSV
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Ejemplo de archivo CSV
+
+- `vuelos.csv`
+
+```plaintext
+aerolinea,codigo_vuelo,origen,destino,distancia,salida,duracion,retraso
+XE,XE2679,EWR,MYR,550,1110,113,18
+YV,YV7138,ORD,ABE,654,1426,144,43
+OO,OO2880,MKE,EWR,725,1830,154,104
+UA,UA63,MSP,DEN,680,1439,147,34
+US,US311,CLT,PHX,1774,1801,279,20
+WN,WN1283,SLC,BOI,291,2102,61,68
+EV,EV4838,BMI,ATL,533,1437,96,25
+FL,FL434,ATL,PNS,272,1440,68,16
+MQ,MQ3576,CID,DFW,685,1540,114,-11
+NW,NW433,DTW,SFO,2079,1213,316,22
+OH,OH5399,CVG,MSP,596,2157,103,38
+9E,9E4733,MSP,CLE,622,1934,180,79
+AA,AA522,PDX,DFW,1616,1502,213,10
+AS,AS333,SFO,SEA,679,1855,111,3
+B6,B6505,EWR,FLL,1065,942,186,-12
+CO,CO1764,IAH,ORD,925,1158,155,6
+DL,DL420,SEA,JFK,2421,1309,318,12
+```
+
+- Si lo desea
+	- Puede descargar el archivo [aquí](https://eerosales24.github.io/iph_2026_20/n3/vuelos.csv)
+	- Y puede ejecutar en Spyder el código a explicarse a continuación
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Carga manual de un CSV
+
+- Posibles problemas:
+	- Digitar a mano los datos sería:
+		- ❌ Propenso a errores
+		- ❌ Tedioso (tomaría mucho tiempo)
+	- Si el archivo muy grande
+		- ❌ Los problemas serían más severos
+		
+- Solución:
+	- ✅ Carga automática
+		- Vía Python
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Primero, comprendamos la estructura del archivo CSV a cargar
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Encabezado del archivo `vuelos.csv`
+
+```plaintext
+aerolinea,codigo_vuelo,origen,destino,distancia,salida,duracion,retraso
+```
+
+- La primera línea contiene los títulos
+	- O nombres de las columnas
+		- Separadas por comas
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Cuerpo del archivo `vuelos.csv`
+
+```plaintext
+aerolinea,codigo_vuelo,origen,destino,distancia,salida,duracion,retraso
+XE,XE2679,EWR,MYR,550,1110,113,18
+YV,YV7138,ORD,ABE,654,1426,144,43
+...
+```
+
+- A partir de la segunda línea
+	- Se tiene la información de cada vuelo
+		- Hay un vuelo (su información) por cada línea
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Observemos una vista tabular de `vuelos.csv`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<img src="iph/n3/img/Screenshot 2024-10-27 at 9.16.15 AM.png" alt="" style="width: 75%; height: 70%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Estudiemos como cargar la información de `vuelos.csv` en un **diccionario de diccionarios**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Ejemplo de carga del archivo `vuelos.csv` (1/21)
+
+```python
+def cargar_vuelos(ruta_archivo: str) -> dict:
+    vuelos = {}
+    with open(ruta_archivo, 'r', encoding='utf-8') as archivo:
+        titulos = archivo.readline().strip('\n').split(',')
+        for linea in archivo:
+            datos = linea.strip('\n').split(',')
+            codigo_vuelo = datos[1]  # El código de vuelo está en la 2da columna
+            vuelo_info = {
+                titulos[0]: datos[0],          # aerolínea
+                titulos[2]: datos[2],          # origen
+                titulos[3]: datos[3],          # destino
+                titulos[4]: int(datos[4]),     # distancia
+                titulos[5]: int(datos[5]),     # salida
+                titulos[6]: int(datos[6]),     # duración
+                titulos[7]: int(datos[7])      # retraso
+            }
+            vuelos[codigo_vuelo] = vuelo_info
+    return vuelos
+```
+
+- La función lee cada línea de un archivo `.csv`
+	- Y retorna un diccionario de diccionarios
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Ejemplo de carga del archivo `vuelos.csv` (2/21)
+
+```Python[2]
+def cargar_vuelos(ruta_archivo: str) -> dict:
+    vuelos = {}
+    with open(ruta_archivo, 'r', encoding='utf-8') as archivo:
+        titulos = archivo.readline().strip('\n').split(',')
+        for linea in archivo:
+            datos = linea.strip('\n').split(',')
+            codigo_vuelo = datos[1]  # El código de vuelo está en la 2da columna
+            vuelo_info = {
+                titulos[0]: datos[0],          # aerolínea
+                titulos[2]: datos[2],          # origen
+                titulos[3]: datos[3],          # destino
+                titulos[4]: int(datos[4]),     # distancia
+                titulos[5]: int(datos[5]),     # salida
+                titulos[6]: int(datos[6]),     # duración
+                titulos[7]: int(datos[7])      # retraso
+            }
+            vuelos[codigo_vuelo] = vuelo_info
+    return vuelos
+```
+
+- Se crea un diccionario principal
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Ejemplo de carga del archivo `vuelos.csv` (3/21)
+
+```Python[3]
+def cargar_vuelos(ruta_archivo: str) -> dict:
+    vuelos = {}
+    with open(ruta_archivo, 'r', encoding='utf-8') as archivo:
+        titulos = archivo.readline().strip('\n').split(',')
+        for linea in archivo:
+            datos = linea.strip('\n').split(',')
+            codigo_vuelo = datos[1]  # El código de vuelo está en la 2da columna
+            vuelo_info = {
+                titulos[0]: datos[0],          # aerolínea
+                titulos[2]: datos[2],          # origen
+                titulos[3]: datos[3],          # destino
+                titulos[4]: int(datos[4]),     # distancia
+                titulos[5]: int(datos[5]),     # salida
+                titulos[6]: int(datos[6]),     # duración
+                titulos[7]: int(datos[7])      # retraso
+            }
+            vuelos[codigo_vuelo] = vuelo_info
+    return vuelos
+```
+
+- Se abre el archivo en modo lectura (`'r'`)
+	- Con codificación UTF-8
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Ejemplo de carga del archivo `vuelos.csv` (4/21)
+
+```Python[4]
+def cargar_vuelos(ruta_archivo: str) -> dict:
+    vuelos = {}
+    with open(ruta_archivo, 'r', encoding='utf-8') as archivo:
+        titulos = archivo.readline().strip('\n').split(',')
+...
+```
+
+- Se lee la primera línea 
+	- Que tiene los títulos de las columnas en el CSV
+
+ - ¿Por qué se usar `str.strip()`?
+	-  `str.strip()` elimina (innecesarios)
+		- Espacios, tabulaciones y saltos de línea
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🌀 `str.strip()` 🌀
+
+- Elimina caracteres iniciales y finales
+- Sintaxis: 
+```Python
+string.strip(chars)
+```
+
+- `chars`: Caracteres a eliminar
+	-  Opcional: Elimina espacios, tabulaciones y saltos de línea por defecto
+
+- Retorna una nueva cadena 
+	- Sin los caracteres iniciales y finales  
+- Ayuda:  [str.strip](https://docs.python.org/3/library/stdtypes.html#str.strip)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🌀 `str.strip()` - Ejemplos 🌀
+
+```Python
+'  ejemplo  '.strip()  
+# → 'ejemplo' (elimina espacios iniciales y finales)
+
+'###texto###'.strip('#')  
+# → 'texto' (elimina caracteres `#` iniciales y finales)
+
+'\t\n prueba \n\t'.strip()  
+# → 'prueba' (elimina espacios, tabulaciones y saltos de línea)
+
+'---xxholax---'.strip('-x')  
+# → 'hola' (elimina todos los `-` y `x` de ambos lados)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Ejemplo de carga del archivo `vuelos.csv` (5/21)
+
+```Python[3]
+def cargar_vuelos(ruta_archivo: str) -> dict:
+...
+    titulos = archivo.readline().strip('\n').split(',')
+...
+```
+
+ - ¿Por qué se usar `str.split()`?
+	- `split(',')` toma la línea completa
+		- y la convierte en una lista, 
+			- Separando los datos por coma (`,`)
+				- En ítems individuales
+
+-  `titulos` es una lista que se ve así:
+
+```python
+['aerolinea', 'codigo_vuelo', 'origen', 'destino', 'distancia', 'salida', 'duracion', 'retraso']
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Ejemplo de carga del archivo `vuelos.csv` (6/21)
+
+```Python[4]
+def cargar_vuelos(ruta_archivo: str) -> dict:
+...
+    titulos = archivo.readline().strip('\n').split(',')
+...
+```
+
+- La primera línea del CSV ya queda leída
+	- De aquí en adelante en la función
+		- Se leería **desde la segunda línea**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Ejemplo de carga del archivo `vuelos.csv` (7/21)
+
+```Python[5]
+def cargar_vuelos(ruta_archivo: str) -> dict:
+    vuelos = {}
+    with open(ruta_archivo, 'r', encoding='utf-8') as archivo:
+        titulos = archivo.readline().strip('\n').split(',')
+        for linea in archivo:
+...
+```
+
+- El ciclo `for` va a leer línea a línea el CSV
+	- Desde la 2da porque la 1ra ya se leyó
+
+	<br>
+
+- Una línea **termina cuando haya un salto de línea**
+	- En el archivo CSV
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Ejemplo de carga del archivo `vuelos.csv` (8/21)
+
+```Python[6]
+def cargar_vuelos(ruta_archivo: str) -> dict:
+    vuelos = {}
+    with open(ruta_archivo, 'r', encoding='utf-8') as archivo:
+        titulos = archivo.readline().strip('\n').split(',')
+        for linea in archivo:
+            datos = linea.strip('\n').split(',')
+...
+```
+
+- Recordatorio: 
+	- `split(',')` toma la línea completa
+		- y la convierte en una lista, 
+			- Separando los datos por coma (`,`)
+				- En ítems individuales
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Ejemplo de carga del archivo `vuelos.csv` (9/21)
+
+- Por ejemplo, como la segunda línea del CSV es:
+
+```plaintext
+XE,XE2679,EWR,MYR,550,1110,113,18
+```
+
+- En la primera iteración de `for`
+
+```Python
+    for linea in archivo:
+        datos = linea.strip('\n').split(',')
+```
+
+- `datos` es una lista que se ve así:
+
+```Python
+['XE', 'XE2679', 'EWR', 'MYR', '550', '1110', '113', '18']
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Ejemplo de carga del archivo `vuelos.csv` (10/21)
+
+```Python[7-9]
+def cargar_vuelos(ruta_archivo: str) -> dict:
+    vuelos = {}
+    with open(ruta_archivo, 'r', encoding='utf-8') as archivo:
+        titulos = archivo.readline().strip('\n').split(',')
+        for linea in archivo:
+            datos = linea.strip('\n').split(',')
+            vuelo_info = {
+		    ...
+            }
+
+```
+
+- `vuelo_info` es un diccionario 
+	- En cada iteración
+		- Se usa para almacenar 
+			- Detalles de un **solo vuelo**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Ejemplo de carga del archivo `vuelos.csv` (11/21)
+
+```Python
+def cargar_vuelos(ruta_archivo: str) -> dict:
+...
+            vuelo_info = {
+                titulos[0]: datos[0],          # aerolínea
+                titulos[2]: datos[2],          # origen
+                titulos[3]: datos[3],          # destino
+                titulos[4]: int(datos[4]),     # distancia
+                titulos[5]: int(datos[5]),     # salida
+                titulos[6]: int(datos[6]),     # duración
+                titulos[7]: int(datos[7])      # retraso
+            }
+...
+```
+
+- En cada iteración
+	- `vuelo_info` guarda datos de **un solo vuelo**
+		- `aerolinea`, `origen`, `destino`, etc.
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Ejemplo de carga del archivo `vuelos.csv` (12/21)
+
+```Python
+def cargar_vuelos(ruta_archivo: str) -> dict:
+...
+            vuelo_info = {
+                titulos[0]: datos[0],          # aerolínea
+                titulos[2]: datos[2],          # origen
+                titulos[3]: datos[3],          # destino
+                titulos[4]: int(datos[4]),     # distancia
+                titulos[5]: int(datos[5]),     # salida
+                titulos[6]: int(datos[6]),     # duración
+                titulos[7]: int(datos[7])      # retraso
+            }
+...
+```
+
+- Los datos de un vuelo son
+	- Extraídos de la lista `datos`
+		- Vía indexación
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Ejemplo de carga del archivo `vuelos.csv` (13/21)
+
+- Para la primera línea en el CSV en `datos`:
+
+```Python
+['XE', 'XE2679', 'EWR', 'MYR', '550', '1110', '113', '18']
+# 0                2      3      4      5       6      7
+```
+
+- `vuelo_info` se vería así:
+
+```Python
+{'aerolinea': 'XE', 'origen': 'EWR', 'destino': 'MYR', 'distancia': '550', 'salida': '1110', 'duracion': '113', 'retraso': '18'}
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Ejemplo de carga del archivo `vuelos.csv` (14/21)
+
+```Python[7]
+def cargar_vuelos(ruta_archivo: str) -> dict:
+    vuelos = {}
+    with open(ruta_archivo, 'r', encoding='utf-8') as archivo:
+        titulos = archivo.readline().strip('\n').split(',')
+        for linea in archivo:
+            datos = linea.strip('\n').split(',')
+            codigo_vuelo = datos[1]  # El código de vuelo está en la 2da columna
+            vuelo_info = {
+                titulos[0]: datos[0],          # aerolínea
+                titulos[2]: datos[2],          # origen
+                titulos[3]: datos[3],          # destino
+                titulos[4]: int(datos[4]),     # distancia
+                titulos[5]: int(datos[5]),     # salida
+                titulos[6]: int(datos[6]),     # duración
+                titulos[7]: int(datos[7])      # retraso
+            }
+            vuelos[codigo_vuelo] = vuelo_info
+    return vuelos
+```
+
+- ¿Para qué se extrae el código de vuelo en esta línea?
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Ejemplo de carga del archivo `vuelos.csv` (15/21)
+
+```Python[17]
+def cargar_vuelos(ruta_archivo: str) -> dict:
+    vuelos = {}
+    with open(ruta_archivo, 'r', encoding='utf-8') as archivo:
+        titulos = archivo.readline().strip('\n').split(',')
+        for linea in archivo:
+            datos = linea.strip('\n').split(',')
+            codigo_vuelo = datos[1]  # El código de vuelo está en la 2da columna
+            vuelo_info = {
+                titulos[0]: datos[0],          # aerolínea
+                titulos[2]: datos[2],          # origen
+                titulos[3]: datos[3],          # destino
+                titulos[4]: int(datos[4]),     # distancia
+                titulos[5]: int(datos[5]),     # salida
+                titulos[6]: int(datos[6]),     # duración
+                titulos[7]: int(datos[7])      # retraso
+            }
+            vuelos[codigo_vuelo] = vuelo_info
+    return vuelos
+```
+- `vuelo_info` se hace un sub-diccionario 
+	- De `vuelos` usando (`datos[1]`) como llave
+		- `datos[1]` es el **código de vuelo**:
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Ejemplo de carga del archivo `vuelos.csv` (16/21)
+
+- Para cada línea en el CSV
+	- `datos[1]` es el **código de vuelo**:
+
+<br>
+
+```Python
+['XE', 'XE2679', 'EWR', 'MYR', '550', '1110', '113', '18']
+# 0     **1**      2      3      4      5       6      7
+```
+
+<br>
+
+- Así se vería `vuelos` después de la 1ra iteración:
+
+```Python
+{'XE2679': {'aerolinea': 'XE', 'origen': 'EWR', 'destino': 'MYR', 'distancia': '550', 'salida': '1110', 'duracion': '113', 'retraso': '18'}}
+```
+
+- Note que el código de vuelo **es la llave**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Ejemplo de carga del archivo `vuelos.csv` (17/21)
+
+- Así se vería `vuelos` después de la 1ra iteración:
+
+```Python
+{'XE2679': {'aerolinea': 'XE', 'origen': 'EWR', 'destino': 'MYR', 'distancia': '550', 'salida': '1110', 'duracion': '113', 'retraso': '18'}}
+```
+
+- `vuelos` es un diccionario de diccionarios
+	- `'XE2679'`es una llave (código de vuelo)
+		- Da acceso a un sub-diccionario
+			- Con la información de ese vuelo
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Ejemplo de carga del archivo `vuelos.csv` (18/21)
+
+```Python[5]
+def cargar_vuelos(ruta_archivo: str) -> dict:
+    vuelos = {}
+    with open(ruta_archivo, 'r', encoding='utf-8') as archivo:
+        titulos = archivo.readline().strip('\n').split(',')
+        for linea in archivo:
+            datos = linea.strip('\n').split(',')
+            codigo_vuelo = datos[1]  # El código de vuelo está en la 2da columna
+            vuelo_info = {
+                titulos[0]: datos[0],          # aerolínea
+                titulos[2]: datos[2],          # origen
+                titulos[3]: datos[3],          # destino
+                titulos[4]: int(datos[4]),     # distancia
+                titulos[5]: int(datos[5]),     # salida
+                titulos[6]: int(datos[6]),     # duración
+                titulos[7]: int(datos[7])      # retraso
+            }
+            vuelos[codigo_vuelo] = vuelo_info
+    return vuelos
+```
+
+- El proceso se repite 
+	- Para cada línea de `vuelos.csv`
+		- Hasta que no haya líneas que leer en el archivo
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Ejemplo de carga del archivo `vuelos.csv` (19/21)
+
+- Aquí una versión más compacta:
+
+```python
+def cargar_vuelos(ruta_archivo: str) -> dict:
+    vuelos = {}
+    with open(ruta_archivo, 'r', encoding='utf-8') as archivo:
+        titulos = archivo.readline().strip('\n').split(',')
+        for linea in archivo:
+            datos = linea.strip('\n').split(',')
+            codigo_vuelo = datos[1]  # El código de vuelo está en la 2da columna
+            vuelo_info = {
+                titulos[0]: datos[0],          # aerolínea
+                titulos[2]: datos[2],          # origen
+                titulos[3]: datos[3],          # destino
+                titulos[4]: int(datos[4]),     # distancia
+                titulos[5]: int(datos[5]),     # salida
+                titulos[6]: int(datos[6]),     # duración
+                titulos[7]: int(datos[7])      # retraso
+            }
+            vuelos[codigo_vuelo] = vuelo_info
+    return vuelos
+```
+
+- Note que gracias al uso de `with open()` 
+	- No es necesario llamar a `close()`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Ejemplo de carga del archivo `vuelos.csv` (20/21)
+
+- Este sería el diccionario de diccionarios retornado:
+
+```python
+{'XE2679': {'aerolinea': 'XE', 'origen': 'EWR', 'destino': 'MYR', 'distancia': '550', 'salida': '1110', 'duracion': '113', 'retraso': '18'}, 'YV7138': {'aerolinea': 'YV', 'origen': 'ORD', 'destino': 'ABE', 'distancia': '654', 'salida': '1426', 'duracion': '144', 'retraso': '43'}, 'OO2880': {'aerolinea': 'OO', 'origen': 'MKE', 'destino': 'EWR', 'distancia': '725', 'salida': '1830', 'duracion': '154', 'retraso': '104'}, 'UA63': {'aerolinea': 'UA', 'origen': 'MSP', 'destino': 'DEN', 'distancia': '680', 'salida': '1439', 'duracion': '147', 'retraso': '34'}, 'US311': {'aerolinea': 'US', 'origen': 'CLT', 'destino': 'PHX', 'distancia': '1774', 'salida': '1801', 'duracion': '279', 'retraso': '20'}, 'WN1283': {'aerolinea': 'WN', 'origen': 'SLC', 'destino': 'BOI', 'distancia': '291', 'salida': '2102', 'duracion': '61', 'retraso': '68'}, 'EV4838': {'aerolinea': 'EV', 'origen': 'BMI', 'destino': 'ATL', 'distancia': '533', 'salida': '1437', 'duracion': '96', 'retraso': '25'}, 'FL434': {'aerolinea': 'FL', 'origen': 'ATL', 'destino': 'PNS', 'distancia': '272', 'salida': '1440', 'duracion': '68', 'retraso': '16'}, 'MQ3576': {'aerolinea': 'MQ', 'origen': 'CID', 'destino': 'DFW', 'distancia': '685', 'salida': '1540', 'duracion': '114', 'retraso': '-11'}, 'NW433': {'aerolinea': 'NW', 'origen': 'DTW', 'destino': 'SFO', 'distancia': '2079', 'salida': '1213', 'duracion': '316', 'retraso': '22'}, 'OH5399': {'aerolinea': 'OH', 'origen': 'CVG', 'destino': 'MSP', 'distancia': '596', 'salida': '2157', 'duracion': '103', 'retraso': '38'}, '9E4733': {'aerolinea': '9E', 'origen': 'MSP', 'destino': 'CLE', 'distancia': '622', 'salida': '1934', 'duracion': '180', 'retraso': '79'}, 'AA522': {'aerolinea': 'AA', 'origen': 'PDX', 'destino': 'DFW', 'distancia': '1616', 'salida': '1502', 'duracion': '213', 'retraso': '10'}, 'AS333': {'aerolinea': 'AS', 'origen': 'SFO', 'destino': 'SEA', 'distancia': '679', 'salida': '1855', 'duracion': '111', 'retraso': '3'}, 'B6505': {'aerolinea': 'B6', 'origen': 'EWR', 'destino': 'FLL', 'distancia': '1065', 'salida': '942', 'duracion': '186', 'retraso': '-12'}, 'CO1764': {'aerolinea': 'CO', 'origen': 'IAH', 'destino': 'ORD', 'distancia': '925', 'salida': '1158', 'duracion': '155', 'retraso': '6'}, 'DL420': {'aerolinea': 'DL', 'origen': 'SEA', 'destino': 'JFK', 'distancia': '2421', 'salida': '1309', 'duracion': '318', 'retraso': '12'}}
+```
+
+<br>
+
+
+- Aquí fue formateado para mejor legibilidad:
+
+```python
+vuelos = {
+    'XE2679': {
+        'aerolinea': 'XE', 'origen': 'EWR', 'destino': 'MYR',
+        'distancia': '550', 'salida': '1110', 'duracion': '113', 'retraso': '18'
+    },
+    'YV7138': {
+        'aerolinea': 'YV', 'origen': 'ORD', 'destino': 'ABE',
+        'distancia': '654', 'salida': '1426', 'duracion': '144', 'retraso': '43'
+    },
+    'OO2880': {
+        'aerolinea': 'OO', 'origen': 'MKE', 'destino': 'EWR',
+        'distancia': '725', 'salida': '1830', 'duracion': '154', 'retraso': '104'
+    },
+    'UA63': {
+        'aerolinea': 'UA', 'origen': 'MSP', 'destino': 'DEN',
+        'distancia': '680', 'salida': '1439', 'duracion': '147', 'retraso': '34'
+    },
+    'US311': {
+        'aerolinea': 'US', 'origen': 'CLT', 'destino': 'PHX',
+        'distancia': '1774', 'salida': '1801', 'duracion': '279', 'retraso': '20'
+    },
+    'WN1283': {
+        'aerolinea': 'WN', 'origen': 'SLC', 'destino': 'BOI',
+        'distancia': '291', 'salida': '2102', 'duracion': '61', 'retraso': '68'
+    },
+    'EV4838': {
+        'aerolinea': 'EV', 'origen': 'BMI', 'destino': 'ATL',
+        'distancia': '533', 'salida': '1437', 'duracion': '96', 'retraso': '25'
+    },
+    'FL434': {
+        'aerolinea': 'FL', 'origen': 'ATL', 'destino': 'PNS',
+        'distancia': '272', 'salida': '1440', 'duracion': '68', 'retraso': '16'
+    },
+    'MQ3576': {
+        'aerolinea': 'MQ', 'origen': 'CID', 'destino': 'DFW',
+        'distancia': '685', 'salida': '1540', 'duracion': '114', 'retraso': '-11'
+    },
+    'NW433': {
+        'aerolinea': 'NW', 'origen': 'DTW', 'destino': 'SFO',
+        'distancia': '2079', 'salida': '1213', 'duracion': '316', 'retraso': '22'
+    },
+    'OH5399': {
+        'aerolinea': 'OH', 'origen': 'CVG', 'destino': 'MSP',
+        'distancia': '596', 'salida': '2157', 'duracion': '103', 'retraso': '38'
+    },
+    '9E4733': {
+        'aerolinea': '9E', 'origen': 'MSP', 'destino': 'CLE',
+        'distancia': '622', 'salida': '1934', 'duracion': '180', 'retraso': '79'
+    },
+    'AA522': {
+        'aerolinea': 'AA', 'origen': 'PDX', 'destino': 'DFW',
+        'distancia': '1616', 'salida': '1502', 'duracion': '213', 'retraso': '10'
+    },
+    'AS333': {
+        'aerolinea': 'AS', 'origen': 'SFO', 'destino': 'SEA',
+        'distancia': '679', 'salida': '1855', 'duracion': '111', 'retraso': '3'
+    },
+    'B6505': {
+        'aerolinea': 'B6', 'origen': 'EWR', 'destino': 'FLL',
+        'distancia': '1065', 'salida': '942', 'duracion': '186', 'retraso': '-12'
+    },
+    'CO1764': {
+        'aerolinea': 'CO', 'origen': 'IAH', 'destino': 'ORD',
+        'distancia': '925', 'salida': '1158', 'duracion': '155', 'retraso': '6'
+    },
+    'DL420': {
+        'aerolinea': 'DL', 'origen': 'SEA', 'destino': 'JFK',
+        'distancia': '2421', 'salida': '1309', 'duracion': '318', 'retraso': '12'
+    }
+}
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Ejemplo de carga del archivo `vuelos.csv` (21/21)
+
+- Así se vería conceptualmente:
+
+<img src="iph/n3/img/vuelos.png" alt="" style="width: 55%; height: 50%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Carga de datos en N3-PROY (1/2)
+
+- Contrario al ejemplo aquí estudiado
+	- En N3-PROY 
+		- No se debe cargar un diccionario de diccionarios, sino un
+			- **Diccionario**
+				- **De listas de**
+					- **Diccionarios**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Carga de datos en N3-PROY (2/2) (TODO)
+
+<img src="diagramaN3.png" alt="" style="object-fit: scale-down">
+
+<!-- .element: style="width: 80%; height: 55%" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Accedo a estructuras compuestas
+
+- Revise la siguiente buena práctica:
+
+	- [Acceder de forma segura a estructuras compuestas](https://eerosales24.github.io/iph_2026_20/general/buenas_practicas/#/23)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Actividad I
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad I (1/1)
+
+- Trabaje en el **TODO 1** de **N3-PROY**
+	- Use los doctests para validar que
+		- Implementó correctamente la carga de datos
+
+- Al terminar,
+	- Continue con el desarrollo de N3-PROY
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Fin de la Actividad I
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Entrega
+
+- No es necesario entregar  este laboratorio
+
+	<br>
+
+- Envíe sus avances en N3-PROY en un `.zip` en  [Bloque Neón](https://bloqueneon.uniandes.edu.co/)
+	- Vaya a **"Actividades"**
+		- **"N3-PROY"**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+[<i class="fas fa-home  fa-3x"></i>](https://eerosales24.github.io/iph_2026_20/#)
+</div></script></section></div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/chart/chart.min.js"></script>
+	<script src="plugin/chart/plugin.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+	  function isLight(color) {
+		let hex = color.replace('#', '');
+
+		// convert #fff => #ffffff
+		if(hex.length == 3){
+			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+		}
+
+		const c_r = parseInt(hex.substr(0, 2), 16);
+		const c_g = parseInt(hex.substr(2, 2), 16);
+		const c_b = parseInt(hex.substr(4, 2), 16);
+		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+		return brightness > 155;
+	}
+
+	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+	var isLight = isLight(bgColor);
+
+	if(isLight){
+		document.body.classList.add('has-light-background');
+	} else {
+		document.body.classList.add('has-dark-background');
+	}
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+        ],
+
+
+    	allottedTime: 120 * 1000,
+
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
+
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
+
+		customcontrols: {
+			controls: [
+			]
+		},
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width":960,"height":700,"margin":"0.025","minScale":"0.1","maxScale":"2.0","controls":"true","controlsLayout":"bottom-right","progress":"true","slideNumber":"true","center":"false","transition":"slide","transitionSpeed":"default"}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+
+  <!-- created with Advanced Slides -->
+</html>

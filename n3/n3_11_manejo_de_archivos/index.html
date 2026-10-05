@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title></title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/iph.css" id="theme" />
+    <link rel="stylesheet" href="plugin/highlight/spyder.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
+
+
+
+    <script defer src="dist/fontawesome/all.min.js"></script>
+
+	<script type="text/javascript">
+		var forgetPop = true;
+		function onPopState(event) {
+			if(forgetPop){
+				forgetPop = false;
+			} else {
+				parent.postMessage(event.target.location.href, "app://obsidian.md");
+			}
+        }
+		window.onpopstate = onPopState;
+		window.onmessage = event => {
+			if(event.data == "reload"){
+				window.document.location.reload();
+			}
+			forgetPop = true;
+		}
+
+		function fitElements(){
+			const itemsToFit = document.getElementsByClassName('fitText');
+			for (const item in itemsToFit) {
+				if (Object.hasOwnProperty.call(itemsToFit, item)) {
+					var element = itemsToFit[item];
+					fitElement(element,1, 1000);
+					element.classList.remove('fitText');
+				}
+			}
+		}
+
+		function fitElement(element, start, end){
+
+			let size = (end + start) / 2;
+			element.style.fontSize = `${size}px`;
+
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
+					size--;
+					element.style.fontSize = `${size}px`;
+				}
+				return;
+			}
+
+			if(element.scrollHeight > element.offsetHeight){
+				fitElement(element, start, size);
+			} else {
+				fitElement(element, size, end);
+			}		
+		}
+
+
+		document.onreadystatechange = () => {
+			fitElements();
+			if (document.readyState === 'complete') {
+				if (window.location.href.indexOf("?export") != -1){
+					parent.postMessage(event.target.location.href, "app://obsidian.md");
+				}
+				if (window.location.href.indexOf("print-pdf") != -1){
+					let stateCheck = setInterval(() => {
+						clearInterval(stateCheck);
+						window.print();
+					}, 250);
+				}
+			}
+	};
+
+
+        </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### <i class="fas fa-award"></i> IP Honores
+
+ ####  *Manejo de archivos*
+
+[Eduardo Rosales](mailto:ee.rosales24@uniandes.edu.co)
+
+Departamento de Ingeniería de Sistemas y Computación
+
+Universidad de los Andes
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Archivo (1/2)
+
+- Persiste información digital
+- Permite escribir o leer información
+- Identificado por un nombre
+	- Se accede al archivo mediante su 
+		- Nombre y extensión
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Archivo (2/2)
+
+- Tiene un formato específico
+	- Formatos comunes:
+		- .txt
+			- Archivo de texto plano
+		- .csv
+			- Archivo para datos tabulares
+			- Separados por coma
+				- CSV (Comma-Separated Values)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Archivo de texto - Ejemplo
+
+- Ejemplo de contenido 
+	- De un archivo `.txt`:
+
+```plaintext
+What is Lorem Ipsum?
+
+Lorem Ipsum is simply dummy text of the printing and 
+typesetting industry. Lorem Ipsum has been the industry's 
+standard dummy text ever since the 1500s, when an unknown 
+printer took a galley of type and scrambled it to make a 
+type specimen book. It has survived not only five centuries, 
+but also the leap into electronic typesetting, remaining 
+essentially unchanged.
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Archivo CSV - Ejemplo
+
+- Ejemplo de contenido 
+	- De un archivo `.csv`:
+
+```plaintext
+Nombre,Apellido,Edad,Ciudad
+Ana,García,25,Madrid
+Luis,Pérez,30,Barcelona
+María,Martínez,22,Sevilla
+Carlos,López,28,Valencia
+
+```
+
+- Note que la primera fila contiene los títulos de las columnas
+	- Desde la segunda fila
+		- Están los datos
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Manejo de archivos
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Tabla Manejo de Archivos</title>
+  <style>
+    .tabla-escalable {
+      transform: scale(0.8); /* Cambia este valor: ej. 0.8 para más pequeño, 1.2 para más grande */
+      transform-origin: center;
+    }
+    table {
+      border-collapse: collapse;
+      font-family: sans-serif;
+    }
+    th, td {
+      border: 1px solid #444;
+      padding: 6px 10px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+
+<div class="tabla-escalable">
+  <table>
+    <thead>
+      <tr>
+        <th>Paso / Modo</th>
+        <th>Descripción</th>
+        <th>¿Debe existir el archivo?</th>
+        <th>¿Reemplaza contenido previo?</th>
+        <th>Notas</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Abrir</strong></td>
+        <td>Acceder al archivo según el modo</td>
+        <td>Depende del modo</td>
+        <td>Depende del modo</td>
+        <td>Primer paso obligatorio</td>
+      </tr>
+      <tr>
+        <td>  - Lectura</td>
+        <td>Consultar contenido</td>
+        <td>Sí</td>
+        <td>No</td>
+        <td>Error si no existe</td>
+      </tr>
+      <tr>
+        <td> -  Escritura</td>
+        <td>Crear o sobrescribir</td>
+        <td>No</td>
+        <td>Sí</td>
+        <td>Borra lo previo si existe</td>
+      </tr>
+      <tr>
+        <td> -  Adición</td>
+        <td>Agregar al final</td>
+        <td>Sí</td>
+        <td>No</td>
+        <td>No modifica lo anterior</td>
+      </tr>
+      <tr>
+        <td><strong>Cerrar</strong></td>
+        <td>Finalizar el uso del archivo</td>
+        <td>Ya fue gestionado al abrir</td>
+        <td>No</td>
+        <td>Guarda cambios y libera recursos</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+</body>
+</html>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Manejo de archivos en Python
+
+- En el curso se aprenden 3 operaciones básicas:
+	- Abrir
+	- Leer/Escribir
+	- Cerrar
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Primero, entendamos lo básico: abrir y cerrar un archivo
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Abrir un archivo en Python
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `open()` (1/2)
+
+- Permite abrir un archivo en un modo dado
+- Sintaxis: 
+```Python
+open(file, mode='r', encoding=None)
+```
+	- `file`: Ruta del archivo a abrir
+	- `mode`: Modo en el que se abre el archivo
+	- `encoding`: Codificación del texto
+- Modos de acceso comunes:
+	- `'r'`: (Read) Lectura
+	- `'w'`: (Write) Escritura (sobrescribe)
+	- `'a'`: (Append) Adicción al final
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `open()` (1/2)
+
+- Un archivo abierto
+	- Ocupa recursos del sistema
+		- Por lo tanto, debe cerrarse
+			- Una vez terminado su uso
+- Ayuda:   [open](https://docs.python.org/3/library/functions.html#open)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Cerrar un archivo en Python
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `close()` (1/2)
+
+- Permite cerrar un archivo
+	- Que se encuentra abierto
+- Sintaxis: 
+```Python
+archivo.close()
+```
+	- `archivo`: Variable que representa al archivo 
+		- Que se encuentra abierto
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `close()` (2/2)
+
+- Muy importante:
+	- **Siempre** cerrar el archivo 
+		- Después de terminar de leer o escribir
+- Cerrar el archivo es esencial para asegurar que:
+	- Los cambios se guarden correctamente
+	- Los recursos asociados al archivo se liberen
+	
+- Ayuda: [close](https://docs.python.org/3/library/io.html#io.IOBase.close)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Segundo, entendamos lo básico para leer un archivo
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Leer una línea de un archivo en Python
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `readline()` (1/2)
+
+- Lee una línea completa desde el archivo 
+	- Hasta encontrar un salto de línea
+- Sintaxis: 
+```Python
+archivo.readline()
+```
+
+- `archivo`: Variable que representa al archivo
+	- Que se encuentra abierto
+- Retorna la línea leída como un string
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `readline()` (1/2)
+
+- Comportamiento **al final del archivo**:
+	- Retorna una cadena vacía (`''`)
+		- Cuando se alcanza el fin del archivo
+- Uso común:
+	- Ideal para leer archivos línea por línea 
+		- Especialmente útil en archivos grandes
+
+- Ayuda:  [readline](https://docs.python.org/3/library/io.html#io.IOBase.readline)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Veamos un ejemplo básico de lectura en Python
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Archivo de texto a leer (1/2)
+
+- `ejemplo.txt`:
+
+```plaintext
+Eduardo
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Ejemplo  de lectura de archivo .txt (1/2)
+
+```Python
+# Abre el archivo en modo lectura:
+archivo = open('ejemplo.txt', 'r', encoding='utf-8')
+# Lee la primera línea del archivo:
+linea = archivo.readline()
+
+# `linea` será igual a '', sólo al final del archivo:
+while linea != '': 
+    print(linea)
+    
+    # Lee una nueva línea del archivo:
+    linea = archivo.readline()  
+archivo.close()  # Cierra el archivo
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Ejemplo  de lectura de archivo .txt (2/2)
+
+<img src="iph/n3/img/Screenshot 2024-10-22 at 6.53.55 PM.png" alt="" style="width: 60%; height: 35%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Archivo de texto a leer (II)
+
+- `otro_ejemplo.txt`:
+
+```plaintext
+Contiene
+varias
+líneas
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Ejemplo  de lectura de archivo .txt (III)
+
+<img src="iph/n3/img/Screenshot 2024-10-22 at 6.52.33 PM.png" alt="" style="width: 60%; height: 40%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Comprendamos aspectos de codificación
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Codificación (encoding)
+    
+- Proceso de convertir caracteres en una representación 
+	- Que puede ser almacenada o transmitida digitalmente
+    
+- Cada codificación tiene un conjunto específico de caracteres que puede representar
+    
+- Ejemplos de codificaciones: 
+	- UTF-8
+	- ASCII
+	- ISO-8859-1 (Latin-1)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Codificación usando `open()` (1/2)
+
+
+- Sintaxis: 
+```python
+open(file, mode='r',encoding=None)
+```
+    
+- `encoding` 
+	- Especifica la codificación a usar para leer/escribir el archivo
+    
+- Por defecto, `open()` no usa ninguna codificación
+    
+- Es una buena práctica 
+	- Especificar la codificación correcta al usar un archivo
+    
+- Si no se hace, algunos caracteres
+	- Pueden no leerse o escribirse correctamente
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Codificación usando `open()` (2/2)
+
+```Python[1]
+archivo = open('ejemplo.txt', 'r', encoding='utf-8')
+linea = archivo.readline()
+:
+while linea != '': 
+    print(linea)
+    
+    linea = archivo.readline()  
+archivo.close()
+```
+
+- Por este motivo
+	- En el primer ejemplo de apertura
+		- Se usó: `encoding='utf-8'`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta I
+
+- Complete los siguientes TODOs: 
+
+```Python
+# TODO1: Abrir el archivo loremipsum.txt en modo lectura
+
+# Lee la primera línea del archivo:
+linea = archivo.readline()
+
+# `linea` será igual a '', sólo al final del archivo:
+while linea != '': 
+    print(linea)
+    
+    # Lee una nueva línea del archivo:
+    linea = archivo.readline()
+    
+# TODO2: Cerrar el archivo loremipsum.txt
+
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta II - Solución
+
+```Python[1-2,13-14]
+# TODO1 - DONE: Abrir el archivo loremipsum.txt en modo lectura
+archivo = open('loremipsum.txt', 'r', encoding='utf-8')
+# Lee la primera línea del archivo:
+linea = archivo.readline()
+
+# `linea` será igual a '', sólo al final del archivo:
+while linea != '': 
+    print(linea)
+    
+    # Lee una nueva línea del archivo:
+    linea = archivo.readline()
+    
+# TODO2 - DONE: Cerrar el archivo loremipsum.txt
+archivo.close()  # Cierra el archivo
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Tercero, entendamos lo básico para escribir un archivo
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `write()` (1/2)
+
+- Función de escritura
+- Escribe una cadena de texto en un archivo
+- Sintaxis: 
+```Python
+archivo.write(texto)
+```
+
+- `archivo`: Variable que representa al archivo 
+	- Que se encuentra abierto
+- `texto`: Cadena de texto 
+	- Que se desea escribir en el archivo
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `write()` (2/2)
+
+- Modo de apertura:
+	- El archivo debe estar abierto 
+		- En un modo que permita la escritura:
+			- `'w'`:  (Write) Escritura (sobrescribe)
+			- `'a'`: (Append) Adición al final
+- Retorna el número de caracteres escritos
+- Ayuda:   [write](https://docs.python.org/3/library/io.html#io.IOBase.write)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Veamos un ejemplo de sobrescritura en Python
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Archivo de texto a sobrescribir (I)
+
+- `otro_ejemplo.txt`:
+
+```plaintext
+Contiene
+varias
+líneas
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Ejemplo  de sobrescritura del archivo .txt (1/2)
+
+```Python
+# Abre el archivo en modo escritura:
+archivo = open('otro_ejemplo.txt', 'w', encoding='utf-8')
+
+# Línea a escribir en el archivo (str):
+linea_a_escribir = 'Nuevo texto'
+
+# Escritura de una línea en el archivo en modo (sobre)escritura:
+archivo.write(linea_a_escribir)
+
+archivo.close()  # Cierra el archivo
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Ejemplo  de sobrescritura del archivo .txt (2/2)
+
+<img src="iph/n3/img/Screenshot 2024-10-27 at 8.38.04 AM.png" alt="" style="width: 60%; height: 40%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Veamos un ejemplo de adición (escritura al final) en Python
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Archivo de texto a escribir en modo adición (1/3)
+
+- `otro_ejemplo.txt`:
+
+```plaintext
+Contiene
+varias
+líneas
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Ejemplo  de escritura en modo adición de archivo .txt (2/3)
+
+```Python
+# Abre el archivo en modo escritura:
+archivo = open('otro_ejemplo.txt', 'a', encoding='utf-8')
+
+# Línea a escribir en el archivo (str)
+# que inicia con salto de línea:
+linea_a_escribir = '\nNuevo texto'
+
+# Escritura de una línea en el archivo en modo adición:
+archivo.write(linea_a_escribir)
+
+archivo.close()  # Cierra el archivo
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Ejemplo  de escritura en modo adición de archivo .txt (3/3)
+
+<img src="iph/n3/img/Screenshot 2024-10-27 at 8.48.32 AM.png" alt="" style="object-fit: scale-down">
+
+<!-- .element: style="width: 60%; height: 40%" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Limitaciones de `open()`, `close()`
+
+- No cierra el archivo automáticamente si ocurre una excepción
+    
+- Requiere recordar llamar a `close()` manualmente
+	- Si `close()` se omite por error
+		- No se garantiza liberación inmediata del recurso
+			- El archivo puede seguir abierto
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Comprendamos una forma más Pythonica de manejar un archivo la cual se DEBE usar en N3-PROY
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  `with` 
+
+- Forma práctica y segura de manejar archivos
+- Garantiza que los recursos del sistema
+	- Como archivos
+		- Se liberen correctamente
+	- No necesita un `close()`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `with open(...) as ...`
+
+- Sintaxis:
+
+```Python
+with open(file, mode='r', encoding=None) as file_object:
+    # Operaciones de lectura o escritura
+```
+
+<br>
+
+- `file`: Ruta del archivo a abrir
+- `mode`: Modo de acceso, como en `open`
+- `encoding`: Codificación del archivo de texto
+- `file_object`: Variable asociada al archivo
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Abrir  un archivo (modo lectura) (1/2)
+
+```python
+with open('ejemplo.txt', 'r') as archivo:
+    for linea in archivo:
+        print(linea)
+    # No es necesario archivo.close()
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Abrir  un archivo (modo lectura) (2/2)
+
+
+<img src="iph/n3/img/with_1.png" alt="" style="width: 60%; height: 35%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Ventajas de usar `with`, `open()` y `for`
+
+- `with` cierra el archivo de forma automática
+	- Incluso si ocurren errores
+
+- No se necesita llamar a
+	- `close()`
+	- `readline()`
+
+- El ciclo `for` 
+	- Procesa cada línea del archivo    
+
+- El código es más legible, conciso y eficiente
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Abrir  un archivo (modo lectura y encoding) (1/2)
+
+```python
+with open('otro_ejemplo.txt', 'r', encoding='utf-8') as archivo:
+    for linea in archivo:
+        print(linea)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Abrir  un archivo (modo lectura y encoding) (2/2)
+
+<img src="iph/n3/img/with_2.png" alt="" style="width: 70%; height: 40%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Escribiendo un archivo (codificación UTF-8) (1/2)
+
+- Al igual que con `open()` se puede escribir un archivo para:
+	- Sobreescribir
+	- Adiccionar
+- El siguiente es un ejemplo de sobrescritura con codificación UTF-8
+
+```python
+texto = 'Nuevo texto'
+with open('otro_ejemplo.txt', 'w', encoding='utf-8') as archivo:
+    archivo.write(texto)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Escribiendo un archivo (codificación UTF-8) (2/2)
+
+<img src="iph/n3/img/with_3.png" alt="" style="object-fit: scale-down">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta II
+
+- Suponga que el archivo `ejemplo.txt` existe y su contenido es la siguiente línea:
+    
+```plaintext
+ABC
+```
+
+- ¿Cuál será su contenido, después de ejecutar las siguientes líneas?  
+  
+```python
+with open('ejemplo.txt', 'w', encoding='utf-8') as archivo:
+    archivo.write('DEF')
+    archivo.write('GHI')
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta II - Solución
+
+- Suponga que el archivo `ejemplo.txt` existe y su contenido es la siguiente línea:
+    
+```plaintext
+ABC
+```
+
+- ¿Cuál será su contenido, después de ejecutar las siguientes líneas?  
+
+```python
+with open('ejemplo.txt', 'w', encoding='utf-8') as archivo:
+    archivo.write('DEF')
+    archivo.write('GHI')
+```
+
+- **Respuesta:**
+```plaintext
+DEFGHI
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### En N3-PROY se **debe** usar `with`, `open()`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Para cerrar
+
+- Revise la siguiente buena práctica:
+	- [Evitar uso innecesario de `readline()`](https://eerosales24.github.io/iph_2026_20/general/buenas_practicas/#/22)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<i class="fas fa-question-circle fa-2x fa-spin fa-4x"></i>
+
+<br>
+<br>
+
+ [<i class="fas fa-home  fa-3x"></i>](https://eerosales24.github.io/iph_2026_20/#)
+</div></script></section></div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/chart/chart.min.js"></script>
+	<script src="plugin/chart/plugin.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+	  function isLight(color) {
+		let hex = color.replace('#', '');
+
+		// convert #fff => #ffffff
+		if(hex.length == 3){
+			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+		}
+
+		const c_r = parseInt(hex.substr(0, 2), 16);
+		const c_g = parseInt(hex.substr(2, 2), 16);
+		const c_b = parseInt(hex.substr(4, 2), 16);
+		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+		return brightness > 155;
+	}
+
+	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+	var isLight = isLight(bgColor);
+
+	if(isLight){
+		document.body.classList.add('has-light-background');
+	} else {
+		document.body.classList.add('has-dark-background');
+	}
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+        ],
+
+
+    	allottedTime: 120 * 1000,
+
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
+
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
+
+		customcontrols: {
+			controls: [
+			]
+		},
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width":960,"height":700,"margin":"0.025","minScale":"0.1","maxScale":"2.0","controls":"true","controlsLayout":"bottom-right","progress":"true","slideNumber":"true","center":"false","transition":"slide","transitionSpeed":"default"}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+
+  <!-- created with Advanced Slides -->
+</html>
