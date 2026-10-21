@@ -99,15 +99,6 @@ Universidad de los Andes
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### Objetivos
- 
-
-- Afianzar la comprensión de los strings y ciclos
-- Afianzar la comprensión de las listas y sus métodos
-- Aprender nuevos métodos de las listas
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
 ###  Siga paso a paso las siguientes instrucciones
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
@@ -156,88 +147,7 @@ Universidad de los Andes
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-# Validaciones seguras de los métodos de `list`
-
-- Revise la siguiente buena práctica:
-
-	- <a href="https://eerosales24.github.io/iph_2026_20/n3/buenas_practicas/#/15" target="_blank" rel="noopener noreferrer">Validaciones seguras de métodos de <code>list</code></a>
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
 ### Actividad I
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-###  Actividad I (1/1)
-
-- Cree un archivo llamado: `logica.py`
-	- Copie y pegue el siguiente código e implemente el `TODO1`
-	- Este fue el ejercicio del Quiz II de N3
-
-```python
-import doctest
-
-    def tribonacci_while(n: int) -> int:
-    """
-    Calcula el n-ésimo número de la serie Tribonacci usando un ciclo while.
-
-    La serie Tribonacci se define así:
-    - tribonacci(0) = 0
-    - tribonacci(1) = 1
-    - tribonacci(2) = 1
-    - tribonacci(n) = tribonacci(n - 1) + tribonacci(n - 2) + tribonacci(n - 3), para n >= 3
-
-    Args:
-        n (int): Posición en la serie Tribonacci. Debe ser un entero no negativo.
-
-    Returns:
-        int: El valor correspondiente a la posición n en la serie Tribonacci.
-
-    >>> tribonacci_while(0)
-    0
-    >>> tribonacci_while(1)
-    1
-    >>> tribonacci_while(2)
-    1
-    >>> tribonacci_while(3)
-    2
-    >>> tribonacci_while(4)
-    4
-    >>> tribonacci_while(5)
-    7
-    >>> tribonacci_while(6)
-    13
-    >>> tribonacci_while(8)
-    44
-    """
-    assert isinstance(n, int) and n >= 0, "n debe ser un entero no negativo."
-
-    resultado = 0
-
-    if n == 1 or n == 2:
-        resultado = 1
-    elif n >= 3:
-        a = 0
-        b = 1
-        c = 1
-        posicion = 3
-
-        # TODO1: Complete la función tal y como se describe en la documentación
-
-        resultado = c
-
-    return resultado
-
-#doctest.run_docstring_examples(tribonacci_while, globals(), verbose=True)
-```
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Fin de la Actividad I
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Actividad II
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -971,7 +881,7 @@ def es_correo_uniandes(email: str, min_usuario: int=4) -> bool:
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-###  Actividad II (2/8)
+###  Actividad I (2/8)
 
 - En `logica.py`
 	- Copie y pegue el siguiente código
@@ -1020,7 +930,7 @@ def filtrar_correos_uniandes(correos: list, min_usuario: int=4) -> str:
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-###  Actividad II (3/8)
+###  Actividad I (3/8)
 
 - En `logica.py`
 	- Copie y pegue el siguiente código
@@ -1066,7 +976,7 @@ def eliminar_repetidos(lista: list) -> list:
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-###  Actividad II (4/8)
+###  Actividad I (4/8)
 
 - En `logica.py`
 	- Copie y pegue el siguiente código
@@ -1163,7 +1073,7 @@ print(resultado)  # →  Ana, Luis, Marta
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-###  Actividad II (5/8)
+###  Actividad I (5/8)
 
 - En `logica.py`
 	- Cree una nueva  implementación de la función:
@@ -1313,7 +1223,7 @@ def invertir_palabras(oracion: str) -> str:
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-###  Actividad II (6/8)
+###  Actividad I (6/8)
 
 - En `logica.py`
 	- Copie y pegue el siguiente código
@@ -1361,7 +1271,7 @@ def filtrar_correos_desde_texto(texto: str, min_usuario: int=4) -> str:
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-###  Actividad II (7/8)
+###  Actividad I (7/8)
 
 - En `logica.py`
 	- Copie y pegue el siguiente código
@@ -1412,7 +1322,7 @@ def contar_correos_por_dominio(texto: str, min_usuario: int=4) -> dict:
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-###  Actividad II (8/8)
+###  Actividad I (8/8)
 
 1. Revise si sus funciones cumplen con todas las buenas prácticas obligatorias del curso vistas hasta ahora
 
@@ -1424,15 +1334,15 @@ def contar_correos_por_dominio(texto: str, min_usuario: int=4) -> dict:
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### Fin de la Actividad II
+### Fin de la Actividad I
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### Actividad III
+### Actividad II
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-###  Actividad III (1/5)
+###  Actividad II (1/5)
 
 - Ejecute el siguiente código en Spyder
 	- Puede agregarlo a `logica.py` o
@@ -1494,7 +1404,7 @@ print('Después correcto:', carrito)
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-###  Actividad III (2/5)
+###  Actividad II (2/5)
 
 - Ejemplo de resultado obtenido:
   
@@ -1516,7 +1426,7 @@ Después correcto: ['leche']
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-###  Actividad III (3/5)
+###  Actividad II (3/5)
 
 - Versión **incorrecta**:
   
@@ -1543,7 +1453,7 @@ def eliminar_agotados_erroneo(carrito: list, inventario_agotado: list) -> None:
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-###  Actividad III (4/5)
+###  Actividad II (4/5)
 
 - Versión **correcta**:
   
@@ -1568,7 +1478,7 @@ def eliminar_agotados_correcto(carrito: list, inventario_agotado: list) -> None:
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-###  Actividad III (5/5)
+###  Actividad II (5/5)
 
 - Revisa una vez más esta práctica para afianzar su comprensión:
 
@@ -1578,7 +1488,30 @@ def eliminar_agotados_correcto(carrito: list, inventario_agotado: list) -> None:
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### Fin de la Actividad III
+### Fin de la Actividad II
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad III (1/2)
+
+- **N3 - Tarea 1**:
+
+	- En [senecode](https://senecode.virtual.uniandes.edu.co/) ya está disponible una tarea de N3:
+	
+		- Complete todos los siguientes ejercicios:
+			- **`Eliminar caracteres repetidos`**
+			- **`Palabras intercaladas`**
+			- **`Verificar paréntesis`**
+			- **`Descifrar código César`**
+			- **`Escalas musicales`**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad III (2/2)
+
+- Fecha límite de entrega:
+	- **Jueves 29 de octubre 11:00pm**
+	- Recuerde: Esta tarea es un **evaluable** de Nivel 3
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
