@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title></title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/iph.css" id="theme" />
+    <link rel="stylesheet" href="plugin/highlight/spyder.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
+
+
+
+    <script defer src="dist/fontawesome/all.min.js"></script>
+
+	<script type="text/javascript">
+		var forgetPop = true;
+		function onPopState(event) {
+			if(forgetPop){
+				forgetPop = false;
+			} else {
+				parent.postMessage(event.target.location.href, "app://obsidian.md");
+			}
+        }
+		window.onpopstate = onPopState;
+		window.onmessage = event => {
+			if(event.data == "reload"){
+				window.document.location.reload();
+			}
+			forgetPop = true;
+		}
+
+		function fitElements(){
+			const itemsToFit = document.getElementsByClassName('fitText');
+			for (const item in itemsToFit) {
+				if (Object.hasOwnProperty.call(itemsToFit, item)) {
+					var element = itemsToFit[item];
+					fitElement(element,1, 1000);
+					element.classList.remove('fitText');
+				}
+			}
+		}
+
+		function fitElement(element, start, end){
+
+			let size = (end + start) / 2;
+			element.style.fontSize = `${size}px`;
+
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
+					size--;
+					element.style.fontSize = `${size}px`;
+				}
+				return;
+			}
+
+			if(element.scrollHeight > element.offsetHeight){
+				fitElement(element, start, size);
+			} else {
+				fitElement(element, size, end);
+			}		
+		}
+
+
+		document.onreadystatechange = () => {
+			fitElements();
+			if (document.readyState === 'complete') {
+				if (window.location.href.indexOf("?export") != -1){
+					parent.postMessage(event.target.location.href, "app://obsidian.md");
+				}
+				if (window.location.href.indexOf("print-pdf") != -1){
+					let stateCheck = setInterval(() => {
+						clearInterval(stateCheck);
+						window.print();
+					}, 250);
+				}
+			}
+	};
+
+
+        </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### <i class="fas fa-award"></i> IP Honores
+
+ ####  *Pandas y matplotlib - En la práctica*
+
+[Eduardo Rosales](mailto:ee.rosales24@uniandes.edu.co)
+
+Departamento de Ingeniería de Sistemas y Computación
+
+Universidad de los Andes
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### ¡Pandas y matplotlib se aprenden en la práctica!
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Importante
+
+Como un estudiante de **IP Honores**, es muy importante que desarrolle independencia al aprender librerías como Pandas y matplotlib. Por este motivo, en las siguientes actividades, se lo invita a **leer** la documentación de las librerías. En su realidad profesional, cada vez que necesite usar una nueva librería, siempre le será muy útil leer su documentación y _practicar, practicar y practicar_.
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Trabajo individual
+
+- Este laboratorio debe realizarse de forma
+	- **Completamente individual**<!-- .element: class="fragment highlight-red" -->
+
+	<br>
+	
+	
+- Por favor:
+	- Evite las distracciones
+	- Guarde **silencio**<!-- .element: class="fragment highlight-blue" -->
+
+
+	<br>
+
+- El desarrollo de este laboratorio es fundamental
+	- Para un buen desempeño en el examen final
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Instrucciones
+
+- **Paso 1**: Descargue el esqueleto del laboratorio
+- **Paso 2**: Implemente los TODOs
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Paso 1: Descargar el esqueleto del laboratorio
+
+- Descargue el esqueleto del laboratorio:
+    - [`lab_pandas_matplotlib.zip`](https://eerosales24.github.io/iph_2026_20/n4/pandas_matplotlib.zip)
+- Este contiene los siguientes archivos:
+    -  `lab_pandas_matplotlib.py`
+    - `games.csv`
+- Copie los 2 archivos 
+    - A su **directorio de trabajo** de Spyder
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Paso 2: Implementar los TODOs (1/2)
+
+- Abra el archivo `lab_pandas_matplotlib.py`
+	- Siga las instrucciones generales
+- Ubique y complete los **18** TODOs
+	- Los cuales están muy bien documentados
+
+- IMPORTANTE: Consulte los links proporcionados
+	- En caso de dudas sobre un método/función
+	- Es vital que se familiarice y entienda 
+		- La documentación de Pandas y matplotlib
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Paso 2: Implementar los TODOs (2/2)
+
+- El objetivo NO es solo ejecutar comandos
+	- ***El objetivo es comprender cada comando***
+
+	<br>
+
+- Los ejemplos de gráficos producidos en esta actividad
+	- Serán una **ayuda vital**
+		- Al desarrollar N4-PROY
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### A continuación se proporciona una explicación detallada de `DataFrame.groupby`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `DataFrame.groupby` (1/2)
+
+- Método para **dividir** datos en grupos 
+	- Según una columna o columnas
+- Permite aplicar operaciones como
+	- Suma, promedio, conteo, etc., a cada grupo
+- Combina los resultados 
+	- En un nuevo DataFrame o Series
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `DataFrame.groupby` (2/2)
+
+- Sintaxis (básica):
+```python
+df.groupby(by='nombre_columna')
+```
+
+	- `by`: Especifica la columna (o columnas) 
+		- Para agrupar
+- `groupby` retorna un objeto de tipo `GroupBy`
+	- No los datos procesados directamente
+- Para obtener resultados se debe aplicar 
+	- Una operación (Ej:  `.sum()`, `.mean()`)
+- Ayuda: [DataFrame.groupby](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.groupby.html)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Ejemplo 1: Agrupar por una columna y sumar
+
+```python
+import pandas as pd
+
+data = {'Categoria': ['A', 'B', 'A', 'B', 'A'],
+        'Valor': [10, 20, 30, 40, 50]}
+df = pd.DataFrame(data)
+
+# Agrupar por 'Categoria' y calcular la suma:
+resultado = df.groupby('Categoria')['Valor'].sum()
+print(resultado)
+```
+
+```Plaintext
+Categoria
+A    90
+B    60
+Name: Valor, dtype: int64
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Ejemplo 2: Agrupar por múltiples columnas y sumar
+
+```python
+data = {'Categoria': ['A', 'B', 'A', 'B', 'A'],
+        'Subcategoria': ['X', 'X', 'Y', 'Y', 'X'],
+        'Valor': [10, 20, 30, 40, 50]}
+df = pd.DataFrame(data)
+
+# Agrupar por 'Categoria' y 'Subcategoria'. 
+# Esto crea grupos únicos combinando los valores de ambas columnas:
+resultado = df.groupby(['Categoria', 'Subcategoria'])['Valor'].sum()
+print(resultado)
+```
+
+```Plaintext
+Categoria  Subcategoria
+A          X               60
+           Y               30
+B          X               20
+           Y               40
+Name: Valor, dtype: int64
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Ejemplo 3: Aplicar múltiples funciones simultáneamente
+
+```python
+# Se puede calcular diferentes operaciones al mismo tiempo usando `agg`
+resultado = df.groupby('Categoria')['Valor'].agg(['mean', 'sum', 'count'])
+print(resultado)
+```
+
+```Plaintext
+            mean  sum  count
+Categoria                    
+A           30.0   90      3
+B           30.0   60      2
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<i class="fas fa-question-circle fa-2x fa-spin fa-4x"></i>
+
+<br>
+<br>
+
+ [<i class="fas fa-home  fa-3x"></i>](https://eerosales24.github.io/iph_2026_20/#)
+</div></script></section></div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/chart/chart.min.js"></script>
+	<script src="plugin/chart/plugin.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+	  function isLight(color) {
+		let hex = color.replace('#', '');
+
+		// convert #fff => #ffffff
+		if(hex.length == 3){
+			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+		}
+
+		const c_r = parseInt(hex.substr(0, 2), 16);
+		const c_g = parseInt(hex.substr(2, 2), 16);
+		const c_b = parseInt(hex.substr(4, 2), 16);
+		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+		return brightness > 155;
+	}
+
+	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+	var isLight = isLight(bgColor);
+
+	if(isLight){
+		document.body.classList.add('has-light-background');
+	} else {
+		document.body.classList.add('has-dark-background');
+	}
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+        ],
+
+
+    	allottedTime: 120 * 1000,
+
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
+
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
+
+		customcontrols: {
+			controls: [
+			]
+		},
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width":960,"height":700,"margin":"0.025","minScale":"0.1","maxScale":"2.0","controls":"true","controlsLayout":"bottom-right","progress":"true","slideNumber":"true","center":"false","transition":"slide","transitionSpeed":"default"}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+
+  <!-- created with Advanced Slides -->
+</html>

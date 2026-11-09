@@ -1,0 +1,1562 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title></title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/iph.css" id="theme" />
+    <link rel="stylesheet" href="plugin/highlight/spyder.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
+
+
+
+    <script defer src="dist/fontawesome/all.min.js"></script>
+
+	<script type="text/javascript">
+		var forgetPop = true;
+		function onPopState(event) {
+			if(forgetPop){
+				forgetPop = false;
+			} else {
+				parent.postMessage(event.target.location.href, "app://obsidian.md");
+			}
+        }
+		window.onpopstate = onPopState;
+		window.onmessage = event => {
+			if(event.data == "reload"){
+				window.document.location.reload();
+			}
+			forgetPop = true;
+		}
+
+		function fitElements(){
+			const itemsToFit = document.getElementsByClassName('fitText');
+			for (const item in itemsToFit) {
+				if (Object.hasOwnProperty.call(itemsToFit, item)) {
+					var element = itemsToFit[item];
+					fitElement(element,1, 1000);
+					element.classList.remove('fitText');
+				}
+			}
+		}
+
+		function fitElement(element, start, end){
+
+			let size = (end + start) / 2;
+			element.style.fontSize = `${size}px`;
+
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
+					size--;
+					element.style.fontSize = `${size}px`;
+				}
+				return;
+			}
+
+			if(element.scrollHeight > element.offsetHeight){
+				fitElement(element, start, size);
+			} else {
+				fitElement(element, size, end);
+			}		
+		}
+
+
+		document.onreadystatechange = () => {
+			fitElements();
+			if (document.readyState === 'complete') {
+				if (window.location.href.indexOf("?export") != -1){
+					parent.postMessage(event.target.location.href, "app://obsidian.md");
+				}
+				if (window.location.href.indexOf("print-pdf") != -1){
+					let stateCheck = setInterval(() => {
+						clearInterval(stateCheck);
+						window.print();
+					}, 250);
+				}
+			}
+	};
+
+
+        </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### <i class="fas fa-award"></i> IP Honores
+
+ ####  *Tuplas*
+
+[Eduardo Rosales](mailto:ee.rosales24@uniandes.edu.co)
+
+Departamento de Ingeniería de Sistemas y Computación
+
+Universidad de los Andes
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Tupla
+
+- Secuencia **inmutable** e indexada
+	- Puede contener objetos de múltiples tipos
+		- Incluidas otras tuplas    
+- Soporta elementos duplicados
+- Soporta el cálculo de su tamaño/longitud
+	- = Total de elementos
+- Puede ser usada como llave en diccionarios
+- Permite que una función retorne múltiples valores
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Las tuplas son secuencias
+
+-  🌀 Secuencia 🌀
+	- Iterable que soporta indexación y 
+		- Cálculo de tamaño/longitud
+- Las secuencias tienen índice cero
+	- Ej: 
+	
+```Python
+(-2, -1, 0, 1, 2)  # Tupla de enteros
+```
+
+<img src="iph/n3/img/Screenshot 2024-10-05 at 11.23.16 AM.png" alt="" style="object-fit: scale-down">
+
+
+- El primer elemento está en el índice 0 (no en 1)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Creación de tuplas vía paréntesis
+
+- A este tipo de creación se le llama
+	- **Creación explícita**
+	
+- Sintaxis: 
+```Python
+nombre_tupla = (valor_1, valor_2, valor_n)
+```
+
+	- `nombre_tupla`: Nombre de la tupla
+		- (Idealmente) En plural
+	- `valores`: Elementos de la tupla (opcionales)
+		- Separados por comas si hay varios
+		- Pueden provenir de expresiones
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Creación de tuplas vía paréntesis - Ejemplos
+
+```Python
+()  # Tupla vacía
+(7,)  # Tupla unitaria 
+
+# Importante: (7) no es una tupla, sino una expresión
+
+
+enteros = (0, -1, 7)  # Tupla de enteros
+flotantes = (.4, 1.3, 2.9)  # Tupla de flotantes
+booleanos = (True, False)  # Tupla de booleanos
+strings = ('a', 'foo', 'b')  # Tupla de strings 
+items = (0, 1.0, 'a', True)  # Tupla de múltiples tipos
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Creación de tuplas sin paréntesis
+
+- A este tipo de creación se le llama
+	- **Creación implícita**
+
+- Sintaxis: 
+```Python
+nombre_tupla = valores, 
+```
+
+	- `nombre_tupla`: Nombre de la tupla
+		- (Idealmente) En plural
+	- `valores`: Elementos de la tupla (opcionales)
+		- Separados por comas si hay varios
+		- Pueden provenir de expresiones
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Creación de tuplas sin paréntesis  - Ejemplos
+
+```Python
+7,  # Tupla unitaria 
+# Importante: 7 no es una tupla, sino un valor entero
+
+enteros = 0, -1, 7  # Tupla de enteros
+flotantes = .4, 1.3, 2.9  # Tupla de flotantes
+booleanos = True, False  # Tupla de booleanos
+strings = 'a', 'foo', 'b'  # Tupla de strings 
+items = 0, 1.0, 'a', True  # Tupla de múltiples tipos
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Empaquetado (packing)
+    
+- Agrupar múltiples valores en una tupla
+	- Ej:
+
+```python    
+enteros = (1, 2, 3)  # enteros → (1, 2, 3)  (creación explícita)
+
+enteros = 1, 2, 3  # enteros → (1, 2, 3) (creación implícita)  
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Desempaquetado (unpacking) (1/2)
+
+- Extraer los valores dentro de la tupla, en distintas variables:
+	- Ej:
+
+```Python
+t = 1, 2, 3  
+x, y, z = t  # x = 1, y = 2, z = 3
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Desempaquetado (unpacking) (2/2)
+
+- Asignación múltiple:
+- Ej:
+
+```Python
+x, y, z = 1, 2, 3  # x = 1, y = 2, z = 3
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Hay una creación mediante `tuple()`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `tuple()`
+
+- Crea una nueva tupla
+- Sintaxis:
+``` tuple(iterable)```
+	- `iterable`: Iterable a convertir en una tupla (opcional)
+- Si un iterable es pasado como argumento
+	- Lo convierte a tupla y lo retorna, 
+	- Caso contrario 
+		- Retorna una tupla vacía
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `tuple()` - Ejemplos
+
+```Python
+tuple()  # → ()
+tuple('')  # → ()
+tuple([])  # → ()
+tuple({})  # → ()
+tuple('abc')  # → ('a', 'b', 'c')  # Divide (split) del string
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta I
+
+- ¿Cuáles de las siguientes líneas crean tuplas?
+
+```Python
+tupla_1 = (1, 2, 3, 4)
+tupla_2 = 1, 2, 3, 4
+tupla_unitaria = 1, 
+otra_tupla_unitaria = 1 
+otra_tupla_unitaria = 1, 
+tupla_vacia = ()
+otra_tupla_vacia = ,
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta I - Solución
+
+```Python
+tupla_1 = (1, 2, 3, 4)
+tupla_2 = 1, 2, 3, 4
+tupla_unitaria = 1, 
+otra_tupla_unitaria = 1   # no es una tupla, sino un entero
+otra_tupla_unitaria = 1, 
+tupla_vacia = ()
+
+otra_tupla_vacia = , # SyntaxError. 
+# Así no se define una tupla vacía. 
+# Para definir una tupla vacía se usaría: `()` o `tuple()`
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Creación de tuplas a partir de listas (1/2)
+
+- Crear una tupla unitaria 
+	- A partir de una lista unitaria:
+	
+```Python
+lista_unitaria = [1]
+tupla_unitaria = tuple(lista_unitaria)  
+
+print(tupla_unitaria)  # → (1,)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Creación de tuplas a partir de listas (2/2)
+
+
+- Crea una tupla con varios ítems
+	- A partir de una lista:
+
+```Python
+lista = [1, 2, 3, 4, 5]
+print(lista)  # → [1, 2, 3, 4, 5]
+
+tupla = tuple(lista)
+print(tupla)  # → (1, 2, 3, 4, 5)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Creación de tuplas a partir de diccionarios
+
+	
+```Python
+diccionario = {'uno': 1, 'dos': 2, 'tres': 3}
+
+# Crea una tupla a partir de las llaves del diccionario:
+tupla_llaves = tuple(diccionario.keys())
+print(tupla_llaves)  # → ('uno', 'dos', 'tres')
+
+# Crea una tupla a partir de los valores del diccionario:
+tupla_valores = tuple(diccionario.values())
+print(tupla_valores)  # → (1, 2, 3)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `dict.items()` es un método de los diccionarios, que retorna una tupla
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `dict.items()` 
+
+- Retorna una vista de todas las parejas llave-valor 
+	- De un diccionario
+- Sintaxis: 
+```Python
+dictionario.items()
+```
+
+- La vista es dinámica
+	- Refleja los cambios al diccionario
+- Ayuda:  [dict.items](https://docs.python.org/3/library/stdtypes.html#dict.items)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `dict.items()` - Ejemplos
+
+```Python
+dct = {}
+items = dct.items()  # items → dict_items([])
+
+dct = {'a':1}
+items = dct.items()  # items → dict_items([('a', 1)])
+
+dct = {'a':1, 'b':2, 'c':3}
+items = dct.items()  # items → dict_items([('a', 1), ('b', 2), ('c', 3)])
+items_list = list(items)
+print(items_list)  # → [('a', 1), ('b', 2), ('c', 3)]
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `dict.items()` - Ejemplos
+
+- Obtener una vista de todos los pares llave-valor:
+
+```Python
+diccionario = {'a': 1, 'b': 2}
+items = diccionario.items()  # items → dict_items([('a', 1), ('b', 2)])
+```
+
+- La vista refleja los cambios al diccionario:
+
+```Python
+diccionario['c'] = 3 # diccionario → {'a': 1, 'b': 2, 'c': 3} 
+print(items) # dict_items([('a', 1), ('b', 2), ('c', 3)])
+```
+
+- La vista se podría materializar como una lista de tuplas:
+
+```Python
+items_list = list(items) 
+print(items_list) # → [('a', 1), ('b', 2), ('c', 3)]
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<img src="iph/n4/img/Screenshot 2024-11-09 at 10.32.11 AM.png" alt="" style="object-fit: scale-down">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<img src="iph/n4/img/Screenshot 2024-11-09 at 10.33.06 AM.png" alt="" style="object-fit: scale-down">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Usando `dict.items()` se puede hacer otro patrón de recorrido **en diccionarios**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Patrón de recorrido por llaves y valores
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Patrón de recorrido por  llave-Valor - Con `for` y `dict.items()`
+
+```Python
+for llave, valor in dict.items():
+    # Usar llave y valor
+```
+
+- Ej:
+
+```Python
+diccionario = {'a': 1, 'b': 2, 'c': 3}
+for llave_actual, valor_actual in diccionario.items():
+    print(f"Llave: {llave_actual}, Valor: {valor_actual}")
+```
+
+```Python
+Llave: a, Valor: 1
+Llave: b, Valor: 2
+Llave: c, Valor: 3
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Patrón de recorrido por pares llave-valor - Explicación
+
+```Python
+for llave, valor in dict.items():
+    # Usar llave y valor
+```
+
+- `dict.items()` retorna  una vista 
+	- De todas las parejas llave-valor
+
+- ✅ Forma pythónica
+	- Para acceder a llaves y valores simultáneamente
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Sigamos con el estudio de las tuplas...
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Las tuplas son inmutables
+
+- Después de su creación
+	- Las tuplas NO se pueden cambiar
+- Esto garantiza la integridad de los datos
+	- Datos en la tupla permanecerán constantes
+		- Sin modificaciones accidentales
+- Intentar modificar una tupla
+	- Resultaría en un error en Python
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Las tuplas son inmutables - Ejemplos
+
+- No se puede cambiar una tupla:
+
+```Python
+enteros = (1, 2, 3)
+enteros[-1] = 4  # → TypeError: porque `enteros` es inmutable
+```
+
+- Toda operación con tuplas
+	- Retornará una **nueva tupla**:
+
+```Python
+enteros = (1, 2, 3)  # `enteros` es una tupla inmutable
+
+enteros = enteros + (4, 5)  # enteros = (1, 2, 3, 4, 5)
+# Ahora `enteros` es una nueva tupla (inmutable)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Las tuplas pueden contener a otras tuplas
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Tuplas complejas (1/2)
+
+- Tuplas que contienen otras estructuras de datos
+- Por ejemplo, **otras tuplas**
+- Las tuplas, dentro de otras tuplas
+	- Pueden tener valores de distinto tipo
+- Ej:
+
+```Python
+x = 2
+y = 3
+ancho = 7
+alto = 4
+rectangulo = ((x, y), (ancho, alto), 'rojo')
+# rectangulo = ((2, 3), (7, 4), 'rojo')
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Tuplas complejas (2/2)
+
+- Múltiples niveles de anidación son posibles
+- Ej:
+
+```Python
+enteros = (1, 2, 3)
+flotantes = (3.5, 4.1, 5.6)
+booleanos = (True, False)
+
+tuplas = (enteros, flotantes, booleanos)
+# tuplas = ((1, 2, 3), (3.5, 4.1, 5.6), (True, False))
+```
+
+```Python
+tuplas_de_tuplas = ('1st', ('2nd', ('3rd',)))
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `len()`
+
+- Retorna la longitud (tamaño) de un objeto    
+- Sintaxis: 
+```Python
+len(objeto)
+```
+- Compatible con múltiples objetos
+	- Por ejemplo **tuplas**
+- Ayuda:  [len](https://docs.python.org/3/library/functions.html#len)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `len()` - Ejemplos
+
+```Python
+len(())  # → 0 (Tupla vacía)
+
+len((1,))  # → 1 (Tupla unitaria)
+
+len((1, 2, 3))  # → 3
+
+len((1, 'N', 2.0, False))  # → 4 
+
+len((None, None))  # → 2 
+# (La constante None es contada como un ítem)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Se puede **concatenar**  tuplas
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Concatenación - Tuplas (1/2)
+
+- Crea una nueva tupla 
+	- Al yuxtaponer dos tuplas dadas
+    
+- Sintaxis: `tupla1 + tupla2`
+	- Ambos operandos **deben** ser tuplas
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Concatenación - Tuplas (2/2)
+
+- La concatenación de tuplas es asociativa: 
+	- `(A + B) + C = A + (B + C)`
+- Sobrecarga del operador binario `+`
+	- Contrario a la suma
+		- La concatenación NO es conmutativa: 
+		- `A + B ≠ B + A`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Concatenación - Tuplas  - Ejemplos
+
+
+```Python
+(1, 2) + ()  # → (1, 2)
+
+(1, 2) + (3, 4)  # → (1, 2, 3, 4)
+
+(1,) + (2,) + (3,) + (4,)  # → (1, 2, 3, 4)
+
+((1,), (2,)) + ((3,), (4,))  # → ((1,), (2,), (3,), (4,))
+
+(1,) + 'a'  # TypeError: same type required
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### La operación de repetición también existe para tuplas
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Repetición - Tuplas
+    
+- Crea una nueva tupla
+	- Con sus elementos repetidos `n` veces
+- Sintaxis: 
+	- `tupla * n` o
+	- `n * tupla`
+		- `n` Debe ser un entero
+- La repetición de tuplas es conmutativa:
+	- `A * B = B * A`
+- Sobrecarga del operador binario de multiplicación: `*`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Repetición - Tuplas  - Ejemplos
+
+```Python
+() * 2  # → ()
+
+2 * (1, 2, 3)  # → (1, 2, 3, 1, 2, 3)
+```
+
+- Casos especiales:
+
+```Python
+(1, 2, 3) * 0  # → ()  (Retorna tupla vacía para cero)
+(1, 2, 3) * -1  # → () (Retorna tupla vacía para negativos)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Estudiemos algunos métodos de las tuplas
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `tuple.count()`
+
+- Retorna el número de ocurrencias 
+	- De un valor dado
+- Sintaxis: 
+```Python
+tupla.count(valor)
+```
+	- `valor`: Valor a buscar
+- Retorna el número de ocurrencias 
+	- ó `0` si no se encuentra el valor dado
+- Ayuda:  [tuples](https://docs.python.org/3/library/stdtypes.html#sequence-types-list-tuple-range)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `tuple.count()` - Ejemplos
+
+```Python
+('b','a','n','a','n','a').count('a')  # → 3
+(1, 1.5, 'a', True).count(1.5)  # → 1
+(('a',),('a',)).count(('a',))  # → 2
+(('a',),('a',)).count(())  # → 0
+('a','b','c').count('d')  # → 0
+('a','b','c').count(5)  # → 0
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `tuple.index()` (1/2)
+
+- Retorna el primer índice que contiene al valor especificado
+- Sintaxis: 
+```
+tupla.index(value, start, end)
+```
+
+- `value`: Valor cuyo índice buscar
+- `start`: Inicio de búsqueda (opcional: 0)
+- `end`: Fin de búsqueda (opcional: fin de la tupla, excluyente)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `tuple.index()` (2/2)
+
+- Si el valor dado no se encuentra
+	- Genera un `ValueError`
+- Para evitarlo, se hace una verificación previa:
+
+```Python
+if item_buscado in tupla:
+    # Encuentra el índice del ítem buscado en la tupla:
+    indice = tupla.index(item_buscado)
+```
+
+Ayuda:  [tuples](https://docs.python.org/3/library/stdtypes.html#sequence-types-list-tuple-range)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `tuple.index()` - Ejemplos
+
+```Python
+('a','b','c','a').index('a')  # → 0
+
+(1, 2, 3, 4, 5).index(3)  # → 2
+
+('a','b','c','a').index('a', 1)  # → 3
+
+(1, 2, 3).index(4)  # → ValueError: value not found
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Las tuplas soportan otras operaciones que ya conocemos…
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Indexamiento en tuplas
+
+- Las tuplas soportan indexamiento 
+	- Positivo y negativo    
+- Ej:
+    
+```Python
+letras = ('a', 'b', 'c', 'd')  # Creación explícita
+
+primera_letra = letras[0]  # 'a'
+
+ultima_letra = letras[-1]  # 'd'  
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Sclicing en tuplas
+
+- Las tuplas soportan slicing
+- Ej:
+    
+```Python
+numeros = 1, 2, 3  # Creación implícita (empaquetado)
+
+numeros_slice = numeros[1:3]  # (2, 3)
+
+numeros_copia = numeros[:]  # (1, 2, 3)
+
+numeros_inversa = numeros[::-1]  # (3, 2, 1)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Las tuplas soportan operadores de membresía (pertenencia)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Operadores de membresía (pertenencia) en tuplas
+
+```Python
+nums = (1, 2, 3)
+1 in nums  # → True (el entero 1 está en nums)
+3 in nums  # → True (el entero 3 está en nums)
+4 in nums  # → False (el entero 4 está en nums)
+() in nums  # → False (la tupla vacía no está en nums)
+(1,) in nums  # → False (la tupla (1,) no está en nums)
+(1, 2) in nums  # → False (la tuple (1, 2) no está en nums)
+(1, 2, 3) in nums  # → False (la tuple (1, 2, 3) no está en nums)
+4 not in nums  # → True  (el entero 4 está en nums)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta II
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+data = (5, 10, 15, 20, 15, 30)
+
+print(data.index(15, 3))
+
+print(data.count(15))
+
+print(20 not in data)
+
+print(data[3])
+
+print(data[2:5])
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta II - Solución
+
+```Python
+data = (5, 10, 15, 20, 15, 30)
+
+print(data.index(15, 3))
+
+print(data.count(15))
+
+print(20 not in data)
+
+print(data[3])
+
+print(data[2:5])
+```
+
+```plaintext
+4
+2
+False
+20
+(15, 20, 15)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+t = 1, 2, 3
+x, y, z = t
+u = x, y, z
+a, b, c = 3, 4, 5
+print(t)
+print('Unpacked t:', x, y, z)
+print('Repacked u:', u)
+print(a,b,c, sep=', ')
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III - Solución
+
+
+```Python
+t = 1, 2, 3
+x, y, z = t
+u = x, y, z
+a, b, c = 3, 4, 5
+print(t)
+print('Unpacked t:', x, y, z)
+print('Repacked u:', u)
+print(a,b,c, sep=', ')
+```
+
+```plaintext
+(1, 2, 3)
+Unpacked t: 1 2 3
+Repacked u: (1, 2, 3)
+3, 4, 5
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Las tuplas también se pueden recorrer
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🌀 Patrón de recorrido total  🌀
+
+- Procesar a los elementos
+	- De uno en uno
+		- Desde el inicio
+			- Y hasta el final
+- ¿Cuándo usarlo?
+	- Cuando se requiere recorrer 
+		- **Toda la secuencia**
+			- Ej: String, lista ó **tupla**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Recorrido total con `for-in`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Patrón de recorrido total - `for-in` (1/2)
+
+```Python
+    # Inicializar resultado
+    resultado = valor_inicial
+    
+    # Ciclo para recorrer cada ítem en la secuencia
+    for item_actual in secuencia:
+        # TODO: Actualizar el resultado
+        # basado en el ítem actual
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Patrón de recorrido total - `for-in` (2/2)
+
+```Python[5]
+    # Inicializar resultado
+    resultado = valor_inicial
+    
+    # Ciclo para recorrer cada ítem en la secuencia
+    for item_actual in secuencia:
+        # TODO: Actualizar el resultado
+        # basado en el ítem actual
+```
+
+- El ciclo recorre la secuencia de principio a fin
+	- ✅ Más directo y sencillo que `while`
+		- ✅ No se requieren índices
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Patrón de recorrido total - `for-in` - Ejemplo tuplas
+
+- Sumar todos los valores en la tupla:
+
+```Python
+def sumar_tupla(tupla: tuple) -> int:
+    suma = 0  # Variable de retorno
+    
+    # Ciclo para recorrer cada elemento en la tupla
+    for numero_actual in tupla:
+        # Actualizar la suma
+        suma += numero_actual
+    
+    # Retornar el resultado final
+    return suma  # Se usa un solo return
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `for in range`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Patrón de recorrido total - `for-in range` (I)
+
+```Python
+    # Inicializar resultado
+    resultado = valor_inicial
+    
+    # Ciclo para recorrer la secuencia usando un rango
+    for i in range(len(secuencia)):
+        # TODO: Actualizar el resultado
+        # basado en el elemento actual (secuencia[i])
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Patrón de recorrido total - `for-in range` (II)
+
+```Python[6-8]
+    # Inicializar resultado
+    resultado = valor_inicial
+    
+    # Ciclo para recorrer la secuencia usando un rango
+    for i in range(len(secuencia)):
+        # TODO: Actualizar el resultado
+        # basado en el elemento actual
+        secuencia[i]
+```
+
+- ✅ Permite acceder por índice
+	- A los elementos de la secuencia
+		- Usando `secuencia[i]`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Patrón de recorrido total - `for-in range` - Ejemplo tuplas
+
+- Obtener elementos pares en una tupla:
+
+```Python
+def obtener_elementos_pares(tupla: tuple) -> list:
+    """
+    Retorna una lista con los elementos en las posiciones pares de la tupla dada.
+
+    Args:
+        tupla (tuple): La tupla de la cual se extraerán elementos.
+
+    Returns:
+        list: Una lista con los elementos en posiciones pares.
+
+    >>> obtener_elementos_pares(())
+    []
+
+    >>> obtener_elementos_pares((1, 2, 3, 4, 5))
+    [1, 3, 5]
+
+    >>> obtener_elementos_pares((10, 20, 30, 40, 50, 60))
+    [10, 30, 50]
+
+    >>> obtener_elementos_pares((5,))
+    [5]
+    """
+    # Lista para almacenar los elementos de las posiciones pares
+    elementos_pares = []  # Variable de retorno
+    
+    # Ciclo para recorrer la tupla por índice
+    for i in range(len(tupla)):
+        if i % 2 == 0:  # Comprueba si el índice es par
+            elementos_pares.append(tupla[i])
+    
+    return elementos_pares  # Se usa un solo retorno
+
+
+
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🌀 Patrón de recorrido parcial 🌀
+
+- Procesar elementos de uno en uno
+    - Detenerse al cumplir una condición
+        - O completar una parte de la secuencia
+- ¿Cuándo usarlo?
+    - Cuando **NO es necesario**
+        - Recorrer toda la secuencia
+	        - Ej: Una tupla
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Patrón de recorrido parcial - `while` con centinela 
+
+```Python[3, 6, 8]
+    # Inicializar índice y centinela
+    i = 0
+    encontrado = False
+    
+    # Ciclo para recorrer la secuencia parcialmente
+    while i < len(secuencia) and not encontrado:
+        # TODO: Evaluar condición para actualizar el centinela
+        encontrado = True
+            
+        # Avanzar al siguiente elemento
+        i += 1
+```
+
+- El centinela cambia si se cumple una condición
+    - En este ejemplo pasará a ser `True`
+        - Terminando así el ciclo
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Patrón de recorrido parcial - `while` con centinela - Ejemplo tuplas
+
+```Python
+def buscar_posicion_tupla(tupla: tuple, buscado: int) -> int:
+    """
+    Busca la posición de un elemento en la tupla dada. 
+    Retorna el índice de la primera ocurrencia del elemento buscado 
+    o -1 si el elemento no está presente.
+
+    Args:
+        tupla (tuple): La tupla en la que se busca el elemento.
+        buscado (int): El elemento que se quiere encontrar.
+
+    Returns:
+        int: El índice de la primera aparición del elemento,
+          o -1 si no se encuentra.
+
+    >>> buscar_posicion_tupla((), 3)
+    -1
+
+    >>> buscar_posicion_tupla((1, 2, 3, 4, 5), 3)
+    2
+
+    >>> buscar_posicion_tupla((1, 2, 3, 4, 5), 6)
+    -1
+
+    >>> buscar_posicion_tupla((7, 7, 7), 7)
+    0
+    """
+    i = 0
+    posicion = -1  # Variable de retorno
+    encontrado = False  # Centinela
+    
+    while i < len(tupla) and not encontrado:
+        if tupla[i] == buscado:
+            encontrado = True  # Cambio del centinela
+            posicion = i
+        i += 1
+    
+    return posicion  # Se usa un solo return
+
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Patrón de recorrido parcial - `while` sin centinela 
+
+```Python[3, 6]
+    # Inicializar resultado e índice
+    resultado = -1
+    i = 0
+
+    # Ciclo para recorrer la secuencia parcialmente
+    while i < len(secuencia) and secuencia[i] != buscado:
+        i += 1
+
+    # TODO: Evaluar condición para actualizar
+    # La variable resultado 
+```
+
+- Si el elemento actual es igual al  buscado
+    - El `and` evaluará a `False`
+        - Terminando así el ciclo
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Patrón de recorrido parcial - `while` sin centinela - Ejemplo tuplas
+
+```Python
+def buscar_posicion_tupla(tupla: tuple, buscado: int) -> int:
+    """
+    Busca la posición de un elemento en la tupla dada. 
+    Retorna el índice de la primera ocurrencia del elemento buscado 
+    o -1 si el elemento no está presente.
+
+    Args:
+        tupla (tuple): La tupla en la que se busca el elemento.
+        buscado (int): El elemento que se quiere encontrar.
+
+    Returns:
+        int: El índice de la primera aparición del elemento,
+          o -1 si no se encuentra.
+
+    >>> buscar_posicion_tupla((), 3)
+    -1
+
+    >>> buscar_posicion_tupla((1, 2, 3, 4, 5), 3)
+    2
+
+    >>> buscar_posicion_tupla((1, 2, 3, 4, 5), 6)
+    -1
+
+    >>> buscar_posicion_tupla((7, 7, 7), 7)
+    0
+    """
+    posicion = -1  # Variable de retorno
+    i = 0
+    
+    while i < len(tupla) and tupla[i] != buscado:
+        i += 1
+
+    # Condición para actualizar la variable de retorno:
+    if i != len(tupla):
+        posicion = i
+
+    return posicion  # Se usa un solo return
+
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Listas vs Tuplas (1/2)
+    
+- Similitudes:
+	- Secuencias
+	- Iterables
+	- Indexables
+	- Soportan 
+		- Cálculo de tamaño/longitud
+		- Slicing
+		- Operadores de pertenencia
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Listas vs Tuplas (2/2)
+    
+- Diferencias:
+	- Mutabilidad:
+		- Listas son mutables
+		- Tuplas son **inmutables**
+	- Las tuplas son generalmente más 
+		- Rápidas y más eficientes 
+			- En el uso de memoria
+				- Debido a su inmutabilidad
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Listas y Tuplas
+
+- Las listas pueden contener tuplas
+- Ej:  
+
+```Python
+lst = [(0, 'apple'), (1, 'banana'), (2, 'cherry')]
+```
+
+- Las tuplas pueden contener listas
+- Ej:
+
+```Python
+tp = ([1, 2, 3], [5, 6, 7])
+```
+
+- Una tupla es inmutable
+	- Pero la lista adentro no lo es
+	- Ej:
+
+```Python
+tp[0].append(4)  # tp = ([1, 2, 3, 4], [5, 6, 7])
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Tuplas dentro de listas - Acceso
+- Se pueden usar para modelar atributos
+- La lista agrupa a las tuplas
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Tuplas dentro de listas - Acceso - Ejemplo
+
+ ```Python
+students = [
+    (15, 'Alice', 'Computer Science'),
+    (27, 'Bob', 'History'),
+    (98, 'Claire', 'Biology'),
+]
+
+# Ejemplo de desempaquetado (unpacking) de datos de un estudiante
+student_id, student_name, student_major = students[0]
+# student_id = 15
+# student_name = 'Alice'
+# student_major = 'Computer Science'
+ ```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Diccionarios vs Tuplas (1/3)
+    
+- Similitudes:
+	- Iterables
+	- Soportan 
+		- Cálculo de tamaño/longitud
+		- Operadores de pertenencia
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Diccionarios vs Tuplas (2/3)
+    
+- Diferencias:
+	- Mutabilidad:
+		- Diccionarios son mutables
+		- Tuplas son **inmutables**
+	- Secuencialidad
+		- La tuplas son secuencias
+		- Los diccionarios no
+			- Agrupan parejas llave-valor
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Diccionarios vs Tuplas (3/3)
+    
+- Búsqueda rápida:
+	- Los diccionarios son ideales 
+		- Para buscar datos rápidamente por llave
+		- Diccionarios son mutables
+- Eficiencia en memoria:
+	- Las tuplas son más eficientes en el uso 
+		- De memoria dada a su inmutabilidad
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Diccionarios y Tuplas (1/2)
+
+- Los diccionarios pueden contener
+	- Tuplas como llaves
+	- Ej:  
+
+```Python
+dct = {(1, 2): 'apple', (3, 4): 'banana'}
+```
+
+- Los diccionarios pueden contener 
+	- Tuplas como valores
+	- Ej:
+
+```Python
+dct = {'tuple1': (1,  2,  3), 'tuple2': (4,  5,  6)}
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Diccionarios y Tuplas (2/2)
+
+
+- Las tuplas pueden contener diccionarios
+- Ej:
+
+```Python
+ tp = ({'a': 1, 'b': 2}, {'c': 3, 'd': 4})
+```
+
+
+- Una tupla es inmutable
+	- Pero el diccionario adentro no lo es
+	- Ej:
+	
+```Python
+tp[0]['a'] = 10  
+# tp =  ({'a':10, 'b':2}, {'c':3, 'd':4})
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Estudiemos cómo usar tuplas para agrupar datos
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Tuplas para agrupamiento de datos
+    
+- Las tuplas permiten agrupar ítems
+	- Con las ventajas de la inmutabilidad
+		- No se puede cambiar los datos
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+**![](https://lh7-rt.googleusercontent.com/slidesz/AGV_vUdcrfxbVZdA1txAJuL0YD6D40QWFNECKUJ3282b-XeKVQm3sJtXkFlgfP4AXyuyEKvIkha3QVVkZ35Tfk_sWKQHLmgzXCVGJ8DLj_WWiAsciKU8wXGYBHhChUh17r1Lr4gUl8WCfnjhCMlZU0s_pWJJOGcKpPJs=s2048?key=NRLyLb_iv1u0wdKKCuWF_g)**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+```Python
+coordenada_1 = (7, 7, 7)
+type(coordenada_1)  # → <class 'tuple'>
+
+coordenada_2 = 9, 9, 9
+type(coordenada_2)  # → <class 'tuple'>
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Estudiemos cómo usar tuplas con funciones
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Valor de retorno
+    
+- Una tupla se puede usar como valor de retorno
+- Esto permite retornar **múltiples valores**
+	- Todos ellos dentro de una tupla
+		- Explícita o implícita
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Parámetros
+
+- Una tupla se puede usar como un parámetro
+- Esto permite **disminuir la cantidad de parámetros**
+- Empaquetamiento → código más conciso y legible
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Uso de tuplas en funciones - Ejemplos
+
+```Python
+def encontrar_centro_rectangulo(esquina_inferior: tuple, esquina_superior: tuple) -> tuple:
+    """
+    Calcula el centro de un rectángulo a partir de sus esquinas como coordenadas. 
+
+    Args:
+        esquina_inferior (tuple): Coordenadas (x, y) 
+          de la esquina inferior izquierda.
+          
+        esquina_superior (tuple): Coordenadas (x, y) 
+          de la esquina superior derecha.
+
+    Returns:
+        tuple: Coordenadas del centro (x, y) del rectángulo.
+
+    >>> encontrar_centro_rectangulo((0, 0), (10, 10))
+    (5.0, 5.0)
+
+    >>> encontrar_centro_rectangulo((1, 2), (5, 6))
+    (3.0, 4.0)
+    """
+    x_centro = (esquina_inferior[0] + esquina_superior[0]) / 2
+
+    y_centro = (esquina_inferior[1] + esquina_superior[1]) / 2
+
+    # Se retorna una tupla (explícita en este caso):
+    return (x_centro, y_centro)  
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+def normalize_scores(scores: list) -> tuple:
+    max_score = max(scores)
+    for i in range(len(scores)):
+        scores[i] = round((scores[i] / max_score) * 100, 2)
+    return tuple(scores)
+
+scores = (10, 20, 30, 40, 50, 110)
+norm_scores = normalize_scores(list(scores))
+
+print('Original scores:', scores)     
+print('Normalized scores:', norm_scores)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III - Solución
+
+```Python
+def normalize_scores(scores: list) -> tuple:
+    max_score = max(scores)
+    for i in range(len(scores)):
+        scores[i] = round((scores[i] / max_score) * 100, 2)
+    return tuple(scores)
+
+scores = (10, 20, 30, 40, 50, 110)
+norm_scores = normalize_scores(list(scores))
+
+print('Original scores:', scores)     
+print('Normalized scores:', norm_scores)
+```
+
+```plaintext
+Original scores: (10, 20, 30, 40, 50, 110)
+Normalized scores: (9.09, 18.18, 27.27, 36.36, 45.45, 100.0)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Para cerrar
+
+- Revise la siguiente buena práctica:
+	- <a href="https://eerosales24.github.io/iph_2026_20/n4/buenas_practicas/#/3" target="_blank" rel="noopener noreferrer">Validación segura del método tuple.index()</a>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<i class="fas fa-question-circle fa-2x fa-spin fa-4x"></i>
+
+<br>
+<br>
+
+ [<i class="fas fa-home  fa-3x"></i>](https://eerosales24.github.io/iph_2026_20/#)
+</div></script></section></div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/chart/chart.min.js"></script>
+	<script src="plugin/chart/plugin.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+	  function isLight(color) {
+		let hex = color.replace('#', '');
+
+		// convert #fff => #ffffff
+		if(hex.length == 3){
+			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+		}
+
+		const c_r = parseInt(hex.substr(0, 2), 16);
+		const c_g = parseInt(hex.substr(2, 2), 16);
+		const c_b = parseInt(hex.substr(4, 2), 16);
+		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+		return brightness > 155;
+	}
+
+	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+	var isLight = isLight(bgColor);
+
+	if(isLight){
+		document.body.classList.add('has-light-background');
+	} else {
+		document.body.classList.add('has-dark-background');
+	}
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+        ],
+
+
+    	allottedTime: 120 * 1000,
+
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
+
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
+
+		customcontrols: {
+			controls: [
+			]
+		},
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width":960,"height":700,"margin":"0.025","minScale":"0.1","maxScale":"2.0","controls":"true","controlsLayout":"bottom-right","progress":"true","slideNumber":"true","center":"false","transition":"slide","transitionSpeed":"default"}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+
+  <!-- created with Advanced Slides -->
+</html>

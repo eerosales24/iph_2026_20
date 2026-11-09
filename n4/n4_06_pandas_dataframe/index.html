@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title></title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/iph.css" id="theme" />
+    <link rel="stylesheet" href="plugin/highlight/spyder.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
+
+
+
+    <script defer src="dist/fontawesome/all.min.js"></script>
+
+	<script type="text/javascript">
+		var forgetPop = true;
+		function onPopState(event) {
+			if(forgetPop){
+				forgetPop = false;
+			} else {
+				parent.postMessage(event.target.location.href, "app://obsidian.md");
+			}
+        }
+		window.onpopstate = onPopState;
+		window.onmessage = event => {
+			if(event.data == "reload"){
+				window.document.location.reload();
+			}
+			forgetPop = true;
+		}
+
+		function fitElements(){
+			const itemsToFit = document.getElementsByClassName('fitText');
+			for (const item in itemsToFit) {
+				if (Object.hasOwnProperty.call(itemsToFit, item)) {
+					var element = itemsToFit[item];
+					fitElement(element,1, 1000);
+					element.classList.remove('fitText');
+				}
+			}
+		}
+
+		function fitElement(element, start, end){
+
+			let size = (end + start) / 2;
+			element.style.fontSize = `${size}px`;
+
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
+					size--;
+					element.style.fontSize = `${size}px`;
+				}
+				return;
+			}
+
+			if(element.scrollHeight > element.offsetHeight){
+				fitElement(element, start, size);
+			} else {
+				fitElement(element, size, end);
+			}		
+		}
+
+
+		document.onreadystatechange = () => {
+			fitElements();
+			if (document.readyState === 'complete') {
+				if (window.location.href.indexOf("?export") != -1){
+					parent.postMessage(event.target.location.href, "app://obsidian.md");
+				}
+				if (window.location.href.indexOf("print-pdf") != -1){
+					let stateCheck = setInterval(() => {
+						clearInterval(stateCheck);
+						window.print();
+					}, 250);
+				}
+			}
+	};
+
+
+        </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### <i class="fas fa-award"></i> IP Honores
+
+ ####  *Pandas - DataFrame*
+
+[Eduardo Rosales](mailto:ee.rosales24@uniandes.edu.co)
+
+Departamento de Ingeniería de Sistemas y Computación
+
+Universidad de los Andes
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Continuamos con el estudio de la librería **Pandas**:
+
+<img src="iph/n4/img/Screenshot 2024-11-18 at 8.01.43 PM.png" alt="" style="object-fit: scale-down">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pandas - DataFrame
+
+- Estructura de datos bidimensional etiquetada
+- Similar a una hoja de cálculo
+	- Columnas y filas
+- Ayuda: [Pandas.DataFrame](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### DataFrames
+
+- Múltiples registros ordenados bajo algún criterio    
+	- Varias columnas con nombre
+- Diferentes tipos de dato por columna
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### DataFrames - Ejemplo
+
+<table border="1" style="border-collapse: collapse; width: 100%; text-align: center; font-size: 20px;">
+  <thead style="background-color: #d3d3d3;">
+    <tr>
+      <th style="color: black;">Tiempo</th>
+      <th style="color: black;">Atleta</th>
+      <th style="color: black;">País</th>
+      <th style="color: black;">Fecha</th>
+      <th style="color: black;">Ciudad</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>9.58</td>
+      <td>Usain Bolt</td>
+      <td>Jamaica</td>
+      <td>16/08/09</td>
+      <td>Berlin</td>
+    </tr>
+    <tr>
+      <td>9.69</td>
+      <td>Usain Bolt</td>
+      <td>Jamaica</td>
+      <td>16/09/08</td>
+      <td>Beijing</td>
+    </tr>
+    <tr>
+      <td>9.77</td>
+      <td>Asafa Powell</td>
+      <td>Jamaica</td>
+      <td>18/08/06</td>
+      <td>Zurich</td>
+    </tr>
+    <tr>
+      <td>…</td>
+      <td>…</td>
+      <td>…</td>
+      <td>…</td>
+      <td>…</td>
+    </tr>
+  </tbody>
+</table>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Estudiemos la creación de un DataFrame, desde un diccionario
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### DataFrame desde un diccionario
+
+```Python
+import pandas as pd
+
+tiempos = pd.Series([9.58, 9.63, 9.69, 9.72, 9.74, 9.77])
+
+atletas = pd.Series(['Usain Bolt', 'Usain Bolt', 'Usain Bolt', 'Usain Bolt', 'Yohan Blake', 'Asafa Powell'])
+
+paises = pd.Series(['Jamaica', 'Jamaica', 'Jamaica', 'Jamaica', 'Jamaica', 'Jamaica'])
+
+fechas = pd.Series(['16/08/2009', '19/08/2009','23/08/2008','09/09/2011','30/08/2012','18/08/2006'])
+
+ciudades = pd.Series(['Berlin','Beijing','New York','Rieti','Zurich'])
+
+datos_series = {'Tiempo': tiempos, 'Atleta': atletas, 'Pais': paises, 'Fecha': fechas, 'Ciudad': ciudades}
+
+df_records = pd.DataFrame(datos_series)
+print(df_records)
+```
+
+
+```plaintext
+    Tiempo     Atleta     Pais       Fecha    Ciudad
+0    9.58    Usain Bolt  Jamaica  16/08/2009    Berlin
+1    9.63    Usain Bolt  Jamaica  19/08/2009   Beijing
+2    9.69    Usain Bolt  Jamaica  23/08/2008  New York
+3    9.72    Usain Bolt  Jamaica  09/09/2011     Rieti
+4    9.74   Yohan Blake  Jamaica  30/08/2012    Zurich
+5    9.77  Asafa Powell  Jamaica  18/08/2006       NaN
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Estudiemos la creación de un DataFrame, desde un archivo CSV
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### DataFrame desde un CSV (1/4)
+
+- Ejemplo de archivo CSV (`records.csv`)
+
+```Plaintext
+Tiempo, Atleta, País, Fecha, Ciudad
+9.58, Usain Bolt, Jamaica, 16/08/2009, Berlin
+9.63, Usain Bolt, Jamaica, 19/08/2009, Beijing
+9.69, Usain Bolt, Jamaica, 23/08/2008, New York
+9.72, Usain Bolt, Jamaica, 09/09/2011, Rieti
+9.74, Yohan Blake, Jamaica, 30/08/2012, Zurich
+9.77, Asafa Powell, Jamaica, 18/08/2006, NaN
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### DataFrame desde un CSV (2/4)
+
+### `pd.read_csv()`
+
+- Lee un archivo CSV en un DataFrame de Pandas
+- Sintaxis:
+```Python
+pd.read_csv(filepath_or_buffer, ...)
+```
+
+- `filepath_or_buffer`: Ruta o URL del archivo CSV
+- Ayuda: [pandas.read_csv](https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html#pandas.read_csv)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### DataFrame desde un CSV (3/4)
+
+```Python
+df_records_csv = pd.read_csv('ruta/completa/al/archivo/records.csv')
+print(df_records_csv)
+```
+
+```plaintext
+    Tiempo     Atleta     Pais       Fecha    Ciudad
+0    9.58    Usain Bolt  Jamaica  16/08/2009    Berlin
+1    9.63    Usain Bolt  Jamaica  19/08/2009   Beijing
+2    9.69    Usain Bolt  Jamaica  23/08/2008  New York
+3    9.72    Usain Bolt  Jamaica  09/09/2011     Rieti
+4    9.74   Yohan Blake  Jamaica  30/08/2012    Zurich
+5    9.77  Asafa Powell  Jamaica  18/08/2006       NaN
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### DataFrame desde un CSV (4/4)
+
+- Si el archivo está en el mismo directorio
+	- Que la lógica, se puede usar el formato corto de ruta:
+
+	<br>
+
+```Python
+df = pd.read_csv('./educacion.csv')
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pandas.DataFrame
+
+- Existe una extensa selección 
+	- De métodos de los DataFrames
+- Para mayor información
+	- Revisar la documentación de `Pandas.DataFrames`:
+
+https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html
+
+- Adicionalmente, haremos actividades en laboratorio
+	- Para afianzar el entendimiento de librerías usadas en N4
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<i class="fas fa-question-circle fa-2x fa-spin fa-4x"></i>
+
+<br>
+<br>
+
+ [<i class="fas fa-home  fa-3x"></i>](https://eerosales24.github.io/iph_2026_20/#)
+</div></script></section></div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/chart/chart.min.js"></script>
+	<script src="plugin/chart/plugin.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+	  function isLight(color) {
+		let hex = color.replace('#', '');
+
+		// convert #fff => #ffffff
+		if(hex.length == 3){
+			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+		}
+
+		const c_r = parseInt(hex.substr(0, 2), 16);
+		const c_g = parseInt(hex.substr(2, 2), 16);
+		const c_b = parseInt(hex.substr(4, 2), 16);
+		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+		return brightness > 155;
+	}
+
+	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+	var isLight = isLight(bgColor);
+
+	if(isLight){
+		document.body.classList.add('has-light-background');
+	} else {
+		document.body.classList.add('has-dark-background');
+	}
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+        ],
+
+
+    	allottedTime: 120 * 1000,
+
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
+
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
+
+		customcontrols: {
+			controls: [
+			]
+		},
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width":960,"height":700,"margin":"0.025","minScale":"0.1","maxScale":"2.0","controls":"true","controlsLayout":"bottom-right","progress":"true","slideNumber":"true","center":"false","transition":"slide","transitionSpeed":"default"}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+
+  <!-- created with Advanced Slides -->
+</html>

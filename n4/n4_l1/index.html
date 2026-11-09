@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title></title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/iph.css" id="theme" />
+    <link rel="stylesheet" href="plugin/highlight/spyder.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
+
+
+
+    <script defer src="dist/fontawesome/all.min.js"></script>
+
+	<script type="text/javascript">
+		var forgetPop = true;
+		function onPopState(event) {
+			if(forgetPop){
+				forgetPop = false;
+			} else {
+				parent.postMessage(event.target.location.href, "app://obsidian.md");
+			}
+        }
+		window.onpopstate = onPopState;
+		window.onmessage = event => {
+			if(event.data == "reload"){
+				window.document.location.reload();
+			}
+			forgetPop = true;
+		}
+
+		function fitElements(){
+			const itemsToFit = document.getElementsByClassName('fitText');
+			for (const item in itemsToFit) {
+				if (Object.hasOwnProperty.call(itemsToFit, item)) {
+					var element = itemsToFit[item];
+					fitElement(element,1, 1000);
+					element.classList.remove('fitText');
+				}
+			}
+		}
+
+		function fitElement(element, start, end){
+
+			let size = (end + start) / 2;
+			element.style.fontSize = `${size}px`;
+
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
+					size--;
+					element.style.fontSize = `${size}px`;
+				}
+				return;
+			}
+
+			if(element.scrollHeight > element.offsetHeight){
+				fitElement(element, start, size);
+			} else {
+				fitElement(element, size, end);
+			}		
+		}
+
+
+		document.onreadystatechange = () => {
+			fitElements();
+			if (document.readyState === 'complete') {
+				if (window.location.href.indexOf("?export") != -1){
+					parent.postMessage(event.target.location.href, "app://obsidian.md");
+				}
+				if (window.location.href.indexOf("print-pdf") != -1){
+					let stateCheck = setInterval(() => {
+						clearInterval(stateCheck);
+						window.print();
+					}, 250);
+				}
+			}
+	};
+
+
+        </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### <i class="fas fa-award"></i> IP Honores
+
+ ####  *Laboratorio 1 de Nivel 4 - N4-L1*
+
+[Eduardo Rosales](mailto:ee.rosales24@uniandes.edu.co)
+
+Departamento de Ingeniería de Sistemas y Computación
+
+Universidad de los Andes
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Objetivos
+
+1.   Afianzar la comprensión de los  **patrones de recorrido** en matrices
+
+<br>
+
+2. Comprender algunos recorridos atípicos en matrices
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Siga paso a paso las siguientes instrucciones
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Trabajo individual
+
+- Este laboratorio es
+	- **Completamente individual**<!-- .element: class="fragment highlight-blue" -->
+
+	<br>
+
+- El tiempo para terminar el laboratorio es muy corto
+	- Por favor:
+		- Evite las distracciones
+		- Guarde **silencio**<!-- .element: class="fragment highlight-blue" -->
+
+	<br>
+
+- Si no termina el laboratorio
+	- Debe finalizarlo (**y comprenderlo**) 
+		- En sus horas de trabajo semanal
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Quiz I - N4
+
+- La próxima semana tendremos el primer quiz de N4
+	- El tema estará relacionado
+		- Con los **temas en este laboratorio** <!-- .element: class="fragment highlight-red" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Examen Final - IP Honores
+
+- N4-EXAM será el **25 de mayo de 2026**
+	- Horario: **9 - 11am**
+	- Lugar: **AU_403**
+
+<br>
+
+- Gran parte de N4-EXAM
+	- Evalúa **_matrices_** <!-- .element: class="fragment highlight-blue" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Preguntas
+
+- En caso de dudas, por favor:
+
+<br> 
+
+1. Formule su pregunta de forma **muy clara y concisa**
+
+<br>
+
+2. Luego (**y solo luego de esto**)
+	- Levante la mano
+
+<br>
+
+<i class="fas fa-question-circle fa-1x fa-spin fa-1x"></i> _Al plantearse correctamente la pregunta, la respuesta a veces se revela sola_
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad I (1/3)
+
+- Cree un archivo llamado: `logica.py`
+	- Copie y pegue el siguiente código e implemente el `TODO1`:
+
+```python
+import doctest
+
+def es_primo(n: int) -> bool:
+    """
+    Determina si un número entero positivo es primo.
+
+    Un número primo es mayor o igual a 2 y solo divisible por 1 y él mismo.
+
+    Args:
+        n (int): Número entero a evaluar.
+
+    Returns:
+        bool: True si el número es primo, False en caso contrario.
+    """
+    i = 2
+    es_numero_primo = True
+
+    if n < 2:
+        es_numero_primo = False
+
+    while i * i <= n and es_numero_primo:
+        if n % i == 0:
+            es_numero_primo = False
+        i += 1
+
+    return es_numero_primo
+    
+
+def contar_primos_en_matriz(matriz: list) -> int:
+    """
+    Cuenta cuántos números primos hay en una matriz
+
+    Un número primo es mayor o igual a 2 y solo divisible por 1 y sí mismo.
+    Esta función recorre toda la matriz elemento por elemento.
+
+    Args:
+        matriz (list): Lista de listas que representa la matriz.
+
+    Returns:
+        int: Cantidad de números primos en la matriz.
+
+    >>> contar_primos_en_matriz([])  # Caso matriz vacía
+    0
+    
+    >>> contar_primos_en_matriz([[1, 4], [6, 8]])  # Ningún primo
+    0
+    
+    >>> contar_primos_en_matriz([[0, -3], [-2, 2]])  # Un solo primo: 2
+    1
+
+    >>> contar_primos_en_matriz([[2, 3], [4, 5]])  # Tres primos: 2, 3 y 5
+    3
+
+    >>> contar_primos_en_matriz([[7, 11, 13], [17, 19, 20], [22, 23, 29]])  # Siete primos
+    7
+    """
+    # TODO1: Implemente la función tal y como se describe en la documentación
+
+
+#doctest.run_docstring_examples(contar_primos_en_matriz, globals(), verbose=True)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad I (2/3)
+
+- En `logica.py`
+	- Copie y pegue el siguiente código e implemente el `TODO2`:
+
+```python
+def extraer_columna(matriz: list, indice_columna: int) -> list:
+    """
+    Extrae una columna específica de una matriz bien formada (rectangular).
+
+    Args:
+        matriz (list): Lista de listas, donde cada sublista es una fila con igual longitud.
+        indice_columna (int): Índice de la columna a extraer (comenzando desde 0).
+
+    Returns:
+        list: Elementos de la columna como lista.
+
+    >>> extraer_columna([], 0)  # Caso matriz vacía
+    []
+    
+    >>> extraer_columna([["a", "b", "c"], ["d", "e", "f"], ["g", "h", "i"]], 0)  # Extrae la primera columna
+    ['a', 'd', 'g']
+
+    >>> extraer_columna([[1, 2], [3, 4]], 1)  # Extrae la segunda columna
+    [2, 4]
+    """
+    # TODO2: Implemente la función tal y como se describe en la documentación
+
+
+#doctest.run_docstring_examples(extraer_columna, globals(), verbose=True)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad I (3/3)
+
+- En `logica.py`
+	- Copie y pegue el siguiente código e implemente el `TODO3`:
+
+```python
+def imprimir_elementos_por_columna(matriz: list) -> None:
+    """
+    Imprime los elementos de cada columna en orden, 
+    recorriendo la matriz columna por columna.
+    
+    Si la matriz recibida está vacía, imprime:
+    La matriz está vacía
+
+    Parámetros:
+        matriz (list): Una lista de listas que representa la matriz.
+
+    Retorna:
+        None.
+    
+    >>> imprimir_elementos_por_columna([])  # Caso matriz vacía
+    La matriz está vacía
+    
+    >>> imprimir_elementos_por_columna([[1, 2], [3, 4]])  # Imprime por columna, matriz 2x2
+    1
+    3
+    2
+    4
+
+    >>> imprimir_elementos_por_columna([[1, 2, 3], [4, 5, 6], [7, 8, 9]])  # Imprime por columna, matriz 3x3
+    1
+    4
+    7
+    2
+    5
+    8
+    3
+    6
+    9
+
+    >>> imprimir_elementos_por_columna([[1, 2, 3, 4], [5, 6, 7, 8]])  # Imprime por columna, matriz 2x4
+    1
+    5
+    2
+    6
+    3
+    7
+    4
+    8
+    """
+    # TODO3: Implemente la función tal y como se describe en la documentación
+    
+
+#doctest.run_docstring_examples(imprimir_elementos_por_columna, globals(), verbose=True)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Fin de la Actividad I
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Actividad II (1/2)
+
+- En `logica.py`
+	- Copie y pegue el siguiente código e implemente el `TODO4`:
+
+
+```python
+def buscar_posicion_matriz(matriz: list, buscado: int) -> tuple:
+    """
+    Busca la posición de un elemento en una matriz dada. 
+    Retorna una tupla con los índices (fila, columna) de la primera ocurrencia
+    del elemento buscado o (-1, -1) si el elemento no está presente.
+    
+    Utiliza un recorrido parcial con while y centinela.
+
+    Args:
+        matriz (list): La matriz en la que se busca el elemento.
+        buscado (int): El elemento que se quiere encontrar.
+
+    Returns:
+        tuple: Una tupla (fila, columna) con la posición del elemento, o (-1, -1) si no se encuentra.
+
+    >>> buscar_posicion_matriz([], 3)  # Caso matriz vacía
+    (-1, -1)
+    
+    >>> buscar_posicion_matriz([[1, 2], [3, 4], [5, 6]], 7)  # Matriz 3x2, elemento no encontrado
+    (-1, -1)
+
+    >>> buscar_posicion_matriz([[1, 2], [3, 4], [5, 6]], 4)  # Matriz 3x2, primera ocurrencia en (1, 1)
+    (1, 1)
+
+    >>> buscar_posicion_matriz([[7, 8, 9], [10, 11, 12]], 12)  # Matriz 2x3, primera ocurrencia en (1, 2)
+    (1, 2)
+    """
+    # TODO4: Implemente la función tal y como se describe en la documentación
+
+
+#doctest.run_docstring_examples(buscar_posicion_matriz, globals(), verbose=True)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad II (2/2)
+
+- En `logica.py`
+	- Copie y pegue el siguiente código e implemente el `TODO5`:
+
+```python
+def hay_primo_en_matriz(matriz: list) -> bool:
+    """
+    Verifica si existe al menos un número primo en una matriz.
+
+    Utiliza un recorrido parcial con while y centinela.
+
+    Args:
+        matriz (list): Lista de listas de enteros.
+
+    Returns:
+        bool: True si hay al menos un número primo, False si no hay ninguno.
+
+    >>> hay_primo_en_matriz([])  # Caso matriz vacía
+    False
+
+    >>> hay_primo_en_matriz([[1, 1], [1, 1]])  # Matriz 2x2 sin números primos
+    False
+
+    >>> hay_primo_en_matriz([[4, 6], [8, 9]])  # Matriz 2x2 sin números primos
+    False
+
+    >>> hay_primo_en_matriz([[2, 4], [6, 8]])  # Matriz 2x2, contiene el primo 2
+    True
+
+    >>> hay_primo_en_matriz([[4, 6], [8, 3]])  # Matriz 2x2, contiene el primo 3
+    True
+
+    >>> hay_primo_en_matriz([[10, 15, 21], [22, 25, 27], [30, 31, 32]])  # Matriz 3x3, contiene el primo 31
+    True
+    """
+    # TODO5: Implemente la función tal y como se describe en la documentación
+
+
+#doctest.run_docstring_examples(hay_primo_en_matriz, globals(), verbose=True)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Fin de la Actividad II
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Matrices:  Conceptos nuevos
+
+- Comprenda muy bien 
+	- Los **NUEVOS** conceptos explicados a continuación
+
+<br>
+
+- Tómese su tiempo para **leer cuidadosamente**<!-- .element: class="fragment highlight-blue" -->
+	- Si tiene dudas, levante su mano para solicitar ayuda
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Recorrido en diagonal
+
+- Recorre únicamente la diagonal de la matriz
+	- De izquierda a derecha
+- Los índices de fila, columna
+	- Son iguales en la diagonal
+
+<table border="1" style="border-collapse: collapse; text-align: center;">
+  <tr>
+    <td style="background-color: lightgreen;">1</td>
+    <td>2</td>
+    <td>3</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td style="background-color: lightgreen;">5</td>
+    <td>6</td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td>8</td>
+    <td style="background-color: lightgreen;">9</td>
+  </tr>
+</table>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Recorrido en diagonal - Ejemplo
+
+```Python
+def imprimir_diagonal_principal(matriz: list) -> None:
+    """
+    Imprime los elementos de la diagonal principal de la matriz.
+
+    Parámetros:
+        matriz (list): Una lista de listas que representa la matriz.
+
+    Retorna:
+        None
+    """
+    for fila in range(len(matriz)):
+        print(matriz[fila][fila])
+```
+
+```Pythpn
+matriz = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+imprimir_diagonal_principal(matriz)
+```
+
+```Plaintext
+1
+5
+9
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Recorrido en la diagonal secundaria
+
+- Así se ve el recorrido en la *diagonal secundaria*
+
+<table border="1" style="border-collapse: collapse; text-align: center;">
+  <tr>
+    <td>1</td>
+    <td>2</td>
+    <td style="background-color: lightgreen;">3</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td style="background-color: lightgreen;">5</td>
+    <td>6</td>
+  </tr>
+  <tr>
+    <td style="background-color: lightgreen;">7</td>
+    <td>8</td>
+    <td>9</td>
+  </tr>
+</table>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad III (1/4)
+
+- En `logica.py`
+	- Copie y pegue el siguiente código e implemente el `TODO6`:
+
+```python
+def imprimir_x_con_forma(n: int) -> None:
+    """
+    Imprime una "X" en una matriz de tamaño n x n, usando el carácter 'x'.
+    El resto de las posiciones se imprimen como espacios sencillos.
+    
+    Puede asumir que x siempre será mayor o igual a 3.
+
+    Args:
+        n (int): Tamaño de la matriz (número de filas y columnas).
+
+    Returns:
+        None
+
+    >>> imprimir_x_con_forma(3)  # Matriz 3x3 en forma de "X"
+    x x
+     x 
+    x x
+
+    >>> imprimir_x_con_forma(5)  # Matriz 5x5 en forma de "X"
+    x   x
+     x x 
+      x  
+     x x 
+    x   x
+
+    >>> imprimir_x_con_forma(7)  # Matriz 7x7 en forma de "X"
+    x     x
+     x   x 
+      x x  
+       x   
+      x x  
+     x   x 
+    x     x
+    """
+    # TODO6: Implemente la función tal y como se describe en la documentación
+
+
+#doctest.run_docstring_examples(imprimir_x_con_forma, globals(), verbose=True)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Recorrido en cuadro
+
+- Recorre en cuadro (bordes exteriores) de la matriz
+- Ej:
+	- Recorrer primero la fila superior
+	- Luego la última columna
+	- La fila inferior en orden inverso 
+	- y  la primera columna en orden inverso
+
+<table border="1" style="border-collapse: collapse; text-align: center;">
+  <tr>
+    <td style="background-color: lightgreen;">1</td>
+    <td style="background-color: lightgreen;">2</td>
+    <td style="background-color: lightgreen;">3</td>
+  </tr>
+  <tr>
+    <td style="background-color: lightgreen;">4</td>
+    <td>5</td>
+    <td style="background-color: lightgreen;">6</td>
+  </tr>
+  <tr>
+    <td style="background-color: lightgreen;">7</td>
+    <td style="background-color: lightgreen;">8</td>
+    <td style="background-color: lightgreen;">9</td>
+  </tr>
+</table>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad III (2/4)
+
+- En `logica.py`
+	- Copie y pegue el siguiente código e implemente el `TODO7`:
+
+```python
+def imprimir_borde_exterior(matriz: list) -> None:
+    """
+    Imprime los elementos en el borde exterior de la matriz, 
+    recorriendo en sentido horario: arriba → derecha → abajo → izquierda.
+    
+    Puede asumir que la mínima matriz dada es de 2 x 2.
+
+    Parámetros:
+        matriz (list): Una lista de listas que representa la matriz rectangular.
+
+    Retorna:
+        None
+
+    >>> imprimir_borde_exterior([[1, 2], [3, 4]])  # Matriz 2x2, recorre el borde
+    1
+    2
+    4
+    3
+
+    >>> imprimir_borde_exterior([[1, 2, 3], [4, 5, 6], [7, 8, 9]])  # Matriz 3x3, recorre el borde
+    1
+    2
+    3
+    6
+    9
+    8
+    7
+    4
+
+    >>> imprimir_borde_exterior([
+    ...     [11, 12, 13, 14],
+    ...     [21, 22, 23, 24],
+    ...     [31, 32, 33, 34],
+    ...     [41, 42, 43, 44]
+    ... ])  # Matriz 4x4, recorre el borde
+    11
+    12
+    13
+    14
+    24
+    34
+    44
+    43
+    42
+    41
+    31
+    21
+    """
+    # TODO7: Implemente la función tal y como se describe en la documentación
+
+
+#doctest.run_docstring_examples(imprimir_borde_exterior, globals(), verbose=True)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad III (3/4)
+
+- En `logica.py`
+	- Cree una función que imprima la primera letra de su nombre y/o apellido
+	- La impresión debe hacerse mediante números uno (`1`)
+	- El resto de la matriz debe quedar en ceros (`0`)
+	- El tamaño de la matriz puede ser fijo y usted puede decidirlo
+	- Este es un posible ejemplo de impresión de una letra "T"
+
+```plaintext
+        1 1 1 1 1
+        0 0 1 0 0
+        0 0 1 0 0
+        0 0 1 0 0
+        0 0 1 0 0
+```
+
+- Usted puede crear la matriz afuera de la función y pasarla como parámetro
+	- O puede crearla adentro de la función
+		- Tiene libertad en ello
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad III (4/4)
+
+1. Revise si sus funciones cumplen con todas las buenas prácticas obligatorias del curso
+	 - En particular, esta:
+		- <a href="https://eerosales24.github.io/iph_2026_20/n4/buenas_practicas/#/4" target="_blank" rel="noopener noreferrer">Usar nombres autoexplicativos para filas, columnas y elementos</a>
+
+
+2. Si una función no cumple las anteriores buenas prácticas
+	- Por favor corrija su implementación
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Entrega
+
+1. Comprima en un archivo `.zip` el archivo:
+	- `logica.py`
+
+2. Haga el envío del `.zip` en  [Bloque Neón](https://bloqueneon.uniandes.edu.co/)
+	- Vaya a **"Actividades"**
+		- **"N4-L1"**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Fin de N4-L1
+
+- Si no alcanzó a terminar el laboratorio
+	- Debe completar el laboratorio en su tiempo de 
+		- **Trabajo individual semanal** de IP Honores
+
+
+<br>
+
+ [<i class="fas fa-home  fa-3x"></i>](https://eerosales24.github.io/iph_2026_20/#)
+</div></script></section></div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/chart/chart.min.js"></script>
+	<script src="plugin/chart/plugin.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+	  function isLight(color) {
+		let hex = color.replace('#', '');
+
+		// convert #fff => #ffffff
+		if(hex.length == 3){
+			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+		}
+
+		const c_r = parseInt(hex.substr(0, 2), 16);
+		const c_g = parseInt(hex.substr(2, 2), 16);
+		const c_b = parseInt(hex.substr(4, 2), 16);
+		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+		return brightness > 155;
+	}
+
+	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+	var isLight = isLight(bgColor);
+
+	if(isLight){
+		document.body.classList.add('has-light-background');
+	} else {
+		document.body.classList.add('has-dark-background');
+	}
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+        ],
+
+
+    	allottedTime: 120 * 1000,
+
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
+
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
+
+		customcontrols: {
+			controls: [
+			]
+		},
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width":960,"height":700,"margin":"0.025","minScale":"0.1","maxScale":"2.0","controls":"true","controlsLayout":"bottom-right","progress":"true","slideNumber":"true","center":"false","transition":"slide","transitionSpeed":"default"}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+
+  <!-- created with Advanced Slides -->
+</html>
