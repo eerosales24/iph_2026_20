@@ -89,7 +89,7 @@
 
 ### <i class="fas fa-award"></i> IP Honores
 
- ####  *Laboratorio 1 de Nivel 4 - N4-L1*
+#### _Laboratorio 1 de Nivel 4 - N4-L1_
 
 [Eduardo Rosales](mailto:ee.rosales24@uniandes.edu.co)
 
@@ -99,58 +99,32 @@ Universidad de los Andes
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### Objetivos
-
-1.   Afianzar la comprensión de los  **patrones de recorrido** en matrices
-
-<br>
-
-2. Comprender algunos recorridos atípicos en matrices
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-###  Siga paso a paso las siguientes instrucciones
+### Siga paso a paso las siguientes instrucciones
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### Trabajo individual
 
-- Este laboratorio es
-	- **Completamente individual**<!-- .element: class="fragment highlight-blue" -->
-
-	<br>
-
+- Este laboratorio debe realizarse de forma
+    
+    - **Completamente individual**<!-- .element: class="fragment highlight-red" -->
+    
+    <br>
+    
 - El tiempo para terminar el laboratorio es muy corto
-	- Por favor:
-		- Evite las distracciones
-		- Guarde **silencio**<!-- .element: class="fragment highlight-blue" -->
+    
+    - Es un laboratorio _retante y muy extenso_ <!-- .element: class="fragment highlight-green" -->
+        - Por favor:
+            - Evite las distracciones
+            - Guarde **silencio**<!-- .element: class="fragment highlight-blue" -->
 
 	<br>
-
+	
 - Si no termina el laboratorio
-	- Debe finalizarlo (**y comprenderlo**) 
-		- En sus horas de trabajo semanal
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Quiz I - N4
-
-- La próxima semana tendremos el primer quiz de N4
-	- El tema estará relacionado
-		- Con los **temas en este laboratorio** <!-- .element: class="fragment highlight-red" -->
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Examen Final - IP Honores
-
-- N4-EXAM será el **25 de mayo de 2026**
-	- Horario: **9 - 11am**
-	- Lugar: **AU_403**
-
-<br>
-
-- Gran parte de N4-EXAM
-	- Evalúa **_matrices_** <!-- .element: class="fragment highlight-blue" -->
+    
+    - Debe finalizarlo (**y comprenderlo**)<!-- .element: class="fragment highlight-green" -->
+        - En las 5h
+            - De trabajo individual semanal
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -158,565 +132,1199 @@ Universidad de los Andes
 
 - En caso de dudas, por favor:
 
-<br> 
+<br> 
 
-1. Formule su pregunta de forma **muy clara y concisa**
+1. Formule su pregunta de forma **muy clara y concisa**
 
 <br>
 
 2. Luego (**y solo luego de esto**)
-	- Levante la mano
+    - Levante la mano
 
 <br>
 
-<i class="fas fa-question-circle fa-1x fa-spin fa-1x"></i> _Al plantearse correctamente la pregunta, la respuesta a veces se revela sola_
+<i class="fas fa-question-circle fa-1x fa-spin fa-1x"></i> _Al plantearse correctamente la pregunta, la respuesta a veces se revela sola_
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-###  Actividad I (1/3)
+### Objetivos del laboratorio
 
-- Cree un archivo llamado: `logica.py`
-	- Copie y pegue el siguiente código e implemente el `TODO1`:
+- Al finalizar este laboratorio, usted debe saber:
+    - **Empaquetar** valores en una tupla
+    - **Desempaquetar** una tupla en variables
+    - **Pasar tuplas** como parámetros a una función
+    - **Retornar una tupla** desde una función
+        - Es decir, retornar múltiples valores
+    - Aprovechar la **inmutabilidad** de las tuplas
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Actividad I
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Repasemos el empaquetado y el desempaquetado
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 🌀 Empaquetado y desempaquetado 🌀
+
+- **Empaquetado:** agrupar varios valores en una tupla:
+
+```Python
+punto = (3, 7)  # Empaquetado explícito (con paréntesis)
+
+punto = 3, 7    # Empaquetado implícito (sin paréntesis)
+```
+
+<br>
+	
+- **Desempaquetado:** extraer los valores de una tupla en variables:
+
+```Python
+x, y = punto  # x = 3, y = 7
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Para las siguientes preguntas
+
+- Responda primero **en su mente** (o en sus notas)
+    
+    - Y solo después, avance a la diapositiva de la solución<br>
+- Si lo desea, verifique luego su respuesta
+    
+    - Ejecutando el código en Spyder
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta I
+
+- ¿De qué tipo es cada una de las siguientes variables?
+
+```Python
+a = (5)
+
+b = (5,)
+
+c = 5,
+
+d = ()
+
+e = ('5')
+
+f = tuple('57')
+
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta I - Solución
+
+```Python
+a = (5)          # int: los paréntesis solos no crean una tupla
+
+b = (5,)         # tuple: (5,)
+
+c = 5,           # tuple: (5,) (empaquetado implícito)
+
+d = ()           # tuple: () (tupla vacía)
+
+e = ('5')        # str: '5' (de nuevo, falta la coma)
+
+f = tuple('57')  # tuple: ('5', '7') (un ítem por cada carácter)
+```
+
+<br>
+
+- Salvo en la tupla vacía
+    - **La coma es la que crea la tupla**, no los paréntesis
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta II
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+punto = (3, 7)
+x, y = punto
+print(x, y)
+
+x, y = y, x
+print(x, y)
+
+print(punto)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta II - Solución
+
+```Python
+punto = (3, 7)
+x, y = punto
+print(x, y)  # → 3 7
+
+x, y = y, x
+print(x, y)  # → 7 3
+
+print(punto)  # → (3, 7)
+```
+
+- `x, y = y, x` intercambia los valores sin una variable auxiliar:
+    1. A la derecha, se **empaqueta** la tupla `(7, 3)`
+    2. A la izquierda, se **desempaqueta** en `x` y `y`
+- `punto` no cambia:
+    - `x` y `y` son variables independientes de la tupla
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III
+
+- Analice cada línea **por separado**:
+    - ¿Cuál funciona y cuál genera un error?
+
+<br>
+
+```Python
+fecha = (12, 'noviembre', 2026)
+
+dia, mes, anio = fecha        # Línea A
+
+dia, mes = fecha              # Línea B
+
+dia, mes, anio, hora = fecha  # Línea C
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III - Solución
+
+```Python
+fecha = (12, 'noviembre', 2026)
+
+dia, mes, anio = fecha        # Línea A → ✅ dia = 12, mes = 'noviembre', anio = 2026
+
+dia, mes = fecha              # Línea B → ValueError: too many values to unpack
+
+dia, mes, anio, hora = fecha  # Línea C → ValueError: not enough values to unpack
+```
+
+<br>
+
+- Al desempaquetar, la cantidad de variables
+    - Debe ser **igual** a la cantidad de elementos de la tupla
+        - Línea B: hay 3 valores y solo 2 variables
+        - Línea C: hay 3 valores y 4 variables
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IV
+
+- Analice cada línea, suponiendo que las líneas que generan error se omiten:
+    - ¿Qué imprime o qué error genera?
+
+<br>
+
+```Python
+colores = ('rojo', 'verde', 'azul')
+
+print(colores[0])               # Línea A
+
+colores[0] = 'negro'            # Línea B
+
+colores.append('negro')         # Línea C
+
+colores = colores + ('negro',)  # Línea D
+
+print(colores)                  # Línea E
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IV - Solución
+
+```Python
+colores = ('rojo', 'verde', 'azul')
+
+print(colores[0])               # Línea A → rojo
+
+colores[0] = 'negro'            # Línea B → TypeError: 'tuple' object does not support item assignment (las tuplas son inmutables)
+
+colores.append('negro')         # Línea C → AttributeError: 'tuple' object has no attribute 'append' (las tuplas son inmutables, no tienen append())
+
+colores = colores + ('negro',)  # Línea D → ✅ Crea una NUEVA tupla
+
+print(colores)                  # Línea E → ('rojo', 'verde', 'azul', 'negro')
+```
+
+<br>
+
+- La línea D **no modifica** la tupla original
+    - Crea una tupla nueva y le asigna el nombre `colores`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta V
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+lista_a = [1, 2, 3]
+lista_b = lista_a
+lista_a += [4]
+
+tupla_a = (1, 2, 3)
+tupla_b = tupla_a
+tupla_a += (4,)
+
+print(lista_a, lista_b, lista_a is lista_b)
+print(tupla_a, tupla_b, tupla_a is tupla_b)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta V - Solución
+
+```plaintext
+[1, 2, 3, 4] [1, 2, 3, 4] True
+(1, 2, 3, 4) (1, 2, 3) False
+```
+
+<br>
+
+- Con la **lista** (mutable), `+=` modifica la misma lista
+    - Ambos nombres ven el cambio
+- Con la **tupla** (inmutable), `+=` crea una **tupla nueva**
+    - Solo `tupla_a` se refiere a ella
+    - `tupla_b` conserva la tupla original
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VI
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+registro = ('Ana', [4.5, 3.8])
+
+registro[1].append(5.0)
+print(registro)
+
+registro[1] = [1.0]
+print(registro)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VI - Solución
+
+```Python
+registro = ('Ana', [4.5, 3.8])
+
+registro[1].append(5.0)
+print(registro)  # → ('Ana', [4.5, 3.8, 5.0])
+
+registro[1] = [1.0]  # → TypeError: 'tuple' object does not support item assignment (una tupla es inmutable)
+
+print(registro)  # No se alcanza a ejecutar
+```
+
+<br>
+
+- La tupla es inmutable:
+    - Siempre contiene **los mismos dos objetos**
+- Pero la lista que está adentro **sí es mutable**
+    - Por eso `append()` funciona
+        - Pero la asignación `registro[1] = ...` no
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Fin de la Actividad I
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Actividad II
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Estudiemos cómo usar tuplas para agrupar datos
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Tuplas para agrupamiento de datos
+
+- Las tuplas permiten agrupar ítems
+    - Con las ventajas de la inmutabilidad
+        - No se pueden cambiar los datos
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<img src="unnamed.png" alt="" style="width: 55%; height: 65%; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Tuplas para agrupamiento de datos - Ejemplo
+
+```Python
+coordenada_1 = (7, 7, 7)
+type(coordenada_1) # → <class 'tuple'>
+
+coordenada_2 = 9, 9, 9
+type(coordenada_2) # → <class 'tuple'>
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Estudiemos cómo usar tuplas con funciones
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Valor de retorno
+
+- Una tupla se puede usar como valor de retorno
+- Esto permite retornar **múltiples valores**
+    - Todos ellos dentro de una tupla
+        - Explícita o implícita
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Parámetros
+
+- Una tupla se puede usar como un parámetro
+- Esto permite **disminuir la cantidad de parámetros**
+- Empaquetado → código más conciso y legible
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Uso de tuplas en funciones - Ejemplo
+
+```Python
+def encontrar_centro_rectangulo(esquina_inferior: tuple, esquina_superior: tuple) -> tuple:
+    """
+    Calcula el centro de un rectángulo a partir de sus esquinas como coordenadas. 
+
+    Args:
+        esquina_inferior (tuple): Coordenadas (x, y) de la esquina inferior izquierda.
+          
+        esquina_superior (tuple): Coordenadas (x, y) de la esquina superior derecha.
+
+    Returns:
+        tuple: Coordenadas del centro (x, y) del rectángulo.
+
+    >>> encontrar_centro_rectangulo((0, 0), (10, 10))
+    (5.0, 5.0)
+
+    >>> encontrar_centro_rectangulo((1, 2), (5, 6))
+    (3.0, 4.0)
+    """
+    x_centro = (esquina_inferior[0] + esquina_superior[0]) / 2
+
+    y_centro = (esquina_inferior[1] + esquina_superior[1]) / 2
+
+    # Se retorna una tupla (explícita en este caso):
+    return (x_centro, y_centro)  
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Retorno explícito vs. implícito
+
+```Python
+return (x_centro, y_centro)  # Tupla explícita (con paréntesis)
+
+return x_centro, y_centro    # Tupla implícita (sin paréntesis)
+```
+
+<br>
+
+- Ambas formas retornan **la misma tupla**
+- En ambos casos se usa **un solo** `return` ✅
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Recibir la tupla retornada
+
+```Python
+# Opción 1: guardar la tupla completa
+centro = encontrar_centro_rectangulo((0, 0), (10, 10))
+print(centro)  # → (5.0, 5.0)
+
+# Opción 2: desempaquetarla directamente en variables
+x_centro, y_centro = encontrar_centro_rectangulo((0, 0), (10, 10))
+print(x_centro)  # → 5.0
+print(y_centro)  # → 5.0
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pasar tuplas como argumentos
+
+```Python
+esquina_1 = (1, 2)
+esquina_2 = (5, 6)
+
+encontrar_centro_rectangulo(esquina_1, esquina_2)  # → (3.0, 4.0)
+encontrar_centro_rectangulo((1, 2), (5, 6))         # → (3.0, 4.0)
+```
+
+<br>
+
+- Cada tupla se pasa como **un solo argumento**
+- Dentro de la función, se puede acceder a sus elementos por índice
+    - Ej: `esquina_inferior[0]`
+- O, de forma más legible, **desempaquetarla**
+    - Ej: `x_inferior, y_inferior = esquina_inferior`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VII
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+def dividir(dividendo: int, divisor: int) -> tuple:
+    return dividendo // divisor, dividendo % divisor
+
+resultado = dividir(17, 5)
+print(resultado)
+print(type(resultado))
+
+cociente, residuo = dividir(17, 5)
+print(cociente)
+print(residuo)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VII - Solución
+
+```Python
+def dividir(dividendo: int, divisor: int) -> tuple:
+    return dividendo // divisor, dividendo % divisor
+
+resultado = dividir(17, 5)
+print(resultado)        # → (3, 2)
+print(type(resultado))  # → tuple
+
+cociente, residuo = dividir(17, 5)
+print(cociente)  # → 3
+print(residuo)   # → 2
+```
+
+<br>
+
+- `return dividendo // divisor, dividendo % divisor`
+    - Retorna una tupla **implícita** con dos valores
+- Quien llama a la función puede:
+    - Guardar la tupla completa (`resultado`)
+    - O desempaquetarla (`cociente, residuo`)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VIII
+
+- ¿Qué ocurre al ejecutar cada una de las líneas A y B?
+
+```Python
+def distancia_al_origen(punto: tuple) -> float:
+    x, y = punto
+    return (x ** 2 + y ** 2) ** 0.5
+
+print(distancia_al_origen((3, 4)))  # Línea A
+
+print(distancia_al_origen(3, 4))    # Línea B
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VIII - Solución
+
+```Python
+def distancia_al_origen(punto: tuple) -> float:
+    x, y = punto
+    return (x ** 2 + y ** 2) ** 0.5
+
+print(distancia_al_origen((3, 4)))  # Línea A → 5.0
+
+print(distancia_al_origen(3, 4))    # Línea B → TypeError: distancia_al_origen()
+                                    # takes 1 positional argument but 2 were given
+```
+
+<br>
+
+- En la línea A, `(3, 4)` es **un solo argumento**: una tupla
+- En la línea B, `3, 4` son **dos argumentos**: dos enteros
+    - Pero la función recibe un solo parámetro
+- Al pasar una tupla literal, los paréntesis **sí son necesarios**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IX
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+def normalize_scores(scores: list) -> tuple:
+    max_score = max(scores)
+    for i in range(len(scores)):
+        scores[i] = round((scores[i] / max_score) * 100, 2)
+    return tuple(scores)
+
+scores = (10, 20, 30, 40, 50, 110)
+norm_scores = normalize_scores(list(scores))
+
+print('Original scores:', scores)     
+print('Normalized scores:', norm_scores)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IX - Solución
+
+```Python
+def normalize_scores(scores: list) -> tuple:
+    max_score = max(scores)
+    for i in range(len(scores)):
+        scores[i] = round((scores[i] / max_score) * 100, 2)
+    return tuple(scores)
+
+scores = (10, 20, 30, 40, 50, 110)
+norm_scores = normalize_scores(list(scores))
+
+print('Original scores:', scores)     
+print('Normalized scores:', norm_scores)
+```
+
+<br>
+
+```plaintext
+Original scores: (10, 20, 30, 40, 50, 110)
+Normalized scores: (9.09, 18.18, 27.27, 36.36, 45.45, 100.0)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta X
+
+- En la Pregunta IX, ¿qué ocurre si se envía la tupla directamente a la función?
+
+```Python
+scores = (10, 20, 30, 40, 50, 110)
+norm_scores = normalize_scores(scores)  # Sin usar list()
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta X - Solución
+
+```Python
+scores = (10, 20, 30, 40, 50, 110)
+norm_scores = normalize_scores(scores)  # Sin list()
+# → TypeError: 'tuple' object does not support item assignment
+```
+
+<br>
+
+- La función intenta modificar su parámetro: `scores[i] = ...`
+    - Pero una tupla es **inmutable**
+- En la Pregunta IX, en cambio:
+    - `list(scores)` crea una **lista nueva** (modificable) a partir de la tupla
+    - La tupla original queda **protegida** contra cambios
+    - `tuple(scores)` retorna el resultado como una tupla
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Ahora, practiquemos creando funciones con tuplas
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Importante
+
+- No es necesario entregar un plan de implementación en este laboratorio
+    
+    <br>
+- Crear un plan de implementación paso a paso, es vital para _entender el problema, dividirlo en subproblemas y resolver cada uno por separado_
+    
+    <br>
+- Algo que destaca a un mal programador, es empezar a codificar de inmediato y perder mucho tiempo produciendo código incorrecto <!-- .element: class="fragment highlight-red" -->
+    
+    <br>
+- En cambio, con un buen plan de implementación, traducir la solución a Python (u otro lenguaje en un futuro o incluso pedírsela a una _IA_ en el contexto de un problema del mundo real) se vuelve trivial
+    
+    <br>
+- Este curso no se trata solo de programar, sino de enseñarle a _pensar de manera lógica y estructurada, de mejorar su capacidad de abstracción_ <!-- .element: class="fragment highlight-blue" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Actividad II (1/3)
+
+- Cree un archivo llamado: `logica.py`
+    1. Copie y pegue el siguiente código
+    2. Lea el plan de implementación en la siguiente diapositiva
+    3. Implemente el `TODO1`
 
 ```python
 import doctest
 
-def es_primo(n: int) -> bool:
+def convertir_segundos(total_segundos: int) -> tuple:
     """
-    Determina si un número entero positivo es primo.
-
-    Un número primo es mayor o igual a 2 y solo divisible por 1 y él mismo.
+    Convierte una cantidad de segundos en una duración expresada como
+    (horas, minutos, segundos).
+    
+    Nota: Debe retornar los tres valores empaquetados en una tupla.
 
     Args:
-        n (int): Número entero a evaluar.
+        total_segundos (int): Cantidad total de segundos (entero no negativo).
 
     Returns:
-        bool: True si el número es primo, False en caso contrario.
+        tuple: Duración como (horas, minutos, segundos), donde los minutos y
+        los segundos son menores a 60.
+
+    >>> convertir_segundos(0)  # Caso cero segundos
+    (0, 0, 0)
+    >>> convertir_segundos(59)  # Caso menos de un minuto
+    (0, 0, 59)
+    >>> convertir_segundos(3600)  # Caso exactamente una hora
+    (1, 0, 0)
+    >>> convertir_segundos(3661)  # Caso con horas, minutos y segundos
+    (1, 1, 1)
+    >>> convertir_segundos(90000)  # Caso más de 24 horas (no se reinicia)
+    (25, 0, 0)
     """
-    i = 2
-    es_numero_primo = True
+    assert isinstance(total_segundos, int), 'total_segundos debe ser int'
+    assert total_segundos >= 0, 'total_segundos no puede ser negativo'
 
-    if n < 2:
-        es_numero_primo = False
-
-    while i * i <= n and es_numero_primo:
-        if n % i == 0:
-            es_numero_primo = False
-        i += 1
-
-    return es_numero_primo
-    
-
-def contar_primos_en_matriz(matriz: list) -> int:
-    """
-    Cuenta cuántos números primos hay en una matriz
-
-    Un número primo es mayor o igual a 2 y solo divisible por 1 y sí mismo.
-    Esta función recorre toda la matriz elemento por elemento.
-
-    Args:
-        matriz (list): Lista de listas que representa la matriz.
-
-    Returns:
-        int: Cantidad de números primos en la matriz.
-
-    >>> contar_primos_en_matriz([])  # Caso matriz vacía
-    0
-    
-    >>> contar_primos_en_matriz([[1, 4], [6, 8]])  # Ningún primo
-    0
-    
-    >>> contar_primos_en_matriz([[0, -3], [-2, 2]])  # Un solo primo: 2
-    1
-
-    >>> contar_primos_en_matriz([[2, 3], [4, 5]])  # Tres primos: 2, 3 y 5
-    3
-
-    >>> contar_primos_en_matriz([[7, 11, 13], [17, 19, 20], [22, 23, 29]])  # Siete primos
-    7
-    """
     # TODO1: Implemente la función tal y como se describe en la documentación
 
-
-#doctest.run_docstring_examples(contar_primos_en_matriz, globals(), verbose=True)
+#doctest.run_docstring_examples(convertir_segundos, globals(), verbose=True)
 ```
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-###  Actividad I (2/3)
+### Ejemplo de plan de implementación del `TODO1`
 
-- En `logica.py`
-	- Copie y pegue el siguiente código e implemente el `TODO2`:
+- Las validaciones con `assert` ya vienen incluidas en el código
+    
+- ¿Qué operaciones necesito?
+    
+    - Horas completas: `total_segundos // 3600`
+    - Segundos sobrantes (sin las horas): `total_segundos % 3600`
+    - Minutos completos: `sobrantes // 60`
+    - Segundos finales: `sobrantes % 60`
+- **Empaquetar** los tres valores en una tupla
+    
+    - `(horas, minutos, segundos)`
+- Retornar la tupla
+    
+    - ✅ Un solo `return`, con **múltiples valores**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Actividad II (2/3)
+
+- En `logica.py`:
+    - Copie y pegue el siguiente código
+    - Cree un _plan de implementación_
+        - Note que el rectángulo llega en **un solo parámetro**: una tupla de tuplas
+    - Implemente el `TODO2`
 
 ```python
-def extraer_columna(matriz: list, indice_columna: int) -> list:
+def esta_dentro_rectangulo(punto: tuple, rectangulo: tuple) -> bool:
     """
-    Extrae una columna específica de una matriz bien formada (rectangular).
+    Verifica si un punto está dentro de un rectángulo. Los puntos que están
+    sobre el borde se consideran dentro.
+
+    El rectángulo llega empaquetado en un solo parámetro, como una tupla de
+    tuplas: (esquina_inferior, esquina_superior), donde cada esquina es una
+    tupla (x, y). Así, la función recibe 2 parámetros en lugar de 6 números.
+
+    Nota: Debe desempaquetar el rectángulo y luego cada una de sus esquinas.
 
     Args:
-        matriz (list): Lista de listas, donde cada sublista es una fila con igual longitud.
-        indice_columna (int): Índice de la columna a extraer (comenzando desde 0).
+        punto (tuple): Coordenadas (x, y) del punto.
+        rectangulo (tuple): Tupla ((x1, y1), (x2, y2)) con la esquina inferior
+          izquierda y la esquina superior derecha del rectángulo.
 
     Returns:
-        list: Elementos de la columna como lista.
+        bool: True si el punto está dentro del rectángulo o sobre su borde,
+        False en caso contrario.
 
-    >>> extraer_columna([], 0)  # Caso matriz vacía
-    []
-    
-    >>> extraer_columna([["a", "b", "c"], ["d", "e", "f"], ["g", "h", "i"]], 0)  # Extrae la primera columna
-    ['a', 'd', 'g']
-
-    >>> extraer_columna([[1, 2], [3, 4]], 1)  # Extrae la segunda columna
-    [2, 4]
+    >>> rectangulo = ((0, 0), (10, 10))
+    >>> esta_dentro_rectangulo((5, 5), rectangulo)  # Caso punto interior
+    True
+    >>> esta_dentro_rectangulo((10, 0), rectangulo)  # Caso punto sobre el borde
+    True
+    >>> esta_dentro_rectangulo((11, 5), rectangulo)  # Caso punto a la derecha
+    False
+    >>> esta_dentro_rectangulo((3, -1), rectangulo)  # Caso punto debajo
+    False
+    >>> esta_dentro_rectangulo((2, 3), ((1, 2), (5, 6)))  # Caso punto dentro de un rectángulo desplazado
+    True
+    >>> esta_dentro_rectangulo((0, 3), ((1, 2), (5, 6)))  # Caso punto a la izquierda de un rectángulo desplazado
+    False
     """
     # TODO2: Implemente la función tal y como se describe en la documentación
 
-
-#doctest.run_docstring_examples(extraer_columna, globals(), verbose=True)
+#doctest.run_docstring_examples(esta_dentro_rectangulo, globals(), verbose=True)
 ```
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-###  Actividad I (3/3)
+### Actividad II (3/3)
 
-- En `logica.py`
-	- Copie y pegue el siguiente código e implemente el `TODO3`:
+- En `logica.py`:
+    - Copie y pegue el siguiente código
+    - Cree un _plan de implementación_
+        - Note que la función retorna **tres valores** en una tupla
+    - Implemente el `TODO3`
 
 ```python
-def imprimir_elementos_por_columna(matriz: list) -> None:
+def calcular_estadisticas(notas: tuple) -> tuple:
     """
-    Imprime los elementos de cada columna en orden, 
-    recorriendo la matriz columna por columna.
+    Calcula la nota mínima, la nota máxima y el promedio de una tupla de notas.
     
-    Si la matriz recibida está vacía, imprime:
-    La matriz está vacía
-
-    Parámetros:
-        matriz (list): Una lista de listas que representa la matriz.
-
-    Retorna:
-        None.
+    Nota 1: Debe usar el patrón de recorrido apropiado. No use las
+    funciones min(), max() ni sum().
     
-    >>> imprimir_elementos_por_columna([])  # Caso matriz vacía
-    La matriz está vacía
-    
-    >>> imprimir_elementos_por_columna([[1, 2], [3, 4]])  # Imprime por columna, matriz 2x2
-    1
-    3
-    2
-    4
+    Nota 2: El promedio se redondea a 2 decimales.
 
-    >>> imprimir_elementos_por_columna([[1, 2, 3], [4, 5, 6], [7, 8, 9]])  # Imprime por columna, matriz 3x3
-    1
-    4
-    7
-    2
-    5
-    8
-    3
-    6
-    9
+    Args:
+        notas (tuple): Tupla no vacía de notas (float) entre 0.0 y 5.0.
 
-    >>> imprimir_elementos_por_columna([[1, 2, 3, 4], [5, 6, 7, 8]])  # Imprime por columna, matriz 2x4
-    1
-    5
-    2
-    6
-    3
-    7
-    4
-    8
+    Returns:
+        tuple: (minima, maxima, promedio) de las notas.
+
+    >>> calcular_estadisticas((4.0,))  # Caso una sola nota
+    (4.0, 4.0, 4.0)
+    >>> calcular_estadisticas((3.0, 4.5, 2.5, 5.0))  # Caso varias notas
+    (2.5, 5.0, 3.75)
+    >>> calcular_estadisticas((3.2, 3.2, 3.2))  # Caso todas las notas iguales
+    (3.2, 3.2, 3.2)
+    >>> minima, maxima, promedio = calcular_estadisticas((1.5, 4.8, 3.6))  # Caso desempaquetado del resultado
+    >>> minima
+    1.5
+    >>> maxima
+    4.8
+    >>> promedio
+    3.3
     """
+    assert len(notas) > 0, 'La tupla de notas no puede estar vacía'
+
     # TODO3: Implemente la función tal y como se describe en la documentación
-    
 
-#doctest.run_docstring_examples(imprimir_elementos_por_columna, globals(), verbose=True)
+#doctest.run_docstring_examples(calcular_estadisticas, globals(), verbose=True)
 ```
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-###  Fin de la Actividad I
+### Fin de la Actividad II
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### Actividad II (1/2)
+### Actividad III
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-- En `logica.py`
-	- Copie y pegue el siguiente código e implemente el `TODO4`:
+### Estudiemos la inmutabilidad de las tuplas en funciones
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
+### Pregunta XI
 
-```python
-def buscar_posicion_matriz(matriz: list, buscado: int) -> tuple:
-    """
-    Busca la posición de un elemento en una matriz dada. 
-    Retorna una tupla con los índices (fila, columna) de la primera ocurrencia
-    del elemento buscado o (-1, -1) si el elemento no está presente.
-    
-    Utiliza un recorrido parcial con while y centinela.
+- ¿Cuál es el resultado de ejecutar el siguiente código?
 
-    Args:
-        matriz (list): La matriz en la que se busca el elemento.
-        buscado (int): El elemento que se quiere encontrar.
+```Python
+def agregar_nota(notas: tuple, nueva_nota: float) -> tuple:
+    notas = notas + (nueva_nota,)
+    return notas
 
-    Returns:
-        tuple: Una tupla (fila, columna) con la posición del elemento, o (-1, -1) si no se encuentra.
+mis_notas = (4.0, 3.5)
+notas_actualizadas = agregar_nota(mis_notas, 5.0)
 
-    >>> buscar_posicion_matriz([], 3)  # Caso matriz vacía
-    (-1, -1)
-    
-    >>> buscar_posicion_matriz([[1, 2], [3, 4], [5, 6]], 7)  # Matriz 3x2, elemento no encontrado
-    (-1, -1)
-
-    >>> buscar_posicion_matriz([[1, 2], [3, 4], [5, 6]], 4)  # Matriz 3x2, primera ocurrencia en (1, 1)
-    (1, 1)
-
-    >>> buscar_posicion_matriz([[7, 8, 9], [10, 11, 12]], 12)  # Matriz 2x3, primera ocurrencia en (1, 2)
-    (1, 2)
-    """
-    # TODO4: Implemente la función tal y como se describe en la documentación
-
-
-#doctest.run_docstring_examples(buscar_posicion_matriz, globals(), verbose=True)
+print(mis_notas)
+print(notas_actualizadas)
+print(mis_notas is notas_actualizadas)
 ```
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-###  Actividad II (2/2)
+### Pregunta XI - Solución
 
-- En `logica.py`
-	- Copie y pegue el siguiente código e implemente el `TODO5`:
-
-```python
-def hay_primo_en_matriz(matriz: list) -> bool:
-    """
-    Verifica si existe al menos un número primo en una matriz.
-
-    Utiliza un recorrido parcial con while y centinela.
-
-    Args:
-        matriz (list): Lista de listas de enteros.
-
-    Returns:
-        bool: True si hay al menos un número primo, False si no hay ninguno.
-
-    >>> hay_primo_en_matriz([])  # Caso matriz vacía
-    False
-
-    >>> hay_primo_en_matriz([[1, 1], [1, 1]])  # Matriz 2x2 sin números primos
-    False
-
-    >>> hay_primo_en_matriz([[4, 6], [8, 9]])  # Matriz 2x2 sin números primos
-    False
-
-    >>> hay_primo_en_matriz([[2, 4], [6, 8]])  # Matriz 2x2, contiene el primo 2
-    True
-
-    >>> hay_primo_en_matriz([[4, 6], [8, 3]])  # Matriz 2x2, contiene el primo 3
-    True
-
-    >>> hay_primo_en_matriz([[10, 15, 21], [22, 25, 27], [30, 31, 32]])  # Matriz 3x3, contiene el primo 31
-    True
-    """
-    # TODO5: Implemente la función tal y como se describe en la documentación
-
-
-#doctest.run_docstring_examples(hay_primo_en_matriz, globals(), verbose=True)
+```plaintext
+(4.0, 3.5)
+(4.0, 3.5, 5.0)
+False
 ```
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-###  Fin de la Actividad II
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Matrices:  Conceptos nuevos
-
-- Comprenda muy bien 
-	- Los **NUEVOS** conceptos explicados a continuación
 
 <br>
 
-- Tómese su tiempo para **leer cuidadosamente**<!-- .element: class="fragment highlight-blue" -->
-	- Si tiene dudas, levante su mano para solicitar ayuda
+- Dentro de la función, `notas + (nueva_nota,)` crea una **tupla nueva**
+    - Y el nombre local `notas` pasa a referirse a ella
+- La tupla original (`mis_notas`) **no puede** ser modificada
+    - Las tuplas protegen los datos que se pasan como argumento
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### Recorrido en diagonal
+### Pregunta XII
 
-- Recorre únicamente la diagonal de la matriz
-	- De izquierda a derecha
-- Los índices de fila, columna
-	- Son iguales en la diagonal
-
-<table border="1" style="border-collapse: collapse; text-align: center;">
-  <tr>
-    <td style="background-color: lightgreen;">1</td>
-    <td>2</td>
-    <td>3</td>
-  </tr>
-  <tr>
-    <td>4</td>
-    <td style="background-color: lightgreen;">5</td>
-    <td>6</td>
-  </tr>
-  <tr>
-    <td>7</td>
-    <td>8</td>
-    <td style="background-color: lightgreen;">9</td>
-  </tr>
-</table>
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Recorrido en diagonal - Ejemplo
+- Partiendo siempre de `notas = (4.0, 3.5)`, analice cada línea **por separado**:
+    - ¿Cuál funciona y cuál genera un error?
 
 ```Python
-def imprimir_diagonal_principal(matriz: list) -> None:
-    """
-    Imprime los elementos de la diagonal principal de la matriz.
+notas = (4.0, 3.5)
 
-    Parámetros:
-        matriz (list): Una lista de listas que representa la matriz.
+notas = notas + (5.0)        # Línea A
 
-    Retorna:
-        None
-    """
-    for fila in range(len(matriz)):
-        print(matriz[fila][fila])
-```
+notas = notas + (5.0,)       # Línea B
 
-```Pythpn
-matriz = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
-imprimir_diagonal_principal(matriz)
-```
-
-```Plaintext
-1
-5
-9
+notas = notas + tuple(5.0)   # Línea C
 ```
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### Recorrido en la diagonal secundaria
+### Pregunta XII - Solución
 
-- Así se ve el recorrido en la *diagonal secundaria*
+```Python
+notas = (4.0, 3.5)
 
-<table border="1" style="border-collapse: collapse; text-align: center;">
-  <tr>
-    <td>1</td>
-    <td>2</td>
-    <td style="background-color: lightgreen;">3</td>
-  </tr>
-  <tr>
-    <td>4</td>
-    <td style="background-color: lightgreen;">5</td>
-    <td>6</td>
-  </tr>
-  <tr>
-    <td style="background-color: lightgreen;">7</td>
-    <td>8</td>
-    <td>9</td>
-  </tr>
-</table>
+notas = notas + (5.0)        # Línea A → TypeError: can only concatenate tuple (not "float") to tuple
+notas = notas + (5.0,)       # Línea B → ✅ notas = (4.0, 3.5, 5.0)
+
+notas = notas + tuple(5.0)   # Línea C → TypeError: 'float' object is not iterable
+```
+
+- `(5.0)` no es una tupla, es un `float`
+- `tuple()` solo convierte **iterables**
+    - Un `float` no lo es
+- Para concatenar **un solo elemento**:
+    - Se debe crear una tupla unitaria: `(5.0,)`
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-###  Actividad III (1/4)
+### Pregunta XIII
 
-- En `logica.py`
-	- Copie y pegue el siguiente código e implemente el `TODO6`:
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+puntos = ((0, 0),)
+
+print(puntos + (1, 2))
+print(puntos + ((1, 2),))
+print(len(puntos + (1, 2)), len(puntos + ((1, 2),)))
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XIII - Solución
+
+```plaintext
+((0, 0), 1, 2)
+((0, 0), (1, 2))
+3 2
+```
+
+<br>
+
+- `puntos + (1, 2)` agrega **dos elementos**: `1` y `2`
+- `puntos + ((1, 2),)` agrega **un elemento**: la tupla `(1, 2)`
+    - Porque `((1, 2),)` es una tupla unitaria que contiene a `(1, 2)`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Aclaración
+
+- En los siguientes ejercicios, **NO debe convertir las tuplas en listas**
+    
+    <br>
+- El objetivo es practicar cómo **crear tuplas nuevas** a partir de otras, usando:
+    
+    - Slicing
+    - Concatenación
+    - Empaquetado
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Contexto: rutas por el campus
+
+- Una **ruta** es una tupla con los códigos de los edificios
+    
+    - Que un estudiante visita, en orden
+    - Ej: `('ML', 'SD', 'W', 'ML')`<br>
+- Se usa una tupla porque la ruta registrada
+    
+    - **No debe cambiar** por accidente<br>
+- Para obtener una variante de la ruta
+    
+    - Se crea una **tupla nueva**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Actividad III (1/3)
+
+- En `logica.py`:
+    - Copie y pegue el siguiente código
+    - Cree un _plan de implementación_
+        - Tip: recuerde la Pregunta XII
+    - Implemente el `TODO4`
 
 ```python
-def imprimir_x_con_forma(n: int) -> None:
+def reemplazar_edificio(ruta: tuple, indice: int, nuevo_edificio: str) -> tuple:
     """
-    Imprime una "X" en una matriz de tamaño n x n, usando el carácter 'x'.
-    El resto de las posiciones se imprimen como espacios sencillos.
+    Retorna una nueva ruta en la que el edificio de la posición indice se
+    reemplaza por nuevo_edificio. La ruta original no se modifica.
     
-    Puede asumir que x siempre será mayor o igual a 3.
+    Nota: Debe construir la nueva tupla con slicing y concatenación.
+    No convierta la tupla en lista.
 
     Args:
-        n (int): Tamaño de la matriz (número de filas y columnas).
+        ruta (tuple): Tupla de códigos de edificios (str), en orden de visita.
+        indice (int): Posición del edificio que se va a reemplazar, con
+          0 <= indice < len(ruta).
+        nuevo_edificio (str): Código del edificio que ocupa esa posición.
 
     Returns:
-        None
+        tuple: Nueva ruta con el edificio reemplazado.
 
-    >>> imprimir_x_con_forma(3)  # Matriz 3x3 en forma de "X"
-    x x
-     x 
-    x x
+    >>> reemplazar_edificio(('ML', 'SD', 'W'), 0, 'AU')  # Caso reemplazar el primero
+    ('AU', 'SD', 'W')
+    >>> reemplazar_edificio(('ML', 'SD', 'W'), 2, 'AU')  # Caso reemplazar el último
+    ('ML', 'SD', 'AU')
+    >>> reemplazar_edificio(('ML',), 0, 'LL')  # Caso ruta de un solo edificio
+    ('LL',)
+    >>> ruta = ('ML', 'SD', 'W')
+    >>> nueva_ruta = reemplazar_edificio(ruta, 1, 'LL')
+    >>> ruta  # Caso la ruta original no cambia (inmutabilidad)
+    ('ML', 'SD', 'W')
+    >>> nueva_ruta
+    ('ML', 'LL', 'W')
+    """
+    assert 0 <= indice < len(ruta), 'indice debe ser una posición de la ruta'
 
-    >>> imprimir_x_con_forma(5)  # Matriz 5x5 en forma de "X"
-    x   x
-     x x 
-      x  
-     x x 
-    x   x
+    # TODO4: Implemente la función tal y como se describe en la documentación
 
-    >>> imprimir_x_con_forma(7)  # Matriz 7x7 en forma de "X"
-    x     x
-     x   x 
-      x x  
-       x   
-      x x  
-     x   x 
-    x     x
+#doctest.run_docstring_examples(reemplazar_edificio, globals(), verbose=True)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Actividad III (2/3)
+
+- En `logica.py`:
+    - Copie y pegue el siguiente código
+    - Cree un _plan de implementación_
+        - Recuerde: `tuple.index()` genera un `ValueError` si el argumento no está en la tupla
+    - Implemente el `TODO5`
+
+```python
+def eliminar_edificio(ruta: tuple, edificio: str) -> tuple:
+    """
+    Retorna una nueva ruta sin la primera ocurrencia del edificio dado. Si el
+    edificio no está en la ruta, retorna la ruta sin cambios. La ruta
+    original no se modifica.
+    
+    Nota 1: Debe usar tuple.index() para encontrar la posición del edificio,
+    *validando antes que el edificio esté en la ruta.*
+    
+    Nota 2: Debe construir la nueva tupla con slicing y concatenación.
+    No convierta la tupla en lista.
+
+    Args:
+        ruta (tuple): Tupla de códigos de edificios (str), en orden de visita.
+        edificio (str): Código del edificio que se va a eliminar.
+
+    Returns:
+        tuple: Nueva ruta sin la primera ocurrencia del edificio.
+
+    >>> eliminar_edificio((), 'ML')  # Caso ruta vacía
+    ()
+    >>> eliminar_edificio(('ML', 'SD', 'W'), 'SD')  # Caso edificio en el medio
+    ('ML', 'W')
+    >>> eliminar_edificio(('ML', 'SD', 'ML'), 'ML')  # Caso solo se elimina la primera ocurrencia
+    ('SD', 'ML')
+    >>> eliminar_edificio(('ML', 'SD', 'W'), 'AU')  # Caso edificio que no está en la ruta
+    ('ML', 'SD', 'W')
+    >>> eliminar_edificio(('W',), 'W')  # Caso ruta de un solo edificio
+    ()
+    """
+    # TODO5: Implemente la función tal y como se describe en la documentación
+
+#doctest.run_docstring_examples(eliminar_edificio, globals(), verbose=True)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Estudiemos las tuplas como registros
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XIV
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+estudiantes = [
+    (202012345, 'Ana', 4.5),
+    (202023456, 'Luis', 2.8),
+    (202034567, 'Sara', 3.0),
+]
+
+for codigo, nombre, nota in estudiantes:
+    if nota >= 3.0:
+        print(nombre, 'aprobó con', nota)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XIV - Solución
+
+```plaintext
+Ana aprobó con 4.5
+Sara aprobó con 3.0
+```
+
+<br>
+
+- En cada iteración, el `for` toma una tupla de la lista
+    - Y la **desempaqueta** en `codigo`, `nombre` y `nota`
+- Es el mismo mecanismo de:
+    - `for llave, valor in diccionario.items():`
+- Equivale a usar índices (`estudiante[1]`, `estudiante[2]`)
+    - Pero es **mucho más legible**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XV
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+asientos = {(1, 'A'): 'Ana', (1, 'B'): 'Luis', (2, 'A'): 'Sara'}
+
+for (fila, columna), estudiante in asientos.items():
+    print(f'{estudiante}: fila {fila}, columna {columna}')
+
+asientos3, 'C' = 'Juan'
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XV - Solución
+
+```plaintext
+Ana: fila 1, columna A
+Luis: fila 1, columna B
+Sara: fila 2, columna A
+TypeError: unhashable type: 'list'
+```
+
+<br>
+
+- `items()` entrega tuplas `(llave, valor)`
+    - Como la llave también es una tupla, se desempaqueta en un solo paso:
+        - `(fila, columna), estudiante`
+- Las llaves de un diccionario deben ser **inmutables**
+    - Una tupla sirve como llave (si sus elementos también son inmutables)
+    - Una lista no
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Actividad III (3/3)
+
+- En `logica.py`:
+    - Copie y pegue el siguiente código
+    - Cree un _plan de implementación_
+        - No implemente la función hasta no tener un plan muy concreto
+    - Implemente el `TODO6`
+
+```python
+def buscar_estudiante(estudiantes: list, codigo_buscado: int) -> tuple:
+    """
+    Busca, en una lista de registros, al estudiante que tiene el código dado
+    y retorna una tupla con su nombre y su nota. Cada registro es una tupla
+    de la forma (codigo, nombre, nota) y los códigos no se repiten.
+    Si ningún estudiante tiene el código buscado, retorna ('', -1.0).
+
+    Nota: Debe usar el patrón de recorrido apropiado.
+
+    Args:
+        estudiantes (list): Lista de tuplas (codigo, nombre, nota), donde
+          codigo es int, nombre es str y nota es float.
+        codigo_buscado (int): Código del estudiante que se busca.
+
+    Returns:
+        tuple: (nombre, nota) del estudiante encontrado, o ('', -1.0) si
+        ningún estudiante tiene el código buscado.
+
+    >>> buscar_estudiante([], 202012345)  # Caso lista vacía
+    ('', -1.0)
+    >>> estudiantes = [(202012345, 'Ana', 4.5), (202023456, 'Luis', 2.8), (202034567, 'Sara', 3.0)]
+    >>> buscar_estudiante(estudiantes, 202012345)  # Caso el estudiante es el primero de la lista
+    ('Ana', 4.5)
+    >>> buscar_estudiante(estudiantes, 202034567)  # Caso el estudiante es el último de la lista
+    ('Sara', 3.0)
+    >>> buscar_estudiante(estudiantes, 201911111)  # Caso el código no está en la lista
+    ('', -1.0)
+    >>> nombre, nota = buscar_estudiante(estudiantes, 202023456)  # Caso desempaquetado del resultado
+    >>> nombre
+    'Luis'
+    >>> nota
+    2.8
     """
     # TODO6: Implemente la función tal y como se describe en la documentación
 
-
-#doctest.run_docstring_examples(imprimir_x_con_forma, globals(), verbose=True)
+#doctest.run_docstring_examples(buscar_estudiante, globals(), verbose=True)
 ```
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### Recorrido en cuadro
+### Para cerrar
 
-- Recorre en cuadro (bordes exteriores) de la matriz
-- Ej:
-	- Recorrer primero la fila superior
-	- Luego la última columna
-	- La fila inferior en orden inverso 
-	- y  la primera columna en orden inverso
-
-<table border="1" style="border-collapse: collapse; text-align: center;">
-  <tr>
-    <td style="background-color: lightgreen;">1</td>
-    <td style="background-color: lightgreen;">2</td>
-    <td style="background-color: lightgreen;">3</td>
-  </tr>
-  <tr>
-    <td style="background-color: lightgreen;">4</td>
-    <td>5</td>
-    <td style="background-color: lightgreen;">6</td>
-  </tr>
-  <tr>
-    <td style="background-color: lightgreen;">7</td>
-    <td style="background-color: lightgreen;">8</td>
-    <td style="background-color: lightgreen;">9</td>
-  </tr>
-</table>
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-###  Actividad III (2/4)
-
-- En `logica.py`
-	- Copie y pegue el siguiente código e implemente el `TODO7`:
-
-```python
-def imprimir_borde_exterior(matriz: list) -> None:
-    """
-    Imprime los elementos en el borde exterior de la matriz, 
-    recorriendo en sentido horario: arriba → derecha → abajo → izquierda.
+1. Revise la siguiente buena práctica:
     
-    Puede asumir que la mínima matriz dada es de 2 x 2.
+    - <a href="https://eerosales24.github.io/iph_2026_20/n4/buenas_practicas/#/3" target="_blank" rel="noopener noreferrer">Validación segura del método tuple.index()</a>
 
-    Parámetros:
-        matriz (list): Una lista de listas que representa la matriz rectangular.
-
-    Retorna:
-        None
-
-    >>> imprimir_borde_exterior([[1, 2], [3, 4]])  # Matriz 2x2, recorre el borde
-    1
-    2
-    4
-    3
-
-    >>> imprimir_borde_exterior([[1, 2, 3], [4, 5, 6], [7, 8, 9]])  # Matriz 3x3, recorre el borde
-    1
-    2
-    3
-    6
-    9
-    8
-    7
-    4
-
-    >>> imprimir_borde_exterior([
-    ...     [11, 12, 13, 14],
-    ...     [21, 22, 23, 24],
-    ...     [31, 32, 33, 34],
-    ...     [41, 42, 43, 44]
-    ... ])  # Matriz 4x4, recorre el borde
-    11
-    12
-    13
-    14
-    24
-    34
-    44
-    43
-    42
-    41
-    31
-    21
-    """
-    # TODO7: Implemente la función tal y como se describe en la documentación
-
-
-#doctest.run_docstring_examples(imprimir_borde_exterior, globals(), verbose=True)
-```
+	<br>
+	
+2. Revise si sus funciones cumplen con todas las buenas prácticas obligatorias del curso vistas hasta ahora
+	 
+    <br>
+    
+3. Si una función no cumple las anteriores buenas prácticas
+    
+    - Por favor **corrija su implementación**
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-###  Actividad III (3/4)
-
-- En `logica.py`
-	- Cree una función que imprima la primera letra de su nombre y/o apellido
-	- La impresión debe hacerse mediante números uno (`1`)
-	- El resto de la matriz debe quedar en ceros (`0`)
-	- El tamaño de la matriz puede ser fijo y usted puede decidirlo
-	- Este es un posible ejemplo de impresión de una letra "T"
-
-```plaintext
-        1 1 1 1 1
-        0 0 1 0 0
-        0 0 1 0 0
-        0 0 1 0 0
-        0 0 1 0 0
-```
-
-- Usted puede crear la matriz afuera de la función y pasarla como parámetro
-	- O puede crearla adentro de la función
-		- Tiene libertad en ello
+### Fin de la Actividad III
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-###  Actividad III (4/4)
+### Entrega (1/2)
 
-1. Revise si sus funciones cumplen con todas las buenas prácticas obligatorias del curso
-	 - En particular, esta:
-		- <a href="https://eerosales24.github.io/iph_2026_20/n4/buenas_practicas/#/4" target="_blank" rel="noopener noreferrer">Usar nombres autoexplicativos para filas, columnas y elementos</a>
-
-
-2. Si una función no cumple las anteriores buenas prácticas
-	- Por favor corrija su implementación
+1. Comprima en un archivo `.zip` el archivo:
+    - `logica.py`
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### Entrega
+### Entrega (2/2)
 
-1. Comprima en un archivo `.zip` el archivo:
-	- `logica.py`
-
-2. Haga el envío del `.zip` en  [Bloque Neón](https://bloqueneon.uniandes.edu.co/)
-	- Vaya a **"Actividades"**
-		- **"N4-L1"**
+2. Haga el envío del `.zip` en  [Bloque Neón](https://bloqueneon.uniandes.edu.co/)
+    - Vaya a **"Actividades"**
+        - **"N4-L1"**
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 # Fin de N4-L1
 
 - Si no alcanzó a terminar el laboratorio
-	- Debe completar el laboratorio en su tiempo de 
-		- **Trabajo individual semanal** de IP Honores
-
+    - Debe completar el laboratorio en su tiempo de
+        - **Trabajo individual semanal** de IP Honores
 
 <br>
 
- [<i class="fas fa-home  fa-3x"></i>](https://eerosales24.github.io/iph_2026_20/#)
+[<i class="fas fa-home fa-3x"></i>](https://eerosales24.github.io/iph_2026_20/#)
 </div></script></section></div>
     </div>
 
