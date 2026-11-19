@@ -643,7 +643,7 @@ def encontrar_posiciones_mayores(matriz: list, valor: int) -> list:
 
     # Ciclo para recorrer cada elemento usando índices
     for fila in range(len(matriz)):  # Recorre las filas
-        for columna in range(len(matriz[fila])):  # Recorre las columnas
+        for columna in range(len(matriz[0])):  # Recorre las columnas
             # Compara el elemento con el valor dado:
             if matriz[fila][columna] > valor:
                 # Guarda la posición como una tupla:
@@ -663,8 +663,8 @@ def encontrar_posiciones_mayores(matriz: list, valor: int) -> list:
 matriz = [['p', 'e'], ['r', 'r'], ['i', 't'], ['o', 's']]
 num_filas = len(matriz)
 num_columnas = len(matriz[0])
-for fila in range(num_filas:
-    for columna in range(num_columnas:
+for fila in range(num_filas):
+    for columna in range(num_columnas):
         print(matriz[fila][columna], end='')
 ```
 
@@ -679,7 +679,7 @@ matriz = [['p', 'e'], ['r', 'r'], ['i', 't'], ['o', 's']]
 num_filas = len(matriz)
 num_columnas = len(matriz[0])
 for fila in range(num_filas):
-    for columna in range(num_columnas:
+    for columna in range(num_columnas):
         print(matriz[fila][columna], end='')
 ```
 

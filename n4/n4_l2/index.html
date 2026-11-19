@@ -99,28 +99,27 @@ Universidad de los Andes
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-## Objetivos
-
-
-- Practicar la algoritmia de matrices
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
 ###  Siga paso a paso las siguientes instrucciones
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### Trabajo individual
 
-- Este laboratorio debe realizarse de forma
-	- **Completamente individual**<!-- .element: class="fragment highlight-red" -->
+- Este laboratorio es
+	- **Completamente individual**<!-- .element: class="fragment highlight-blue" -->
 
 	<br>
-	
-	
-- Por favor:
-	- Evite las distracciones
-	- Guarde **silencio**<!-- .element: class="fragment highlight-blue" -->
+
+- El tiempo para terminar el laboratorio es muy corto
+	- Por favor:
+		- Evite las distracciones
+		- Guarde **silencio**<!-- .element: class="fragment highlight-blue" -->
+
+	<br>
+
+- Si no termina el laboratorio
+	- Debe finalizarlo (**y comprenderlo**) 
+		- En sus horas de trabajo semanal
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -143,753 +142,550 @@ Universidad de los Andes
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-###  Los pasos a seguir
+###  Actividad I (1/3)
 
-- **Paso 1**: Revise el marco conceptual
-- **Paso 2**: Descargue el esqueleto del laboratorio
-- **Paso 3**: Ejecute el procesador de imágenes
-- **Paso 4**: Estudie la implementación dada
-- **Paso 5**: Implemente los TODOs
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+- Cree un archivo llamado: `logica.py`
+	- Copie y pegue el siguiente código e implemente el `TODO1`:
 
-### Paso 1: Revise el marco conceptual
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+```python
+import doctest
 
-### Imagen
+def es_primo(n: int) -> bool:
+    """
+    Determina si un número entero positivo es primo.
 
-- Una matriz de píxeles
-    - En donde cada píxel representa un color
-    ​
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+    Un número primo es mayor o igual a 2 y solo divisible por 1 y él mismo.
 
-### Pixel
+    Args:
+        n (int): Número entero a evaluar.
 
-- Unidad básica de una imagen digital
-- Es un punto de un color dado
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+    Returns:
+        bool: True si el número es primo, False en caso contrario.
+    """
+    i = 2
+    es_numero_primo = True
 
-### Matriz de píxeles (1/2)
+    if n < 2:
+        es_numero_primo = False
+
+    while i * i <= n and es_numero_primo:
+        if n % i == 0:
+            es_numero_primo = False
+        i += 1
+
+    return es_numero_primo
     
-- Una matriz
-    - Que contiene los píxeles de la imagen
-- La posición destacada en la parte inferior es (2, 1)
-    - Y es un pixel verde
 
-<table border="3">
+def contar_primos_en_matriz(matriz: list) -> int:
+    """
+    Cuenta cuántos números primos hay en una matriz
+
+    Un número primo es mayor o igual a 2 y solo divisible por 1 y sí mismo.
+    Esta función recorre toda la matriz elemento por elemento.
+
+    Args:
+        matriz (list): Lista de listas que representa la matriz.
+
+    Returns:
+        int: Cantidad de números primos en la matriz.
+
+    >>> contar_primos_en_matriz([])  # Caso matriz vacía
+    0
+    
+    >>> contar_primos_en_matriz([[1, 4], [6, 8]])  # Ningún primo
+    0
+    
+    >>> contar_primos_en_matriz([[0, -3], [-2, 2]])  # Un solo primo: 2
+    1
+
+    >>> contar_primos_en_matriz([[2, 3], [4, 5]])  # Tres primos: 2, 3 y 5
+    3
+
+    >>> contar_primos_en_matriz([[7, 11, 13], [17, 19, 20], [22, 23, 29]])  # Siete primos
+    7
+    """
+    # TODO1: Implemente la función tal y como se describe en la documentación
+
+
+#doctest.run_docstring_examples(contar_primos_en_matriz, globals(), verbose=True)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad I (2/3)
+
+- En `logica.py`
+	- Copie y pegue el siguiente código e implemente el `TODO2`:
+
+```python
+def extraer_columna(matriz: list, indice_columna: int) -> list:
+    """
+    Extrae una columna específica de una matriz bien formada (rectangular).
+
+    Args:
+        matriz (list): Lista de listas, donde cada sublista es una fila con igual longitud.
+        indice_columna (int): Índice de la columna a extraer (comenzando desde 0).
+
+    Returns:
+        list: Elementos de la columna como lista.
+
+    >>> extraer_columna([], 0)  # Caso matriz vacía
+    []
+    
+    >>> extraer_columna([["a", "b", "c"], ["d", "e", "f"], ["g", "h", "i"]], 0)  # Extrae la primera columna
+    ['a', 'd', 'g']
+
+    >>> extraer_columna([[1, 2], [3, 4]], 1)  # Extrae la segunda columna
+    [2, 4]
+    """
+    # TODO2: Implemente la función tal y como se describe en la documentación
+
+
+#doctest.run_docstring_examples(extraer_columna, globals(), verbose=True)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad I (3/3)
+
+- En `logica.py`
+	- Copie y pegue el siguiente código e implemente el `TODO3`:
+
+```python
+def imprimir_elementos_por_columna(matriz: list) -> None:
+    """
+    Imprime los elementos de cada columna en orden, 
+    recorriendo la matriz columna por columna.
+    
+    Si la matriz recibida está vacía, imprime:
+    La matriz está vacía
+
+    Parámetros:
+        matriz (list): Una lista de listas que representa la matriz.
+
+    Retorna:
+        None.
+    
+    >>> imprimir_elementos_por_columna([])  # Caso matriz vacía
+    La matriz está vacía
+    
+    >>> imprimir_elementos_por_columna([[1, 2], [3, 4]])  # Imprime por columna, matriz 2x2
+    1
+    3
+    2
+    4
+
+    >>> imprimir_elementos_por_columna([[1, 2, 3], [4, 5, 6], [7, 8, 9]])  # Imprime por columna, matriz 3x3
+    1
+    4
+    7
+    2
+    5
+    8
+    3
+    6
+    9
+
+    >>> imprimir_elementos_por_columna([[1, 2, 3, 4], [5, 6, 7, 8]])  # Imprime por columna, matriz 2x4
+    1
+    5
+    2
+    6
+    3
+    7
+    4
+    8
+    """
+    # TODO3: Implemente la función tal y como se describe en la documentación
+    
+
+#doctest.run_docstring_examples(imprimir_elementos_por_columna, globals(), verbose=True)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Fin de la Actividad I
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Actividad II (1/2)
+
+- En `logica.py`
+	- Copie y pegue el siguiente código e implemente el `TODO4`:
+	- Si tiene dudas sobre el patrón de recorrido parcial en matrices
+		- Consulte primero la diapositiva correspondiente:
+		- <a href="https://eerosales24.github.io/iph_2026_20/n4/n4_04_patron_de_recorrido_parcial_matrices/#/" target="_blank" rel="noopener noreferrer">Patrón de recorrido parcial en matrices</a>
+
+
+```python
+def buscar_posicion_matriz(matriz: list, buscado: int) -> tuple:
+    """
+    Busca la posición de un elemento en una matriz dada. 
+    Retorna una tupla con los índices (fila, columna) de la primera ocurrencia
+    del elemento buscado o (-1, -1) si el elemento no está presente.
+    
+    Utiliza un recorrido parcial con while y centinela.
+
+    Args:
+        matriz (list): La matriz en la que se busca el elemento.
+        buscado (int): El elemento que se quiere encontrar.
+
+    Returns:
+        tuple: Una tupla (fila, columna) con la posición del elemento, o (-1, -1) si no se encuentra.
+
+    >>> buscar_posicion_matriz([], 3)  # Caso matriz vacía
+    (-1, -1)
+    
+    >>> buscar_posicion_matriz([[1, 2], [3, 4], [5, 6]], 7)  # Matriz 3x2, elemento no encontrado
+    (-1, -1)
+
+    >>> buscar_posicion_matriz([[1, 2], [3, 4], [5, 6]], 4)  # Matriz 3x2, primera ocurrencia en (1, 1)
+    (1, 1)
+
+    >>> buscar_posicion_matriz([[7, 8, 9], [10, 11, 12]], 12)  # Matriz 2x3, primera ocurrencia en (1, 2)
+    (1, 2)
+    """
+    # TODO4: Implemente la función tal y como se describe en la documentación
+
+
+#doctest.run_docstring_examples(buscar_posicion_matriz, globals(), verbose=True)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Actividad II (2/2)
+
+- En `logica.py`
+	- Copie y pegue el siguiente código e implemente el `TODO5`:
+
+```python
+def hay_primo_en_matriz(matriz: list) -> bool:
+    """
+    Verifica si existe al menos un número primo en una matriz.
+
+    Utiliza un recorrido parcial con while y centinela.
+
+    Args:
+        matriz (list): Lista de listas de enteros.
+
+    Returns:
+        bool: True si hay al menos un número primo, False si no hay ninguno.
+
+    >>> hay_primo_en_matriz([])  # Caso matriz vacía
+    False
+
+    >>> hay_primo_en_matriz([[1, 1], [1, 1]])  # Matriz 2x2 sin números primos
+    False
+
+    >>> hay_primo_en_matriz([[4, 6], [8, 9]])  # Matriz 2x2 sin números primos
+    False
+
+    >>> hay_primo_en_matriz([[2, 4], [6, 8]])  # Matriz 2x2, contiene el primo 2
+    True
+
+    >>> hay_primo_en_matriz([[4, 6], [8, 3]])  # Matriz 2x2, contiene el primo 3
+    True
+
+    >>> hay_primo_en_matriz([[10, 15, 21], [22, 25, 27], [30, 31, 32]])  # Matriz 3x3, contiene el primo 31
+    True
+    """
+    # TODO5: Implemente la función tal y como se describe en la documentación
+
+
+#doctest.run_docstring_examples(hay_primo_en_matriz, globals(), verbose=True)
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Fin de la Actividad II
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Matrices:  Conceptos nuevos
+
+- Comprenda muy bien 
+	- Los **NUEVOS** conceptos explicados a continuación
+
+<br>
+
+- Tómese su tiempo para **leer cuidadosamente**<!-- .element: class="fragment highlight-blue" -->
+	- Si tiene dudas, levante su mano para solicitar ayuda
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Recorrido en diagonal
+
+- Recorre únicamente la diagonal de la matriz
+	- De izquierda a derecha
+- Los índices de fila, columna
+	- Son iguales en la diagonal
+
+<table border="1" style="border-collapse: collapse; text-align: center;">
   <tr>
-    <td style="width: 50px; height: 50px;"></td>
-    <td style="width: 50px; height: 50px;"></td>
-    <td style="width: 50px; height: 50px;"></td>
+    <td style="background-color: lightgreen;">1</td>
+    <td>2</td>
+    <td>3</td>
   </tr>
   <tr>
-    <td style="width: 50px; height: 50px;"></td>
-    <td style="width: 50px; height: 50px;"></td>
-    <td style="width: 50px; height: 50px;"></td>
+    <td>4</td>
+    <td style="background-color: lightgreen;">5</td>
+    <td>6</td>
   </tr>
   <tr>
-    <td style="width: 50px; height: 50px;"></td>
-    <td style="background-color: green; width: 50px; height: 50px;"></td>
-    <td style="width: 50px; height: 50px;"></td>
+    <td>7</td>
+    <td>8</td>
+    <td style="background-color: lightgreen;">9</td>
   </tr>
 </table>
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### Matriz de píxeles (2/2)
-
-- Cada píxel se representa como un vector
-    - De tres elementos (RGB)
-
-<img src="iph/n4/img/Screenshot 2024-11-12 at 7.27.33 PM.png" alt="" style="object-fit: scale-down">
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### RGB
-
-- Forma de representación de colores
-    - Red (Rojo)
-    - Green (Verde)
-    - Blue (Azul)
-- Para cada uno, se tiene un valor
-    - En las imágenes de este laboratorio
-        - Será un valor entre 0 y 1
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Matriz como una lista tridimensional
-
-<img src="iph/n4/img/Screenshot 2024-11-14 at 11.25.38 AM.png" alt="" style="width: 65%; height: 65%; object-fit: fill">
-
-
-- Hay una lista externa
-- Dentro de ella, hay listas que representan las filas
-- Dentro de cada fila
-    - Hay listas que representan los pixeles
-        - Cada pixel es una lista de 3 valores RGB
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Estudiemos una matriz de pixeles en Python
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Matriz de pixeles en Python - Ejemplo (1/2)
+### Recorrido en diagonal - Ejemplo
 
 ```Python
-        imagen = [
-            [  # Primera fila de píxeles
-                [1.0, 1.0, 0.0],  # Primer píxel: Amarillo
-                [1.0, 1.0, 0.0],  # Segundo píxel: Amarillo
-                [1.0, 1.0, 0.0]   # Tercer píxel: Amarillo
-            ],
-            [  # Segunda fila de píxeles
-                [0.0, 0.0, 1.0],  # Cuarto píxel: Azul
-                [0.0, 0.0, 1.0],  # Quinto píxel: Azul
-                [0.0, 0.0, 1.0]   # Sexto píxel: Azul
-            ],
-            [  # Tercera fila de píxeles
-                [1.0, 0.0, 0.0],  # Séptimo píxel: Rojo
-                [1.0, 0.0, 0.0],  # Octavo píxel: Rojo
-                [1.0, 0.0, 0.0]   # Noveno píxel: Rojo
-            ]
-        ]
+def imprimir_diagonal_principal(matriz: list) -> None:
+    """
+    Imprime los elementos de la diagonal principal de la matriz.
+
+    Parámetros:
+        matriz (list): Una lista de listas que representa la matriz.
+
+    Retorna:
+        None
+    """
+    for fila in range(len(matriz)):
+        print(matriz[fila][fila])
 ```
 
-- Se trata de una matriz de 3 x 3
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Matriz de pixeles en Python - Ejemplo (2/2)
-
-<img src="iph/n4/img/Screenshot 2024-11-12 at 8.17.57 PM.png" alt="" style="width: 65%; height: 65%; object-fit: fill">
-
-
-- Así se vería la anterior matriz
-- Estudie de nuevo el código y **compréndalo**
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Formato de imagen
-
-- Las imágenes pueden venir en varios formatos
-- Ej:
-    - JPEG 
-    - PNG
-    - BMP
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Estudiemos cómo cargar una imagen
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Cargar una imagen
-
-- Leer los datos de la imagen 
-    - Desde un archivo y 
-        - Convertirlos en una estructura de datos 
-            - Que Python pueda manipular
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### `matplotlib`
- 
-- Librería para la creación y manipulación 
-    - De gráficos
-- Ofrece control sobre los 
-    - Estilos
-    - Colores
-    - Tamaños de los gráficos, etc.
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### ```matplotlib.image```
-
-- Módulo para manipular imágenes
-- Permite cargar imágenes:
-    - `imread()`: Función para leer una imagen
-        - Puede leer diferentes formatos como:
-            - PNG, 
-            - JPEG, etc.
-            
-- Ayuda: [matplotlib.image](https://matplotlib.org/stable/api/image_api.html#module-matplotlib.image) y [imread()](https://matplotlib.org/stable/api/image_api.html#matplotlib.image.imread)
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Estudiemos un ejemplo de carga de una imagen en Python
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### `cargar_imagen()`
-
-```Python
-import matplotlib.image as mpimg
-
-def cargar_imagen(ruta_imagen: str) -> list:
-    """
-    Carga una imagen desde una ruta especificada y 
-    la convierte en una lista.
-
-    Args:
-        ruta_imagen (str): La ruta de la imagen a cargar.
-
-    Returns:
-        (list): Una lista tridimensional que representa 
-        la imagen cargada. Cada elemento de la lista es un 
-        valor de píxel en el rango de 0 a 1.
-
-    Nota: El método list.tolist() se utiliza para convertir 
-    a una lista de Python.
-    """
-    return mpimg.imread(ruta_imagen).tolist()
+```Pythpn
+matriz = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+imprimir_diagonal_principal(matriz)
 ```
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Estudiemos cómo mostrar una imagen
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### `matplotlib.pyplot`
-
-- Módulo para manipular imágenes
-    - Permite visualizar imágenes: 
-        - `imshow()`: Muestra una imagen
-            - En una cuadrícula 2D
-        - `show()`: Muestra el gráfico
-        
-- Ayuda: [matplotlib.pyplot](https://matplotlib.org/stable/api/pyplot_summary.html#module-matplotlib.pyplot), [imshow()](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.imshow.html#matplotlib.pyplot.imshow), [show()](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.show.html#matplotlib.pyplot.show)
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Estudiemos un ejemplo de visualización de imagen en Python
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-```Python
-import matplotlib.pyplot as plt 
-
-def visualizar_imagen(imagen: list) -> None:
-    """
-    Visualiza una imagen a partir de una lista.
-
-    Args:
-        imagen (list): (list): Una lista tridimensional que 
-        representa la imagen cargada. Cada elemento de la 
-        lista es un valor de píxel en el rango de 0 a 1.
-
-    Returns: 
-        None: La función sólo muestra la imagen.
-
-    Nota: Esta función utiliza matplotlib.pyplot.imshow(...) 
-    para visualizar la imagen y matplotlib.pyplot.show() 
-    para mostrarla.
-    """
-    plt.imshow(imagen)
-    plt.show()
-```
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Paso 2: Descargue el esqueleto del laboratorio
-
-- [procesador_imagenes.zip](https://eerosales24.github.io/iph_2026_20/n4/procesador_imagenes.zip)
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Paso 3: Ejecute el procesador de imágenes
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Ejecutar el procesador de imágenes
-
-- En Spyder, ejecute el archivo:
-    - `consola_procesador_imagenes.py`
-- Seleccione la opción 1:
-
-```Python
-1. Cargar imagen
-```
-
-- Aparecerá este mensaje:
 
 ```Plaintext
-Ingrese el nombre del archivo imagen o *Enter* para cargar la imagen de prueba:
+1
+5
+9
 ```
-
-- Presione `Enter`
-- Se cargará  y mostrará una imagen de prueba
-    - Ver ejemplo en la siguiente diapositiva
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### Ejecutar el procesador de imágenes - Ejemplo
+### Recorrido en la diagonal secundaria
 
-- Abra la pestaña 'plot' de Spyder
-    - Así debería verse la imagen cargada:
+- Así se ve el recorrido en la *diagonal secundaria*
 
-<img src="iph/n4/img/Screenshot 2024-11-12 at 8.28.06 PM.png" alt="" style="width: 65%; height: 65%; object-fit: fill">
+<table border="1" style="border-collapse: collapse; text-align: center;">
+  <tr>
+    <td>1</td>
+    <td>2</td>
+    <td style="background-color: lightgreen;">3</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td style="background-color: lightgreen;">5</td>
+    <td>6</td>
+  </tr>
+  <tr>
+    <td style="background-color: lightgreen;">7</td>
+    <td>8</td>
+    <td>9</td>
+  </tr>
+</table>
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### Paso 4: Estudie la implementación dada
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+###  Actividad III (1/4)
 
-### Estudiar la implementación dada
+- En `logica.py`
+	- Copie y pegue el siguiente código e implemente el `TODO6`:
 
-- Explore el archivo `procesador_imagenes.py`
-- Ubique y estudie las siguientes funciones:
-    - `cargar_imagen()`
-    - `visualizar_imagen()`
-- Estas funciones ya fueron explicadas 
-    - En diapositivas anteriores
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Estudiar la función `convertir_negativo()`
-
-- En el archivo `procesador_imagenes.py`
-- Ubique y estudie la función:
-    - `convertir_negativo()`
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Función `convertir_negativo()` (1/5)
-
-```Python
-def convertir_negativo(imagen: list) -> list:
-    """
-    Convierte una imagen a negativo.
+```python
+def imprimir_x_con_forma(n: int) -> None:
+    """
+    Imprime una "X" en una matriz de tamaño n x n, usando el carácter 'x'.
+    El resto de las posiciones se imprimen como espacios sencillos.
+    
+    Puede asumir que x siempre será mayor o igual a 3.
 
     Args:
-        imagen (list): Una lista tridimensional que representa 
-        la imagen a la que se va a aplicar el filtro. Cada 
-        elemento de la lista es un valor de píxel en el rango 
-        de 0 a 1.
+        n (int): Tamaño de la matriz (número de filas y columnas).
 
     Returns:
-        (list): Imagen convertida a negativo.
+        None
 
-    Nota: Se calcula restando cada componente RGB de 1.
-    """
-    for fila in range(len(imagen)):
-        for columna in range(len(imagen[0])):
-            for componente in range(3):
-                imagen[fila][columna][componente] = 1 - imagen[fila][columna][componente]
-    return imagen
+    >>> imprimir_x_con_forma(3)  # Matriz 3x3 en forma de "X"
+    x x
+     x 
+    x x
+
+    >>> imprimir_x_con_forma(5)  # Matriz 5x5 en forma de "X"
+    x   x
+     x x 
+      x  
+     x x 
+    x   x
+
+    >>> imprimir_x_con_forma(7)  # Matriz 7x7 en forma de "X"
+    x     x
+     x   x 
+      x x  
+       x   
+      x x  
+     x   x 
+    x     x
+    """
+    # TODO6: Implemente la función tal y como se describe en la documentación
+
+
+#doctest.run_docstring_examples(imprimir_x_con_forma, globals(), verbose=True)
 ```
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### Función `convertir_negativo()` (2/5)
+### Recorrido en cuadro
 
-```Python[2,3]
-def convertir_negativo(imagen: list) -> list:
-    for fila in range(len(imagen)):
-        for columna in range(len(imagen[0])):
-            for componente in range(3):
-                imagen[fila][columna][componente] = 1 - imagen[fila][columna][componente]
-    return imagen
-```
+- Recorre en cuadro (bordes exteriores) de la matriz
+- Ej:
+	- Recorrer primero la fila superior
+	- Luego la última columna
+	- La fila inferior en orden inverso 
+	- y  la primera columna en orden inverso
 
-- Se recorren todas las filas y columnas de la matriz
+<table border="1" style="border-collapse: collapse; text-align: center;">
+  <tr>
+    <td style="background-color: lightgreen;">1</td>
+    <td style="background-color: lightgreen;">2</td>
+    <td style="background-color: lightgreen;">3</td>
+  </tr>
+  <tr>
+    <td style="background-color: lightgreen;">4</td>
+    <td>5</td>
+    <td style="background-color: lightgreen;">6</td>
+  </tr>
+  <tr>
+    <td style="background-color: lightgreen;">7</td>
+    <td style="background-color: lightgreen;">8</td>
+    <td style="background-color: lightgreen;">9</td>
+  </tr>
+</table>
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### Función `convertir_negativo()` (3/5)
+###  Actividad III (2/4)
 
-```Python[4]
-def convertir_negativo(imagen: list) -> list:
-    for fila in range(len(imagen)):
-        for columna in range(len(imagen[0])):
-            for componente in range(3):
-                imagen[fila][columna][componente] = 1 - imagen[fila][columna][componente]
-    return imagen
-```
+- En `logica.py`
+	- Copie y pegue el siguiente código e implemente el `TODO7`:
 
-- Cada píxel tiene 3 componentes RGB
-    - El último ciclo recorre esos 3 componentes
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+```python
+def imprimir_borde_exterior(matriz: list) -> None:
+    """
+    Imprime los elementos en el borde exterior de la matriz, 
+    recorriendo en sentido horario: arriba → derecha → abajo → izquierda.
+    
+    Puede asumir que la mínima matriz dada es de 2 x 2.
 
-### Función `convertir_negativo()` (4/5)
+    Parámetros:
+        matriz (list): Una lista de listas que representa la matriz rectangular.
 
-```Python[5]
-def convertir_negativo(imagen: list) -> list:
-    for fila in range(len(imagen)):
-        for columna in range(len(imagen[0])):
-            for componente in range(3):
-                imagen[fila][columna][componente] = 1 - imagen[fila][columna][componente]
-    return imagen
-```
+    Retorna:
+        None
 
-- Se hace una *inversión de color*
-    - Restando el valor del componente de 1
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+    >>> imprimir_borde_exterior([[1, 2], [3, 4]])  # Matriz 2x2, recorre el borde
+    1
+    2
+    4
+    3
 
-### Función `convertir_negativo()` (5/5)
+    >>> imprimir_borde_exterior([[1, 2, 3], [4, 5, 6], [7, 8, 9]])  # Matriz 3x3, recorre el borde
+    1
+    2
+    3
+    6
+    9
+    8
+    7
+    4
 
-```Python
-imagen[fila][columna][componente] = 
-                        1 - imagen[fila][columna][componente]
-```
+    >>> imprimir_borde_exterior([
+    ...     [11, 12, 13, 14],
+    ...     [21, 22, 23, 24],
+    ...     [31, 32, 33, 34],
+    ...     [41, 42, 43, 44]
+    ... ])  # Matriz 4x4, recorre el borde
+    11
+    12
+    13
+    14
+    24
+    34
+    44
+    43
+    42
+    41
+    31
+    21
+    """
+    # TODO7: Implemente la función tal y como se describe en la documentación
 
-    - En esta línea si un componente RGB es 0.3
-        - La resta resultaría en 0.7
-            - Invirtiendo la intensidad
-                - *Efecto de negativo*
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### Negativo - Imagen de prueba
-
-<img src="iph/n4/img/Screenshot 2024-11-12 at 9.39.52 PM.png" alt="" style="width: 65%; height: 65%; object-fit: fill">
-
-
-- Así se ve el efecto negativo 
-    - En la imagen de prueba
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Estudiar la función `aplicar_filtro_umbral()`
-
-- En el archivo `procesador_imagenes.py`
-- Ubique y estudie la función:
-    - `aplicar_filtro_umbral()`
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Función `aplicar_filtro_umbral()` (1/6)
-
-```Python
-def aplicar_filtro_umbral(imagen: list, umbral: float) -> list:
-    """
-    Aplica un filtro de umbral a una imagen.
-
-    Args:
-        imagen (list): Una lista tridimensional que representa 
-        la imagen a la que se va a aplicar el filtro. Cada 
-        elemento de la lista es un valor de píxel en el rango 
-        de 0 a 1.
-        umbral (float): El umbral para el filtro.
-
-    Returns: 
-        (list): La imagen con el filtro de umbral aplicado.
-
-    Nota: Si el promedio de RGB supera el umbral dado, 
-    el píxel se convierte a rojo.
-    """
-    for fila in range(len(imagen)):
-        for columna in range(len(imagen[0])):
-            if (sum(imagen[fila][columna]) / 3) > umbral:
-                imagen[fila][columna] = [1, 0, 0]  # Rojo
-    return imagen
+#doctest.run_docstring_examples(imprimir_borde_exterior, globals(), verbose=True)
 ```
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### Función `aplicar_filtro_umbral()` (2/6)
+###  Actividad III (3/4)
 
-```Python[2,3]
-def aplicar_filtro_umbral(imagen: list, umbral: float) -> list:
-    for fila in range(len(imagen)):
-        for columna in range(len(imagen[0])):
-            if (sum(imagen[fila][columna]) / 3) > umbral:
-                imagen[fila][columna] = [1, 0, 0]  # Rojo
-    return imagen
+- En `logica.py`
+	- Cree una función que imprima la primera letra de su nombre y/o apellido
+	- La impresión debe hacerse mediante números uno (`1`)
+	- El resto de la matriz debe quedar en ceros (`0`)
+	- El tamaño de la matriz puede ser fijo y usted puede decidirlo
+	- Este es un posible ejemplo de impresión de una letra "T"
+
+```plaintext
+        1 1 1 1 1
+        0 0 1 0 0
+        0 0 1 0 0
+        0 0 1 0 0
+        0 0 1 0 0
 ```
 
-- Se recorren todas las filas y columnas de la matriz
+- Usted puede crear la matriz afuera de la función y pasarla como parámetro
+	- O puede crearla adentro de la función
+		- Tiene libertad en ello
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### Función `aplicar_filtro_umbral()` (3/6)
+###  Actividad III (4/4)
 
-```Python[4]
-def aplicar_filtro_umbral(imagen: list, umbral: float) -> list:
-    for fila in range(len(imagen)):
-        for columna in range(len(imagen[0])):
-            if (sum(imagen[fila][columna]) / 3) > umbral:
-                imagen[fila][columna] = [1, 0, 0]  # Rojo
-    return imagen
-```
+1. Revise si sus funciones cumplen con todas las buenas prácticas obligatorias del curso
+	 - En particular, esta:
+		- <a href="https://eerosales24.github.io/iph_2026_20/n4/buenas_practicas/#/4" target="_blank" rel="noopener noreferrer">Usar nombres autoexplicativos para filas, columnas y elementos</a>
 
-- Se calcula el promedio de los componentes RGB
-    - Para ello se usa la función `sum()`
+
+2. Si una función no cumple las anteriores buenas prácticas
+	- Por favor corrija su implementación
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### `sum()`
+### Entrega
 
-- Calcula y retorna la suma de todos los ítems 
-    - De un iterable dado
-- Sintaxis: 
-```Python
-sum(iterable, start)
-```
-- `iterable`: Un iterable (Ej: Una lista)
-- `start`: Valor que inicializa la suma (opcional: 0)
-- `sum()` fue creada para operar **sobre números**
-- Ayuda:  [sum](https://docs.python.org/3/library/functions.html#sum)
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+1. Comprima en un archivo `.zip` el archivo:
+	- `logica.py`
 
-### Función `aplicar_filtro_umbral()` (4/6)
-
-```Python[4]
-def aplicar_filtro_umbral(imagen: list, umbral: float) -> list:
-    for fila in range(len(imagen)):
-        for columna in range(len(imagen[0])):
-            if (sum(imagen[fila][columna]) / 3) > umbral:
-                imagen[fila][columna] = [1, 0, 0]  # Rojo
-    return imagen
-```
-
-- `sum(...) / 3`
-    - Obtiene un valor promedio
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Función `aplicar_filtro_umbral()` (5/6)
-
-```Python[5]
-def aplicar_filtro_umbral(imagen: list, umbral: float) -> list:
-    for fila in range(len(imagen)):
-        for columna in range(len(imagen[0])):
-            if (sum(imagen[fila][columna]) / 3) > umbral:
-                imagen[fila][columna] = [1, 0, 0]  # Rojo
-    return imagen
-```
-
-- Si el promedio es mayor que el umbral
-    - El píxel se cambia a **rojo** (`[1, 0, 0]`)
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Función `aplicar_filtro_umbral()` (6/6)
-
-```Python
-imagen[fila][columna] = [1, 0, 0]  # Rojo
-```
-
-- Cuando el promedio supera el umbral
-    - Esta línea cambia el color del píxel a rojo
-    - *Filtro umbral* que destaca áreas brillantes
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Filtro Umbral - Imagen de prueba - umbral = 0.5
-
-<img src="iph/n4/img/Screenshot 2024-11-12 at 9.41.42 PM.png" alt="" style="width: 65%; height: 65%; object-fit: fill">
-
-
- Así se ve el filtro umbral, con `umbral=0.5` 
-- En la imagen de prueba
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### El laboratorio viene con una imagen `.png` para cargar
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### `cosmos.png` (1/3)
-
-<img src="iph/n4/img/Screenshot 2024-11-12 at 9.36.26 PM.png" alt="" style="width: 65%; height: 75%; object-fit: fill">
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### `cosmos.png` (2/3)
-
-- "Los Pilares de la Creación"
-- Son estructuras de gas y polvo 
-    - En la Nebulosa del Águila
-- A 7000 años luz de distancia
-- Abarca 70 x 50 años luz
-- Capturados por los telescopios espaciales 
-    - Hubble y 
-    - James Webb
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### `cosmos.png` (3/3)
-
--  "Los Pilares de la Creación"
-- Son zonas de formación estelar
-- Llamados así por su apariencia columnar
-- Extensión aproximadamente de 4 o 5 años luz
-- Los pilares se están erosionando 
-    - Por la radiación de estrellas cercanas
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Observemos los efectos anteriores al ser aplicados a `cosmos.png`
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Negativo - `cosmos.png`
-
-<img src="iph/n4/img/Screenshot 2024-11-12 at 9.44.28 PM.png" alt="" style="width: 65%; height: 75%; object-fit: fill">
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Filtro Umbral - `cosmos.png` - `umbral = 0.5`
-
-
-<img src="iph/n4/img/Screenshot 2024-11-12 at 9.45.46 PM.png" alt="" style="width: 65%; height: 75%; object-fit: fill">
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Paso 5:  Implemente los `TODOs`
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Implementar los TODOs
-
-- En el archivo `procesador_imagenes.py`
-- Ubique e implemente los TODOs
-- A continuación se proveen salidas de ejemplo
-    - Para la imagen de prueba
-    - Para la imagen `cosmos.png`
-- **Siempre pruebe primero**
-    - Con la imagen de prueba
-        - Y luego, con `cosmos.png`
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### `TODO1`
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Efecto reflejar - Imagen de prueba
-
-<img src="iph/n4/img/Screenshot 2024-11-12 at 9.48.33 PM.png" alt="" style="width: 65%; height: 75%; object-fit: fill">
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Efecto reflejar - `cosmos.png`
-
-<img src="iph/n4/img/Screenshot 2024-11-12 at 10.07.34 PM.png" alt="" style="width: 65%; height: 75%; object-fit: fill">
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### `TODO2`
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Efecto binarizar - Imagen de prueba - `umbral = 0.5`
-
-<img src="iph/n4/img/Screenshot 2024-11-12 at 9.52.42 PM.png" alt="" style="width: 65%; height: 75%; object-fit: fill">
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Efecto binarizar - `cosmos.png` - `umbral = 0.5`
-
-<img src="iph/n4/img/Screenshot 2024-11-12 at 10.08.06 PM.png" alt="" style="width: 65%; height: 75%; object-fit: fill">
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### `TODO3`
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Efecto escala grises - Imagen de prueba
-
-
-<img src="iph/n4/img/Screenshot 2024-11-12 at 9.54.10 PM.png" alt="" style="width: 65%; height: 75%; object-fit: fill">
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Efecto escala grises - `cosmos.png`
-
-<img src="iph/n4/img/Screenshot 2024-11-12 at 10.08.37 PM.png" alt="" style="width: 65%; height: 75%; object-fit: fill">
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### `TODO4`
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Efecto ajustar brillo - Imagen de prueba - `ajuste = 0.45`
-
-<img src="iph/n4/img/Screenshot 2024-11-12 at 9.56.30 PM.png" alt="" style="width: 65%; height: 75%; object-fit: fill">
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Efecto ajustar brillo - `cosmos.png` - `ajuste = 0.45`
-
-<img src="iph/n4/img/Screenshot 2024-11-12 at 10.09.07 PM.png" alt="" style="width: 65%; height: 75%; object-fit: fill">
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### `TODO5`
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Filtro sepia - Imagen de prueba 
-
-<img src="iph/n4/img/Screenshot 2024-11-12 at 9.58.41 PM.png" alt="" style="width: 65%; height: 75%; object-fit: fill">
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Filtro sepia - `cosmos.png`
-
-<img src="iph/n4/img/Screenshot 2024-11-12 at 10.09.36 PM.png" alt="" style="width: 65%; height: 75%; object-fit: fill">
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### `TODO6`: Obtener las coordenadas del punto Verde
-
-- ¿En dónde está el **pixel verde**?
-    - Para averiguralo 
-        - Implemente un **recorrido parcial**
-    - Imagen de prueba:
-        - Hay un (obvio) pixel verde 
-    - `cosmos.png`:
-        - El profesor **escondió un pixel verde**
-            - Obtenga sus coordenadas
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### `TODO7`:  Cree su filtro personalizado
-
-- Implemente su propio filtro personalizado
-    - El profesor dejó un filtro de ejemplo
-        - `aplicar_filtro_personalizado()`
-    - **Reemplácelo** por su propio filtro personalizado
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Ejemplo efecto personalizado - Imagen de prueba
-
-
-<img src="iph/n4/img/Screenshot 2024-11-12 at 10.06.08 PM.png" alt="" style="width: 65%; height: 75%; object-fit: fill">
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Ejemplo efecto personalizado - `cosmos.png`
-
-
-<img src="iph/n4/img/Screenshot 2024-11-12 at 10.07.02 PM.png" alt="" style="width: 65%; height: 75%; object-fit: fill">
+2. Haga el envío del `.zip` en  [Bloque Neón](https://bloqueneon.uniandes.edu.co/)
+	- Vaya a **"Actividades"**
+		- **"N4-L2"**
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 # Fin de N4-L2
 
-- No es necesario hacer ningún envío
-	- Aunque hay una actividad en Bloque Neón (N4-L2)
-		- En donde podría hacerlo
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+- Si no alcanzó a terminar el laboratorio
+	- Debe completar el laboratorio en su tiempo de 
+		- **Trabajo individual semanal** de IP Honores
 
-<i class="fas fa-question-circle fa-2x fa-spin fa-4x"></i>
 
-<br>
 <br>
 
  [<i class="fas fa-home  fa-3x"></i>](https://eerosales24.github.io/iph_2026_20/#)
