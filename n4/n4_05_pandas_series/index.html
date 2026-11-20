@@ -84,7 +84,7 @@
   </head>
   <body>
     <div class="reveal">
-      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+      <div class="slides"><section  data-markdown><script type="text/template"></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### <i class="fas fa-award"></i> IP Honores
@@ -105,289 +105,487 @@ Estudiemos a la librería **Pandas**
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### Pandas
+### Pandas (1/2)
 
-- Librería para el análisis de datos
-	- Limpieza, filtro, agrupamiento y transformación de datos
-- Análisis estadísticos
-	-  Funciones estadísticas y de agregación
-- Importación y exportación 
-	- Soporta una variedad de formatos de datos
-		- Ej: CSV, Excel, SQL, etc.
-- Integración con matplotlib
-	- Para la visualización de datos
+- Librería de Python para el análisis de datos
+- Por convención, se importa con el alias `pd`
+```Python
+import pandas as pd
+```
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### Tipos de datos (básicos) en Pandas
+### Pandas (2/2)
+
+- Provee 2 estructuras principales:
+	- **Serie** (`Series`): datos en una dimensión
+		- Como una *columna*
+	- **DataFrame**: datos en dos dimensiones (una tabla)
+		- Como una *matriz*
+		- Cada columna es una Serie
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Series (1/2)
+
+
+- Cada valor tiene una **etiqueta**
+	- Si no hay índice explícito:
+		- Las etiquetas son 0, 1, 2, …
+
+
+```Python
+import pandas as pd
+
+edades = pd.Series([18, 21, 19])
+
+print(edades)
+```
+
+```plaintext
+0    18
+1    21
+2    19
+dtype: int64
+```
+
+- Todos los valores tienen el mismo tipo de dato (`dtype`)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Series (2/2)
+
+- Se pueden crear desde un diccionario
+	- Las llaves proveen las etiquetas
+
+
+```Python
+import pandas as pd
+
+precios = pd.Series({'café': 3500, 'té': 2800, 'jugo': 5000})
+
+print(precios)
+```
+
+```plaintext
+café    3500
+té      2800
+jugo    5000
+dtype: int64
+```
+
+- Todos los valores tienen el mismo tipo de dato (`dtype`)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Tipos de datos (básicos)
 
 <table border="1" style="border-collapse: collapse; width: 100%; text-align: center; font-size: 20px;">
   <thead style="background-color: #d3d3d3;">
     <tr>
       <th style="color: black;">Tipo en Pandas</th>
-      <th style="color: black;">Tipo equivalente en Python</th>
-      <th style="color: black;">Descripción</th>
+      <th style="color: black;">Contenido</th>
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td>object</td>
-      <td><code>str</code></td>
-      <td>Tipo más general. Es asignado a una columna si tiene valores de varios tipos (números y strings)</td>
-    </tr>
-    <tr>
-      <td>int64</td>
-      <td><code>int</code></td>
-      <td>Valores numéricos</td>
-    </tr>
-    <tr>
-      <td>float64</td>
-      <td>float</td>
-      <td>Valores numéricos con decimales. Si una columna contiene números y NaNs (nulos), pandas lo pondrá por defecto en float64</td>
-    </tr>
-    <tr>
-      <td>datetime64, timedelta[ns]</td>
-      <td><code>datetime</code></td>
-      <td>Valores destinados a contener datos de tiempo</td>
-    </tr>
+    <tr><td><code>int64</code></td><td>Números enteros</td></tr>
+    <tr><td><code>float64</code></td><td>Números con decimales. También números con valores nulos (<code>NaN</code>)</td></tr>
+    <tr><td><code>bool</code></td><td><code>True</code> o <code>False</code></td></tr>
+    <tr><td><code>str</code></td><td>Texto (antes de pandas 3.0 aparece como <code>object</code>)</td></tr>
   </tbody>
 </table>
+
+- Se consulta con `serie.dtype`
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### Pandas - Series 
-
-- Estructura de datos unidimensional
-- Similar a una columna
-	- En una hoja de cálculo
-- Ayuda: [Pandas Series](https://pandas.pydata.org/docs/reference/api/pandas.Series.html)
+### Aprendamos operaciones clave con las Series
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### Series
+### Comparación
 
-- Existe el concepto de índice
-- El mismo tipo de dato
-	- Para todas las columnas
-- Un solo nombre que describe la serie
-- Ej:
-	- La serie: `“Edades”`
-	- Tipo de dato: `int64`
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Series - Ejemplo (1/6)
-
-<table border="1" style="border-collapse: collapse; width: 100%; text-align: center; font-size: 20px;">
-  <thead style="background-color: #d3d3d3;">
-    <tr>
-      <th style="width: 10%;">Edades</th>
-      <th>Valor</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>0</td>
-      <td>5</td>
-    </tr>
-    <tr>
-      <td>1</td>
-      <td>18</td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td>21</td>
-    </tr>
-    <tr>
-      <td>3</td>
-      <td>19</td>
-    </tr>
-    <tr>
-      <td>4</td>
-      <td>17</td>
-    </tr>
-    <tr>
-      <td>5</td>
-      <td>22</td>
-    </tr>
-    <tr>
-      <td>6</td>
-      <td>35</td>
-    </tr>
-    <tr>
-      <td>7</td>
-      <td>54</td>
-    </tr>
-    <tr>
-      <td>8</td>
-      <td>60</td>
-    </tr>
-    <tr>
-      <td>9</td>
-      <td>12</td>
-    </tr>
-    <tr>
-      <td>10</td>
-      <td>20</td>
-    </tr>
-  </tbody>
-</table>
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Series - Ejemplo (2/6)
+- Comparar una Serie con un valor
+	- Produce una **Serie de booleanos**:
+		- Un resultado `bool` por elemento
+- Operadores de comparación: `==`, `!=`, `>`, `>=`, `<`, `<=`
 
 ```Python
 import pandas as pd
-edades = pd.Series([5, 18, 21, 19, 17, 22, 35, 54, 60, 12, 20])
-print (edades)
+
+edades = pd.Series([15, 18, 21, 17])
+
+print(edades >= 18)
 ```
 
 ```plaintext
-0      5
-1     18
-2     21
-3     19
-4     17
-5     22
-6     35
-7     54
-8     60
-9     12
-10    20
+0    False
+1     True
+2     True
+3    False
+dtype: bool
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Filtrado (1/2)
+
+- Una Serie con una condición
+	- Dentro de `[]` **filtra**
+		- Conservando solo los elementos con `True`
+- Se conservan las etiquetas originales:
+
+
+```Python
+import pandas as pd
+
+edades = pd.Series([15, 18, 21, 17])
+
+mayores = edades[edades >= 18]  # Se filtra por condición de mayor o igual que 18
+
+print(mayores)
+```
+
+```plaintext
+1    18
+2    21
 dtype: int64
 ```
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### Series - Ejemplo (3/6)
+### Filtrado (2/2)
+
+- Si ningún elemento cumple la condición
+	- El resultado es una Serie **vacía**
+
 
 ```Python
 import pandas as pd
-# Serie con nombre:
-edades = pd.Series([5, 18, 21, 19, 17, 22, 35, 54, 60, 12, 20], name='edades'))
-print (edades)
+
+edades = pd.Series([15, 18, 21, 17])
+
+mayores = edades[edades > 99999]
+
+print(mayores)
 ```
 
+<br>
+
 ```plaintext
-0      5
-1     18
-2     21
-3     19
-4     17
-5     22
-6     35
-7     54
-8     60
-9     12
-10    20
-Name: edades, dtype: int64
+Series([], dtype: int64)
 ```
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### Series - Ejemplo (4/6)
+### `Series.value_counts()` (1/2)
+
+- Cuenta cuántas veces aparece **cada valor**
+- Retorna una **Serie**:
+	- Etiquetas (índice): los valores, sin repetir
+	- Valores: cuántas veces aparece cada uno
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `Series.value_counts()` (2/2)
+
+- La serie retornada estará
+	- Ordenada de **mayor a menor** frecuencia
+	- Solo incluye los valores que aparecen al menos una vez
+
+	<br>
+
+- Ayuda: [Series.value_counts](https://pandas.pydata.org/docs/reference/api/pandas.Series.value_counts.html)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `value_counts()` - Ejemplo
 
 ```Python
 import pandas as pd
-grados = [12, 15, 23, 18, 20, 21, 14]
-# Etiquetas para la serie:
-dias = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo']
-temperaturas = pd.Series(grados, index=días, name='temperaturas')
-print(temperaturas)
+
+bebidas = pd.Series(['café', 'té', 'café', 'jugo', 'café',
+                     'agua', 'té', 'café', 'jugo', 'té'])
+
+conteo = bebidas.value_counts()
+
+print(conteo)
 ```
 
 ```plaintext
-lunes        12
-martes       15
-miércoles    23
-jueves       18
-viernes      20
-sábado       21
-domingo      14
-Name: temperaturas, dtype: int64
+café    4
+té      3
+jugo    2
+agua    1
+Name: count, dtype: int64
 ```
+
+- `conteo` es una Serie de números: se puede recortar, ordenar y graficar
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### Series - Ejemplo (5/6)
+### `head(n)` y `tail(n)`
+
+- `head(n)`: retorna los **primeros** `n` elementos
+- `tail(n)`: retorna los **últimos** `n` elementos
+	- Si no se indica `n`
+		- Es por defecto 5
+
+<br>
+
+- **No ordenan**: respetan el orden actual de la Serie
+
+	<br>
+
+- Ayuda: [Series.head](https://pandas.pydata.org/docs/reference/api/pandas.Series.head.html), [Series.tail](https://pandas.pydata.org/docs/reference/api/pandas.Series.tail.html)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `head(n)` y `tail(n)` - Ejemplo
 
 ```Python
 import pandas as pd
-# Serie desde diccionarios
-datos = {'lunes':12, 'martes':15, 'miércoles':23,\
-		 'jueves':18, 'viernes':20, 'sábado':21, 'domingo':14}
-temperaturas = pd.Series(datos, name='temperaturas')
-print(temperaturas)
+
+bebidas = pd.Series(['café', 'té', 'café', 'jugo', 'café',
+                     'agua', 'té', 'café', 'jugo', 'té'])
+
+conteo = bebidas.value_counts()  # café 4, té 3, jugo 2, agua 1
+
+print(conteo.head(2))  # Las 2 más pedidas
+
+print(conteo.tail(2))  # Las 2 menos pedidas
 ```
 
 ```plaintext
-lunes        12
-martes       15
-miércoles    23
-jueves       18
-viernes      20
-sábado       21
-domingo      14
-Name: temperaturas, dtype: int64
+café    4
+té      3
+Name: count, dtype: int64
+
+jugo    2
+agua    1
+Name: count, dtype: int64
 ```
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### Series - Ejemplo (6/6)
+### `Series.sort_values()`
+
+- Retorna una **nueva** Serie ordenada por sus valores
+	- Cada etiqueta se mueve con su valor
+- `ascending`:
+	- `ascending=True` (por defecto): de menor a mayor
+	- `ascending=False`: de mayor a menor
+
+	<br>
+
+- Ayuda: [Series.sort_values](https://pandas.pydata.org/docs/reference/api/pandas.Series.sort_values.html)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `sort_values()` - Ejemplo
 
 ```Python
 import pandas as pd
-datos = {'lunes':12, 'martes':15, 'miércoles':23,\
-		 'jueves':18, 'viernes':20, 'sábado':21, 'domingo':14}
-temperaturas = pd.Series(datos, name='temperaturas')
-# Restaurar índices (en lugar de etiquetas)
-temperaturas = temperaturas.reset_index(drop=True)
-print(temperaturas)
+
+precios = pd.Series({'café': 3500, 'té': 2800, 'jugo': 5000, 'agua': 2000})
+
+print(precios.sort_values())  # de menor a mayor
+
+print(precios.sort_values(ascending=False).head(2))  # los 2 más caros
 ```
 
 ```plaintext
-0    12
-1    15
-2    23
-3    18
-4    20
-5    21
-6    14
-Name: temperaturas, dtype: int64
+agua    2000
+té      2800
+café    3500
+jugo    5000
+dtype: int64
+
+jugo    5000
+café    3500
+dtype: int64
 ```
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### Estudiemos algunos métodos de las series de Pandas
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+### `count()`, `sum()` y `mean()`
 
-### `Series.get()`
+- Resumen la Serie en **un solo valor**
+- Ignoran los valores nulos
 
-- Obtiene el ítem para la llave dada
-- Sintaxis: 
+<table border="1" style="border-collapse: collapse; width: 100%; text-align: center; font-size: 20px;">
+  <thead style="background-color: #d3d3d3;">
+    <tr>
+      <th style="color: black;">Método</th>
+      <th style="color: black;">Retorna</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td><code>count()</code></td><td>La cantidad de valores <b>no nulos</b> (NOTA: <code>len()</code> cuenta todos)</td></tr>
+    <tr><td><code>sum()</code></td><td>La suma de los valores</td></tr>
+    <tr><td><code>mean()</code></td><td>El promedio</td></tr>
+  </tbody>
+</table>
+
 ```Python
-Series.get(key, default=None)
-```
+import pandas as pd
 
-- `key`: Llave (por ejemplo un índice)
-- `default`: Valor de retorno por defecto 
-	- Si no se encuentra la llave
-- Ayuda: [Series.get](https://pandas.pydata.org/docs/reference/api/pandas.Series.get.html)
+ventas = pd.Series([4, None, 8, 6])
+
+print(ventas.count())  # → 3
+print(len(ventas))  # → 4
+print(ventas.sum())  # → 18.0
+print(ventas.mean())  # → 6.0
+```
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### `Series.get()` - Ejemplo
+### <i class="fas fa-exclamation-triangle"></i> Cuidado: `sum()` con textos
+
+- Con textos, `sum()` **concatena** y retorna *un solo `str`*
+- Un `str` no es una Serie:
+	- No tiene `value_counts()`, `head()`, etc.
 
 ```Python
-# llaves: 'a', 'b', 'c', 'd'
-serie = pd.Series({'a':1, 'b':2, 'c':3, 'd':4})
-serie.get('a')  # → 1
-serie.get('b')  # → 2
-serie.get('c')  # → 3
-serie.get('d')  # → 4
+import pandas as pd
+
+silabas = pd.Series(['pa', 'pe', 'l'])
+
+texto = silabas.sum()
+
+print(texto, type(texto))  # → papel <class 'str'>
+
+print(texto.value_counts())  # → Traceback (most recent call last):
+#  ...
+# AttributeError: 'str' object has no attribute 'value_counts'
 ```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Encadenar métodos
+
+- Cada método retorna un resultado
+	- Sobre el que se puede aplicar otro método
+- Se lee de izquierda a derecha:
+
+```Python
+import pandas as pd
+
+bebidas = pd.Series(['café', 'té', 'café', 'jugo', 'café',
+                     'agua', 'té', 'café', 'jugo', 'té'])
+
+top2 = bebidas.value_counts().head(2)  # Serie: café 4, té 3
+
+# La suma de los valores:
+print(top2.sum())  # → 7
+```
+
+- `value_counts()` → Serie · `head(2)` → Serie · `sum()` → un solo número
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `Series.plot()` (1/2)
+
+- Grafica una Serie (usa la librería `matplotlib`)
+	- Eje x: las **etiquetas** (índice)
+	- Altura de las barras: los **valores**
+- Parámetros comunes:
+	- `kind="bar"`: barras verticales
+	- `figsize=(ancho, alto)`, `color=...`, `title=...`, `xlabel=...`, `ylabel=...`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `Series.plot()` (2/2)
+
+- `plt.show()` muestra la gráfica
+	- `import matplotlib.pyplot as plt`
+- Necesita valores **numéricos**:
+	- Con textos o con una Serie vacía genera un error
+
+	 <br>
+
+- Ayuda: [Series.plot](https://pandas.pydata.org/docs/reference/api/pandas.Series.plot.html)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `plot()` - Ejemplo
+
+```Python
+import pandas as pd
+import matplotlib.pyplot as plt
+
+bebidas = pd.Series(['café', 'té', 'café', 'jugo', 'café',
+
+                     'agua', 'té', 'café', 'jugo', 'té'])
+top3 = bebidas.value_counts().head(3)
+
+ax = top3.plot(kind="bar", figsize=(7, 4), color="gray",
+               title="Top 3 bebidas más pedidas",
+               xlabel="Bebida", ylabel="Cantidad de pedidos")
+               
+ax.figure.tight_layout()  # Ajusta los márgenes
+
+plt.show()
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `plot()` - Resultado
+
+<img src="iph/n4/img/n4_05_series_plot_bebidas.png" alt="" style="object-fit: scale-down">
+
+
+- Eje x: las etiquetas de `top3` · Altura de cada barra: su frecuencia
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### ¿Qué retorna cada paso?
+
+<table border="1" style="border-collapse: collapse; width: 100%; text-align: center; font-size: 20px;">
+  <thead style="background-color: #d3d3d3;">
+    <tr>
+      <th style="color: black;">Expresión</th>
+      <th style="color: black;">Retorna</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td><code>serie == valor</code></td><td>Serie de booleanos (<code>bool</code>)</td></tr>
+    <tr><td><code>serie[serie == valor]</code></td><td>Serie (solo los elementos con <code>True</code>)</td></tr>
+    <tr><td><code>serie.value_counts()</code></td><td>Serie (valor → frecuencia)</td></tr>
+    <tr><td><code>serie.head(n)</code> · <code>serie.tail(n)</code> · <code>serie.sort_values()</code></td><td>Serie</td></tr>
+    <tr><td><code>serie.count()</code> · <code>serie.sum()</code> · <code>serie.mean()</code></td><td><b>Un solo valor</b></td></tr>
+    <tr><td><code>serie.plot(...)</code></td><td>Una gráfica</td></tr>
+  </tbody>
+</table>
+
+- Si un paso retorna un solo valor, ya no se pueden usar métodos de Series sobre él
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Resumen
+
+<table border="1" style="border-collapse: collapse; width: 100%; text-align: center; font-size: 20px;">
+  <thead style="background-color: #d3d3d3;">
+    <tr>
+      <th style="color: black;">Necesito…</th>
+      <th style="color: black;">Uso</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Comparar con un valor</td><td><code>serie == valor</code>, <code>serie > valor</code>, …</td></tr>
+    <tr><td>Filtrar</td><td><code>serie[serie > valor]</code></td></tr>
+    <tr><td>Contar cada valor</td><td><code>serie.value_counts()</code></td></tr>
+    <tr><td>Los <code>n</code> más frecuentes</td><td><code>serie.value_counts().head(n)</code></td></tr>
+    <tr><td>Los <code>n</code> menos frecuentes</td><td><code>serie.value_counts().tail(n)</code></td></tr>
+    <tr><td>Ordenar</td><td><code>serie.sort_values(ascending=...)</code></td></tr>
+    <tr><td>Un solo número</td><td><code>serie.count()</code>, <code>serie.sum()</code>, <code>serie.mean()</code></td></tr>
+    <tr><td>Gráfica de barras</td><td><code>serie.plot(kind="bar")</code> y <code>plt.show()</code></td></tr>
+  </tbody>
+</table>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Ponga a prueba lo aprendido
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -397,24 +595,27 @@ serie.get('d')  # → 4
 
 ```Python
 import pandas as pd
-datos = pd.Series([1, 2, 3, 4, 5])
-print(datos.get(0))
+temperaturas = pd.Series({'lunes': 12, 'martes': 19, 'miércoles': 23, 'jueves': 17})
+print(temperaturas[temperaturas > 18])
 ```
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### Pregunta I - Solución
 
-
 ```Python
 import pandas as pd
-datos = pd.Series([1, 2, 3, 4, 5])
-print(datos.get(0))
+temperaturas = pd.Series({'lunes': 12, 'martes': 19, 'miércoles': 23, 'jueves': 17})
+print(temperaturas[temperaturas > 18])
 ```
 
 ```plaintext
-1
+martes       19
+miércoles    23
+dtype: int64
 ```
+
+- El filtro conserva los elementos con `True` (mayores a 18), con sus etiquetas
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -424,8 +625,9 @@ print(datos.get(0))
 
 ```Python
 import pandas as pd
-datos = pd.Series({'o':'a', 's':'e', 'e':'s', 'a':'o'})
-print(datos.get('a'), datos.get('e'), datos.get('s'), datos.get('o'), sep='')
+edades = pd.Series([15, 18, 21, 17, 30])
+mayores = edades[edades >= 18]
+print(mayores.count(), len(edades))
 ```
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
@@ -434,13 +636,16 @@ print(datos.get('a'), datos.get('e'), datos.get('s'), datos.get('o'), sep='')
 
 ```Python
 import pandas as pd
-datos = pd.Series({'o':'a', 's':'e', 'e':'s', 'a':'o'})
-print(datos.get('a'), datos.get('e'), datos.get('s'), datos.get('o'), sep='')
+edades = pd.Series([15, 18, 21, 17, 30])
+mayores = edades[edades >= 18]
+print(mayores.count(), len(edades))
 ```
 
 ```plaintext
-osea
+3 5
 ```
+
+- El filtro deja 18, 21 y 30; la Serie original no cambia (5 elementos)
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -450,9 +655,8 @@ osea
 
 ```Python
 import pandas as pd
-letras = ['h', 'a', 's', 'u', 'k', 's', 'y', 'o']
-datos = pd.Series(letras, index=[7, 6, 5, 4, 3, 2, 1, 0])
-print(datos.get(7), datos.get(4), datos.get(5), datos.get(3),datos.get(1), sep='')
+colores = pd.Series(['rojo', 'azul', 'rojo', 'verde', 'rojo', 'azul'])
+print(colores.value_counts())
 ```
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
@@ -461,42 +665,18 @@ print(datos.get(7), datos.get(4), datos.get(5), datos.get(3),datos.get(1), sep='
 
 ```Python
 import pandas as pd
-letras = ['h', 'a', 's', 'u', 'k', 's', 'y', 'o']
-datos = pd.Series(letras, index=[7, 6, 5, 4, 3, 2, 1, 0])
-print(datos.get(7), datos.get(4), datos.get(5), datos.get(3),datos.get(1), sep='')
+colores = pd.Series(['rojo', 'azul', 'rojo', 'verde', 'rojo', 'azul'])
+print(colores.value_counts())
 ```
 
 ```plaintext
-husky
-```
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### `Series.iloc[]`
-
-- Permite acceder a un grupo de filas o columnas    
-- Considerando **al índice**
-- Sintaxis: 
-```Python
-Series.iloc[start:end]
-```
-- `start`: Inicio de indexación, incluido
-- `end`: Fin indexación, no incluido, opcional
-- Ayuda: [Series.iloc](https://pandas.pydata.org/docs/reference/api/pandas.Series.iloc.html)
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### `Series.iloc[]` - Ejemplo
-
-```Python
-import pandas as pd
-serie = pd.Series([1, 2, 3, 4])
-print(serie.iloc[0])
+rojo     3
+azul     2
+verde    1
+Name: count, dtype: int64
 ```
 
-```plaintext
-1
-```
+- Cuenta cada valor y ordena de mayor a menor frecuencia
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -506,9 +686,8 @@ print(serie.iloc[0])
 
 ```Python
 import pandas as pd
-serie = pd.Series([1, 2, 3, 4])
-# end No incluido:
-print(serie.iloc[0:2])
+letras = pd.Series(['b', 'a', 'n', 'a', 'n', 'a'])
+print(letras.value_counts().head(1))
 ```
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
@@ -517,16 +696,16 @@ print(serie.iloc[0:2])
 
 ```Python
 import pandas as pd
-serie = pd.Series([1, 2, 3, 4])
-# end No incluido:
-print(serie.iloc[0:2])
+letras = pd.Series(['b', 'a', 'n', 'a', 'n', 'a'])
+print(letras.value_counts().head(1))
 ```
 
 ```plaintext
-0    1
-1    2
-dtype: int64
+a    3
+Name: count, dtype: int64
 ```
+
+- `value_counts()` deja de primero el valor más frecuente y `head(1)` lo toma
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -536,8 +715,9 @@ dtype: int64
 
 ```Python
 import pandas as pd
-serie = pd.Series({'a':1, 'b':2, 'c':3, 'd':4})
-print(serie.iloc[2:])
+frutas = pd.Series(['mango', 'pera', 'mango', 'uva', 'pera',
+                    'mango', 'kiwi', 'uva', 'pera', 'mango'])
+print(frutas.value_counts().tail(2))
 ```
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
@@ -546,15 +726,19 @@ print(serie.iloc[2:])
 
 ```Python
 import pandas as pd
-serie = pd.Series({'a':1, 'b':2, 'c':3, 'd':4})
-print(serie.iloc[2:])
+frutas = pd.Series(['mango', 'pera', 'mango', 'uva', 'pera',
+                    'mango', 'kiwi', 'uva', 'pera', 'mango'])
+print(frutas.value_counts().tail(2))
 ```
 
 ```plaintext
-c    3
-d    4
-dtype: int64
+uva     2
+kiwi    1
+Name: count, dtype: int64
 ```
+
+- Frecuencias: mango 4, pera 3, uva 2, kiwi 1
+- `tail(2)` toma los 2 menos frecuentes y mantiene el orden de mayor a menor
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -564,8 +748,8 @@ dtype: int64
 
 ```Python
 import pandas as pd
-serie = pd.Series({'a':1, 'b':2, 'c':3, 'd':4})
-print(serie.iloc[-1])
+puntos = pd.Series([3, 9, 1, 7, 5])
+print(puntos.head(2).sum(), puntos.sort_values().head(2).sum())
 ```
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
@@ -574,41 +758,16 @@ print(serie.iloc[-1])
 
 ```Python
 import pandas as pd
-serie = pd.Series({'a':1, 'b':2, 'c':3, 'd':4})
-print(serie.iloc[-1])
+puntos = pd.Series([3, 9, 1, 7, 5])
+print(puntos.head(2).sum(), puntos.sort_values().head(2).sum())
 ```
 
 ```plaintext
-4
-```
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### `Series.loc[]`
-
-- Permite acceder a un grupo de filas o columnas    
-- Considerando **la etiqueta** del índice
-- Sintaxis: 
-```Python
-Series.loc[start:end]
-```
-- `start`: Inicio por etiqueta, incluido
-- `end`: Fin por etiqueta, no incluido, opcional
-- Ayuda: [Series.loc](https://pandas.pydata.org/docs/reference/api/pandas.Series.loc.html)
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### `Series.loc[]` - Ejemplo
-
-```Python
-import pandas as pd
-serie = pd.Series([5, 6, 7, 8], index=[1, 2, 3, 4])
-print(serie.loc[1])
+12 4
 ```
 
-```Python
-5
-```
+- `head(2)` toma los 2 primeros **sin ordenar**: 3 + 9
+- `sort_values().head(2)` toma los 2 menores: 1 + 3
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -618,8 +777,8 @@ print(serie.loc[1])
 
 ```Python
 import pandas as pd
-serie = pd.Series({'a':1, 'b':2, 'c':3, 'd':4})
-print(serie.loc['a'])
+goles = pd.Series({'Ana': 5, 'Luis': 2, 'Sara': 7, 'Juan': 4})
+print(goles.sort_values().tail(2))
 ```
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
@@ -628,44 +787,54 @@ print(serie.loc['a'])
 
 ```Python
 import pandas as pd
-serie = pd.Series({'a':1, 'b':2, 'c':3, 'd':4})
-print(serie.loc['a'])
+goles = pd.Series({'Ana': 5, 'Luis': 2, 'Sara': 7, 'Juan': 4})
+print(goles.sort_values().tail(2))
 ```
 
 ```plaintext
-1
+Ana     5
+Sara    7
+dtype: int64
 ```
+
+- Por defecto ordena de menor a mayor: los 2 últimos son los 2 mayores, de menor a mayor
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### Pregunta VIII
 
-- ¿Cuál es el resultado de ejecutar el siguiente código?
+- ¿Cuál expresión retorna los 2 jugadores con **menos** goles?
 
 ```Python
 import pandas as pd
-serie = pd.Series({'a':1, 'b':2, 'c':3, 'd':4})
-# end incluido:
-print(serie.loc['a':'c'])
+goles = pd.Series({'Ana': 5, 'Luis': 2, 'Sara': 7, 'Juan': 4})
 ```
+
+- a) `goles.sort_values().head(2)`
+- b) `goles.sort_values().tail(2)`
+- c) `goles.sort_values(ascending=False).head(2)`
+- d) `goles.head(2)`
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### Pregunta VIII - Solución
 
+- Respuesta: **a)**
+
 ```Python
 import pandas as pd
-serie = pd.Series({'a':1, 'b':2, 'c':3, 'd':4})
-# end incluido:
-print(serie.loc['a':'c'])
+goles = pd.Series({'Ana': 5, 'Luis': 2, 'Sara': 7, 'Juan': 4})
+print(goles.sort_values().head(2))
 ```
 
 ```plaintext
-a    1
-b    2
-c    3
+Luis    2
+Juan    4
 dtype: int64
 ```
+
+- b) y c) retornan los 2 con **más** goles
+- d) retorna los 2 primeros sin ordenar (Ana y Luis)
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -675,50 +844,26 @@ dtype: int64
 
 ```Python
 import pandas as pd
-serie = pd.Series({'a':1, 'b':2, 'c':3, 'd':4})
-print(serie.loc['a':])
+notas = pd.Series([4.0, None, 3.0, None, 5.0])
+print(len(notas), notas.count(), notas.mean())
 ```
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### Pregunta IX - Solución
 
-
 ```Python
 import pandas as pd
-serie = pd.Series({'a':1, 'b':2, 'c':3, 'd':4})
-print(serie.loc['a':])
+notas = pd.Series([4.0, None, 3.0, None, 5.0])
+print(len(notas), notas.count(), notas.mean())
 ```
 
 ```plaintext
-a    1
-b    2
-c    3
-d    4
-dtype: int64
+5 3 4.0
 ```
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### `Series.to_list()`
-
-- Retorna una lista con los valores de la serie    
-- Sintaxis: 
-```Python
-Series.to_list()
-```
-- Ayuda: [Series.to_list](https://pandas.pydata.org/docs/reference/api/pandas.Series.to_list.html)
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### `Series.to_list()` - Ejemplo
-
-```Python
-
-serie = pd.Series([1, 2, 3])
-
-serie.to_list()  # → [1, 2, 3]
-```
+- `len()` cuenta todos los elementos; `count()` solo los no nulos
+- `mean()` ignora los `NaN`: (4 + 3 + 5) / 3
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -728,10 +873,9 @@ serie.to_list()  # → [1, 2, 3]
 
 ```Python
 import pandas as pd
-serie = pd.Series(['s', 'o', 'm', 's', 'o', 'c'])
-lista = serie.to_list()[::-1]
-for letra in lista:
-    print(letra, end='')
+votos = pd.Series(['sí', 'no', 'sí', 'sí', 'no', 'sí'])
+conteo = votos.value_counts()
+print(conteo.count(), conteo.sum(), conteo.mean())
 ```
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
@@ -740,37 +884,17 @@ for letra in lista:
 
 ```Python
 import pandas as pd
-serie = pd.Series(['s', 'o', 'm', 's', 'o', 'c'])
-lista = serie.to_list()[::-1]
-for letra in lista:
-    print(letra, end='')
+votos = pd.Series(['sí', 'no', 'sí', 'sí', 'no', 'sí'])
+conteo = votos.value_counts()
+print(conteo.count(), conteo.sum(), conteo.mean())
 ```
 
 ```plaintext
-cosmos
+2 6 3.0
 ```
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### `Series.copy()`
-
-- Retorna una copia de la serie    
-- Sintaxis: 
-```Python
-Series.copy()
-```
-- Ayuda: [Series.copy](https://pandas.pydata.org/docs/reference/api/pandas.Series.copy.html)
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### `Series.copy()` - Ejemplo
-
-```Python
-import pandas as pd
-serie = pd.Series([1, 2, 3])
-serie_copia = serie.copy()
-print(serie is serie_copia) # → False
-```
+- `conteo` es la Serie: `sí` → 4, `no` → 2
+- `count()`: 2 valores distintos · `sum()`: 6 votos · `mean()`: 6 / 2
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -780,185 +904,25 @@ print(serie is serie_copia) # → False
 
 ```Python
 import pandas as pd
-serie = pd.Series([-1, 0, 1])
-serie_copia = serie.copy()
-print(serie.to_list() == serie_copia.to_list())
-
-import pandas as pd
-serie = pd.Series([-1, 0, 1])
-serie_copia = serie.copy()
-print(serie.to_list() is serie_copia.to_list())
+silabas = pd.Series(['ca', 'mi', 'no'])
+print(silabas.sum())
 ```
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### Pregunta XI - Solución
 
-
 ```Python
 import pandas as pd
-serie = pd.Series([-1, 0, 1])
-serie_copia = serie.copy()
-print(serie.to_list() == serie_copia.to_list())
-
-import pandas as pd
-serie = pd.Series([-1, 0, 1])
-serie_copia = serie.copy()
-print(serie.to_list() is serie_copia.to_list())
+silabas = pd.Series(['ca', 'mi', 'no'])
+print(silabas.sum())
 ```
 
 ```plaintext
-True
-False
-```
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### `Series.count()`
-
-- Retorna el número de valores no nulos
-	- Que se encuentran en la serie
-- Sintaxis: 
-```Python
-Series.count()
-```
-- Ayuda: [Series.count](https://pandas.pydata.org/docs/reference/api/pandas.Series.count.html)
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### `Series.copy()` - Ejemplo
-
-```Python
-import pandas as pd
-serie = pd.Series([1, 2, 3])
-print(serie.count()) # → 3
-```
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Estudiemos formas comunes de **actualización de una serie**
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Actualización de una Serie - Indexación\*
-
-```Python
-import pandas as pd
-serie = pd.Series([1, 2, 3])  
-# Cambia el segundo elemento a 5:   
-serie[1] = 5
-print(serie)
+camino
 ```
 
-```plaintext
-0    1
-1    5
-2    3
-dtype: int64
-```
-
-- \* No funciona con indexación negativa
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Actualización de una Serie - Lista de Índices\*
-
-```Python
-import pandas as pd
-serie = pd.Series([1, 2, 3, 4, 5])  
-# Cambia el 2do y 4to elemento a 6 y 7 respectivamente:
-serie[ [1, 3] ] = [6, 7]
-print(serie)
-```
-
-```plaintext
-0    1
-1    6
-2    3
-3    7
-4    5
-dtype: int64
-```
-
-- \* No funciona con indexación negativa
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Estudiemos formas comunes de **eliminación en una serie**
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### `Series.drop()`
-
-- Retorna la serie con etiquetas/índices borrados
-	
-- Sintaxis: 
-```Python
-Series.drop(labels=None, index=None)
-```
-
-- `labels`: Etiqueta o lista de etiquetas a eliminar
-- `index`: Índices o lista de índices a eliminar
-- En lugar de etiquetas
-- Ayuda: [Series.drop](https://pandas.pydata.org/docs/reference/api/pandas.Series.drop.html)
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Eliminación en una Serie - Series.drop()\* (1/3)
-
-```Python
-import pandas as pd
-serie = pd.Series([1, 2, 3])
-# Elimina el segundo elemento de la serie:  
-serie = serie.drop(1)
-print(serie)
-```
-
-```plaintext
-0    1
-2    3
-dtype: int64
-```
-- \* No funciona con indexación negativa
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Eliminación en una Serie - Series.drop()\* (2/3)
-
-```Python
-import pandas as pd
-serie = pd.Series([1, 2, 3, 4, 5])
-# Elimina el 2do y 4to elemento de la serie:
-serie = serie.drop([1, 3])
-print(serie)
-```
-
-```plaintext
-0    1
-2    3
-4    5
-dtype: int64
-```
-- \* No funciona con indexación negativa
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Eliminación en una Serie - Series.drop()\* (3/3)
-
-```Python
-import pandas as pd
-serie = pd.Series({'a':1, 'b':2, 'c':3})
-# Elimina el elemento con la llave b:
-serie = serie.drop('b')
-print(serie)
-```
-
-```plaintext
-a    1
-c    3
-dtype: int64
-```
-- \* No funciona con indexación negativa
+- Con textos, `sum()` concatena: retorna un solo `str`
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -968,15 +932,10 @@ dtype: int64
 
 ```Python
 import pandas as pd
-
-serie = pd.Series(['1', '2', '3', 'e', 'v', 'i', 'n', 'x'])
-
-serie[7] = 'U'
-serie[0] = 'o'
-serie[1] = 's'
-serie[2] = 'r'
-
-print(''.join(serie.to_list()[::-1]))
+tallas = pd.Series(['S', 'M', 'S', 'L'])
+total = tallas.sum()
+print(total)
+print(total.value_counts())
 ```
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
@@ -985,83 +944,129 @@ print(''.join(serie.to_list()[::-1]))
 
 ```Python
 import pandas as pd
-
-serie = pd.Series(['1', '2', '3', 'e', 'v', 'i', 'n', 'x'])
-
-serie[7] = 'U'
-serie[0] = 'o'
-serie[1] = 's'
-serie[2] = 'r'
-
-print(''.join(serie.to_list()[::-1]))
+tallas = pd.Series(['S', 'M', 'S', 'L'])
+total = tallas.sum()
+print(total)
+print(total.value_counts())
 ```
 
 ```plaintext
-Universo
+SMSL
+Traceback (most recent call last):
+  ...
+AttributeError: 'str' object has no attribute 'value_counts'
 ```
+
+- `tallas.sum()` retorna el `str` `'SMSL'`, no una Serie
+- Un `str` no tiene el método `value_counts()`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XIII
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+import pandas as pd
+calificaciones = pd.Series([4.5, 3.0, 4.5, 2.5, 4.5, 3.0])
+aprobadas = calificaciones[calificaciones >= 3.0]
+print(aprobadas.value_counts().head(1))
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XIII - Solución
+
+```Python
+import pandas as pd
+calificaciones = pd.Series([4.5, 3.0, 4.5, 2.5, 4.5, 3.0])
+aprobadas = calificaciones[calificaciones >= 3.0]
+print(aprobadas.value_counts().head(1))
+```
+
+```plaintext
+4.5    3
+Name: count, dtype: int64
+```
+
+- El filtro deja 4.5, 3.0, 4.5, 4.5 y 3.0; el valor más frecuente es 4.5
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### Pregunta XIV
 
-- ¿Cuál es el resultado de ejecutar el siguiente código?
+- ¿Cuál expresión retorna los 3 deportes **más** frecuentes?
 
 ```Python
 import pandas as pd
-lista1 = [1, 2, 3, 4, 5, 6]
-serie = pd.Series(lista1)
-serie = serie.drop([0, 2, 4]) 
-print(sum(serie))
+deportes = pd.Series(['fútbol', 'tenis', 'fútbol', 'golf', 'tenis',
+                      'fútbol', 'natación', 'golf', 'fútbol', 'tenis'])
 ```
+
+- a) `deportes.value_counts().head(3)`
+- b) `deportes.value_counts().tail(3)`
+- c) `deportes.head(3)`
+- d) `deportes.sum().value_counts().head(3)`
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### Pregunta XIV - Solución
 
+- Respuesta: **a)**
 
 ```Python
 import pandas as pd
-lista1 = [1, 2, 3, 4, 5, 6]
-serie = pd.Series(lista1)
-serie = serie.drop([0, 2, 4]) # Borra posición 0, 2 y 4
-print(sum(serie))
+deportes = pd.Series(['fútbol', 'tenis', 'fútbol', 'golf', 'tenis',
+                      'fútbol', 'natación', 'golf', 'fútbol', 'tenis'])
+print(deportes.value_counts().head(3))
 ```
 
 ```plaintext
-12
+fútbol    4
+tenis     3
+golf      2
+Name: count, dtype: int64
 ```
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### Las series soportan varias **operaciones estadísticas**
+- b) los 3 **menos** frecuentes · c) los 3 primeros elementos, sin contar · d) `sum()` retorna un `str`: `AttributeError`
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### Pregunta XV
 
-- ¿Cuál es el resultado de ejecutar el siguiente código?
+- ¿Qué muestra la gráfica?
 
 ```Python
 import pandas as pd
-serie = pd.Series([-3, -2, -1, 0, 1, 2, 3])
-print(serie.max())
+import matplotlib.pyplot as plt
+colores = pd.Series(['rojo', 'azul', 'rojo'])
+conteo = colores.value_counts()
+conteo.plot(kind='bar')
+plt.show()
 ```
+
+- a) Barras en 0, 1 y 2, con alturas `'rojo'`, `'azul'` y `'rojo'`
+- b) Barras para `rojo` y `azul`, con alturas 2 y 1
+- c) Una sola barra con altura 3
+- d) Un error, porque los colores son textos
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### Pregunta XV - Solución
 
+- Respuesta: **b)**
+
 ```Python
 import pandas as pd
-serie = pd.Series([-3, -2, -1, 0, 1, 2, 3])
-print(serie.max())
+import matplotlib.pyplot as plt
+colores = pd.Series(['rojo', 'azul', 'rojo'])
+conteo = colores.value_counts()
+conteo.plot(kind='bar')
+plt.show()
 ```
 
-```plaintext
-3
-```
-
-- Ayuda: [Series.max](https://pandas.pydata.org/docs/reference/api/pandas.Series.max.html)
+- `conteo` tiene las etiquetas `rojo` y `azul`, con los valores 2 y 1
+- Eje x: las etiquetas · Altura: los valores (son números, por eso no hay error)
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -1071,112 +1076,57 @@ print(serie.max())
 
 ```Python
 import pandas as pd
-serie = pd.Series([-3, -2, -1, 0, 1, 2, 3])
-print(serie.min())
+import matplotlib.pyplot as plt
+sedes = pd.Series(['Centro', 'Norte', 'Centro'])
+sedes.plot(kind='bar')
+plt.show()
 ```
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### Pregunta XVI - Solución
 
-
 ```Python
 import pandas as pd
-serie = pd.Series([-3, -2, -1, 0, 1, 2, 3])
-print(serie.min())
+import matplotlib.pyplot as plt
+sedes = pd.Series(['Centro', 'Norte', 'Centro'])
+sedes.plot(kind='bar')
+plt.show()
 ```
 
 ```plaintext
--3
+Traceback (most recent call last):
+  ...
+TypeError: no numeric data to plot
 ```
 
-- Ayuda: [Series.min](https://pandas.pydata.org/docs/reference/api/pandas.Series.min.html)
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Pregunta XVII
-
-- ¿Cuál es el resultado de ejecutar el siguiente código?
-
-```Python
-import pandas as pd
-serie = pd.Series([1, 2, 3, 4, 5])  
-# promedio
-print(serie.mean())
-```
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Pregunta XVII - Solución
-
-
-```Python
-import pandas as pd
-serie = pd.Series([1, 2, 3, 4, 5])  
-# promedio
-print(serie.mean())
-```
-
-```plaintext
-3.0
-```
-
-- Ayuda: [Series.mean](https://pandas.pydata.org/docs/reference/api/pandas.Series.mean.html)
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Pregunta XVIII
-
-- ¿Cuál es el resultado de ejecutar el siguiente código?
-
-```Python
-import pandas as pd
-serie = pd.Series([1, 1, 1, 1, 1])
-# Desviación estándar
-print(serie.std())
-```
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Pregunta XVIII - Solución
-
-
-```Python
-import pandas as pd
-serie = pd.Series([1, 1, 1, 1, 1])
-# Desviación estándar
-print(serie.std())
-```
-
-```plaintext
-0.0
-```
-
-- Ayuda: [Series.std](https://pandas.pydata.org/docs/reference/api/pandas.Series.std.html)
+- `plot()` necesita valores numéricos: primero hay que contar
+	- `sedes.value_counts().plot(kind='bar')`
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### Tarea (1/2)
 
-- Los datos de ventas de una tienda se ven así:
+- En una semana, la biblioteca registró el género de cada libro prestado:
 
 ```Python
 import pandas as pd
-ventas = pd.Series({'manzanas': 100, 'naranjas': 80,'plátanos': 150})
+generos = pd.Series(['novela', 'cómic', 'cómic', 'novela', 'poesía',
+                     'poesía', 'novela', 'cómic', 'cómic'])
 ```
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### Tarea (2/2)
 
-- Agregue un nuevo producto:
-	- `peras` con `120` ventas
-- Modificar las ventas de un producto: 
-	- La ventas de las `manzanas` son ahora `200`
-- Borrar un producto: 
-	- Borrar el producto `naranjas` 
-- Calcular estadísticas de ventas: 
-	- Calcule la media de las ventas
+- Obtenga:
+	- Cuántas veces se prestó cada género
+	- Los 2 géneros más prestados
+	- El género menos prestado
+	- Los géneros ordenados de menor a mayor cantidad de préstamos
+	- El total de préstamos de la semana
+- Grafique en barras la cantidad de préstamos por género
+	- Con título y nombres de los ejes
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -1190,33 +1140,45 @@ https://pandas.pydata.org/docs/reference/api/pandas.Series.html
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
+### Tarea - Solución (1/2)
+
+```Python
+import pandas as pd
+generos = pd.Series(['novela', 'cómic', 'cómic', 'novela', 'poesía',
+                     'poesía', 'novela', 'cómic', 'cómic'])
+conteo = generos.value_counts()  # cómic 4, novela 3, poesía 2
+print(conteo)
+print(conteo.head(2))            # cómic 4, novela 3
+print(conteo.tail(1))            # poesía 2
+print(conteo.sort_values())      # poesía 2, novela 3, cómic 4
+print(generos.count())           # 9 préstamos
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Tarea - Solución (2/2)
+
+```Python
+import pandas as pd
+import matplotlib.pyplot as plt
+generos = pd.Series(['novela', 'cómic', 'cómic', 'novela', 'poesía',
+                     'poesía', 'novela', 'cómic', 'cómic'])
+conteo = generos.value_counts()
+ax = conteo.plot(kind="bar", figsize=(7, 4), color="gray",
+                 title="Préstamos por género",
+                 xlabel="Género", ylabel="Cantidad de préstamos")
+ax.figure.tight_layout()
+plt.show()
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
 <i class="fas fa-question-circle fa-2x fa-spin fa-4x"></i>
 
 <br>
 <br>
 
  [<i class="fas fa-home  fa-3x"></i>](https://eerosales24.github.io/iph_2026_20/#)
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-### Tarea - Solución
-
-```Python
-import pandas as pd
-ventas = pd.Series({'manzanas': 100, 'naranjas': 80,'plátanos': 150})
-
-# Agregar un nuevo producto:
-ventas['peras'] = 120
-
-# Modificar las ventas de un producto:
-ventas['manzanas'] = 200
-
-# Borrar un producto:
-ventas = ventas.drop('naranjas')
-
-# Calcular la media de las ventas:
-media = ventas.mean()
-```
 </div></script></section></div>
     </div>
 

@@ -84,7 +84,7 @@
   </head>
   <body>
     <div class="reveal">
-      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+      <div class="slides"><section  data-markdown><script type="text/template"></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### <i class="fas fa-award"></i> IP Honores
@@ -105,185 +105,1238 @@ Continuamos con el estudio de la librería **Pandas**:
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### Pandas - DataFrame
+### Pandas - DataFrame (1/2)
 
-- Estructura de datos bidimensional etiquetada
-- Similar a una hoja de cálculo
-	- Columnas y filas
+- Estructura de datos **bidimensional**: una tabla, una matriz
+	- Similar a una hoja de cálculo
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pandas - DataFrame (2/2)
+
+- Filas:
+	- Identificadas por un **índice** (0, 1, 2, …)
+- Columnas:
+	- Identificadas por un **nombre**
+	- Cada columna es una **Serie**, con su propio tipo de dato
+
+	<br>
+
 - Ayuda: [Pandas.DataFrame](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html)
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### DataFrames
+### DataFrame - Ejemplo
 
-- Múltiples registros ordenados bajo algún criterio    
-	- Varias columnas con nombre
-- Diferentes tipos de dato por columna
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+- Pedidos de una cafetería (archivo `pedidos.csv`)
 
-### DataFrames - Ejemplo
-
-<table border="1" style="border-collapse: collapse; width: 100%; text-align: center; font-size: 20px;">
+<table border="1" style="border-collapse: collapse; width: 70%; text-align: center; font-size: 20px;">
   <thead style="background-color: #d3d3d3;">
     <tr>
-      <th style="color: black;">Tiempo</th>
-      <th style="color: black;">Atleta</th>
-      <th style="color: black;">País</th>
-      <th style="color: black;">Fecha</th>
-      <th style="color: black;">Ciudad</th>
+      <th style="color: black;"></th>
+      <th style="color: black;">sede</th>
+      <th style="color: black;">bebida</th>
+      <th style="color: black;">cantidad</th>
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td>9.58</td>
-      <td>Usain Bolt</td>
-      <td>Jamaica</td>
-      <td>16/08/09</td>
-      <td>Berlin</td>
-    </tr>
-    <tr>
-      <td>9.69</td>
-      <td>Usain Bolt</td>
-      <td>Jamaica</td>
-      <td>16/09/08</td>
-      <td>Beijing</td>
-    </tr>
-    <tr>
-      <td>9.77</td>
-      <td>Asafa Powell</td>
-      <td>Jamaica</td>
-      <td>18/08/06</td>
-      <td>Zurich</td>
-    </tr>
-    <tr>
-      <td>…</td>
-      <td>…</td>
-      <td>…</td>
-      <td>…</td>
-      <td>…</td>
-    </tr>
+    <tr><td><b>0</b></td><td>Norte</td><td>café</td><td>2</td></tr>
+    <tr><td><b>1</b></td><td>Centro</td><td>té</td><td>2</td></tr>
+    <tr><td><b>2</b></td><td>Norte</td><td>té</td><td>1</td></tr>
+    <tr><td><b>3</b></td><td>Norte</td><td>café</td><td>3</td></tr>
+    <tr><td><b>4</b></td><td>Sur</td><td>café</td><td>1</td></tr>
+    <tr><td><b>5</b></td><td>Norte</td><td>jugo</td><td>1</td></tr>
+    <tr><td><b>6</b></td><td>Centro</td><td>café</td><td>3</td></tr>
+    <tr><td><b>7</b></td><td>Norte</td><td>té</td><td>2</td></tr>
+    <tr><td><b>8</b></td><td>Norte</td><td>café</td><td>3</td></tr>
   </tbody>
 </table>
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### Estudiemos la creación de un DataFrame, desde un diccionario
+### ¿Cómo crear un DataFrame desde un diccionario?
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### DataFrame desde un diccionario
+### DataFrame desde un diccionario (1/4)
+
+- **Llaves:**
+	- Cada llave
+		- Es el nombre de una columna
+
+- **Valores:**
+	- En este ejemplo
+		- Cada valor es una lista
+
+```Python
+{
+    'sede':     ['Norte', 'Centro', 'Norte'],
+    'bebida':   ['café', 'té', 'té'],
+    'cantidad': [2, 2, 1],
+}
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### DataFrame desde un diccionario (2/4)
+
+- Cada **lista** tiene los valores de esa columna
+	- Todas del mismo tamaño
+		- En este ejemplo: 3
+- El índice se asignará automáticamente: 0, 1, 2, …
+
+```Python
+{
+    'sede':     ['Norte', 'Centro', 'Norte'],
+    'bebida':   ['café', 'té', 'té'],
+    'cantidad': [2, 2, 1],
+}
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### DataFrame desde un diccionario (3/4)
+
+- Se usa `pd.DataFrame()`:
+	- Recibe el diccionario y retorna el DataFrame
 
 ```Python
 import pandas as pd
 
-tiempos = pd.Series([9.58, 9.63, 9.69, 9.72, 9.74, 9.77])
-
-atletas = pd.Series(['Usain Bolt', 'Usain Bolt', 'Usain Bolt', 'Usain Bolt', 'Yohan Blake', 'Asafa Powell'])
-
-paises = pd.Series(['Jamaica', 'Jamaica', 'Jamaica', 'Jamaica', 'Jamaica', 'Jamaica'])
-
-fechas = pd.Series(['16/08/2009', '19/08/2009','23/08/2008','09/09/2011','30/08/2012','18/08/2006'])
-
-ciudades = pd.Series(['Berlin','Beijing','New York','Rieti','Zurich'])
-
-datos_series = {'Tiempo': tiempos, 'Atleta': atletas, 'Pais': paises, 'Fecha': fechas, 'Ciudad': ciudades}
-
-df_records = pd.DataFrame(datos_series)
-print(df_records)
+df = pd.DataFrame( ... )
 ```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
+### DataFrame desde un diccionario (4/4)
+
+
+```Python
+import pandas as pd
+
+df = pd.DataFrame({
+    'sede':      ['Norte', 'Centro', 'Norte'],
+    'bebida':    ['café', 'té', 'té'],
+    'cantidad':  [2, 2, 1],
+})
+
+print(df)
+```
 
 ```plaintext
-    Tiempo     Atleta     Pais       Fecha    Ciudad
-0    9.58    Usain Bolt  Jamaica  16/08/2009    Berlin
-1    9.63    Usain Bolt  Jamaica  19/08/2009   Beijing
-2    9.69    Usain Bolt  Jamaica  23/08/2008  New York
-3    9.72    Usain Bolt  Jamaica  09/09/2011     Rieti
-4    9.74   Yohan Blake  Jamaica  30/08/2012    Zurich
-5    9.77  Asafa Powell  Jamaica  18/08/2006       NaN
+     sede bebida  cantidad
+0   Norte   café         2
+1  Centro     té         2
+2   Norte     té         1
 ```
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### Estudiemos la creación de un DataFrame, desde un archivo CSV
+### ¿Cómo crear un DataFrame desde un CSV?
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### DataFrame desde un CSV (1/4)
+### DataFrame desde un CSV (1/2)
 
-- Ejemplo de archivo CSV (`records.csv`)
+
+- Se usa la función:
+	- `pd.read_csv()`
+
+```Python
+import pandas as pd
+
+pedidos = pd.read_csv('ruta/al/archivo.csv')
+```
+
+- Ayuda: [pandas.read_csv](https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### DataFrame desde un CSV (2/2)
+
+- `pd.read_csv(ruta)`: 
+	- Lee un archivo CSV y retorna un DataFrame
+	- La primera línea del archivo tiene los nombres de las columnas
+- Ejemplo de primeras líneas de `pedidos.csv`:
+
+```plaintext
+sede,bebida,cantidad
+Norte,café,2
+Centro,té,2
+Norte,té,1
+...
+```
+
+```Python
+import pandas as pd
+
+pedidos = pd.read_csv('pedidos.csv')
+```
+
+- Ayuda: [pandas.read_csv](https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Aprendamos operaciones clave con los DataFrames
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Exploración (1/3)
+
+- `df.head(n)` / `df.tail(n)`:
+	- primeras / últimas `n` filas
+- `len(df)`:
+	- cantidad de filas
+- `list(df.columns)`:
+	- nombres de las columnas
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Exploración (2/3)
+
+<table border="1" style="border-collapse: collapse; width: 70%; text-align: center; font-size: 20px;">
+  <thead style="background-color: #d3d3d3;">
+    <tr>
+      <th style="color: black;"></th>
+      <th style="color: black;">sede</th>
+      <th style="color: black;">bebida</th>
+      <th style="color: black;">cantidad</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td><b>0</b></td><td>Norte</td><td>café</td><td>2</td></tr>
+    <tr><td><b>1</b></td><td>Centro</td><td>té</td><td>2</td></tr>
+    <tr><td><b>2</b></td><td>Norte</td><td>té</td><td>1</td></tr>
+    <tr><td><b>3</b></td><td>Norte</td><td>café</td><td>3</td></tr>
+    <tr><td><b>4</b></td><td>Sur</td><td>café</td><td>1</td></tr>
+    <tr><td><b>5</b></td><td>Norte</td><td>jugo</td><td>1</td></tr>
+    <tr><td><b>6</b></td><td>Centro</td><td>café</td><td>3</td></tr>
+    <tr><td><b>7</b></td><td>Norte</td><td>té</td><td>2</td></tr>
+    <tr><td><b>8</b></td><td>Norte</td><td>café</td><td>3</td></tr>
+  </tbody>
+</table>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Exploración (3/3)
+
+```Python
+import pandas as pd
+
+pedidos = pd.read_csv('pedidos.csv')
+
+print(len(pedidos))  # → 9
+
+print(list(pedidos.columns))  # → ['sede', 'bebida', 'cantidad']
+
+print(pedidos.tail(2))  # →
+#     sede bebida  cantidad
+# 7  Norte     té         2
+# 8  Norte   café         3
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Selección de una columna (1/3)
+
+- `df["columna"]` retorna la columna como una **Serie**
+	- Conserva el índice de las filas
+	- Su nombre (`Name`) es el de la columna
+	- Sobre la columna/Serie:
+		- Aplican los métodos de las Series:
+			- `value_counts()`, `head()`, `sum()`, …
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Selección de una columna (2/3)
+
+```Python
+import pandas as pd
+
+pedidos = pd.read_csv('pedidos.csv')
+
+sedes = pedidos['sede']  # Serie con la columna `sede`
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Selección de una columna (3/3)
+
+```Python
+import pandas as pd
+
+pedidos = pd.read_csv('pedidos.csv')
+
+sedes = pedidos['sede']  # Serie con la columna `sede`
+
+print(sedes.head(2))
+print(sedes.value_counts())
+```
+
+<br>
+
+```plaintext
+0     Norte
+1    Centro
+Name: sede, dtype: str
+sede
+Norte     6
+Centro    2
+Sur       1
+Name: count, dtype: int64
+```
+
+- Antes de pandas 3.0, el texto aparece como `dtype: object`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Filtrado de filas (1/2)
+
+- `df["col"] == valor`
+	- Produce una Serie de booleanos: una por fila
+- `df[serie_de_booleanos]`
+	- Conserva las filas con `True` (un nuevo DataFrame)
+	- Si ninguna fila cumple la condición → DataFrame **vacío**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Filtrado de filas (2/2)
+
+```Python
+import pandas as pd
+
+pedidos = pd.read_csv('pedidos.csv')
+
+centro = pedidos[pedidos['sede'] == 'Centro']  # Filtrar los de sede: Centro
+
+print(centro)  # →
+#      sede bebida  cantidad
+# 1  Centro     té         2
+# 6  Centro   café         3
+
+# No hay sede Oeste, entonces, se retorna un DataFrame vacío:
+print(len(pedidos[pedidos['sede'] == 'Oeste']))   # → 0
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Filtrar y luego seleccionar (1/2)
+
+- ¿Cuántas veces se pidió cada bebida en la sede Norte?
+
+```Python
+import pandas as pd
+
+pedidos = pd.read_csv('pedidos.csv')
+
+norte = pedidos[pedidos['sede'] == 'Norte']  # Filas de Norte
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Filtrar y luego seleccionar (2/2)
+
+- ¿Cuántas veces se pidió cada bebida en la sede Norte?
+
+```Python
+import pandas as pd
+
+pedidos = pd.read_csv('pedidos.csv')
+
+norte = pedidos[pedidos['sede'] == 'Norte']  # Filas de Norte
+
+print(norte['bebida'].value_counts())        # Contar la columna bebida ya filtrada
+```
+
+```plaintext
+bebida
+café    3
+té      2
+jugo    1
+Name: count, dtype: int64
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `DataFrame.groupby` (1/2)
+
+- Método para **dividir** datos en grupos
+	- Según una columna o columnas
+- Permite aplicar operaciones como
+	- Suma, promedio, conteo, etc., a cada grupo
+- Combina los resultados
+	- En un nuevo DataFrame o Series
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `DataFrame.groupby` (2/2)
+
+- Sintaxis (básica):
+```python
+df.groupby(by='nombre_columna')
+```
+
+- `by`: la columna (o columnas) para agrupar
+- `groupby` retorna un objeto de tipo `GroupBy`
+	- No los datos procesados directamente
+- Para obtener resultados se debe aplicar
+	- Una operación (ej. `.sum()`, `.mean()`)
+- Ayuda: [DataFrame.groupby](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.groupby.html)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Ejemplo 1: Agrupar por una columna y sumar
+
+```python
+import pandas as pd
+
+data = {'Categoria': ['A', 'B', 'A', 'B', 'A'],
+            'Valor': [10,  20,   30,  40,  50]}
+
+df = pd.DataFrame(data)
+
+# Agrupar por 'Categoria' y calcular la suma:
+resultado = df.groupby('Categoria')['Valor'].sum()
+
+print(resultado)
+```
 
 ```Plaintext
-Tiempo, Atleta, País, Fecha, Ciudad
-9.58, Usain Bolt, Jamaica, 16/08/2009, Berlin
-9.63, Usain Bolt, Jamaica, 19/08/2009, Beijing
-9.69, Usain Bolt, Jamaica, 23/08/2008, New York
-9.72, Usain Bolt, Jamaica, 09/09/2011, Rieti
-9.74, Yohan Blake, Jamaica, 30/08/2012, Zurich
-9.77, Asafa Powell, Jamaica, 18/08/2006, NaN
+Categoria
+A    90
+B    60
+Name: Valor, dtype: int64
 ```
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### DataFrame desde un CSV (2/4)
+### Ejemplo 2: Agrupar por múltiples columnas y sumar
 
-### `pd.read_csv()`
+```python
+import pandas as pd
 
-- Lee un archivo CSV en un DataFrame de Pandas
-- Sintaxis:
-```Python
-pd.read_csv(filepath_or_buffer, ...)
+data = {'Categoria':    ['A', 'B', 'A', 'B', 'A'],
+        'Subcategoria': ['X', 'X', 'Y', 'Y', 'X'],
+        'Valor':        [10,   20,  30,  40,  50]}
+
+df = pd.DataFrame(data)
+
+# Agrupar por 'Categoria' y 'Subcategoria'.
+# Esto crea grupos únicos combinando los valores de ambas columnas:
+resultado = df.groupby(['Categoria', 'Subcategoria'])['Valor'].sum()
+print(resultado)
 ```
 
-- `filepath_or_buffer`: Ruta o URL del archivo CSV
-- Ayuda: [pandas.read_csv](https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html#pandas.read_csv)
+```Plaintext
+Categoria  Subcategoria
+A          X               60
+           Y               30
+           
+B          X               20
+           Y               40
+           
+Name: Valor, dtype: int64
+```
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### DataFrame desde un CSV (3/4)
+### Ejemplo 3: Aplicar múltiples funciones simultáneamente
+
+```python
+# df: el DataFrame del Ejemplo 2
+# Se pueden calcular varias operaciones al mismo tiempo con `agg`
+resultado = df.groupby('Categoria')['Valor'].agg(['mean', 'sum', 'count'])
+print(resultado)
+```
+
+<br>
+
+```Plaintext
+           mean  sum  count
+Categoria
+A          30.0   90      3
+B          30.0   60      2
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### `groupby()` - Ejemplo con `pedidos.csv`
 
 ```Python
-df_records_csv = pd.read_csv('ruta/completa/al/archivo/records.csv')
-print(df_records_csv)
+import pandas as pd
+
+pedidos = pd.read_csv('pedidos.csv')
+
+print(pedidos.groupby('sede')['cantidad'].sum())  # Unidades por sede
 ```
 
 ```plaintext
-    Tiempo     Atleta     Pais       Fecha    Ciudad
-0    9.58    Usain Bolt  Jamaica  16/08/2009    Berlin
-1    9.63    Usain Bolt  Jamaica  19/08/2009   Beijing
-2    9.69    Usain Bolt  Jamaica  23/08/2008  New York
-3    9.72    Usain Bolt  Jamaica  09/09/2011     Rieti
-4    9.74   Yohan Blake  Jamaica  30/08/2012    Zurich
-5    9.77  Asafa Powell  Jamaica  18/08/2006       NaN
+sede
+Centro     5
+Norte     12
+Sur        1
+Name: cantidad, dtype: int64
 ```
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-### DataFrame desde un CSV (4/4)
+### <i class="fas fa-exclamation-triangle"></i> Cuidado: agrupar por la columna filtrada
 
-- Si el archivo está en el mismo directorio
-	- Que la lógica, se puede usar el formato corto de ruta:
-
-	<br>
+- Después de filtrar por un valor, esa columna tiene un **solo valor**
+- Agrupar por ella deja **un solo grupo**, es decir, un único resultado
 
 ```Python
-df = pd.read_csv('./educacion.csv')
+import pandas as pd
+pedidos = pd.read_csv('pedidos.csv')
+norte = pedidos[pedidos['sede'] == 'Norte']
+print(norte.groupby('sede')['bebida'].count())
 ```
+
+```plaintext
+sede
+Norte    6
+Name: bebida, dtype: int64
+```
+
+- Es el total de pedidos de Norte, **no un conteo por bebida**
+	- Para contar por bebida: `norte['bebida'].value_counts()`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Seguir el tipo al reasignar
+
+- Una variable puede guardar un DataFrame y luego una Serie
+	- El **nombre** de la variable no define su tipo
+- Al leer código, siga qué guarda la variable después de cada línea
+
+```Python
+import pandas as pd
+datos = pd.read_csv('pedidos.csv')        # DataFrame: todos los pedidos
+datos = datos[datos['bebida'] == 'café']  # DataFrame: pedidos de café
+datos = datos['sede']                     # Serie: sedes de esos pedidos
+datos = datos.value_counts()              # Serie: sede → frecuencia
+print(datos.head(1))
+```
+
+```plaintext
+sede
+Norte    3
+Name: count, dtype: int64
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###  Graficar un DataFrame
+
+- Filtrar filas → seleccionar columna → contar → recortar → graficar
+
+```Python
+import pandas as pd
+import matplotlib.pyplot as plt
+
+pedidos = pd.read_csv('pedidos.csv')
+norte = pedidos[pedidos['sede'] == 'Norte']
+top2 = norte['bebida'].value_counts().head(2)
+
+ax = top2.plot(kind="bar", figsize=(7, 4), color="gray",
+               title="Bebidas más pedidas en Norte",
+               xlabel="Bebida", ylabel="Cantidad de pedidos")
+               
+ax.figure.tight_layout()
+
+plt.show()
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Graficar un DataFrame - Resultado
+
+<img src="iph/n4/img/n4_06_dataframe_plot_norte.png" alt="" style="object-fit: scale-down">
+
+
+- Se gráfica la Serie `top2`: etiquetas en el eje x, frecuencias como alturas
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Resumen
+
+<table border="1" style="border-collapse: collapse; width: 100%; text-align: center; font-size: 20px;">
+  <thead style="background-color: #d3d3d3;">
+    <tr>
+      <th style="color: black;">Necesito…</th>
+      <th style="color: black;">Uso</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Cargar un CSV</td><td><code>pd.read_csv('archivo.csv')</code></td></tr>
+    <tr><td>Primeras / últimas filas</td><td><code>df.head(n)</code> / <code>df.tail(n)</code></td></tr>
+    <tr><td>Cantidad de filas</td><td><code>len(df)</code></td></tr>
+    <tr><td>Una columna (Serie)</td><td><code>df["col"]</code></td></tr>
+    <tr><td>Filtrar filas</td><td><code>df[df["col"] == valor]</code></td></tr>
+    <tr><td>Contar por grupo (orden por nombre)</td><td><code>df.groupby("col")["otra"].count()</code></td></tr>
+    <tr><td>Sumar por grupo</td><td><code>df.groupby("col")["num"].sum()</code></td></tr>
+    <tr><td>Los <code>n</code> más frecuentes de una columna</td><td><code>df["col"].value_counts().head(n)</code></td></tr>
+  </tbody>
+</table>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Ponga a prueba lo aprendido
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### <i class="fas fa-question-circle"></i> Preguntas: el DataFrame `ventas`
+
+- En cada pregunta: ¿cuál es el resultado de ejecutar el código?
+	- Si hay opciones: ¿cuál es la correcta?
+- Todas las preguntas usan este DataFrame:
+
+```Python
+ventas = pd.DataFrame({
+    'tienda': ['B', 'A', 'B', 'B', 'C', 'A'],
+    'producto': ['pan', 'leche', 'leche', 'pan', 'pan', 'pan'],
+    'unidades': [3, 2, 1, 2, 4, 1],
+})
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta I
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+import pandas as pd
+ventas = pd.DataFrame({
+    'tienda': ['B', 'A', 'B', 'B', 'C', 'A'],
+    'producto': ['pan', 'leche', 'leche', 'pan', 'pan', 'pan'],
+    'unidades': [3, 2, 1, 2, 4, 1],
+})
+print(len(ventas))
+print(ventas.head(2))
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta I - Solución
+
+```Python
+import pandas as pd
+ventas = pd.DataFrame({
+    'tienda': ['B', 'A', 'B', 'B', 'C', 'A'],
+    'producto': ['pan', 'leche', 'leche', 'pan', 'pan', 'pan'],
+    'unidades': [3, 2, 1, 2, 4, 1],
+})
+print(len(ventas))
+print(ventas.head(2))
+```
+
+```plaintext
+6
+  tienda producto  unidades
+0      B      pan         3
+1      A    leche         2
+```
+
+- `len()` cuenta las filas; `head(2)` retorna las 2 primeras
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta II
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+import pandas as pd
+ventas = pd.DataFrame({
+    'tienda': ['B', 'A', 'B', 'B', 'C', 'A'],
+    'producto': ['pan', 'leche', 'leche', 'pan', 'pan', 'pan'],
+    'unidades': [3, 2, 1, 2, 4, 1],
+})
+print(ventas['unidades'].sum())
+print(ventas['Unidades'].sum())
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta II - Solución
+
+```Python
+import pandas as pd
+ventas = pd.DataFrame({
+    'tienda': ['B', 'A', 'B', 'B', 'C', 'A'],
+    'producto': ['pan', 'leche', 'leche', 'pan', 'pan', 'pan'],
+    'unidades': [3, 2, 1, 2, 4, 1],
+})
+print(ventas['unidades'].sum())
+print(ventas['Unidades'].sum())
+```
+
+```plaintext
+13
+Traceback (most recent call last):
+  ...
+KeyError: 'Unidades'
+```
+
+- Los nombres de las columnas distinguen mayúsculas: `'Unidades'` no existe
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+import pandas as pd
+ventas = pd.DataFrame({
+    'tienda': ['B', 'A', 'B', 'B', 'C', 'A'],
+    'producto': ['pan', 'leche', 'leche', 'pan', 'pan', 'pan'],
+    'unidades': [3, 2, 1, 2, 4, 1],
+})
+print(ventas[ventas['tienda'] == 'A'])
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta III - Solución
+
+```Python
+import pandas as pd
+ventas = pd.DataFrame({
+    'tienda': ['B', 'A', 'B', 'B', 'C', 'A'],
+    'producto': ['pan', 'leche', 'leche', 'pan', 'pan', 'pan'],
+    'unidades': [3, 2, 1, 2, 4, 1],
+})
+print(ventas[ventas['tienda'] == 'A'])
+```
+
+```plaintext
+  tienda producto  unidades
+1      A    leche         2
+5      A      pan         1
+```
+
+- Quedan las filas de la tienda A, con su índice original
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IV
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+import pandas as pd
+ventas = pd.DataFrame({
+    'tienda': ['B', 'A', 'B', 'B', 'C', 'A'],
+    'producto': ['pan', 'leche', 'leche', 'pan', 'pan', 'pan'],
+    'unidades': [3, 2, 1, 2, 4, 1],
+})
+filtro = ventas[ventas['producto'] == 'B']
+print(len(filtro), filtro['unidades'].sum())
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IV - Solución
+
+```Python
+import pandas as pd
+ventas = pd.DataFrame({
+    'tienda': ['B', 'A', 'B', 'B', 'C', 'A'],
+    'producto': ['pan', 'leche', 'leche', 'pan', 'pan', 'pan'],
+    'unidades': [3, 2, 1, 2, 4, 1],
+})
+filtro = ventas[ventas['producto'] == 'B']
+print(len(filtro), filtro['unidades'].sum())
+```
+
+```plaintext
+0 0
+```
+
+- `'B'` es una tienda, no un producto: el DataFrame queda **vacío**
+- La suma de una Serie vacía es 0
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta V
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+import pandas as pd
+ventas = pd.DataFrame({
+    'tienda': ['B', 'A', 'B', 'B', 'C', 'A'],
+    'producto': ['pan', 'leche', 'leche', 'pan', 'pan', 'pan'],
+    'unidades': [3, 2, 1, 2, 4, 1],
+})
+tienda_b = ventas[ventas['tienda'] == 'B']
+print(tienda_b['producto'].value_counts())
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta V - Solución
+
+```Python
+import pandas as pd
+ventas = pd.DataFrame({
+    'tienda': ['B', 'A', 'B', 'B', 'C', 'A'],
+    'producto': ['pan', 'leche', 'leche', 'pan', 'pan', 'pan'],
+    'unidades': [3, 2, 1, 2, 4, 1],
+})
+tienda_b = ventas[ventas['tienda'] == 'B']
+print(tienda_b['producto'].value_counts())
+```
+
+```plaintext
+producto
+pan      2
+leche    1
+Name: count, dtype: int64
+```
+
+- Filtra las filas de la tienda B y cuenta su columna `producto`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VI
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+import pandas as pd
+ventas = pd.DataFrame({
+    'tienda': ['B', 'A', 'B', 'B', 'C', 'A'],
+    'producto': ['pan', 'leche', 'leche', 'pan', 'pan', 'pan'],
+    'unidades': [3, 2, 1, 2, 4, 1],
+})
+print(ventas.groupby('tienda')['producto'].count())
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VI - Solución
+
+```Python
+import pandas as pd
+ventas = pd.DataFrame({
+    'tienda': ['B', 'A', 'B', 'B', 'C', 'A'],
+    'producto': ['pan', 'leche', 'leche', 'pan', 'pan', 'pan'],
+    'unidades': [3, 2, 1, 2, 4, 1],
+})
+print(ventas.groupby('tienda')['producto'].count())
+```
+
+```plaintext
+tienda
+A    2
+B    3
+C    1
+Name: producto, dtype: int64
+```
+
+- Una fila por tienda, en orden alfabético: cuántas ventas (filas) tiene cada una
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VII
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+import pandas as pd
+ventas = pd.DataFrame({
+    'tienda': ['B', 'A', 'B', 'B', 'C', 'A'],
+    'producto': ['pan', 'leche', 'leche', 'pan', 'pan', 'pan'],
+    'unidades': [3, 2, 1, 2, 4, 1],
+})
+print(ventas.groupby('producto')['unidades'].sum())
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VII - Solución
+
+```Python
+import pandas as pd
+ventas = pd.DataFrame({
+    'tienda': ['B', 'A', 'B', 'B', 'C', 'A'],
+    'producto': ['pan', 'leche', 'leche', 'pan', 'pan', 'pan'],
+    'unidades': [3, 2, 1, 2, 4, 1],
+})
+print(ventas.groupby('producto')['unidades'].sum())
+```
+
+```plaintext
+producto
+leche     3
+pan      10
+Name: unidades, dtype: int64
+```
+
+- leche: 2 + 1 · pan: 3 + 2 + 4 + 1
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VIII
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+import pandas as pd
+ventas = pd.DataFrame({
+    'tienda': ['B', 'A', 'B', 'B', 'C', 'A'],
+    'producto': ['pan', 'leche', 'leche', 'pan', 'pan', 'pan'],
+    'unidades': [3, 2, 1, 2, 4, 1],
+})
+print(ventas.groupby('tienda')['producto'].sum())
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta VIII - Solución
+
+```Python
+import pandas as pd
+ventas = pd.DataFrame({
+    'tienda': ['B', 'A', 'B', 'B', 'C', 'A'],
+    'producto': ['pan', 'leche', 'leche', 'pan', 'pan', 'pan'],
+    'unidades': [3, 2, 1, 2, 4, 1],
+})
+print(ventas.groupby('tienda')['producto'].sum())
+```
+
+```plaintext
+tienda
+A       lechepan
+B    panlechepan
+C            pan
+Name: producto, dtype: str
+```
+
+- Con textos, `sum()` concatena los textos de cada grupo (antes de pandas 3.0: `dtype: object`)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IX
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+import pandas as pd
+ventas = pd.DataFrame({
+    'tienda': ['B', 'A', 'B', 'B', 'C', 'A'],
+    'producto': ['pan', 'leche', 'leche', 'pan', 'pan', 'pan'],
+    'unidades': [3, 2, 1, 2, 4, 1],
+})
+print(ventas.groupby('tienda')['producto'].count().head(1))
+print(ventas['tienda'].value_counts().head(1))
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta IX - Solución
+
+```Python
+import pandas as pd
+ventas = pd.DataFrame({
+    'tienda': ['B', 'A', 'B', 'B', 'C', 'A'],
+    'producto': ['pan', 'leche', 'leche', 'pan', 'pan', 'pan'],
+    'unidades': [3, 2, 1, 2, 4, 1],
+})
+print(ventas.groupby('tienda')['producto'].count().head(1))
+print(ventas['tienda'].value_counts().head(1))
+```
+
+```plaintext
+tienda
+A    2
+Name: producto, dtype: int64
+tienda
+B    3
+Name: count, dtype: int64
+```
+
+- `groupby` ordena por nombre (A primero); `value_counts` de mayor a menor (B primero)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta X
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+import pandas as pd
+ventas = pd.DataFrame({
+    'tienda': ['B', 'A', 'B', 'B', 'C', 'A'],
+    'producto': ['pan', 'leche', 'leche', 'pan', 'pan', 'pan'],
+    'unidades': [3, 2, 1, 2, 4, 1],
+})
+tienda_b = ventas[ventas['tienda'] == 'B']
+print(tienda_b.groupby('tienda')['producto'].count())
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta X - Solución
+
+```Python
+import pandas as pd
+ventas = pd.DataFrame({
+    'tienda': ['B', 'A', 'B', 'B', 'C', 'A'],
+    'producto': ['pan', 'leche', 'leche', 'pan', 'pan', 'pan'],
+    'unidades': [3, 2, 1, 2, 4, 1],
+})
+tienda_b = ventas[ventas['tienda'] == 'B']
+print(tienda_b.groupby('tienda')['producto'].count())
+```
+
+```plaintext
+tienda
+B    3
+Name: producto, dtype: int64
+```
+
+- Después del filtro, `tienda` solo tiene el valor `'B'`: queda un solo grupo
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XI
+
+- ¿Qué retorna `ventas.groupby('tienda')`?
+
+```Python
+import pandas as pd
+ventas = pd.DataFrame({
+    'tienda': ['B', 'A', 'B', 'B', 'C', 'A'],
+    'producto': ['pan', 'leche', 'leche', 'pan', 'pan', 'pan'],
+    'unidades': [3, 2, 1, 2, 4, 1],
+})
+```
+
+- a) Un DataFrame con las filas ordenadas por tienda
+- b) Una Serie con la cantidad de ventas de cada tienda
+- c) Un objeto con los grupos: falta elegir una columna y una operación
+- d) Un número: la cantidad de tiendas distintas
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XI - Solución
+
+- Respuesta: **c)**
+
+```Python
+import pandas as pd
+ventas = pd.DataFrame({
+    'tienda': ['B', 'A', 'B', 'B', 'C', 'A'],
+    'producto': ['pan', 'leche', 'leche', 'pan', 'pan', 'pan'],
+    'unidades': [3, 2, 1, 2, 4, 1],
+})
+grupos = ventas.groupby('tienda')
+print(grupos['unidades'].sum())
+```
+
+```plaintext
+tienda
+A    3
+B    6
+C    4
+Name: unidades, dtype: int64
+```
+
+- `groupby()` solo agrupa: el resultado aparece al elegir una columna y una operación
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XII
+
+- ¿Cuál es el resultado de ejecutar el siguiente código?
+
+```Python
+import pandas as pd
+ventas = pd.DataFrame({
+    'tienda': ['B', 'A', 'B', 'B', 'C', 'A'],
+    'producto': ['pan', 'leche', 'leche', 'pan', 'pan', 'pan'],
+    'unidades': [3, 2, 1, 2, 4, 1],
+})
+datos = ventas[ventas['producto'] == 'pan']
+datos = datos['tienda']
+datos = datos.value_counts()
+print(datos.head(1))
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XII - Solución
+
+```Python
+import pandas as pd
+ventas = pd.DataFrame({
+    'tienda': ['B', 'A', 'B', 'B', 'C', 'A'],
+    'producto': ['pan', 'leche', 'leche', 'pan', 'pan', 'pan'],
+    'unidades': [3, 2, 1, 2, 4, 1],
+})
+datos = ventas[ventas['producto'] == 'pan']
+datos = datos['tienda']
+datos = datos.value_counts()
+print(datos.head(1))
+```
+
+```plaintext
+tienda
+B    2
+Name: count, dtype: int64
+```
+
+- `datos`: DataFrame (ventas de pan) → Serie (sus tiendas) → Serie (tienda → frecuencia)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XIII
+
+- ¿Cuál expresión retorna cuántas ventas (filas) tiene cada tienda, **de mayor a menor**?
+
+```Python
+import pandas as pd
+ventas = pd.DataFrame({
+    'tienda': ['B', 'A', 'B', 'B', 'C', 'A'],
+    'producto': ['pan', 'leche', 'leche', 'pan', 'pan', 'pan'],
+    'unidades': [3, 2, 1, 2, 4, 1],
+})
+```
+
+- a) `ventas['tienda'].value_counts()`
+- b) `ventas.groupby('tienda')['producto'].count()`
+- c) `ventas.groupby('tienda')['unidades'].sum()`
+- d) `ventas['tienda'].count()`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XIII - Solución
+
+- Respuesta: **a)**
+
+```Python
+import pandas as pd
+ventas = pd.DataFrame({
+    'tienda': ['B', 'A', 'B', 'B', 'C', 'A'],
+    'producto': ['pan', 'leche', 'leche', 'pan', 'pan', 'pan'],
+    'unidades': [3, 2, 1, 2, 4, 1],
+})
+print(ventas['tienda'].value_counts())
+```
+
+```plaintext
+tienda
+B    3
+A    2
+C    1
+Name: count, dtype: int64
+```
+
+- b) cuenta bien, pero en orden alfabético · c) suma unidades, no cuenta ventas · d) un solo número: 6
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XIV
+
+- ¿Cuál expresión retorna el producto **menos** vendido (en número de ventas) en la tienda B?
+
+```Python
+import pandas as pd
+ventas = pd.DataFrame({
+    'tienda': ['B', 'A', 'B', 'B', 'C', 'A'],
+    'producto': ['pan', 'leche', 'leche', 'pan', 'pan', 'pan'],
+    'unidades': [3, 2, 1, 2, 4, 1],
+})
+```
+
+- a) `ventas[ventas['tienda'] == 'B']['producto'].value_counts().tail(1)`
+- b) `ventas[ventas['producto'] == 'B']['tienda'].value_counts().tail(1)`
+- c) `ventas[ventas['tienda'] == 'B'].groupby('tienda')['producto'].count()`
+- d) `ventas[ventas['tienda'] == 'B']['producto'].sum()`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Pregunta XIV - Solución
+
+- Respuesta: **a)**
+
+```Python
+import pandas as pd
+ventas = pd.DataFrame({
+    'tienda': ['B', 'A', 'B', 'B', 'C', 'A'],
+    'producto': ['pan', 'leche', 'leche', 'pan', 'pan', 'pan'],
+    'unidades': [3, 2, 1, 2, 4, 1],
+})
+print(ventas[ventas['tienda'] == 'B']['producto'].value_counts().tail(1))
+```
+
+```plaintext
+producto
+leche    1
+Name: count, dtype: int64
+```
+
+- b) filtra por la columna equivocada: queda vacío · c) un solo grupo: `B` con 3 · d) concatena: `'panlechepan'`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Tarea
+
+- Usando `pedidos.csv`, obtenga:
+	- La cantidad de pedidos de cada sede, de mayor a menor
+	- Las unidades (`cantidad`) pedidas en cada sede
+	- La sede con más unidades de café
+- Grafique en barras las unidades pedidas por bebida, de mayor a menor
+	- Con título y nombres de los ejes
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### Pandas.DataFrame
 
-- Existe una extensa selección 
+- Existe una extensa selección
 	- De métodos de los DataFrames
 - Para mayor información
-	- Revisar la documentación de `Pandas.DataFrames`:
+	- Revisar la documentación de `Pandas.DataFrame`:
 
 https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html
 
 - Adicionalmente, haremos actividades en laboratorio
 	- Para afianzar el entendimiento de librerías usadas en N4
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Tarea - Solución (1/2)
+
+```Python
+import pandas as pd
+pedidos = pd.read_csv('pedidos.csv')
+print(pedidos['sede'].value_counts())                # Norte 6, Centro 2, Sur 1
+print(pedidos.groupby('sede')['cantidad'].sum())     # Centro 5, Norte 12, Sur 1
+cafe = pedidos[pedidos['bebida'] == 'café']
+unidades_cafe = cafe.groupby('sede')['cantidad'].sum()
+print(unidades_cafe.sort_values(ascending=False).head(1))  # Norte 8
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Tarea - Solución (2/2)
+
+```Python
+import pandas as pd
+import matplotlib.pyplot as plt
+pedidos = pd.read_csv('pedidos.csv')
+unidades = pedidos.groupby('bebida')['cantidad'].sum()
+unidades = unidades.sort_values(ascending=False)
+ax = unidades.plot(kind="bar", figsize=(7, 4), color="gray",
+                   title="Unidades pedidas por bebida",
+                   xlabel="Bebida", ylabel="Unidades")
+ax.figure.tight_layout()
+plt.show()
+```
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f8f8f8" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
